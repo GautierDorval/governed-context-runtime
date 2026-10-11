@@ -127,7 +127,7 @@ export function textBytes(value) {
 }
 export function unitPreimage(unit, source) {
   if (!['unitId', 'sourcePath', 'selector', 'digest', 'digestScope', 'canonicalization'].every(key => Object.hasOwn(unit, key))) fail('unit_field_missing');
-  const selected = select(strictParse(source), unit.selector);
+  const selected = select(strictParse(source, { historical: true }), unit.selector);
   if (unit.digestScope === 'canonical_interpretive_unit_envelope') {
     const fields = ['unitId', 'sourcePath', 'selector', 'claimClass', 'authorityScope', 'canonicalSource', 'canonicalText'];
     if (unit.canonicalization !== 'attested-interpretive-unit-envelope-v0' || !fields.every(key => Object.hasOwn(unit, key))) fail('unit_recipe_mismatch');
@@ -138,8 +138,11 @@ export function unitPreimage(unit, source) {
   if (unit.canonicalization === 'deterministic-json-sort-keys-v0') return canonical(selected, { historical: true });
   fail('unknown_profile');
 }
-export function artifactPreimage(path, bytes) {
-  if (/\.(json|jsonld)$/.test(path)) return canonical(strictParse(bytes, { historical: true }), { historical: true });
+export function artifactPreimage(path, bytes, profile) {
+  if (/\.(json|jsonld)$/i.test(path) && !/\.(json|jsonld)$/.test(path)) fail('ambiguous_artifact_extension');
+  const expected = /\.(json|jsonld)$/.test(path) ? 'deterministic-json-sort-keys-v0' : 'utf8-nfc-lf-trimmed-v0';
+  if (profile !== undefined && profile !== expected) fail('artifact_profile');
+  if (expected === 'deterministic-json-sort-keys-v0') return canonical(strictParse(bytes, { historical: true }), { historical: true });
   return textBytes(decoder.decode(bytes));
 }
 
@@ -153,17 +156,24 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
     if (!ok) fail(id);
   };
   const inventory = snapshot.inventory;
+  same('snapshot-type', 'GovernedContextCorpusSnapshot', snapshot.type);
+  same('snapshot-version', '0.1.0-proposed', snapshot.schemaVersion);
+  same('snapshot-identity', 'governed-context-runtime:' + snapshot.corpusRootDigest, snapshot.snapshotId);
+  same('inventory-type', 'GovernedContextCorpusInventory', inventory.type);
+  same('inventory-version', '0.1.0-proposed', inventory.schemaVersion);
   same('inventory-profile', 'gd-portable-json-v1', inventory.profile);
   same('corpus-root', snapshot.corpusRootDigest, await digest(canonical(inventory)));
   if (!inventory.items.length || inventory.items.length > 1024) fail('archive_coverage');
   const sources = new Map(), uris = new Set();
   for (const item of inventory.items) {
     if (!/^\/v0\/artifacts\/[a-f0-9]{64}$/.test(item.uri) || sources.has(item.sourcePath) || uris.has(item.uri)) fail('invalid_archive_identity');
+    for (const [key,value] of Object.entries({kind:'source-archive',digestScope:'canonical-json',canonicalization:PROFILE,digestAlgorithm:'sha-256',version:item.repositoryDigest})) same('item-profile:' + key, value, item[key]);
     uris.add(item.uri);
     const encoded = await getArchive(item.uri);
     same('archive-envelope:' + item.sourcePath, item.digest, await digest(encoded));
     same('archive-address:' + item.sourcePath, item.digest, 'sha-256:' + item.uri.split('/').at(-1));
     const archive = strictParse(encoded);
+    for (const [key,value] of Object.entries({type:'RuntimeSourceArchive',schemaVersion:'0.1.0-proposed',encoding:'base64',digestScope:'repository-bytes',digestAlgorithm:'sha-256'})) same('archive-profile:' + key, value, archive[key]);
     same('archive-source:' + item.sourcePath, item.sourcePath, archive.sourcePath);
     if (typeof archive.contentBase64 !== 'string' || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(archive.contentBase64)) fail('invalid_base64');
     const data = Uint8Array.from(atob(archive.contentBase64), c => c.charCodeAt(0));
@@ -181,14 +191,27 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
   if (!tokens.length || new Set(tokens).size !== tokens.length) fail('empty_or_duplicate_intents');
   const packs = document('public/context-pack-registry.json').packs;
   if (!packs.length || packs.length !== inventory.packs.length) fail('pack_coverage');
-  const declared = document('public/content-digests.json').artifacts;
+  const digestDocument = document('public/content-digests.json');
+  const artifactProfiles = {json:'deterministic-json-sort-keys-v0',text:'utf8-nfc-lf-trimmed-v0'};
+  for (const [key,value] of Object.entries(artifactProfiles)) same('artifact-registry-profile:' + key, value, digestDocument.canonicalization?.[key]);
+  const declared = digestDocument.artifacts;
+  for (const item of declared) {
+    same('artifact-algorithm', 'sha-256', item.digestAlgorithm);
+    if (item.canonicalization !== undefined) same('artifact-declared-profile', /\.(json|jsonld)$/.test(item.sourcePath) ? artifactProfiles.json : artifactProfiles.text, item.canonicalization);
+  }
   if (!declared.length || new Set(declared.map(item => item.sourcePath)).size !== declared.length) fail('digest_registry_structure');
   const declaredMap = new Map(declared.map(item => [item.sourcePath, item]));
   const units = document('public/attested-interpretive-units.json').units;
   same('snapshot-unit-registry', units, inventory.units);
   if (!units.length || new Set(units.map(unit => unit.unitId)).size !== units.length) fail('unit_coverage');
   const unitMap = new Map(units.map(unit => [unit.unitId, unit]));
-  for (const unit of units) same('unit:' + unit.unitId, unit.digest, await digest(unitPreimage(unit, source(unit.sourcePath))));
+  for (const unit of units) {
+    same('unit-algorithm', 'sha-256', unit.digestAlgorithm);
+    const value = select(strictParse(source(unit.sourcePath), {historical:true}), unit.selector);
+    const type = value === null ? 'NoneType' : Array.isArray(value) ? 'list' : ({string:'str',boolean:'bool',object:'dict',number:Number.isInteger(value)?'int':'float'})[typeof value];
+    same('unit-selected-type', type, unit.selectedValueType);
+    same('unit:' + unit.unitId, unit.digest, await digest(unitPreimage(unit, source(unit.sourcePath))));
+  }
   const recipes = document("spec/governed-context-runtime/attestation-recipes.json");
   const pairs = new Set(), graph = new Map(), digestCoverage = { registry: new Set(), packOnly: new Set() };
   for (const [position, pack] of packs.entries()) {
@@ -216,6 +239,8 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
     for (const key of ['payloadDigest', 'payloadFileDigest', 'payloadUrl']) same('manifest-association:' + pack.packId + ':' + key, pack[key], manifest[key]);
     same('included-artifacts:' + pack.packId, payload.includedArtifacts.map(item => item.path), manifest.includedArtifacts);
     same('included-units:' + pack.packId, payload.includedUnits.map(unit => unit.unitId), manifest.includedUnitIds);
+    same('indexed-units:' + pack.packId, manifest.includedUnitIds, indexed.unitIds);
+    if (new Set(indexed.unitIds).size !== indexed.unitIds.length || indexed.unitIds.some(id => !unitMap.has(id))) fail('indexed_unit_reference');
     if (!payload.includedArtifacts.length || !payload.includedUnits.length) fail('empty_pack_attestations');
     for (const item of payload.includedArtifacts) {
       const path = item.sourcePath;
@@ -223,7 +248,10 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
       const entry = declaredMap.get(path);
       if (entry && ['path', 'sourcePath', 'digest', 'digestScope'].some(key => entry[key] !== item[key])) fail('digest_registry_association');
       digestCoverage[entry ? 'registry' : 'packOnly'].add(path);
-      same('artifact:' + path, item.digest, await digest(artifactPreimage(path, source(path))));
+      const profile = /\.(json|jsonld)$/.test(path) ? artifactProfiles.json : artifactProfiles.text;
+      if (item.digestAlgorithm !== undefined) same('pack-artifact-algorithm', 'sha-256', item.digestAlgorithm);
+      if (item.canonicalization !== undefined) same('pack-artifact-profile', profile, item.canonicalization);
+      same('artifact:' + path, item.digest, await digest(artifactPreimage(path, source(path), profile)));
     }
     for (const partial of payload.includedUnits) {
       const full = unitMap.get(partial.unitId);

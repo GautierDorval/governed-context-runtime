@@ -1,12 +1,13 @@
 {
   "name": "governed-context-runtime-reference",
-  "version": "0.1.0",
+  "version": "0.2.0-proposed",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=24.17.0"
   },
   "scripts": {
-    "test": "node --test spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/public-evidence/verify.mjs evidence/publication.json"
+    "demo": "node spec/examples/demo.mjs",
+    "test": "node scripts/check-package.mjs && node --test spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json"
   }
 }

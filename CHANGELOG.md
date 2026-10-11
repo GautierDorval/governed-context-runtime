@@ -1,7 +1,9 @@
 # Changes
 
+## 0.2.0-proposed
+
+Complete fictional receipt-to-snapshot demonstration; stricter metadata and unit-reference verification; bounded historical source parsing; JOSE media-type comparison without rewriting signed bytes; clarified v0 integrity scope; paired guides and editable visual assets. Proposed contracts retain their historical byte recipes. No generic-domain support, automatic updater, live-service qualification or model-fidelity result is claimed.
+
 ## 0.1.0
 
-Initial public documentation and reference package. The interface contracts remain proposed. Reuses existing canonicalization vectors and JWS verification; includes a receiver-local permission profile and a synthetic public-evidence verifier. Runtime production and external model experiments are not established by this publication.
-
-Documentation is published with rights reserved. Existing scoped Apache-2.0 files are identified in `rights.json`.
+Initial documentation and offline reference publication.

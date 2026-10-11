@@ -1,154 +1,277 @@
 {
-  "candidateOnly": false,
-  "contracts": [
+  "schema": "runtime-file-rights/1",
+  "repositoryWideLicense": null,
+  "files": [
     {
       "path": "spec/LICENSE",
-      "source": "spec/governed-context-runtime/LICENSE",
-      "sha256": "e95b51ede4d44d9cb0213f9b5b64eb259cdced38fad3a3990cf67d3b593a9e65",
+      "source": "spec/LICENSE",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "e95b51ede4d44d9cb0213f9b5b64eb259cdced38fad3a3990cf67d3b593a9e65"
     },
     {
       "path": "spec/context-pack.schema.json",
-      "source": "spec/governed-context-runtime/context-pack.schema.json",
-      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+      "source": "spec/context-pack.schema.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5"
     },
     {
       "path": "spec/context-pack-manifest.schema.json",
-      "source": "spec/governed-context-runtime/context-pack-manifest.schema.json",
-      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+      "source": "spec/context-pack-manifest.schema.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289"
     },
     {
       "path": "spec/intent-registry.schema.json",
-      "source": "spec/governed-context-runtime/intent-registry.schema.json",
-      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6",
+      "source": "spec/intent-registry.schema.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6"
     },
     {
       "path": "spec/runtime-snapshot.schema.json",
-      "source": "spec/governed-context-runtime/runtime-snapshot.schema.json",
-      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0",
+      "source": "spec/runtime-snapshot.schema.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0"
     },
     {
       "path": "spec/attestation-recipes.json",
-      "source": "spec/governed-context-runtime/attestation-recipes.json",
-      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1",
+      "source": "spec/attestation-recipes.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1"
     },
     {
       "path": "spec/reference/verification.mjs",
-      "source": "spec/governed-context-runtime/reference/verification.mjs",
-      "sha256": "86ea1beda816efc75af0e84c987883e4d43ade35c04e8a9977ccb2e0dc8d924c",
+      "source": "spec/reference/verification.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "bda283c61db54c78aecda23ba02948fb305f96d48821b3ddcfceb3ec2418d7cf"
     },
     {
       "path": "spec/reference/verification.d.mts",
-      "source": "spec/governed-context-runtime/reference/verification.d.mts",
-      "sha256": "62e94a139c28f022095161b19765bd860abe320a5720060f81607a8c1b984977",
+      "source": "spec/reference/verification.d.mts",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "62e94a139c28f022095161b19765bd860abe320a5720060f81607a8c1b984977"
     },
     {
       "path": "spec/reference/vectors.json",
-      "source": "spec/governed-context-runtime/reference/vectors.json",
-      "sha256": "326ad909381d8e7f9b4901161e311c3943fb3119f4da00425be7232539b24263",
+      "source": "spec/reference/vectors.json",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "326ad909381d8e7f9b4901161e311c3943fb3119f4da00425be7232539b24263"
     },
     {
       "path": "spec/reference/test-vectors.mjs",
-      "source": "spec/governed-context-runtime/reference/test-vectors.mjs",
-      "sha256": "1f4c375a15735b553f3b969c6e8e2a31c9878e9d46c0448b9c570f934bd816b3",
+      "source": "spec/reference/test-vectors.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "1f4c375a15735b553f3b969c6e8e2a31c9878e9d46c0448b9c570f934bd816b3"
     },
     {
       "path": "spec/reference/signatures.mjs",
-      "source": "spec/governed-context-runtime/reference/signatures.mjs",
-      "sha256": "2d65e0ffafd2688784519bf9e7bd5ed77027f354e84d6718f7a1f329723051da",
+      "source": "spec/reference/signatures.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68"
     },
     {
       "path": "spec/reference/consumer.mjs",
-      "source": "spec/governed-context-runtime/reference/consumer.mjs",
-      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904",
+      "source": "spec/reference/consumer.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904"
     },
     {
       "path": "spec/reference/test-consumer.mjs",
-      "source": "spec/governed-context-runtime/reference/test-consumer.mjs",
-      "sha256": "8cce57b5cb4ef6831a8de4342c4e8183ffddb45c9d09e987399796fcb61985fa",
+      "source": "spec/reference/test-consumer.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "8cce57b5cb4ef6831a8de4342c4e8183ffddb45c9d09e987399796fcb61985fa"
     },
     {
       "path": "spec/public-evidence/verify.mjs",
-      "source": "spec/governed-context-runtime/public-evidence/verify.mjs",
-      "sha256": "c4a7bd428e9d799d9549af6f8eb9f4507774ce71ad1f9fb70943f0decfdb8426",
+      "source": "spec/public-evidence/verify.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "c4a7bd428e9d799d9549af6f8eb9f4507774ce71ad1f9fb70943f0decfdb8426"
     },
     {
       "path": "spec/public-evidence/fixture.mjs",
-      "source": "spec/governed-context-runtime/public-evidence/fixture.mjs",
-      "sha256": "9cea5adba2955d7e0211d03f7b1a36a613373ecbdbe75f1998db725e4d0431aa",
+      "source": "spec/public-evidence/fixture.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "9cea5adba2955d7e0211d03f7b1a36a613373ecbdbe75f1998db725e4d0431aa"
     },
     {
       "path": "spec/public-evidence/store.mjs",
-      "source": "spec/governed-context-runtime/public-evidence/store.mjs",
-      "sha256": "d29dd7865614b11be0ebf9113b3338474b29e70795ed1e274c489c13c9f72507",
+      "source": "spec/public-evidence/store.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "d29dd7865614b11be0ebf9113b3338474b29e70795ed1e274c489c13c9f72507"
     },
     {
       "path": "spec/public-evidence/test-store.mjs",
-      "source": "spec/governed-context-runtime/public-evidence/test-store.mjs",
-      "sha256": "4d5061535c9cfcebc12e6ca8e06ba0091e02150a28a27f935f10ddfede5dc479",
+      "source": "spec/public-evidence/test-store.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "4d5061535c9cfcebc12e6ca8e06ba0091e02150a28a27f935f10ddfede5dc479"
     },
     {
       "path": "spec/public-evidence/test-publication.mjs",
-      "source": "spec/governed-context-runtime/public-evidence/test-publication.mjs",
-      "sha256": "949792fbc227025da053e34686e341a04421c950be369dd0d6ba1a4154715942",
+      "source": "spec/public-evidence/test-publication.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "1a7bae2fbaefd9d71b38af6dc9d03e5e56e4486b6ca5d16877abeae5259c42b2"
     },
     {
       "path": "spec/public-evidence/README.md",
-      "source": "spec/governed-context-runtime/public-evidence/README.md",
-      "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c",
+      "source": "spec/public-evidence/README.md",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c"
     },
     {
       "path": "spec/examples/verify-context.mjs",
-      "source": "spec/governed-context-runtime/examples/verify-context.mjs",
-      "sha256": "729912e1d603a628111842d67d5058ab8a790b4dd4e199f6caf0845f78d3f060",
+      "source": "spec/examples/verify-context.mjs",
       "license": "Apache-2.0",
-      "unchangedCopy": true
+      "sha256": "729912e1d603a628111842d67d5058ab8a790b4dd4e199f6caf0845f78d3f060"
+    },
+    {
+      "path": "spec/reference/test-public-finish.mjs",
+      "source": "spec/reference/test-public-finish.mjs",
+      "license": "Apache-2.0",
+      "sha256": "5817b2f61a82457ff01c2c63e6e304e9a22874b135c662e22de8554c3ade0ef5"
+    },
+    {
+      "path": "spec/examples/demo.mjs",
+      "source": "spec/examples/demo.mjs",
+      "license": "Apache-2.0",
+      "sha256": "2905dae63337d63aae1f1ffaf1b5c408490ee15422abe7194f85c34721d62ab4"
+    },
+    {
+      "path": "spec/examples/synthetic/bundle.json",
+      "source": "spec/examples/synthetic/bundle.json",
+      "license": "Apache-2.0",
+      "sha256": "0097fe492042f61542d30d48c2dff2918e7f0ba836089dea1a3d6b9645510b74"
+    },
+    {
+      "path": "assets/banner.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "59eaf78d9bf4f680ece853f4f5fe8ab856d6c0ca790110bf595413ef39dc573c"
+    },
+    {
+      "path": "assets/architecture.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "a3e7e2b4971eb54cfa6089ac81fc8fdb1781c53e1278768ec1b49e46130b6440"
+    },
+    {
+      "path": "assets/verification.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
+    },
+    {
+      "path": "assets/social.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "0c8359726c3e6847f05fa16c3444e1eb793d1883202a969ee7d1cfb93e5bc9b4"
+    },
+    {
+      "path": "assets/social.png",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "ae0c8b5dbfd017766950576770576dd238ab1d2aeb65a87d6753c3163afdac00"
+    },
+    {
+      "path": "docs/source.json",
+      "source": "paired-editorial-source",
+      "license": "All rights reserved",
+      "sha256": "01c4bcc2a8d2deae8511d9263e13cb46c622aed4eab5a6e850fdb7274586cd7b"
+    },
+    {
+      "path": "README.md",
+      "source": "paired-editorial-source",
+      "license": "All rights reserved",
+      "sha256": "f31439d690a256e911111fa686e89c25e93ce71dfc224ec3f28ffd7f7e8f9414"
+    },
+    {
+      "path": "docs/en/README.md",
+      "source": "paired-editorial-source",
+      "license": "All rights reserved",
+      "sha256": "82783cfe19d0bfb9fe40d90790153aba8399e82d33e6f9f71488000af106a12d"
+    },
+    {
+      "path": "docs/fr/README.md",
+      "source": "paired-editorial-source",
+      "license": "All rights reserved",
+      "sha256": "f4f7931197208c7ec2b33d61c9d8ccf1ef429babeae253f4a8680edf72bd95eb"
+    },
+    {
+      "path": "docs/verification.md",
+      "source": "reviewed-contract-explanation",
+      "license": "All rights reserved",
+      "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6"
+    },
+    {
+      "path": "docs/schemas.md",
+      "source": "reviewed-schema-mapping",
+      "license": "All rights reserved",
+      "sha256": "acb5a256a0b8c58049a59c8b7441f3984cc9483a5767ad80f17ac70cd6d8c218"
+    },
+    {
+      "path": "SECURITY.md",
+      "source": "reviewed-existing-contact",
+      "license": "All rights reserved",
+      "sha256": "021a84090d20a0e3ee8809fffba68bf2d143d122e5fa3cb11d90b34ed135d5bd"
+    },
+    {
+      "path": "evidence/publication.json",
+      "source": "historical-public-synthetic-example",
+      "license": "All rights reserved",
+      "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4"
+    },
+    {
+      "path": "evidence/README.md",
+      "source": "reviewed-evidence-scope",
+      "license": "All rights reserved",
+      "sha256": "43124f278e50e9598def0e0ac1f890953c87b81603d07490d87e120c582c6e1d"
+    },
+    {
+      "path": "NOTICE.md",
+      "source": "rights-boundary",
+      "license": "All rights reserved",
+      "sha256": "5248a10bf6f06fc5976b8840cca502763a3ff27c636ae0467f5b2dd37965cc7e"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "source": "contribution-contract",
+      "license": "All rights reserved",
+      "sha256": "382cc059d60ea278de01c04bbd17ddb005213175708ae09fc24a3afdeace8659"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "source": "edition-notes",
+      "license": "All rights reserved",
+      "sha256": "9ad6b58c14bf810b7eb29bd12c87abd13637f542508f93b2735c6aa29da641cb"
+    },
+    {
+      "path": "CITATION.cff",
+      "source": "citation",
+      "license": "All rights reserved",
+      "sha256": "77106311eed92ec6ace700102e6a2f2c5a17e92af3eae8f1a3f40228799e7fab"
+    },
+    {
+      "path": "package.json",
+      "source": "closed-package-configuration",
+      "license": "All rights reserved",
+      "sha256": "467953f478b1143cbd8cbafb168159c6925746220338ef082b05330f56a805c2"
+    },
+    {
+      "path": ".gitattributes",
+      "source": "closed-package-configuration",
+      "license": "All rights reserved",
+      "sha256": "b151f36790625936ff2c616f36a98a812643a66c5fd28c2ae1b0f87e97996f6a"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "source": "pinned-read-only-workflow",
+      "license": "All rights reserved",
+      "sha256": "e0468e017429057462a6d52d8f9cb4390c2a493f4333f910491ea6f59f50e461"
+    },
+    {
+      "path": "scripts/check-package.mjs",
+      "source": "closed-export-verifier",
+      "license": "Apache-2.0",
+      "sha256": "fe4937ce388c01ad18adf592d9f4fce33b7fadab48739168eac6e457efa5c90c"
     }
   ],
-  "newDocumentation": "Published by permission of Gautier Dorval; all rights reserved; no general documentation license granted.",
-  "excluded": [
-    "private sources",
-    "raw model capture",
-    "runtime corpus archives",
-    "audit dossiers",
-    "source Git history"
-  ],
-  "repositoryWideLicense": null
+  "selfAndManifest": "rights.json and package-manifest.json are project metadata, all rights reserved; hashes exclude self-reference."
 }

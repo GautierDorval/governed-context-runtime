@@ -41,3 +41,15 @@ test('withheld metric status cannot disclose zero and report-level zero forbids 
  m.status='withheld';p.publicationId=await publicationId(p);await verifyPublication(p);
  r.reportStatus='measured_zero';p.publicationId=await publicationId(p);await assert.rejects(verifyPublication(p),/WITHHOLDING_REPORT_DISCLOSES_ZERO/);
 });
+
+test('C21 complement inference is not a claimed guarantee; real publication is refused',async()=>{
+ const synthetic=await syntheticPublication();
+ // A total of 9 and a subgroup of 8 reveal 1 by complement. Thresholds on
+ // individual rows alone cannot prevent this; this profile admits no real data.
+ assert.equal(9-8,1);
+ for(const value of [9,8]){const p=structuredClone(synthetic);p.category='operational_measurement';p.fixtureOnly=false;p.observations[0].metrics[0].value=value;p.observations[0].metrics[0].status='measured';p.publicationId=await publicationId(p);await assert.rejects(()=>verifyPublication(p),/PUBLIC_CATEGORY/);}
+});
+test('C21 overlapping-period difference requires a separate real-data policy',async()=>{
+ assert.equal(12-11,1);
+ for(const value of [12,11]){const p=await syntheticPublication();p.observations[0].population='real-activity';Object.assign(p.observations[0].metrics[0],{value,status:'measured'});p.publicationId=await publicationId(p);await assert.rejects(()=>verifyPublication(p),/POPULATION/);}
+});
