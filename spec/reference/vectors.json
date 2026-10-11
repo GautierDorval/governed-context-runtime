@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "0.1.0-proposed",
+  "profile": "gd-portable-json-v1",
+  "origin": "Independent literal expected bytes; no third-party kit copied.",
+  "cases": [
+    {
+      "id": "precomposed",
+      "input": "{\"s\":\"é\"}",
+      "options": {},
+      "expectedCanonical": "{\"s\":\"é\"}",
+      "expectedDigest": "sha-256:86028b41ba792eaf82aa26a45b218f6734f7f1096a86f1746c8296e088a0ccb4"
+    },
+    {
+      "id": "combined-preserved",
+      "input": "{\"s\":\"é\"}",
+      "options": {},
+      "expectedCanonical": "{\"s\":\"é\"}",
+      "expectedDigest": "sha-256:1fc0bd7cc93fca8092a2041d7d01842876422aa7e2838acf42c14578e9f2be05"
+    },
+    {
+      "id": "escaped-unicode",
+      "input": "{\"s\":\"\\u00e9\"}",
+      "options": {},
+      "expectedCanonical": "{\"s\":\"é\"}",
+      "expectedDigest": "sha-256:86028b41ba792eaf82aa26a45b218f6734f7f1096a86f1746c8296e088a0ccb4"
+    },
+    {
+      "id": "nfc-historical",
+      "input": "{\"s\":\"é\"}",
+      "options": {
+        "historical": true,
+        "nfc": true
+      },
+      "expectedCanonical": "{\"s\":\"é\"}",
+      "expectedDigest": "sha-256:86028b41ba792eaf82aa26a45b218f6734f7f1096a86f1746c8296e088a0ccb4"
+    },
+    {
+      "id": "non-nfc-historical",
+      "input": "{\"s\":\"é\"}",
+      "options": {
+        "historical": true
+      },
+      "expectedCanonical": "{\"s\":\"é\"}",
+      "expectedDigest": "sha-256:1fc0bd7cc93fca8092a2041d7d01842876422aa7e2838acf42c14578e9f2be05"
+    },
+    {
+      "id": "utf16-keys",
+      "input": "{\"\":1,\"😀\":2}",
+      "options": {},
+      "expectedCanonical": "{\"😀\":2,\"\":1}",
+      "expectedDigest": "sha-256:28c95d1bbb2209223307e62f489020e8f9e0cfa16adf2daf6d88127a1e8dd22a"
+    },
+    {
+      "id": "codepoint-historical",
+      "input": "{\"\":1,\"😀\":2}",
+      "options": {
+        "historical": true
+      },
+      "expectedCanonical": "{\"\":1,\"😀\":2}",
+      "expectedDigest": "sha-256:871954531859c7572c6279f90eb83a594ddc3a289e8bdc28d2a84ffb8c1a1703"
+    },
+    {
+      "id": "integer-property-names",
+      "input": "{\"2\":2,\"10\":10}",
+      "options": {},
+      "expectedCanonical": "{\"10\":10,\"2\":2}",
+      "expectedDigest": "sha-256:5355e5c9c48ddb40379a8a11e74e08cf4c2a364f10bf4b2324e32d5d20489385"
+    },
+    {
+      "id": "nested",
+      "input": "{\"z\":[3,1],\"a\":{\"z\":0,\"a\":true}}",
+      "options": {},
+      "expectedCanonical": "{\"a\":{\"a\":true,\"z\":0},\"z\":[3,1]}",
+      "expectedDigest": "sha-256:87329571c69a20837ee9e91b40e909dc2930d7c6875a5219d5ac9a329c43e222"
+    },
+    {
+      "id": "array-order",
+      "input": "[3,2,1]",
+      "options": {},
+      "expectedCanonical": "[3,2,1]",
+      "expectedDigest": "sha-256:30c8681f9b840aceee56b737f3b126ae67ec4eb71d2881db831f86014fba016d"
+    },
+    {
+      "id": "integer",
+      "input": "1",
+      "options": {},
+      "expectedCanonical": "1",
+      "expectedDigest": "sha-256:6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    {
+      "id": "bounds",
+      "input": "[-9007199254740991,9007199254740991]",
+      "options": {},
+      "expectedCanonical": "[-9007199254740991,9007199254740991]",
+      "expectedDigest": "sha-256:cbad3dd0e71e92fb3519919946bde0ab3086ddacce65983bddec595cb27c19da"
+    },
+    {
+      "id": "escapes",
+      "input": "{\"x\":\"a\\nb\\t\\u0001\"}",
+      "options": {},
+      "expectedCanonical": "{\"x\":\"a\\nb\\t\\u0001\"}",
+      "expectedDigest": "sha-256:e59d6483ba37357f57e3067df89106e6fefe395f054c06a827612f344e1f254c"
+    },
+    {
+      "id": "whitespace",
+      "input": " \r\n { \"a\" : null } \t",
+      "options": {},
+      "expectedCanonical": "{\"a\":null}",
+      "expectedDigest": "sha-256:d091f9c83c091f79652fe8786375b3fe4ce0861a56f5bfbafedbe431877ff0e8"
+    },
+    {
+      "id": "historical-floats-in-corpus",
+      "input": "[1.5,4.5,4.6]",
+      "options": {
+        "historical": true
+      },
+      "expectedCanonical": "[1.5,4.5,4.6]",
+      "expectedDigest": "sha-256:f8ed7276d75fc444214e82481ba4fc4c1028bf147215030d0b15241f3a9a0d5e"
+    },
+    {
+      "id": "one-point-zero",
+      "input": "1.0",
+      "options": {},
+      "expectedError": "non_integer_lexeme"
+    },
+    {
+      "id": "fraction",
+      "input": "0.5",
+      "options": {},
+      "expectedError": "non_integer_lexeme"
+    },
+    {
+      "id": "exponent",
+      "input": "1e3",
+      "options": {},
+      "expectedError": "non_integer_lexeme"
+    },
+    {
+      "id": "nan",
+      "input": "NaN",
+      "options": {},
+      "expectedError": "invalid_number"
+    },
+    {
+      "id": "infinity",
+      "input": "Infinity",
+      "options": {},
+      "expectedError": "invalid_number"
+    },
+    {
+      "id": "negative-infinity",
+      "input": "-Infinity",
+      "options": {},
+      "expectedError": "invalid_number"
+    },
+    {
+      "id": "negative-zero",
+      "input": "-0",
+      "options": {},
+      "expectedError": "negative_zero"
+    },
+    {
+      "id": "unsafe-positive",
+      "input": "9007199254740992",
+      "options": {},
+      "expectedError": "unsafe_integer"
+    },
+    {
+      "id": "unsafe-negative",
+      "input": "-9007199254740992",
+      "options": {},
+      "expectedError": "unsafe_integer"
+    },
+    {
+      "id": "duplicate-key",
+      "input": "{\"x\":1,\"x\":2}",
+      "options": {},
+      "expectedError": "duplicate_key"
+    },
+    {
+      "id": "duplicate-decoded-key",
+      "input": "{\"x\":1,\"\\u0078\":2}",
+      "options": {},
+      "expectedError": "duplicate_key"
+    },
+    {
+      "id": "empty-document",
+      "input": "",
+      "options": {},
+      "expectedError": "invalid_json"
+    },
+    {
+      "id": "trailing-comma",
+      "input": "{\"x\":1,}",
+      "options": {},
+      "expectedError": "invalid_json"
+    },
+    {
+      "id": "trailing-data",
+      "input": "{} {}",
+      "options": {},
+      "expectedError": "invalid_json"
+    },
+    {
+      "id": "bom",
+      "input": "﻿{}",
+      "options": {},
+      "expectedError": "bom_forbidden"
+    },
+    {
+      "id": "unpaired-surrogate",
+      "input": "\"\\ud800\"",
+      "options": {},
+      "expectedError": "invalid_unicode"
+    },
+    {
+      "id": "invalid-utf8",
+      "inputHex": "22ff22",
+      "options": {},
+      "expectedError": "invalid_utf8"
+    },
+    {
+      "id": "normalized-key-collision",
+      "input": "{\"é\":1,\"é\":2}",
+      "options": {
+        "historical": true,
+        "nfc": true
+      },
+      "expectedError": "normalized_key_collision"
+    }
+  ]
+}

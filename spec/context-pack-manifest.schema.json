@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack-manifest.schema.json",
+  "title": "Governed context pack manifest",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "type",
+    "status",
+    "packId",
+    "intentToken",
+    "lang",
+    "version",
+    "payloadUrl",
+    "payloadDigest",
+    "payloadDigestScope",
+    "payloadFileDigest",
+    "payloadFileDigestScope",
+    "canonicalizationPolicyId",
+    "fileEncoding",
+    "fileLineEndings",
+    "compositionPolicyId",
+    "corpusVersion",
+    "includedUnitIds",
+    "includedArtifacts",
+    "generatedBy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2.0-proposed"
+    },
+    "type": {
+      "const": "GovernedContextPackManifest"
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "packId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "intentToken": {
+      "enum": [
+        "representation-gap",
+        "prelaunch-semantic-analysis",
+        "product-doctrine-authority-separation",
+        "interpretive-governance-overview",
+        "situational-applicability-overview",
+        "source-authority-and-integrity"
+      ]
+    },
+    "lang": {
+      "enum": [
+        "fr",
+        "en"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "payloadUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "payloadDigest": {
+      "type": "string",
+      "pattern": "^sha-256:[a-f0-9]{64}$"
+    },
+    "payloadDigestScope": {
+      "const": "canonical-json"
+    },
+    "payloadFileDigest": {
+      "type": "string",
+      "pattern": "^sha-256:[a-f0-9]{64}$"
+    },
+    "payloadFileDigestScope": {
+      "const": "repository-bytes"
+    },
+    "canonicalizationPolicyId": {
+      "const": "gd-deterministic-json-v1"
+    },
+    "fileEncoding": {
+      "const": "utf-8"
+    },
+    "fileLineEndings": {
+      "const": "lf"
+    },
+    "compositionPolicyId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "corpusVersion": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "includedUnitIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 1
+    },
+    "includedArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 1
+    },
+    "generatedBy": {
+      "const": "build_governed_context_packs.py"
+    }
+  },
+  "additionalProperties": false
+}

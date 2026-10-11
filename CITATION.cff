@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the exact repository revision. The documented interface contracts remain proposed."
+title: "Governed Context Runtime"
+type: software
+version: 0.1.0
+authors:
+  - family-names: Dorval
+    given-names: Gautier
+repository-code: "https://github.com/GautierDorval/governed-context-runtime"
+url: https://gautierdorval.com/

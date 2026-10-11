@@ -1,0 +1,154 @@
+{
+  "candidateOnly": false,
+  "contracts": [
+    {
+      "path": "spec/LICENSE",
+      "source": "spec/governed-context-runtime/LICENSE",
+      "sha256": "e95b51ede4d44d9cb0213f9b5b64eb259cdced38fad3a3990cf67d3b593a9e65",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/context-pack.schema.json",
+      "source": "spec/governed-context-runtime/context-pack.schema.json",
+      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/context-pack-manifest.schema.json",
+      "source": "spec/governed-context-runtime/context-pack-manifest.schema.json",
+      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/intent-registry.schema.json",
+      "source": "spec/governed-context-runtime/intent-registry.schema.json",
+      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/runtime-snapshot.schema.json",
+      "source": "spec/governed-context-runtime/runtime-snapshot.schema.json",
+      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/attestation-recipes.json",
+      "source": "spec/governed-context-runtime/attestation-recipes.json",
+      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/verification.mjs",
+      "source": "spec/governed-context-runtime/reference/verification.mjs",
+      "sha256": "86ea1beda816efc75af0e84c987883e4d43ade35c04e8a9977ccb2e0dc8d924c",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/verification.d.mts",
+      "source": "spec/governed-context-runtime/reference/verification.d.mts",
+      "sha256": "62e94a139c28f022095161b19765bd860abe320a5720060f81607a8c1b984977",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/vectors.json",
+      "source": "spec/governed-context-runtime/reference/vectors.json",
+      "sha256": "326ad909381d8e7f9b4901161e311c3943fb3119f4da00425be7232539b24263",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/test-vectors.mjs",
+      "source": "spec/governed-context-runtime/reference/test-vectors.mjs",
+      "sha256": "1f4c375a15735b553f3b969c6e8e2a31c9878e9d46c0448b9c570f934bd816b3",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/signatures.mjs",
+      "source": "spec/governed-context-runtime/reference/signatures.mjs",
+      "sha256": "2d65e0ffafd2688784519bf9e7bd5ed77027f354e84d6718f7a1f329723051da",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/consumer.mjs",
+      "source": "spec/governed-context-runtime/reference/consumer.mjs",
+      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/reference/test-consumer.mjs",
+      "source": "spec/governed-context-runtime/reference/test-consumer.mjs",
+      "sha256": "8cce57b5cb4ef6831a8de4342c4e8183ffddb45c9d09e987399796fcb61985fa",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/verify.mjs",
+      "source": "spec/governed-context-runtime/public-evidence/verify.mjs",
+      "sha256": "c4a7bd428e9d799d9549af6f8eb9f4507774ce71ad1f9fb70943f0decfdb8426",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/fixture.mjs",
+      "source": "spec/governed-context-runtime/public-evidence/fixture.mjs",
+      "sha256": "9cea5adba2955d7e0211d03f7b1a36a613373ecbdbe75f1998db725e4d0431aa",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/store.mjs",
+      "source": "spec/governed-context-runtime/public-evidence/store.mjs",
+      "sha256": "d29dd7865614b11be0ebf9113b3338474b29e70795ed1e274c489c13c9f72507",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/test-store.mjs",
+      "source": "spec/governed-context-runtime/public-evidence/test-store.mjs",
+      "sha256": "4d5061535c9cfcebc12e6ca8e06ba0091e02150a28a27f935f10ddfede5dc479",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/test-publication.mjs",
+      "source": "spec/governed-context-runtime/public-evidence/test-publication.mjs",
+      "sha256": "949792fbc227025da053e34686e341a04421c950be369dd0d6ba1a4154715942",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/public-evidence/README.md",
+      "source": "spec/governed-context-runtime/public-evidence/README.md",
+      "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    },
+    {
+      "path": "spec/examples/verify-context.mjs",
+      "source": "spec/governed-context-runtime/examples/verify-context.mjs",
+      "sha256": "729912e1d603a628111842d67d5058ab8a790b4dd4e199f6caf0845f78d3f060",
+      "license": "Apache-2.0",
+      "unchangedCopy": true
+    }
+  ],
+  "newDocumentation": "Published by permission of Gautier Dorval; all rights reserved; no general documentation license granted.",
+  "excluded": [
+    "private sources",
+    "raw model capture",
+    "runtime corpus archives",
+    "audit dossiers",
+    "source Git history"
+  ],
+  "repositoryWideLicense": null
+}

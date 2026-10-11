@@ -1,0 +1,504 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack.schema.json",
+  "title": "Governed context pack",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "type",
+    "status",
+    "packId",
+    "intentToken",
+    "lang",
+    "version",
+    "compositionPolicyId",
+    "corpusVersion",
+    "selectionBoundary",
+    "causalContexts",
+    "applicabilityChains",
+    "activationConditions",
+    "nonApplicabilityConditions",
+    "requiredEvidence",
+    "forbiddenInferences",
+    "applicabilityAbuseBoundaries",
+    "weightingRules",
+    "answerBoundaries",
+    "includedUnits",
+    "includedArtifacts",
+    "manifestUrl"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.2.0-proposed"
+    },
+    "type": {
+      "const": "GovernedContextPack"
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "packId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "intentToken": {
+      "enum": [
+        "representation-gap",
+        "prelaunch-semantic-analysis",
+        "product-doctrine-authority-separation",
+        "interpretive-governance-overview",
+        "situational-applicability-overview",
+        "source-authority-and-integrity"
+      ]
+    },
+    "lang": {
+      "enum": [
+        "fr",
+        "en"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "compositionPolicyId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "corpusVersion": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "selectionBoundary": {
+      "type": "object",
+      "required": [
+        "agentSelectedIntent",
+        "runtimeSelectedIntentFromFreeText",
+        "runtimeComposedAtRequestTime",
+        "runtimeProducedAnswer",
+        "note"
+      ],
+      "properties": {
+        "agentSelectedIntent": {
+          "const": true
+        },
+        "runtimeSelectedIntentFromFreeText": {
+          "const": false
+        },
+        "runtimeComposedAtRequestTime": {
+          "const": false
+        },
+        "runtimeProducedAnswer": {
+          "const": false
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    },
+    "causalContexts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/causalContext"
+      }
+    },
+    "applicabilityChains": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/applicabilityChain"
+      }
+    },
+    "activationConditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "nonApplicabilityConditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "requiredEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "forbiddenInferences": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "applicabilityAbuseBoundaries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "weightingRules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ruleRef"
+      }
+    },
+    "answerBoundaries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ruleRef"
+      }
+    },
+    "includedUnits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unitRef"
+      },
+      "minItems": 1
+    },
+    "includedArtifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactRef"
+      },
+      "minItems": 1
+    },
+    "manifestUrl": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "causalContext": {
+      "type": "object",
+      "required": [
+        "id",
+        "surface_topic",
+        "trigger",
+        "risk",
+        "latent_need",
+        "intended_consequence",
+        "forbidden_derivations"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "surface_topic": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "trigger": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "symptom": {
+          "type": "string"
+        },
+        "risk": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "latent_need": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "canonical_surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "intended_consequence": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "forbidden_derivations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "applicabilityChain": {
+      "type": "object",
+      "required": [
+        "id",
+        "linkedCausalContextId",
+        "applicableCapability",
+        "triggerSituation",
+        "latentNeed",
+        "activationConditions",
+        "nonApplicabilityConditions",
+        "requiredEvidence",
+        "forbiddenInferences",
+        "applicabilityAbuseBoundaries",
+        "riskClass",
+        "domain",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "linkedCausalContextId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "applicableCapability": {
+          "type": "object",
+          "required": [
+            "id",
+            "canonicalServiceUrlFr",
+            "canonicalServiceUrlEn",
+            "labelFr",
+            "labelEn"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "canonicalServiceUrlFr": {
+              "type": "string",
+              "format": "uri"
+            },
+            "canonicalServiceUrlEn": {
+              "type": "string",
+              "format": "uri"
+            },
+            "labelFr": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "labelEn": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "additionalProperties": false
+        },
+        "triggerSituation": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "latentNeed": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "activationConditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "nonApplicabilityConditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "forbiddenInferences": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "applicabilityAbuseBoundaries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "riskClass": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "proposed",
+            "stable",
+            "deprecated"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ruleRef": {
+      "type": "object",
+      "required": [
+        "ruleId",
+        "sourceArtifact",
+        "rule"
+      ],
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "sourceArtifact": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    },
+    "unitRef": {
+      "type": "object",
+      "required": [
+        "unitId",
+        "sourcePath",
+        "canonicalSource",
+        "claimClass",
+        "authorityScope",
+        "digest"
+      ],
+      "properties": {
+        "unitId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "canonicalSource": {
+          "type": "string",
+          "format": "uri"
+        },
+        "claimClass": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "authorityScope": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha-256:[a-f0-9]{64}$"
+        },
+        "digestScope": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "canonicalization": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifactRef": {
+      "type": "object",
+      "required": [
+        "path",
+        "sourcePath",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha-256:[a-f0-9]{64}$"
+        },
+        "digestScope": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

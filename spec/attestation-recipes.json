@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "0.1.0-proposed",
+  "type": "GovernedContextAttestationRecipes",
+  "status": "proposed",
+  "license": "Apache-2.0",
+  "profiles": {
+    "gd-portable-json-v1": {
+      "scope": "new snapshot inventories and archive envelopes only",
+      "encoding": "utf-8",
+      "unicodeNormalization": "none",
+      "propertyOrder": "unsigned UTF-16 code units",
+      "stringSerialization": "JSON strings without optional escaping, invalid Unicode rejected",
+      "numbers": "integer lexical form only, -9007199254740991 through 9007199254740991; reject -0, decimal and exponent lexemes before parsing",
+      "duplicateKeys": "reject decoded duplicates before map construction",
+      "arrays": "preserve order",
+      "bom": "reject",
+      "maxDepth": 64,
+      "note": "Restricted JCS-compatible domain, not an implementation of arbitrary RFC 8785 numbers."
+    },
+    "gd-deterministic-json-v1": {
+      "scope": "historical pack and manifest canonical-json digests",
+      "unicodeNormalization": "NFC on decoded keys and strings",
+      "propertyOrder": "Unicode code points",
+      "keyCollision": "reference verifier rejects collisions rather than reproducing data loss",
+      "aliases": [],
+      "verifiedNumericDomain": "safe integers in this corpus; other historical numeric domains are not inferred"
+    },
+    "deterministic-json-sort-keys-v0": {
+      "scope": "historical selected JSON units and complete JSON artifacts",
+      "unicodeNormalization": "none",
+      "propertyOrder": "Unicode code points",
+      "verifiedNumericDomain": "safe integers and finite non-integral decimals with magnitude at least 0.0001 and less than 10000000000000000; reject other numeric cases as unsupported",
+      "aliases": []
+    },
+    "utf8-nfc-lf-trimmed-v0": {
+      "scope": "historical selected text and complete text artifacts",
+      "steps": ["require valid Unicode", "CRLF and CR to LF", "Python str.strip whitespace removal", "NFC", "UTF-8"],
+      "trimCodePoints": "0009-000D,001C-0020,0085,00A0,1680,2000-200A,2028,2029,202F,205F,3000"
+    },
+    "attested-interpretive-unit-envelope-v0": {
+      "scope": "canonical_interpretive_unit_envelope",
+      "requiredFieldsInPreimage": ["unitId", "sourcePath", "selector", "claimClass", "authorityScope", "canonicalSource", "canonicalText"],
+      "serialization": "deterministic-json-sort-keys-v0",
+      "excluded": "All fields not listed; notably allowedTransformations and forbiddenTransformations are not covered by the historical unit digest. The new snapshot covers their complete registry bytes separately."
+    }
+  },
+  "selector": {
+    "grammar": "$ or $.property followed by zero or more .property, each property optionally followed by one non-negative array index",
+    "notSupported": ["wildcards", "filters", "recursive descent", "eval", "semantic selection"],
+    "errors": ["unsupported_selector", "selector_missing", "source_missing"],
+    "cardinality": "exactly one value; duplicate decoded JSON keys are invalid"
+  },
+  "snapshotRoot": {
+    "preimage": "gd-portable-json-v1 of snapshot.inventory, all and only its fields",
+    "algorithm": "sha-256",
+    "exclusions": ["snapshotId", "corpusRootDigest", "signatures", "publication metadata", "health", "discovery projections", "uptime", "request counters"],
+    "integrityDoesNotProve": ["truth", "authority", "freshness", "adoption", "agent use", "fidelity"]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "runtime-documentation-source/0.1.0-proposed",
+  "documentVersion": "0.1.0",
+  "project": "governed-context-runtime",
+  "author": "Gautier Dorval",
+  "authorUrl": "https://gautierdorval.com/",
+  "publicationState": "public_reference_package",
+  "runtimeLiveVerification": "NOT_RUN",
+  "modelExperiment": "NOT_RUN",
+  "mcpActivation": "NOT_AUTHORIZED",
+  "en": {
+    "title": "Governed Context Runtime",
+    "definition": "A deterministic interface that delivers a precompiled context pack for a canonical intent already selected by a consumer. It does not infer intent from free text, compose a pack at request time, generate an answer or judge a model.",
+    "instance": "The project describes the transport and verification contracts. gautierdorval.com is one instance and remains the canonical source of its doctrine. This public repository is a documentation and reference implementation destination, not a new authority root.",
+    "status": "This public reference package documents proposed contracts and provides executable verification examples. Publication of this package does not establish a current Runtime deployment, MCP activation, model use or independent certification. Historical audit verdicts apply only to their recorded candidates.",
+    "intent": "Select representation-gap when an already identified model response appears to misrepresent the published entity or doctrine. Choose the language explicitly. Fetch the closed intent registry, select its exact pack identity, and bind the payload and detached manifest to a separately pinned corpus root before use.",
+    "retrieval": "The context-verification example expects a snapshot, its content-addressed archives and a separately trusted root. These inputs are not included in this package; its offline tests use neutral fixtures. The proposed /v0/ routes are contracts, not verified public download locations. Obtain published inputs and a local key policy through a separately approved channel before running that example. No example sends a model request.",
+    "localDecision": "Verification establishes byte integrity under a declared format. The consumer then makes its own bounded permission decision. A valid JWS signature is not proof of truth, real-world identity, model fidelity, execution authority or later revocation status. DSSE and detached JWS are different formats.",
+    "counterexample": "Use a static canonical page for a simple definition or an ordinary editorial citation. A pack is useful when the consumer needs the declared selection, dependencies and integrity scope together; it adds no authority merely by being a pack.",
+    "evidence": "Keep operational measurements, local technical verification and external model experiments separate. Data, a public projection, this documentation and a site paragraph can describe the same archive; they are not four independent confirmations.",
+    "limits": "The included public evidence example is synthetic. Its digest authenticates its projected content only. Private source completeness, current deployment, spontaneous adoption and causal effects on model answers are not established.",
+    "siteHeading": "Read, verify and use a context pack",
+    "siteLink": "See the canonical intent registry and the declared pack contracts before selecting a context. Local verification and public deployment have distinct statuses.",
+    "sectionLabel": "Public reference documentation; Runtime deployment is not verified by this package."
+  },
+  "fr": {
+    "title": "Runtime de contexte gouverné",
+    "definition": "Une interface déterministe qui distribue un pack de contexte précompilé pour une intention canonique déjà sélectionnée par un consommateur. Elle ne déduit pas l’intention d’un texte libre, ne compose pas de pack à la requête, ne génère pas de réponse et ne juge pas un modèle.",
+    "instance": "Le projet décrit les contrats de transport et de vérification. gautierdorval.com en est une instance et demeure la source canonique de sa doctrine. Ce dépôt public est une destination documentaire et d’implémentation de référence, sans devenir une nouvelle racine d’autorité.",
+    "status": "Ce paquet public de référence documente des contrats proposés et fournit des exemples exécutables de vérification. Sa publication n’établit ni déploiement courant du Runtime, ni activation MCP, ni usage par un modèle, ni certification indépendante. Les verdicts d’audit historiques ne couvrent que leurs candidats enregistrés.",
+    "intent": "Sélectionner representation-gap lorsqu’une réponse de modèle déjà identifiée semble déformer la représentation de l’entité ou de la doctrine publiée. Choisir explicitement la langue. Lire le registre fermé, sélectionner l’identité exacte du pack et lier son contenu et son manifeste détaché à une racine de corpus épinglée séparément avant utilisation.",
+    "retrieval": "L’exemple de vérification de contexte attend un instantané, ses archives adressées par contenu et une racine de confiance obtenue séparément. Ces entrées ne sont pas incluses dans ce paquet; ses tests hors ligne utilisent des fixtures neutres. Les routes /v0/ proposées sont des contrats, pas des adresses publiques de téléchargement vérifiées. Obtenir les entrées publiées et une politique locale de clés par un canal approuvé distinct avant d’exécuter cet exemple. Aucun exemple n’envoie de requête à un modèle.",
+    "localDecision": "La vérification établit l’intégrité des octets selon le format déclaré. Le consommateur prend ensuite sa propre décision de permission bornée. Une signature JWS valide ne prouve ni vérité, ni identité réelle, ni fidélité du modèle, ni autorité d’exécution, ni état ultérieur de révocation. DSSE et JWS détaché sont des formats distincts.",
+    "counterexample": "Une page canonique statique suffit pour une définition simple ou une citation éditoriale ordinaire. Le pack est utile lorsque le consommateur a besoin de la sélection déclarée, de ses dépendances et de leur portée d’intégrité ensemble. Sa forme ne lui confère aucune autorité supplémentaire.",
+    "evidence": "Séparer mesures opérationnelles, vérification technique locale et expériences externes sur des modèles. Data, une projection publique, cette documentation et un paragraphe du site peuvent décrire la même archive. Ce ne sont pas quatre confirmations indépendantes.",
+    "limits": "L’exemple de preuve publique inclus est synthétique. Son empreinte ne vérifie que son contenu projeté. La complétude de la source privée, le déploiement courant, l’adoption spontanée et les effets causaux sur les réponses de modèles ne sont pas établis.",
+    "siteHeading": "Lire, vérifier et utiliser un pack de contexte",
+    "siteLink": "Consulter le registre canonique d’intentions et les contrats de packs déclarés avant de sélectionner un contexte. La vérification locale et le déploiement public ont des statuts distincts.",
+    "sectionLabel": "Documentation publique de référence; ce paquet ne vérifie pas le déploiement du Runtime."
+  },
+  "repository": "GautierDorval/governed-context-runtime",
+  "repositoryUrl": "https://github.com/GautierDorval/governed-context-runtime"
+}

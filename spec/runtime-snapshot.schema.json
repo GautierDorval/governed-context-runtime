@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/runtime-snapshot.schema.json",
+  "title": "Additive finite runtime snapshot, proposed contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "type", "snapshotId", "corpusRootDigest", "inventory"],
+  "properties": {
+    "schemaVersion": {"const":"0.1.0-proposed"},
+    "type": {"const":"GovernedContextCorpusSnapshot"},
+    "snapshotId": {"type":"string","pattern":"^governed-context-runtime:sha-256:[a-f0-9]{64}$"},
+    "corpusRootDigest": {"$ref":"#/$defs/digest"},
+    "inventory": {
+      "type":"object", "additionalProperties":false,
+      "required":["profile","schemaVersion","type","corpusVersion","items","packs","units","graph","authoritySources","authorityTransport","externalReferences","digestRegistryCoverage"],
+      "properties": {
+        "profile":{"const":"gd-portable-json-v1"}, "schemaVersion":{"const":"0.1.0-proposed"}, "type":{"const":"GovernedContextCorpusInventory"},
+        "corpusVersion":{"type":"string","minLength":1},
+        "items":{"type":"array","minItems":1,"maxItems":1024,"items":{"$ref":"#/$defs/item"}},
+        "packs":{"type":"array","minItems":1,"items":{"type":"object","required":["packId","intentToken","lang","version","payloadDigest","manifestDigest","payloadSourcePath","manifestSourcePath","dependencies","unitIds"]}},
+        "units":{"type":"array","minItems":1,"items":{"type":"object","required":["unitId","sourcePath","selector","digestScope","canonicalization","digest"]}},
+        "graph":{"type":"array","items":{"type":"object","required":["id","semanticId","kind","sourcePath","selector","dependencies"]}},
+        "authoritySources":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},
+        "authorityTransport":{"type":"object","required":["status","grantsGlobalRank","rule"],"properties":{"status":{"const":"proposed-not-ratified"},"grantsGlobalRank":{"const":false},"rule":{"type":"string"}}},
+        "externalReferences":{"type":"object","required":["policy"],"properties":{"policy":{"type":"string"}}},
+        "digestRegistryCoverage":{"type":"object","required":["registry","packOnly"],"additionalProperties":false,"properties":{"registry":{"type":"array","uniqueItems":true,"items":{"type":"string"}},"packOnly":{"type":"array","uniqueItems":true,"items":{"type":"string"}}}}
+      }
+    }
+  },
+  "$defs": {
+    "digest":{"type":"string","pattern":"^sha-256:[a-f0-9]{64}$"},
+    "item":{"type":"object","additionalProperties":false,"required":["uri","sourcePath","kind","version","digestScope","canonicalization","digestAlgorithm","digest","repositoryDigest","byteLength"],"properties":{
+      "uri":{"type":"string","pattern":"^/v0/artifacts/[a-f0-9]{64}$"},"sourcePath":{"type":"string","minLength":1},"kind":{"const":"source-archive"},"version":{"$ref":"#/$defs/digest"},
+      "digestScope":{"const":"canonical-json"},"canonicalization":{"const":"gd-portable-json-v1"},"digestAlgorithm":{"const":"sha-256"},"digest":{"$ref":"#/$defs/digest"},"repositoryDigest":{"$ref":"#/$defs/digest"},"byteLength":{"type":"integer","minimum":0,"maximum":4194304}
+    }}
+  }
+}

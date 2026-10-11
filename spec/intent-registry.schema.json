@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/intent-registry.schema.json",
+  "title": "Canonical intent registry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "type",
+    "status",
+    "site",
+    "runtimeBoundary",
+    "intents"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "type": {
+      "const": "CanonicalIntentRegistry"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "proposed",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "format": "uri"
+    },
+    "runtimeBoundary": {
+      "type": "object",
+      "required": [
+        "runtimeSelectsIntentFromFreeText",
+        "agentSelectsIntent",
+        "runtimeComposesAtRequestTime",
+        "runtimeProducesAnswers"
+      ],
+      "properties": {
+        "runtimeSelectsIntentFromFreeText": {
+          "const": false
+        },
+        "agentSelectsIntent": {
+          "const": true
+        },
+        "runtimeComposesAtRequestTime": {
+          "const": false
+        },
+        "runtimeProducesAnswers": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "intents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/intent"
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "localizedMap": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    },
+    "intent": {
+      "type": "object",
+      "required": [
+        "intentToken",
+        "intentClass",
+        "status",
+        "version",
+        "displayNameFr",
+        "displayNameEn",
+        "descriptionFr",
+        "descriptionEn",
+        "linkedCausalContextIds",
+        "linkedApplicabilityChainIds",
+        "triggerSituationsFr",
+        "triggerSituationsEn",
+        "nonApplicabilitySummaryFr",
+        "nonApplicabilitySummaryEn",
+        "packIds",
+        "canonicalUrls",
+        "attestationUnitId",
+        "deprecatedAliases"
+      ],
+      "properties": {
+        "intentToken": {
+          "enum": [
+            "representation-gap",
+            "prelaunch-semantic-analysis",
+            "product-doctrine-authority-separation",
+            "interpretive-governance-overview",
+            "situational-applicability-overview",
+            "source-authority-and-integrity"
+          ]
+        },
+        "intentClass": {
+          "enum": [
+            "applicability",
+            "doctrinal_context"
+          ]
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "proposed",
+            "stable",
+            "deprecated"
+          ]
+        },
+        "version": {
+          "type": "string"
+        },
+        "displayNameFr": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "displayNameEn": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "descriptionFr": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "descriptionEn": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "linkedCausalContextIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "linkedApplicabilityChainIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "triggerSituationsFr": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "triggerSituationsEn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "nonApplicabilitySummaryFr": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "nonApplicabilitySummaryEn": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "packIds": {
+          "$ref": "#/$defs/localizedMap"
+        },
+        "canonicalUrls": {
+          "$ref": "#/$defs/localizedMap"
+        },
+        "attestationUnitId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "deprecatedAliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
