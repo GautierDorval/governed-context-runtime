@@ -1,5 +1,15 @@
 # Governed Context Runtime
 
+**Give AI agents context they can verify.**
+
+This guide is for developers who want to choose the information an agent receives, identify its version and check its sources before use. A context pack brings that information and its interpretation boundaries together in a prepared, verifiable unit.
+
+For example, when an assistant confuses a product with the doctrine behind it, the consumer can select the corresponding intent, verify the declared pack and provide the resulting context to the assistant. The answer remains subject to its own evaluation.
+
+Start with `npm test` at the repository root, using Node.js 24.17.0 or newer. The synthetic examples run without dependency installation or an API key. Then follow the selection and verification contract below.
+
+## Selection and verification contract
+
 A deterministic interface that delivers a precompiled context pack for a canonical intent already selected by a consumer. It does not infer intent from free text, compose a pack at request time, generate an answer or judge a model.
 
 The project describes the transport and verification contracts. gautierdorval.com is one instance and remains the canonical source of its doctrine. This public repository is a documentation and reference implementation destination, not a new authority root.
@@ -28,6 +38,9 @@ node --test spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spe
 
 Run from the package root with Node.js 24.17.0 or newer. No secrets, account, private checkout or dependency installation. Tests reuse the existing conformance vectors.
 
+<details>
+<summary>Inspect the synthetic verification example</summary>
+
 ### Locally verified synthetic publication
 
 Publication: sha-256:e03c7c3249b4e7eba0b9115af3f7c68d71d7abab7b28e7256f24bfc25d8927bd.
@@ -48,3 +61,5 @@ These rows measure no production activity. Report and metric statuses are distin
 Unit: count. Formula: source value without aggregation. Denominator: not applicable. Profile coverage: complete.
 
 One lineage, no additional independent confirmation. Verifying this projection establishes neither private completeness nor current deployment.
+
+</details>

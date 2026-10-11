@@ -1,5 +1,15 @@
 # Runtime de contexte gouverné
 
+**Donnez aux agents IA un contexte qu’ils peuvent vérifier.**
+
+Ce guide s’adresse aux développeurs qui veulent choisir l’information transmise à un agent, en identifier la version et en vérifier les sources avant utilisation. Un pack de contexte regroupe cette information et ses limites d’interprétation dans un ensemble préparé et vérifiable.
+
+Par exemple, lorsqu’un assistant confond un produit avec la doctrine qui le sous-tend, le consommateur peut sélectionner l’intention correspondante, vérifier le pack déclaré et fournir ce contexte à l’assistant. La réponse reste soumise à sa propre évaluation.
+
+Commencez par `npm test` à la racine du dépôt, avec Node.js 24.17.0 ou une version supérieure. Les exemples synthétiques s’exécutent sans installation de dépendances ni clé d’API. Suivez ensuite le contrat de sélection et de vérification ci-dessous.
+
+## Contrat de sélection et de vérification
+
 Une interface déterministe qui distribue un pack de contexte précompilé pour une intention canonique déjà sélectionnée par un consommateur. Elle ne déduit pas l’intention d’un texte libre, ne compose pas de pack à la requête, ne génère pas de réponse et ne juge pas un modèle.
 
 Le projet décrit les contrats de transport et de vérification. gautierdorval.com en est une instance et demeure la source canonique de sa doctrine. Ce dépôt public est une destination documentaire et d’implémentation de référence, sans devenir une nouvelle racine d’autorité.
@@ -28,6 +38,9 @@ node --test spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spe
 
 Exécuter à la racine du paquet avec Node.js 24.17.0 ou supérieur. Aucun secret, compte, dépôt privé ou installation de dépendances. Les tests réutilisent les vecteurs de conformité existants.
 
+<details>
+<summary>Examiner l’exemple synthétique de vérification</summary>
+
 ### Publication synthétique vérifiée localement
 
 Publication: sha-256:e03c7c3249b4e7eba0b9115af3f7c68d71d7abab7b28e7256f24bfc25d8927bd.
@@ -48,3 +61,5 @@ Ces lignes ne mesurent aucune activité de production. Les statuts du rapport et
 Unité: count. Formule: valeur de source sans agrégation. Dénominateur: non applicable. Couverture du profil: complete.
 
 Filiation unique, aucune confirmation indépendante supplémentaire. La vérification de cette projection ne certifie ni complétude privée ni déploiement courant.
+
+</details>

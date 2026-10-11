@@ -1,38 +1,49 @@
-# governed-context-runtime
+# Governed Context Runtime
 
-[Français](docs/fr/README.md) · [English guide](docs/en/README.md)
+**Give AI agents context they can verify.**
 
-A deterministic interface that delivers a precompiled context pack for a canonical intent already selected by a consumer. It does not infer intent from free text, compose a pack at request time, generate an answer or judge a model.
+When an AI agent uses information about your organization, product or expertise, the sources, definitions and limits behind that information matter. Governed Context Runtime makes those choices explicit in a versioned **context pack**: a prepared set of information with its sources and rules for interpretation.
 
-This public reference package documents proposed contracts and provides executable verification examples. Publication of this package does not establish a current Runtime deployment, MCP activation, model use or independent certification. Historical audit verdicts apply only to their recorded candidates.
+This repository gives developers the schemas, verification code and runnable examples to explore that approach in their own agent workflows.
 
-By [Gautier Dorval](https://gautierdorval.com/). Repository: [GautierDorval/governed-context-runtime](https://github.com/GautierDorval/governed-context-runtime).
+[Start with the English guide](docs/en/README.md) · [Lire le guide en français](docs/fr/README.md)
 
-The included public evidence example is synthetic. Its digest authenticates its projected content only. Private source completeness, current deployment, spontaneous adoption and causal effects on model answers are not established.
+## What you gain
+
+- **A clear context for each task.** Select a declared intent and language, then identify the corresponding prepared pack.
+- **A checkable version.** Verify the received content against a separately trusted reference before passing it to an agent.
+- **Explicit interpretation boundaries.** Keep source authority, permitted use and limits attached to the context you provide.
+- **A reproducible starting point.** Run the reference checks locally and inspect the schemas and examples.
+
+## A concrete use case
+
+An assistant confuses a company's product with the doctrine behind it. A consumer can select the `representation-gap` intent, choose the language and retrieve the declared context pack. It then verifies the pack and its supporting sources before supplying that context to the assistant.
+
+That gives the integration a traceable basis for choosing context. The model's eventual answer still needs its own evaluation.
+
+## Try the reference checks
+
+With Node.js 24.17.0 or newer, clone this repository and run:
 
 ```powershell
+git clone https://github.com/GautierDorval/governed-context-runtime.git
+Set-Location governed-context-runtime
 npm test
 ```
 
-[Evidence scope](evidence/README.md) · [Licensing boundaries](NOTICE.md)
+No dependency installation or API key is needed. The included examples exercise content verification, consumer permission checks and public evidence verification using synthetic data.
 
-### Locally verified synthetic publication
+[Explore the context verification example](spec/examples/verify-context.mjs) · [Inspect the schemas](spec/context-pack.schema.json)
 
-Publication: sha-256:e03c7c3249b4e7eba0b9115af3f7c68d71d7abab7b28e7256f24bfc25d8927bd.
+## Explore the design
 
-Population: synthetic fixtures only. Half-open UTC window: 2026-09-01 → 2026-09-07.
+| Your next step | Read |
+|---|---|
+| Understand the selection and verification flow | [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md) |
+| Inspect what a context pack contains | [Context pack schema](spec/context-pack.schema.json) |
+| Understand the checks and their scope | [Evidence guide](evidence/README.md) |
+| Contribute or reuse material | [Contributing](CONTRIBUTING.md) · [Rights](NOTICE.md) |
 
-These rows measure no production activity. Report and metric statuses are distinct. null is not zero. No total across populations is calculated.
+This is a reference package for proposed contracts, with executable examples. It does not include a hosted Runtime service or production corpus. Its tests establish technical behavior on synthetic inputs; they do not measure adoption or improvements in model answers.
 
-| UTC | Report | Metric | Type | Value |
-|---|---|---|---|---|
-| 2026-09-01 | measured | measured | number | 9 |
-| 2026-09-02 | measured_zero | measured_zero | number | 0 |
-| 2026-09-03 | partial | measured | number | 7 |
-| 2026-09-04 | not_measurable | not_measurable | null | null |
-| 2026-09-05 | observation_unavailable | not_measurable | null | null |
-| 2026-09-06 | not_applicable | not_applicable | null | null |
-
-Unit: count. Formula: source value without aggregation. Denominator: not applicable. Profile coverage: complete.
-
-One lineage, no additional independent confirmation. Verifying this projection establishes neither private completeness nor current deployment.
+By [Gautier Dorval](https://gautierdorval.com/). The site remains the canonical source of the doctrine; this repository documents the reference contracts and verification code.
