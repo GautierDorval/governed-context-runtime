@@ -1,0 +1,131 @@
+# Utiliser l’instance de gautierdorval.com
+
+Un assistant doit parfois expliquer une doctrine sans la confondre avec un produit ou une permission d’agir. Le Runtime lui fournit un contexte déjà préparé : une intention déclarée, une langue, une version, des sources et des limites d’interprétation. L’intégrateur peut examiner cet ensemble avant de le transmettre à l’assistant.
+
+L’instance est accessible sur **[context.gautierdorval.com](https://context.gautierdorval.com/)**. Elle distribue les mêmes artefacts par HTTP et par un adaptateur MCP séparé. Ce dépôt fournit les contrats et les vérificateurs de référence ; le service hébergé et son corpus ont leur propre cycle de publication.
+
+## État observé
+
+Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a confirmé les réponses HTTP, la découverte des huit outils MCP et l’égalité exacte du pack français `representation-gap` reçu par les deux transports. Le registre observé contient six intentions et douze packs FR/EN. Le Runtime déclare `0.3.0-proposed` ; l’édition de référence de ce dépôt reste `0.2.0-proposed`. Ces versions identifient des composants différents.
+
+[Observation datée et empreintes des réponses](../../evidence/instance-2026-10-12.json) · [Portée des preuves](../../evidence/README.md)
+
+Cette observation établit le fonctionnement décrit à cette date, sans garantir la disponibilité future. Les appels de contrôle sont du trafic technique initié par le producteur, sans appel à un modèle. Ils ne mesurent pas l’adoption ni l’effet du contexte sur une réponse.
+
+## 1. Choisir un contexte déclaré
+
+Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.
+
+```powershell
+$runtimeOrigin = 'https://context.gautierdorval.com'
+$intents = Invoke-RestMethod "$runtimeOrigin/v0/intents"
+$pack = Invoke-RestMethod "$runtimeOrigin/v0/packs/representation-gap/fr?version=0.1.0"
+$manifest = Invoke-RestMethod "$runtimeOrigin/v0/packs/representation-gap/fr/manifest?version=0.1.0"
+```
+
+Ces commandes lisent les données. La conversion JSON de PowerShell ne conserve pas les octets d’origine pour une vérification cryptographique. Pour comparer les empreintes, conserver le corps reçu avant décodage ou utiliser l’enveloppe MCP ci-dessous. Cet exemple choisit explicitement le français ; pour l’anglais, utiliser `lang = 'en'` et le chemin REST anglais correspondant.
+
+## 2. Vérifier avant d’utiliser
+
+Épingler séparément la racine de corpus attendue dans la politique locale du consommateur. Lire l’[instantané](https://context.gautierdorval.com/v0/snapshot), vérifier sa racine, puis toutes les archives référencées avec le [vérificateur public](../../spec/reference/verification.mjs). Vérifier ensuite l’identité, la version et l’empreinte du pack sélectionné dans cet instantané. Le [contrat de vérification](../verification.md) précise la portée des contrôles.
+
+Une racine ou une empreinte reçue avec le contenu permet de constater une cohérence, mais ne crée pas à elle seule une référence de confiance indépendante. Une empreinte correcte ne prouve ni vérité ni autorité. La décision d’utiliser le contexte appartient au consommateur. Les signatures et clés fournies avec la démonstration restent réservées aux tests ; elles ne sont pas une chaîne de confiance de production.
+
+Pour apprendre le parcours complet avec une fixture fictive et toutes ses archives :
+
+```powershell
+npm run demo
+npm test
+```
+
+## 3. Lire le même pack par MCP
+
+L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas.
+
+```powershell
+$mcpUri = 'https://context.gautierdorval.com/mcp'
+$mcpVersion = '2026-07-28'
+$mcpMeta = @{
+    'io.modelcontextprotocol/protocolVersion' = $mcpVersion
+    'io.modelcontextprotocol/clientInfo' = @{
+        name = 'runtime-reader'; version = '0.1.0'
+    }
+    'io.modelcontextprotocol/clientCapabilities' = @{}
+}
+$mcpHeaders = @{
+    'Accept' = 'application/json'
+    'MCP-Protocol-Version' = $mcpVersion
+    'Mcp-Method' = 'server/discover'
+}
+$discoveryBody = @{
+    jsonrpc = '2.0'; id = 1; method = 'server/discover'
+    params = @{ _meta = $mcpMeta }
+} | ConvertTo-Json -Depth 10
+Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
+    -Headers $mcpHeaders -Body $discoveryBody
+
+$mcpHeaders['Mcp-Method'] = 'tools/call'
+$mcpHeaders['Mcp-Name'] = 'get_context_pack'
+$packBody = @{
+    jsonrpc = '2.0'; id = 2; method = 'tools/call'
+    params = @{
+        _meta = $mcpMeta
+        name = 'get_context_pack'
+        arguments = @{
+            intentToken = 'representation-gap'; lang = 'fr'; version = '0.1.0'
+        }
+    }
+} | ConvertTo-Json -Depth 10
+$reply = Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
+    -Headers $mcpHeaders -Body $packBody
+if ($reply.error -or $reply.result.isError) { throw 'Lecture MCP refusée' }
+$envelope = $reply.result.content[0].text | ConvertFrom-Json
+$bytes = [Convert]::FromBase64String($envelope.contentBase64)
+$observedDigest = 'sha-256:' + [Convert]::ToHexString(
+    [Security.Cryptography.SHA256]::HashData($bytes)
+).ToLowerInvariant()
+if ($observedDigest -ne $envelope.artifactDigest) { throw 'Empreinte incohérente' }
+```
+
+PowerShell 7 est requis pour cet exemple. La dernière comparaison contrôle uniquement les octets transportés et leur empreinte déclarée. Elle ne remplace pas la vérification de l’instantané sous une racine épinglée. Aucune réponse de modèle n’est produite.
+
+Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Les arguments sont fermés : identifiants déclarés, langues FR/EN, versions enregistrées et empreintes. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 Kio ; les appels provenant d’un navigateur sont limités aux origines autorisées du site et du Runtime.
+
+## Comprendre les états et les preuves
+
+- **Runtime disponible** : les réponses techniques observées montrent un service accessible à une date donnée.
+- **Transport cohérent** : le contrôle publié compare les octets REST et MCP d’un pack précis. Il ne certifie pas tous les usages d’un client.
+- **Contexte vérifié** : la vérification complète exige un instantané et ses archives, sous la politique locale du consommateur.
+- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Les expériences sur modèles restent `NOT_RUN` à ce jour.
+
+Dans `/v0/health`, `mcpEnabled: false` concerne uniquement le Worker résolveur. `externalAdapters.mcp` désigne l’adaptateur séparé ; sa disponibilité se vérifie sur `/mcp`. Le champ `sourceCommitVerified: false` signifie que la déclaration du commit ne constitue pas une attestation indépendante du déploiement.
+
+La [projection synthétique](../../evidence/publication.json) demeure un exercice de lecture des états de mesure. Elle n’est pas une statistique du service hébergé. Le contrôle réel daté est conservé séparément, sans agrégation entre ces populations.
+
+## Vérifier une unité avant utilisation
+
+La réponse brute d’une unité v0 ne constitue pas un contexte vérifié autonome. L’en-tête HTTP `X-Corpus-Root-Digest` l’accompagne et reste accessible au JavaScript du navigateur. Un outil qui ne transmet que le corps JSON perd cet en-tête. MCP transporte la racine dans son enveloppe. Aucune de ces déclarations ne prouve à elle seule l’appartenance à l’instantané.
+
+L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. Les champs de couverture proviennent de la recette archivée dans cet instantané. L’empreinte historique d’enveloppe ne couvre que `requiredFieldsInPreimage` ; les autres champs sont explicitement recensés hors de cette empreinte. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
+
+```javascript
+import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
+const inspected = await inspectVerifiedUnit({
+  snapshotBytes,       // octets de l’instantané complet capturé
+  unitBytes,           // corps REST ou contentBase64 MCP décodé
+  expectedRoot,        // racine choisie séparément par la politique locale
+  getArchive,          // uri => octets capturés, sans réseau implicite
+  expectedIntents,     // catalogue indépendant facultatif
+});
+// Transmettre ensemble inspected.unit, inspected.selectedValue et inspected.verification.
+```
+
+Le chemin explicite est `/v0/snapshots/` suivi des 64 caractères hexadécimaux de la racine épinglée séparément. Récupérer ensuite les URI d’archives énumérées par cet instantané. L’exemple ne fait aucun appel réseau, ne valide aucune signature et ne décide d’aucune permission. Son résultat établit une cohérence avec la racine choisie, sans prouver une clé de production, l’actualité, l’autorité ou une permission d’exécution. Les [contre-épreuves](../../spec/examples/test-verified-unit.mjs) refusent une unité modifiée même si son empreinte historique reste identique.
+
+## Lire précisément le cycle de vie et la découverte
+
+Partir de l’index Runtime, suivre `entrypoints.health`, puis `externalAdapters.mcp.endpoint` dans la réponse de santé. `server/discover` et `tools/list` établissent le protocole et les outils proposés ; récupérer un artefact vérifie séparément sa disponibilité. L’OpenAPI REST décrit le résolveur, sans englober le transport MCP séparé.
+
+`/v0/lifecycle` énumère actuellement les racines disponibles avec leur statut courant ou archivé et une liste d’événements vide. Cet inventaire ne constitue pas une chronologie des déploiements en production. Son ordre par empreinte ne fournit ni dates historiques de publication, ni mises à jour automatiques, ni protection persistante contre le retour en arrière. `signatureTrust: test-only` demeure une limite explicite ; l’instance hébergée n’est pas présentée comme authentifiée de bout en bout par une clé de signature de production.
+
+[Doctrine et contexte sur gautierdorval.com](https://gautierdorval.com/doctrine/runtime-contexte-gouverne/) · [Guide de référence](README.md) · [English](../en/instance.md)

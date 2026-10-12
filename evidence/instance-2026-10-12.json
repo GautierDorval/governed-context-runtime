@@ -1,0 +1,145 @@
+{
+  "schema": "runtime-public-observation/1",
+  "observer": "producer",
+  "startedAt": "2026-10-12T02:18:43.996Z",
+  "scope": "read-only HTTP and JSON-RPC integration checks; no model invocation",
+  "requests": [
+    {
+      "name": "health",
+      "url": "https://context.gautierdorval.com/v0/health",
+      "method": "GET",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:45.977Z",
+      "bytes": 1158,
+      "sha256": "5155880e313957942f7c4fb7b8b00cb84a6aa3960dc91049a3b7238b5cdcf48f",
+      "corpusRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c"
+    },
+    {
+      "name": "intents",
+      "url": "https://context.gautierdorval.com/v0/intents",
+      "method": "GET",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.088Z",
+      "bytes": 10209,
+      "sha256": "610f877e44435c1e5f0f46a1b584cb937ad7a84a627855e43143c157a8209bb9",
+      "corpusRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c"
+    },
+    {
+      "name": "snapshot",
+      "url": "https://context.gautierdorval.com/v0/snapshot",
+      "method": "GET",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.185Z",
+      "bytes": 96114,
+      "sha256": "059ea4ab0b6f5acdd60f08559e96894a15c7e7937168985d09bb66638f359521",
+      "corpusRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c"
+    },
+    {
+      "name": "pack-fr",
+      "url": "https://context.gautierdorval.com/v0/packs/representation-gap/fr?version=0.1.0",
+      "method": "GET",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.241Z",
+      "bytes": 12526,
+      "sha256": "b85ab8ab9e9de303c8a8be90a18984226a056eb815ca695cd7594ba619fa81a5",
+      "corpusRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c"
+    },
+    {
+      "name": "manifest-fr",
+      "url": "https://context.gautierdorval.com/v0/packs/representation-gap/fr/manifest?version=0.1.0",
+      "method": "GET",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.292Z",
+      "bytes": 1367,
+      "sha256": "31942d325f3b6c584b29128cebcc5cf1a9710d394e1fc60060e93538c7c6342a",
+      "corpusRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c"
+    },
+    {
+      "name": "mcp-discovery",
+      "url": "https://context.gautierdorval.com/mcp",
+      "method": "POST",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.510Z",
+      "bytes": 316,
+      "sha256": "71c0332d2e1c7c41122c8f20237779eca39d489f86419c93b569a33c76b1174b",
+      "corpusRoot": null
+    },
+    {
+      "name": "mcp-tools",
+      "url": "https://context.gautierdorval.com/mcp",
+      "method": "POST",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.609Z",
+      "bytes": 5908,
+      "sha256": "c258ccd5361041cb3497258624182d3f27f5ae59d5ddb29402f2a9c1a7853767",
+      "corpusRoot": null
+    },
+    {
+      "name": "mcp-pack-fr",
+      "url": "https://context.gautierdorval.com/mcp",
+      "method": "POST",
+      "status": 200,
+      "capturedAt": "2026-10-12T02:18:46.685Z",
+      "bytes": 17639,
+      "sha256": "cc438ae4dae2366d719c76c1aef7af2dab902cd70727190e8b916caad62df55c",
+      "corpusRoot": null
+    }
+  ],
+  "checks": [
+    "HTTP responses 200",
+    "eight MCP tools discovered",
+    "MCP get_context_pack succeeds",
+    "MCP artifact digest matches decoded bytes",
+    "REST and MCP pack bytes identical",
+    "pack digest matches observed snapshot",
+    "MCP root matches observed snapshot"
+  ],
+  "redirectsFollowed": 0,
+  "retries": 0,
+  "runtimeVersion": "0.3.0-proposed",
+  "corpusRootDigest": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c",
+  "packCount": 12,
+  "mcpProtocolVersion": "2026-07-28",
+  "status": "PASS",
+  "finishedAt": "2026-10-12T02:18:46.686Z",
+  "rawResponsesPublished": false,
+  "modelInvocation": false,
+  "population": "producer-initiated-technical-checks",
+  "limitations": [
+    "Dated producer observation; not a signed independent deployment attestation.",
+    "Does not establish future availability, whole-corpus integrity, adoption, model fidelity or causality.",
+    "Digests identify captured responses retained by the producer; public report does not bundle response bodies."
+  ],
+  "clientSetupNote": "A preceding request without required per-request metadata was rejected with HTTP 400. This observation uses the corrected request format.",
+  "closureReconciliation": {
+    "observer": "producer Codex",
+    "dateUtc": "2026-10-12",
+    "runtimeVersion": "0.3.0-proposed",
+    "requests": {
+      "nodeRetained": 15,
+      "powershellRetained": 4,
+      "headCaptureFailureNotRepeated": 1,
+      "totalAttempted": 20,
+      "retries": 0,
+      "redirectsFollowed": 0
+    },
+    "crossClientComparisons": 4,
+    "openApiResponseSchemas": 7,
+    "clientScope": "Node fetch and PowerShell .NET on one workstation; same network location",
+    "sameRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c",
+    "mcpDiscovery": "Runtime index -> health -> externalAdapters.mcp.endpoint -> server/discover -> tools/list -> get_attested_unit",
+    "unitVerification": {
+      "completeRecordsVerified": 2,
+      "snapshotRootPinnedFrom": "previous operator deployment receipt",
+      "archives": "previous live HTTPS capture, same root",
+      "alteredRecordsRejected": 2,
+      "independentTrustOrganization": false
+    },
+    "limits": [
+      "No global cache coverage or reconstruction of earlier indexed responses.",
+      "No production signing key established.",
+      "Lifecycle inventory is not a deployment chronology.",
+      "Raw v0 body is not a self-contained verified context."
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 # Runtime de contexte gouverné
 
+[Utiliser l’instance hébergée : accès REST/MCP et contrôle daté](instance.md)
+
 **Donner aux agents IA un contexte qu’ils peuvent vérifier.**
 
 Un assistant confond la politique explicative d’un atelier fictif avec une permission d’agir. Sélectionner representation-gap et une langue, identifier le pack déclaré, puis vérifier sa version et ses limites avant de le fournir comme contexte. La démonstration effectue les vérifications sans appeler d’agent.

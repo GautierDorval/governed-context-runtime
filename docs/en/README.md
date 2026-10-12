@@ -1,5 +1,7 @@
 # Governed Context Runtime
 
+[Use the hosted instance: REST/MCP access and dated service check](instance.md)
+
 **Give AI agents context they can verify.**
 
 An assistant confuses a fictional workshop’s explanatory policy with permission to act. Select representation-gap and a language, identify the declared pack, then verify its version and boundaries before supplying it as context. The demo performs the verification steps without calling an agent.

@@ -18,6 +18,14 @@ An assistant confuses a fictional workshop’s explanatory policy with permissio
 
 The consumer selects an intent and language. The runtime delivers the precompiled pack. Verification and permission remain local to the consumer. The agent produces its answer; any external assessment of that answer is a separate step.
 
+## Use the hosted instance
+
+Retrieve a declared context from [context.gautierdorval.com](https://context.gautierdorval.com/), inspect its version and sources, then decide whether to supply it to your assistant. HTTP and a separate MCP adapter expose the same prepared artifacts.
+
+**[Connect through REST or MCP](docs/en/instance.md)** · [Parcours en français](docs/fr/instance.md) · [Dated service observation](evidence/instance-2026-10-12.json)
+
+On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection, digest checks and client compatibility. These are technical service checks; model experiments remain separate.
+
 ## Try it locally
 
 With Node.js 24.17.0 or newer, from this repository’s root:
