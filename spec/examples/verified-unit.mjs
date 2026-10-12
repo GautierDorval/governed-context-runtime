@@ -11,7 +11,8 @@ export async function inspectVerifiedUnit({snapshotBytes,unitBytes,expectedRoot,
   if (snapshot.corpusRootDigest!==expectedRoot) fail('unexpected_corpus_root');
   const archives=new Map(),checks=[];
   await verifySnapshot(snapshot,async uri=>{
-    const bytes=new Uint8Array(await getArchive(uri));archives.set(uri,bytes);return bytes;
+    // Keep a private copy: an ArrayBuffer view would let the caller change verified bytes before use.
+    const bytes=new Uint8Array(await getArchive(uri)).slice();archives.set(uri,bytes);return bytes;
   },catalog,checks);
   const member=snapshot.inventory.units.find(u=>u.unitId===unit.unitId);
   if (!member || !Buffer.from(canonical(member)).equals(Buffer.from(canonical(unit)))) fail('unit_snapshot_membership');
@@ -22,10 +23,11 @@ export async function inspectVerifiedUnit({snapshotBytes,unitBytes,expectedRoot,
     return Buffer.from(archive.contentBase64,'base64');
   };
   const recipes=strictParse(source('spec/governed-context-runtime/attestation-recipes.json'));
-  const recipe=recipes.profiles[unit.canonicalization];
-  if(!recipe) fail('unknown_profile');
+  const recipe=recipes.profiles && Object.hasOwn(recipes.profiles,unit.canonicalization) ? recipes.profiles[unit.canonicalization] : undefined;
+  if(!recipe || typeof recipe!=='object') fail('unknown_profile');
   // Coverage is derived from the recipe inside the verified snapshot, not a second list.
   const covered=recipe.requiredFieldsInPreimage ?? [];
+  if(!Array.isArray(covered) || !covered.every(field=>typeof field==='string')) fail('invalid_recipe_coverage');
   return {
     unit,
     selectedValue:select(strictParse(source(unit.sourcePath),{historical:true}),unit.selector),

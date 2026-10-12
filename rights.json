@@ -222,7 +222,7 @@
       "path": "evidence/README.md",
       "source": "reviewed-evidence-scope",
       "license": "All rights reserved",
-      "sha256": "5783006967287444e64a4e7ca3d5fc2ec1f6c45e63d2d01cb29036b337e33a93"
+      "sha256": "151892705237f32c3a048b9468f126c084450639b849f66c18914404873398dc"
     },
     {
       "path": "NOTICE.md",
@@ -240,7 +240,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "All rights reserved",
-      "sha256": "1a94d9ee63465bdd0b29fe14b2207b4f47d7e78322962ef3bad02e5e895d237b"
+      "sha256": "0f83b0f937f8b51ec4b030ab1f32af70f2762d9a9d611559d28ea639ce370a0a"
     },
     {
       "path": "CITATION.cff",
@@ -276,13 +276,13 @@
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "All rights reserved",
-      "sha256": "7c188e27df5db683c5327414cd79dc0aafe2407ec1a0377a59f0881ef0888bd7"
+      "sha256": "9bfc54fede010798dbf34dc99c1b274c57b1d439db93294fa729341299154e8f"
     },
     {
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "All rights reserved",
-      "sha256": "45fc5cf3a2f9b663987aaf858bf230b3c2f1f6c5673c9feadb3a4d548ff5b78e"
+      "sha256": "11acdf3edb3f3ba1c9859cbc53454cfc797366c6f40095eebc78c63bd3b6a64c"
     },
     {
       "path": "evidence/instance-2026-10-12.json",
@@ -292,15 +292,15 @@
     },
     {
       "path": "spec/examples/test-verified-unit.mjs",
-      "source": "dated-operational-documentation",
+      "source": "spec/examples/test-verified-unit.mjs",
       "license": "Apache-2.0",
-      "sha256": "39bca8b1a0b14c43c0e5b4143e240f912cb9cf9be176742f1d2bf8af00ff793f"
+      "sha256": "c2557e70eed37f1b077d574e7347563f8fbd4d934648ad6f27d420f6e9717e45"
     },
     {
       "path": "spec/examples/verified-unit.mjs",
-      "source": "dated-operational-documentation",
+      "source": "spec/examples/verified-unit.mjs",
       "license": "Apache-2.0",
-      "sha256": "e194406707d520a7bfdcf3291adee8e69e617744b65467616657454fb11b7352"
+      "sha256": "81c5e5ca626f4e658db48091d80ee7d19a8688a59ad1ece842223d1401bdab8f"
     }
   ],
   "selfAndManifest": "rights.json and package-manifest.json are project metadata, all rights reserved; hashes exclude self-reference."

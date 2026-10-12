@@ -2,7 +2,7 @@
 
 ## Operational documentation supplement, 2026-10-12
 
-Bilingual hosted-instance guide, explicit REST/MCP examples and a dated producer observation. Reference edition 0.2.0-proposed and all existing contract, verification and fictional fixture bytes are unchanged. No model experiment or general client compatibility is claimed.
+Bilingual hosted-instance guide, explicit REST/MCP examples, a dated producer observation, and an Apache-2.0 consumer example with counter-tests for verifying a v0 unit against a complete snapshot (`spec/examples/verified-unit.mjs`). Reference edition 0.2.0-proposed and all existing contract, verification and fictional fixture bytes are unchanged. No model experiment or general client compatibility is claimed.
 
 ## 0.2.0-proposed
 

@@ -23,7 +23,7 @@ $pack = Invoke-RestMethod "$runtimeOrigin/v0/packs/representation-gap/fr?version
 $manifest = Invoke-RestMethod "$runtimeOrigin/v0/packs/representation-gap/fr/manifest?version=0.1.0"
 ```
 
-Ces commandes lisent les données. La conversion JSON de PowerShell ne conserve pas les octets d’origine pour une vérification cryptographique. Pour comparer les empreintes, conserver le corps reçu avant décodage ou utiliser l’enveloppe MCP ci-dessous.
+Ces commandes lisent les données. La conversion JSON de PowerShell ne conserve pas les octets d’origine pour une vérification cryptographique. Pour comparer les empreintes, conserver le corps reçu avant décodage ou utiliser l’enveloppe MCP ci-dessous. Cet exemple choisit explicitement le français ; pour l’anglais, utiliser `lang = 'en'` et le chemin REST anglais correspondant.
 
 ## 2. Vérifier avant d’utiliser
 
@@ -96,19 +96,17 @@ Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_co
 - **Runtime disponible** : les réponses techniques observées montrent un service accessible à une date donnée.
 - **Transport cohérent** : le contrôle publié compare les octets REST et MCP d’un pack précis. Il ne certifie pas tous les usages d’un client.
 - **Contexte vérifié** : la vérification complète exige un instantané et ses archives, sous la politique locale du consommateur.
-- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Les expériences sur modèles restent `NOT_RUN` dans ce lot.
+- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Les expériences sur modèles restent `NOT_RUN` à ce jour.
 
 Dans `/v0/health`, `mcpEnabled: false` concerne uniquement le Worker résolveur. `externalAdapters.mcp` désigne l’adaptateur séparé ; sa disponibilité se vérifie sur `/mcp`. Le champ `sourceCommitVerified: false` signifie que la déclaration du commit ne constitue pas une attestation indépendante du déploiement.
 
-La [projection synthétique](../../evidence/publication.json) demeure un exercice de lecture des états de mesure. Elle n’est pas une statistique du service hébergé. Le contrôle réel daté est conservé dans un dossier distinct, sans agrégation entre ces populations.
-
-[Doctrine et contexte sur gautierdorval.com](https://gautierdorval.com/doctrine/runtime-contexte-gouverne/) · [Guide de référence](README.md) · [English](../en/instance.md)
+La [projection synthétique](../../evidence/publication.json) demeure un exercice de lecture des états de mesure. Elle n’est pas une statistique du service hébergé. Le contrôle réel daté est conservé séparément, sans agrégation entre ces populations.
 
 ## Vérifier une unité avant utilisation
 
 La réponse brute d’une unité v0 ne constitue pas un contexte vérifié autonome. L’en-tête HTTP `X-Corpus-Root-Digest` l’accompagne et reste accessible au JavaScript du navigateur. Un outil qui ne transmet que le corps JSON perd cet en-tête. MCP transporte la racine dans son enveloppe. Aucune de ces déclarations ne prouve à elle seule l’appartenance à l’instantané.
 
-L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. Les champs de couverture proviennent de la recette archivée dans cet instantané. L’empreinte historique d’enveloppe ne couvre que `requiredFieldsInPreimage` ; les autres champs sont explicitement recensés hors de cette empreinte. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
+L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. Les champs de couverture proviennent de la recette archivée dans cet instantané. L’empreinte historique d’enveloppe ne couvre que `requiredFieldsInPreimage` ; les autres champs sont explicitement recensés hors de cette empreinte. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
 
 ```javascript
 import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
@@ -126,6 +124,8 @@ Le chemin explicite est `/v0/snapshots/` suivi des 64 caractères hexadécimaux 
 
 ## Lire précisément le cycle de vie et la découverte
 
-Partir de l’index Runtime, suivre `entrypoints.health`, puis `externalAdapters.mcp.endpoint` dans la réponse de santé. `server/discover` et `tools/list` établissent le protocole et les outils proposés ; récupérer un artefact vérifie séparément sa disponibilité. L’OpenAPI REST décrit le résolveur, sans englober le transport MCP séparé.
+Partir de l’index Runtime, suivre `entrypoints.health`, puis `externalAdapters.mcp.endpoint` dans la réponse de santé. `server/discover` et `tools/list` établissent le protocole et les outils proposés ; récupérer un artefact vérifie séparément sa disponibilité. L’OpenAPI REST décrit le résolveur, sans englober le transport MCP séparé.
 
-`/v0/lifecycle` énumère actuellement les racines disponibles avec leur statut courant ou archivé et une liste d’événements vide. Cet inventaire ne constitue pas une chronologie des déploiements en production. Son ordre par empreinte ne fournit ni dates historiques de publication, ni mises à jour automatiques, ni protection persistante contre le retour en arrière. `signatureTrust: test-only` demeure une limite explicite ; l’instance hébergée n’est pas présentée comme authentifiée de bout en bout par une clé de signature de production.
+`/v0/lifecycle` énumère actuellement les racines disponibles avec leur statut courant ou archivé et une liste d’événements vide. Cet inventaire ne constitue pas une chronologie des déploiements en production. Son ordre par empreinte ne fournit ni dates historiques de publication, ni mises à jour automatiques, ni protection persistante contre le retour en arrière. `signatureTrust: test-only` demeure une limite explicite ; l’instance hébergée n’est pas présentée comme authentifiée de bout en bout par une clé de signature de production.
+
+[Doctrine et contexte sur gautierdorval.com](https://gautierdorval.com/doctrine/runtime-contexte-gouverne/) · [Guide de référence](README.md) · [English](../en/instance.md)
