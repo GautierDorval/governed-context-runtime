@@ -103,3 +103,29 @@ Dans `/v0/health`, `mcpEnabled: false` concerne uniquement le Worker résolveur.
 La [projection synthétique](../../evidence/publication.json) demeure un exercice de lecture des états de mesure. Elle n’est pas une statistique du service hébergé. Le contrôle réel daté est conservé dans un dossier distinct, sans agrégation entre ces populations.
 
 [Doctrine et contexte sur gautierdorval.com](https://gautierdorval.com/doctrine/runtime-contexte-gouverne/) · [Guide de référence](README.md) · [English](../en/instance.md)
+
+## Vérifier une unité avant utilisation
+
+La réponse brute d’une unité v0 ne constitue pas un contexte vérifié autonome. L’en-tête HTTP `X-Corpus-Root-Digest` l’accompagne et reste accessible au JavaScript du navigateur. Un outil qui ne transmet que le corps JSON perd cet en-tête. MCP transporte la racine dans son enveloppe. Aucune de ces déclarations ne prouve à elle seule l’appartenance à l’instantané.
+
+L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. Les champs de couverture proviennent de la recette archivée dans cet instantané. L’empreinte historique d’enveloppe ne couvre que `requiredFieldsInPreimage` ; les autres champs sont explicitement recensés hors de cette empreinte. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
+
+```javascript
+import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
+const inspected = await inspectVerifiedUnit({
+  snapshotBytes,       // octets de l’instantané complet capturé
+  unitBytes,           // corps REST ou contentBase64 MCP décodé
+  expectedRoot,        // racine choisie séparément par la politique locale
+  getArchive,          // uri => octets capturés, sans réseau implicite
+  expectedIntents,     // catalogue indépendant facultatif
+});
+// Transmettre ensemble inspected.unit, inspected.selectedValue et inspected.verification.
+```
+
+Le chemin explicite est `/v0/snapshots/` suivi des 64 caractères hexadécimaux de la racine épinglée séparément. Récupérer ensuite les URI d’archives énumérées par cet instantané. L’exemple ne fait aucun appel réseau, ne valide aucune signature et ne décide d’aucune permission. Son résultat établit une cohérence avec la racine choisie, sans prouver une clé de production, l’actualité, l’autorité ou une permission d’exécution. Les [contre-épreuves](../../spec/examples/test-verified-unit.mjs) refusent une unité modifiée même si son empreinte historique reste identique.
+
+## Lire précisément le cycle de vie et la découverte
+
+Partir de l’index Runtime, suivre `entrypoints.health`, puis `externalAdapters.mcp.endpoint` dans la réponse de santé. `server/discover` et `tools/list` établissent le protocole et les outils proposés ; récupérer un artefact vérifie séparément sa disponibilité. L’OpenAPI REST décrit le résolveur, sans englober le transport MCP séparé.
+
+`/v0/lifecycle` énumère actuellement les racines disponibles avec leur statut courant ou archivé et une liste d’événements vide. Cet inventaire ne constitue pas une chronologie des déploiements en production. Son ordre par empreinte ne fournit ni dates historiques de publication, ni mises à jour automatiques, ni protection persistante contre le retour en arrière. `signatureTrust: test-only` demeure une limite explicite ; l’instance hébergée n’est pas présentée comme authentifiée de bout en bout par une clé de signature de production.

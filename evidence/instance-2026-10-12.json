@@ -110,5 +110,36 @@
     "Does not establish future availability, whole-corpus integrity, adoption, model fidelity or causality.",
     "Digests identify captured responses retained by the producer; public report does not bundle response bodies."
   ],
-  "clientSetupNote": "A preceding request without required per-request metadata was rejected with HTTP 400. This observation uses the corrected request format."
+  "clientSetupNote": "A preceding request without required per-request metadata was rejected with HTTP 400. This observation uses the corrected request format.",
+  "closureReconciliation": {
+    "observer": "producer Codex",
+    "dateUtc": "2026-10-12",
+    "runtimeVersion": "0.3.0-proposed",
+    "requests": {
+      "nodeRetained": 15,
+      "powershellRetained": 4,
+      "headCaptureFailureNotRepeated": 1,
+      "totalAttempted": 20,
+      "retries": 0,
+      "redirectsFollowed": 0
+    },
+    "crossClientComparisons": 4,
+    "openApiResponseSchemas": 7,
+    "clientScope": "Node fetch and PowerShell .NET on one workstation; same network location",
+    "sameRoot": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c",
+    "mcpDiscovery": "Runtime index -> health -> externalAdapters.mcp.endpoint -> server/discover -> tools/list -> get_attested_unit",
+    "unitVerification": {
+      "completeRecordsVerified": 2,
+      "snapshotRootPinnedFrom": "previous operator deployment receipt",
+      "archives": "previous live HTTPS capture, same root",
+      "alteredRecordsRejected": 2,
+      "independentTrustOrganization": false
+    },
+    "limits": [
+      "No global cache coverage or reconstruction of earlier indexed responses.",
+      "No production signing key established.",
+      "Lifecycle inventory is not a deployment chronology.",
+      "Raw v0 body is not a self-contained verified context."
+    ]
+  }
 }

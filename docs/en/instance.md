@@ -103,3 +103,29 @@ In `/v0/health`, `mcpEnabled: false` concerns the resolver Worker only. `externa
 The [synthetic projection](../../evidence/publication.json) remains an exercise in interpreting measurement states. It is not a statistic for the hosted service. The dated real observation is kept separately, without aggregating those populations.
 
 [Doctrine and context on gautierdorval.com](https://gautierdorval.com/en/doctrine/governed-context-runtime/) · [Reference guide](README.md) · [Français](../fr/instance.md)
+
+## Verify an individual unit before use
+
+The raw v0 unit response is not a self-contained verified context. `X-Corpus-Root-Digest` accompanies its HTTP response and is exposed to browser JavaScript; a tool that forwards only the JSON body loses that header. MCP carries the root in its transport envelope. Neither location proves membership by itself.
+
+The [consumer example](../../spec/examples/verified-unit.mjs) accepts a unit body, a complete snapshot, its archives and a root supplied separately by local policy. It verifies the snapshot, compares the **entire unit record** with the verified inventory, and returns the selected source value together with the verification scope. Its coverage fields come from the recipe archived inside that snapshot. The historical envelope digest covers only `requiredFieldsInPreimage`; all other record fields are listed as outside that digest. In particular, the selected value and its type and transformation arrays require the complete snapshot verification.
+
+```javascript
+import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
+const inspected = await inspectVerifiedUnit({
+  snapshotBytes,       // complete captured snapshot bytes
+  unitBytes,           // REST body or decoded MCP contentBase64
+  expectedRoot,        // independently selected by local policy
+  getArchive,          // uri => captured archive bytes; no implicit network
+  expectedIntents,     // optional independently maintained catalogue
+});
+// Pass inspected.unit, inspected.selectedValue AND inspected.verification together.
+```
+
+The explicit retrieval path is `/v0/snapshots/` followed by the 64 hexadecimal characters of the separately pinned root. Fetch the archive URIs listed in that snapshot. The example performs no network request and no signature or permission decision. Its output establishes consistency with the chosen root, not production-key authenticity, currentness, authority or permission to execute instructions. The [counter-tests](../../spec/examples/test-verified-unit.mjs) reject a changed unit even when the historical digest is unchanged.
+
+## Read lifecycle and discovery precisely
+
+Start at the Runtime index, follow `entrypoints.health`, then `externalAdapters.mcp.endpoint` in the health response. `server/discover` and `tools/list` establish the supported protocol and tools; retrieving an artifact is a separate availability check. The REST OpenAPI describes the resolver, not the separate MCP transport.
+
+`/v0/lifecycle` currently lists available snapshot roots with current/archive status and an empty event list. That inventory is not a chronology of production deployments. Its digest ordering supplies no historical publication dates, automatic update policy or persistent rollback protection. `signatureTrust: test-only` remains an explicit limit; the hosted instance is not presented as authenticated end to end by a production signing key.

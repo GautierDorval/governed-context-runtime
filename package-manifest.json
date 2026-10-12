@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/en/instance.md",
-      "sha256": "6677d16d49f25289fd391f67aa136ae0c9f42470ccd0c25f4fd15e138bcb66c1",
-      "bytes": 7213
+      "sha256": "7c188e27df5db683c5327414cd79dc0aafe2407ec1a0377a59f0881ef0888bd7",
+      "bytes": 10128
     },
     {
       "path": "docs/fr/README.md",
@@ -86,8 +86,8 @@
     },
     {
       "path": "docs/fr/instance.md",
-      "sha256": "f716d2d07f00b0238fc15beebae3850f0144b6b2744f4bb7d9341811d07b0b60",
-      "bytes": 7794
+      "sha256": "45fc5cf3a2f9b663987aaf858bf230b3c2f1f6c5673c9feadb3a4d548ff5b78e",
+      "bytes": 11125
     },
     {
       "path": "docs/schemas.md",
@@ -111,8 +111,8 @@
     },
     {
       "path": "evidence/instance-2026-10-12.json",
-      "sha256": "13606629826020db636f8888217dfe46fb3d90b08abd45ef5d315fa9255f3909",
-      "bytes": 4531
+      "sha256": "b880ec16f776899ab7cf153574436b1ebcb3da09691dd1b2e36090921f17c920",
+      "bytes": 5697
     },
     {
       "path": "evidence/publication.json",
@@ -121,18 +121,18 @@
     },
     {
       "path": "package.json",
-      "sha256": "467953f478b1143cbd8cbafb168159c6925746220338ef082b05330f56a805c2",
-      "bytes": 566
+      "sha256": "a399dd8062243c278d42f0e82e59f10f40e311c24c5d4fefaacc0477dab6df00",
+      "bytes": 603
     },
     {
       "path": "rights.json",
-      "sha256": "c532d4b97d3fc4e36a519ab005c92d9f2f93c5d4d8bec2d98ecfe73a4abb447c",
-      "bytes": 10811
+      "sha256": "d2f74efc2a9cbbdac5e60bec09b410089dc5dd93653eed07da6812357b883929",
+      "bytes": 11270
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "1a691b306c9b6686de356d2dbcfa88c1ed34de7da384c264309ac6aeb76df437",
-      "bytes": 5717
+      "sha256": "3b88f78e984652600e9c84034917258aa9922f59c32cb6c2154ad95a0595eec9",
+      "bytes": 5792
     },
     {
       "path": "spec/LICENSE",
@@ -163,6 +163,16 @@
       "path": "spec/examples/synthetic/bundle.json",
       "sha256": "0097fe492042f61542d30d48c2dff2918e7f0ba836089dea1a3d6b9645510b74",
       "bytes": 46818
+    },
+    {
+      "path": "spec/examples/test-verified-unit.mjs",
+      "sha256": "39bca8b1a0b14c43c0e5b4143e240f912cb9cf9be176742f1d2bf8af00ff793f",
+      "bytes": 2691
+    },
+    {
+      "path": "spec/examples/verified-unit.mjs",
+      "sha256": "e194406707d520a7bfdcf3291adee8e69e617744b65467616657454fb11b7352",
+      "bytes": 2444
     },
     {
       "path": "spec/examples/verify-context.mjs",
