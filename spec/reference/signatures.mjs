@@ -37,7 +37,9 @@ export async function verifyTestReceipt(artifact, jwks, policy, {expectedRoot,no
   const parts=artifact.detachedJws.split('.');
   if(parts.length!==3 || parts[1]!=='' || !parts[2]) fail('invalid_detached_jws');
   const header=strictParse(from64(parts[0]));
-  if(keys(header)!=='alg,kid,typ' || header.alg!=='Ed25519' || header.typ!==RECEIPT_TYPE) fail('protected_header_policy');
+  // Compare media types per RFC 7515 section 4.1.9; signature input stays untouched.
+  const mediaType = typeof header.typ === 'string' ? (header.typ.includes('/') ? header.typ : 'application/' + header.typ).toLowerCase() : '';
+  if(keys(header)!=='alg,kid,typ' || header.alg!=='Ed25519' || mediaType!==RECEIPT_TYPE) fail('protected_header_policy');
   if(typeof header.kid!=='string') fail('unknown_kid');
   const candidates=jwks.keys.filter(key=>key.kid===header.kid);
   if(candidates.length!==1) fail('unknown_or_duplicate_kid');

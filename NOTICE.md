@@ -1,7 +1,5 @@
-# Rights and publication boundary
+# Rights
 
-Copyright 2026 Gautier Dorval. The exact files listed in `rights.json` under `spec/` retain their existing scoped Apache-2.0 license. See `spec/LICENSE`. This does not license the Runtime corpus, doctrine, operational datasets, private repositories or third-party source code.
+Copyright Gautier Dorval. Files under `spec/` and `scripts/check-package.mjs` are licensed under the included [Apache-2.0 license](spec/LICENSE). Documentation, project visuals and the public-evidence publication are prepared project material: all rights reserved. Public availability does not grant a general documentation or image license.
 
-Documentation is published by permission of Gautier Dorval with all rights reserved. No general documentation or repository-wide license is granted. Files outside the explicitly listed Apache-2.0 scope remain subject to their applicable rights; public availability does not broaden those rights.
-
-The evidence example is synthetic. No private archive, provider response, private source implementation, hidden audit fixture or source Git history is included.
+No repository-wide license is implied. The runtime’s real corpus, doctrine, operational datasets and third-party source material are outside this grant. Fonts are not embedded or redistributed in the SVGs; standard system fallbacks render text. The social PNG is an export of the editable project SVG. See the per-file [rights register](rights.json).

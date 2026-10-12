@@ -1,49 +1,47 @@
+![Governed Context Runtime. Give AI agents context they can verify. By Gautier Dorval.](assets/banner.svg)
+
 # Governed Context Runtime
 
 **Give AI agents context they can verify.**
 
-When an AI agent uses information about your organization, product or expertise, the sources, definitions and limits behind that information matter. Governed Context Runtime makes those choices explicit in a versioned **context pack**: a prepared set of information with its sources and rules for interpretation.
+A versioned context pack brings together the sources, definitions and interpretation boundaries an agent needs for a declared task. A declared context for the task, a reproducible version and explicit interpretation boundaries. Use the reference checks to inspect what you received before passing it into an agent workflow.
 
-This repository gives developers the schemas, verification code and runnable examples to explore that approach in their own agent workflows.
-
-[Start with the English guide](docs/en/README.md) · [Lire le guide en français](docs/fr/README.md)
-
-## What you gain
-
-- **A clear context for each task.** Select a declared intent and language, then identify the corresponding prepared pack.
-- **A checkable version.** Verify the received content against a separately trusted reference before passing it to an agent.
-- **Explicit interpretation boundaries.** Keep source authority, permitted use and limits attached to the context you provide.
-- **A reproducible starting point.** Run the reference checks locally and inspect the schemas and examples.
+By [Gautier Dorval](https://gautierdorval.com/). [Try the demo](#try-it-locally) · [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md)
 
 ## A concrete use case
 
-An assistant confuses a company's product with the doctrine behind it. A consumer can select the `representation-gap` intent, choose the language and retrieve the declared context pack. It then verifies the pack and its supporting sources before supplying that context to the assistant.
+An assistant confuses a fictional workshop’s explanatory policy with permission to act. Select representation-gap and a language, identify the declared pack, then verify its version and boundaries before supplying it as context. The demo performs the verification steps without calling an agent.
 
-That gives the integration a traceable basis for choosing context. The model's eventual answer still needs its own evaluation.
+## From selection to use
 
-## Try the reference checks
+![Consumer selects; runtime delivers; consumer verifies and permits; agent answers; external evaluation remains separate.](assets/architecture.svg)
 
-With Node.js 24.17.0 or newer, clone this repository and run:
+The consumer selects an intent and language. The runtime delivers the precompiled pack. Verification and permission remain local to the consumer. The agent produces its answer; any external assessment of that answer is a separate step.
+
+## Try it locally
+
+With Node.js 24.17.0 or newer, from this repository’s root:
 
 ```powershell
-git clone https://github.com/GautierDorval/governed-context-runtime.git
-Set-Location governed-context-runtime
+npm run demo
 npm test
 ```
 
-No dependency installation or API key is needed. The included examples exercise content verification, consumer permission checks and public evidence verification using synthetic data.
+**Fictional example.** No installation, account or network call is needed. The demo prints `PASS` for the complete verification and for each expected rejection, ending with `VERIFIED_FICTIONAL_CONTEXT`. It uses a public test key, a fixed example clock and a teaching trust anchor.
 
-[Explore the context verification example](spec/examples/verify-context.mjs) · [Inspect the schemas](spec/context-pack.schema.json)
+[Inspect the demo](spec/examples/demo.mjs) · [See the complete fixture](spec/examples/synthetic/bundle.json)
 
-## Explore the design
+## What you can verify
 
-| Your next step | Read |
-|---|---|
-| Understand the selection and verification flow | [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md) |
-| Inspect what a context pack contains | [Context pack schema](spec/context-pack.schema.json) |
-| Understand the checks and their scope | [Evidence guide](evidence/README.md) |
-| Contribute or reuse material | [Contributing](CONTRIBUTING.md) · [Rights](NOTICE.md) |
+- The receipt matches a locally pinned root under a test key policy.
+- The complete snapshot binds archive bytes, pack identities and unit references.
+- Unknown profiles, conflicting labels and controlled alterations are rejected.
+- Permission stays with the consumer; historical inspection cannot grant current use.
 
-This is a reference package for proposed contracts, with executable examples. It does not include a hosted Runtime service or production corpus. Its tests establish technical behavior on synthetic inputs; they do not measure adoption or improvements in model answers.
+[Verification contract and v0 limits](docs/verification.md) · [Runnable checks](spec/reference/test-public-finish.mjs)
 
-By [Gautier Dorval](https://gautierdorval.com/). The site remains the canonical source of the doctrine; this repository documents the reference contracts and verification code.
+## Explore the reference
+
+[Try the demo](#try-it-locally) · [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md) · [Schemas](docs/schemas.md) · [Evidence](evidence/README.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Rights](NOTICE.md)
+
+Reference edition 0.2.0-proposed. The contracts remain proposed. This package contains offline reference code and fictional examples; it does not bundle a hosted service or production corpus. Integrity does not establish truth, authority or model fidelity. The reference retains the gautierdorval.com instance vocabulary; it is not a qualified generic runtime for arbitrary domains.
