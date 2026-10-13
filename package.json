@@ -1,6 +1,16 @@
 {
   "name": "governed-context-runtime-reference",
   "version": "0.2.0-proposed",
+  "description": "Reference contracts, bilingual documentation and synthetic verification examples for Governed Context Runtime.",
+  "license": "Apache-2.0 AND CC-BY-4.0",
+  "homepage": "https://github.com/GautierDorval/governed-context-runtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GautierDorval/governed-context-runtime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GautierDorval/governed-context-runtime/issues"
+  },
   "private": true,
   "type": "module",
   "engines": {

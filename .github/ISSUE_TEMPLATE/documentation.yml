@@ -1,0 +1,33 @@
+name: Documentation
+description: An unclear, inaccurate or asymmetric passage in the English or French documentation.
+labels: [documentation]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: File and section
+      placeholder: docs/en/instance.md, section 2
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - French
+        - Both (FR/EN asymmetry)
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is unclear or inaccurate
+      description: Quote the passage and explain the expected meaning.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested wording
+      description: Optional. English and French meanings must stay equivalent.

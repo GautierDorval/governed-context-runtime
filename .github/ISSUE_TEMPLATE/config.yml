@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security concern
+    url: https://github.com/GautierDorval/governed-context-runtime/blob/main/SECURITY.md
+    about: Report privately; do not open a public issue.
+  - name: Hosted instance and doctrine
+    url: https://gautierdorval.com/en/doctrine/governed-context-runtime/
+    about: Context, status and limits of the instance at context.gautierdorval.com.

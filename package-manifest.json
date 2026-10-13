@@ -10,39 +10,79 @@
       "bytes": 88
     },
     {
+      "path": ".github/ISSUE_TEMPLATE/bug-report.yml",
+      "sha256": "dfbc13f7de022de70467ec253dbd0e52f09793cad935915bf3859f578297209b",
+      "bytes": 1544
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "sha256": "6eb0f23a6bd3573453889ee2e8f09d79694af8111075ab00a969142a1b018b7c",
+      "bytes": 412
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/documentation.yml",
+      "sha256": "3413a5177333b654313d5f465ad5017dab8977bf151d6f1b241e4246bda4e0b6",
+      "bytes": 873
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "5fc26cd88f0b5221ed678dab27b96f00d28bf0be819ff84f8319b25eaa13aa65",
+      "bytes": 656
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "5e971ac9ebf4af703c22ea5332246f6a8afc4119ab0598b47f335919b35c653c",
+      "bytes": 149
+    },
+    {
       "path": ".github/workflows/verify.yml",
       "sha256": "e0468e017429057462a6d52d8f9cb4390c2a493f4333f910491ea6f59f50e461",
       "bytes": 429
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0f83b0f937f8b51ec4b030ab1f32af70f2762d9a9d611559d28ea639ce370a0a",
-      "bytes": 1004
+      "sha256": "f89348fa7488c6f3cdae36a2e1d9a66d5a37025ffa8d9718b4b6bc38bf11b8b6",
+      "bytes": 1368
     },
     {
       "path": "CITATION.cff",
-      "sha256": "77106311eed92ec6ace700102e6a2f2c5a17e92af3eae8f1a3f40228799e7fab",
-      "bytes": 279
+      "sha256": "e3e06962fd3f6079f7cb4875943a0ddba2585a1be3243da428844dedce2cd80a",
+      "bytes": 465
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "sha256": "de51a1d61a6510a739e66c095978b550f7616b5886b8340897c986dcadae099c",
+      "bytes": 5527
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "382cc059d60ea278de01c04bbd17ddb005213175708ae09fc24a3afdeace8659",
-      "bytes": 566
+      "sha256": "bf05dfb19b85b189e2c8c9e8cb701a87a6f0741be1504d1029e1afae4bb641ce",
+      "bytes": 944
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "path": "LICENSES/CC-BY-4.0.txt",
+      "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94",
+      "bytes": 18656
     },
     {
       "path": "NOTICE.md",
-      "sha256": "5248a10bf6f06fc5976b8840cca502763a3ff27c636ae0467f5b2dd37965cc7e",
-      "bytes": 706
+      "sha256": "7a7934e2ab684919e334e11b13c70f9859087bbc9fa23e140df7662bc65cd385",
+      "bytes": 1613
     },
     {
       "path": "README.md",
-      "sha256": "7b6eaee17bce5f8f4be8a7032aba68967051a1b9c3bef15bc3085e12b9feaf00",
-      "bytes": 3775
+      "sha256": "3dbceebc3addb621a236f4fd14535b336b7c9c82915e823f765605e4a1fcd56d",
+      "bytes": 4774
     },
     {
       "path": "SECURITY.md",
-      "sha256": "021a84090d20a0e3ee8809fffba68bf2d143d122e5fa3cb11d90b34ed135d5bd",
-      "bytes": 931
+      "sha256": "111eda455c32bd626ed93312980542b1d311e5afc56524c801a1e9e7e840b0e0",
+      "bytes": 1061
     },
     {
       "path": "assets/architecture.svg",
@@ -121,23 +161,23 @@
     },
     {
       "path": "package.json",
-      "sha256": "a399dd8062243c278d42f0e82e59f10f40e311c24c5d4fefaacc0477dab6df00",
-      "bytes": 603
+      "sha256": "597a6fdd32dbcfe410f80253dac5d75d0caa0aa7f3b346f154b27ed4cb526d5d",
+      "bytes": 1073
     },
     {
       "path": "rights.json",
-      "sha256": "d60411ec537103a021256456dd5ee9aa0e1ced4c4aa13abda863b1b7fe3cfe73",
-      "bytes": 11275
+      "sha256": "f6ad0d74073385be9e86a4815a5183b0b19f699ed9dd07fa0cc58ac0c9462c8f",
+      "bytes": 12791
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "3b88f78e984652600e9c84034917258aa9922f59c32cb6c2154ad95a0595eec9",
-      "bytes": 5792
+      "sha256": "c8f6f7835921512b73f6ccc204999aab9fba86cbaa16dc6a50dba5929c218d52",
+      "bytes": 7701
     },
     {
       "path": "spec/LICENSE",
-      "sha256": "e95b51ede4d44d9cb0213f9b5b64eb259cdced38fad3a3990cf67d3b593a9e65",
-      "bytes": 627
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
     },
     {
       "path": "spec/attestation-recipes.json",

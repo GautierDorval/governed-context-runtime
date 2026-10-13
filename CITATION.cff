@@ -7,3 +7,10 @@ authors:
   - family-names: Dorval
     given-names: Gautier
 url: https://github.com/GautierDorval/governed-context-runtime
+repository-code: https://github.com/GautierDorval/governed-context-runtime
+keywords:
+  - governed context
+  - context packs
+  - verification
+  - Model Context Protocol
+  - AI governance
