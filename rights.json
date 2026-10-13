@@ -6,7 +6,7 @@
       "path": "spec/LICENSE",
       "source": "spec/LICENSE",
       "license": "Apache-2.0",
-      "sha256": "e95b51ede4d44d9cb0213f9b5b64eb259cdced38fad3a3990cf67d3b593a9e65"
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "path": "spec/context-pack.schema.json",
@@ -113,7 +113,7 @@
     {
       "path": "spec/public-evidence/README.md",
       "source": "spec/public-evidence/README.md",
-      "license": "Apache-2.0",
+      "license": "CC-BY-4.0",
       "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c"
     },
     {
@@ -149,13 +149,13 @@
     {
       "path": "assets/architecture.svg",
       "source": "editable-project-asset",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "a3e7e2b4971eb54cfa6089ac81fc8fdb1781c53e1278768ec1b49e46130b6440"
     },
     {
       "path": "assets/verification.svg",
       "source": "editable-project-asset",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
     },
     {
@@ -173,121 +173,121 @@
     {
       "path": "docs/source.json",
       "source": "paired-editorial-source",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "01c4bcc2a8d2deae8511d9263e13cb46c622aed4eab5a6e850fdb7274586cd7b"
     },
     {
       "path": "README.md",
       "source": "paired-editorial-source",
-      "license": "All rights reserved",
-      "sha256": "7b6eaee17bce5f8f4be8a7032aba68967051a1b9c3bef15bc3085e12b9feaf00"
+      "license": "CC-BY-4.0",
+      "sha256": "3dbceebc3addb621a236f4fd14535b336b7c9c82915e823f765605e4a1fcd56d"
     },
     {
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "1248ddc4075dc6fd22e55bf8ce82455f0451224f165ba2fc5d8f959a7da73e69"
     },
     {
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "e4f345a6161645a875c026edb5163a2f39a173235dcb71f53284c37dc1af6ffd"
     },
     {
       "path": "docs/verification.md",
       "source": "reviewed-contract-explanation",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6"
     },
     {
       "path": "docs/schemas.md",
       "source": "reviewed-schema-mapping",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "acb5a256a0b8c58049a59c8b7441f3984cc9483a5767ad80f17ac70cd6d8c218"
     },
     {
       "path": "SECURITY.md",
       "source": "reviewed-existing-contact",
-      "license": "All rights reserved",
-      "sha256": "021a84090d20a0e3ee8809fffba68bf2d143d122e5fa3cb11d90b34ed135d5bd"
+      "license": "CC-BY-4.0",
+      "sha256": "111eda455c32bd626ed93312980542b1d311e5afc56524c801a1e9e7e840b0e0"
     },
     {
       "path": "evidence/publication.json",
       "source": "historical-public-synthetic-example",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4"
     },
     {
       "path": "evidence/README.md",
       "source": "reviewed-evidence-scope",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "151892705237f32c3a048b9468f126c084450639b849f66c18914404873398dc"
     },
     {
       "path": "NOTICE.md",
       "source": "rights-boundary",
-      "license": "All rights reserved",
-      "sha256": "5248a10bf6f06fc5976b8840cca502763a3ff27c636ae0467f5b2dd37965cc7e"
+      "license": "CC-BY-4.0",
+      "sha256": "7a7934e2ab684919e334e11b13c70f9859087bbc9fa23e140df7662bc65cd385"
     },
     {
       "path": "CONTRIBUTING.md",
       "source": "contribution-contract",
-      "license": "All rights reserved",
-      "sha256": "382cc059d60ea278de01c04bbd17ddb005213175708ae09fc24a3afdeace8659"
+      "license": "CC-BY-4.0",
+      "sha256": "bf05dfb19b85b189e2c8c9e8cb701a87a6f0741be1504d1029e1afae4bb641ce"
     },
     {
       "path": "CHANGELOG.md",
       "source": "edition-notes",
-      "license": "All rights reserved",
-      "sha256": "0f83b0f937f8b51ec4b030ab1f32af70f2762d9a9d611559d28ea639ce370a0a"
+      "license": "CC-BY-4.0",
+      "sha256": "f89348fa7488c6f3cdae36a2e1d9a66d5a37025ffa8d9718b4b6bc38bf11b8b6"
     },
     {
       "path": "CITATION.cff",
       "source": "citation",
-      "license": "All rights reserved",
-      "sha256": "77106311eed92ec6ace700102e6a2f2c5a17e92af3eae8f1a3f40228799e7fab"
+      "license": "CC-BY-4.0",
+      "sha256": "e3e06962fd3f6079f7cb4875943a0ddba2585a1be3243da428844dedce2cd80a"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
-      "license": "All rights reserved",
-      "sha256": "a399dd8062243c278d42f0e82e59f10f40e311c24c5d4fefaacc0477dab6df00"
+      "license": "Apache-2.0",
+      "sha256": "597a6fdd32dbcfe410f80253dac5d75d0caa0aa7f3b346f154b27ed4cb526d5d"
     },
     {
       "path": ".gitattributes",
       "source": "closed-package-configuration",
-      "license": "All rights reserved",
+      "license": "Apache-2.0",
       "sha256": "b151f36790625936ff2c616f36a98a812643a66c5fd28c2ae1b0f87e97996f6a"
     },
     {
       "path": ".github/workflows/verify.yml",
       "source": "pinned-read-only-workflow",
-      "license": "All rights reserved",
+      "license": "Apache-2.0",
       "sha256": "e0468e017429057462a6d52d8f9cb4390c2a493f4333f910491ea6f59f50e461"
     },
     {
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "3b88f78e984652600e9c84034917258aa9922f59c32cb6c2154ad95a0595eec9"
+      "sha256": "c8f6f7835921512b73f6ccc204999aab9fba86cbaa16dc6a50dba5929c218d52"
     },
     {
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "9bfc54fede010798dbf34dc99c1b274c57b1d439db93294fa729341299154e8f"
     },
     {
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "11acdf3edb3f3ba1c9859cbc53454cfc797366c6f40095eebc78c63bd3b6a64c"
     },
     {
       "path": "evidence/instance-2026-10-12.json",
       "source": "dated-operational-documentation",
-      "license": "All rights reserved",
+      "license": "CC-BY-4.0",
       "sha256": "b880ec16f776899ab7cf153574436b1ebcb3da09691dd1b2e36090921f17c920"
     },
     {
@@ -301,7 +301,55 @@
       "source": "spec/examples/verified-unit.mjs",
       "license": "Apache-2.0",
       "sha256": "81c5e5ca626f4e658db48091d80ee7d19a8688a59ad1ece842223d1401bdab8f"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug-report.yml",
+      "source": "repository-edition-2026-10-13",
+      "license": "Apache-2.0",
+      "sha256": "dfbc13f7de022de70467ec253dbd0e52f09793cad935915bf3859f578297209b"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "source": "repository-edition-2026-10-13",
+      "license": "Apache-2.0",
+      "sha256": "6eb0f23a6bd3573453889ee2e8f09d79694af8111075ab00a969142a1b018b7c"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/documentation.yml",
+      "source": "repository-edition-2026-10-13",
+      "license": "Apache-2.0",
+      "sha256": "3413a5177333b654313d5f465ad5017dab8977bf151d6f1b241e4246bda4e0b6"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "source": "repository-edition-2026-10-13",
+      "license": "CC-BY-4.0",
+      "sha256": "5fc26cd88f0b5221ed678dab27b96f00d28bf0be819ff84f8319b25eaa13aa65"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "source": "repository-edition-2026-10-13",
+      "license": "Apache-2.0",
+      "sha256": "5e971ac9ebf4af703c22ea5332246f6a8afc4119ab0598b47f335919b35c653c"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "source": "repository-edition-2026-10-13",
+      "license": "CC-BY-4.0",
+      "sha256": "de51a1d61a6510a739e66c095978b550f7616b5886b8340897c986dcadae099c"
+    },
+    {
+      "path": "LICENSE",
+      "source": "repository-edition-2026-10-13",
+      "license": "Apache-2.0",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "LICENSES/CC-BY-4.0.txt",
+      "source": "repository-edition-2026-10-13",
+      "license": "CC-BY-4.0",
+      "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94"
     }
   ],
-  "selfAndManifest": "rights.json and package-manifest.json are project metadata, all rights reserved; hashes exclude self-reference."
+  "selfAndManifest": "rights.json and package-manifest.json are project metadata under Apache-2.0"
 }

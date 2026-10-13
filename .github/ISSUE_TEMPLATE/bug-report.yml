@@ -1,0 +1,49 @@
+name: Reference defect
+description: A verifier, schema, example or check behaves differently from the documented contract.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use fictional inputs only. For a security concern, follow SECURITY.md instead of opening a public issue.
+  - type: input
+    id: revision
+    attributes:
+      label: Affected revision
+      description: Commit SHA or release tag you tested.
+      placeholder: v0.2.0-proposed or a 40-character commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command and environment
+      description: The exact command (for example `npm test`) and the Node.js version.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: Quote or link the contract section you rely on.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+      description: Output, error code or digest that differs.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction
+      description: The smallest fictional input that shows the difference.
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Confirmations
+      options:
+        - label: This report contains no credential, private dataset, personal information or raw model conversation.
+          required: true
