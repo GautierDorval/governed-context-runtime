@@ -40,7 +40,7 @@ npm test
 
 ## 3. Lire le même pack par MCP
 
-L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas.
+L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas. Les clients effectivement testés sont recensés sous [Clients testés](#clients-testés).
 
 ```powershell
 $mcpUri = 'https://context.gautierdorval.com/mcp'
@@ -90,6 +90,23 @@ if ($observedDigest -ne $envelope.artifactDigest) { throw 'Empreinte incohérent
 PowerShell 7 est requis pour cet exemple. La dernière comparaison contrôle uniquement les octets transportés et leur empreinte déclarée. Elle ne remplace pas la vérification de l’instantané sous une racine épinglée. Aucune réponse de modèle n’est produite.
 
 Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Les arguments sont fermés : identifiants déclarés, langues FR/EN, versions enregistrées et empreintes. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 Kio ; les appels provenant d’un navigateur sont limités aux origines autorisées du site et du Runtime.
+
+## Clients testés
+
+Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP du code publié du Runtime tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
+
+| Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
+|---|---|---|---|---|
+| Script HTTP | PowerShell 7.6.6 `Invoke-RestMethod`, extrait de la section 1 (guides EN et FR) | REST | Registre, pack français et manifeste | Réussi |
+| Script HTTP | PowerShell 7.6.6, extrait MCP de la section 3 (guides EN et FR) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
+| Contrôles HTTP | Node.js 24.17.0 et Python 3.14.6 | REST | 1 781 contrôles chacun : instantané, archives, packs, manifestes, empreintes | Réussi |
+| SDK MCP | `@modelcontextprotocol/client` 2.3.1 sur Node.js 24.17.0 | Streamable HTTP, révision épinglée à `2026-07-28` | Découverte et lecture des ressources, vérification complète de l’instantané, `tools/call`, ressources historiques | Réussi |
+| Client MCP indépendant | Bibliothèque standard de Python 3.14.6 | POST JSON-RPC, `2026-07-28` | Mêmes étapes, écrites séparément | Réussi |
+| Échange ancien | Requête `initialize` de la révision `2025-06-18` | POST JSON-RPC | Une requête | Refusé comme documenté : HTTP 404, JSON-RPC `-32601` |
+| Erreur métier | `tools/call` avec une intention non déclarée | POST JSON-RPC, `2026-07-28` | Une requête | Résultat d’outil avec `isError: true` et la liste des intentions déclarées |
+| Applications agentiques | Claude Code, Codex CLI, Cursor et autres assistants | Sans objet | Aucune | Non testé : chacune exige sa propre configuration vers le point d’accès hébergé, que cette passe n’a pas réalisée |
+
+Le SDK MCP et le client Python indépendant ont joint l’adaptateur par un hôte en boucle locale, avec le résolveur sous workerd. Un client qui exige l’échange `initialize` ne convient pas à ce profil ; cela ne dit rien de la conformité de l’un ou l’autre à sa propre révision. Un adaptateur pour les révisions antérieures est différé : ce serait un changement fonctionnel distinct, pas une correction de guide.
 
 ## Comprendre les états et les preuves
 

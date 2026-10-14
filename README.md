@@ -26,7 +26,7 @@ Retrieve a declared context from [context.gautierdorval.com](https://context.gau
 
 **[Connect through REST or MCP](docs/en/instance.md)** · [Parcours en français](docs/fr/instance.md) · [Dated service observation](evidence/instance-2026-10-12.json)
 
-On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection, digest checks and client compatibility. These are technical service checks; model experiments remain separate.
+On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection and digest checks, and lists the clients and versions actually tested. These are technical service checks; model experiments remain separate.
 
 ## Try it locally
 

@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "b476cea7dd6e4729e2b68dba6fefb8c4030113bfb00cc696e3356fe62f4e09ba"
+      "sha256": "095209f834518ca195b22214eb747cbf3083e670a229a6c89d7d4cf3bd3df76b"
     },
     {
       "path": "SECURITY.md",
@@ -168,7 +168,7 @@
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "9bfc54fede010798dbf34dc99c1b274c57b1d439db93294fa729341299154e8f"
+      "sha256": "db7e54473024d3b1a05f482f0d48e4dab0d7bdc41314766e8a6c5379041d2e65"
     },
     {
       "path": "docs/fr/README.md",
@@ -180,7 +180,7 @@
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "87b88b94c95d402a71ecaaafa2f9cfd910b13abe6bbf1c882bdccc2e7036400c"
+      "sha256": "ac68669a09f5449680d6ea0995ff12ee8c0cc8daeb1157aaa2dfdf90ec731704"
     },
     {
       "path": "docs/schemas.md",
@@ -426,7 +426,7 @@
       "path": "test/editorial.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "b81b4f8801e4dc929e6373761532ca162835e206ec9fd1f36582e1dee78efe35"
+      "sha256": "6f5643a067490b9b464263a4b574f9bb8d5db732ad55dd2e3cb88f5a850ec22f"
     },
     {
       "path": "test/graph.test.mjs",

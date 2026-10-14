@@ -104,3 +104,25 @@ test('French guides use the French diagrams and every English diagram has a Fren
     await read('assets/' + match[1] + '.fr.svg');
   }
 });
+
+test('the tested-client tables have the same rows and outcomes in English and French', async () => {
+  /** @param {string} text @param {string} heading */
+  const rows = (text, heading) => {
+    const section = text.split('\n## ').find(part => part.startsWith(heading));
+    assert(section, heading);
+    return section
+      .split('\n')
+      .filter(
+        line => line.startsWith('| ') && !line.startsWith('| Client type') && !line.startsWith('| Type de client'),
+      );
+  };
+  const english = rows(await read('docs/en/instance.md'), 'Tested clients');
+  const french = rows(await read('docs/fr/instance.md'), 'Clients testés');
+  assert.equal(french.length, english.length);
+  /** @param {string} row */
+  const outcome = row => row.split('|').at(-2)?.trim().split(/[ :]/)[0];
+  const pairs = {Passed: 'Réussi', Refused: 'Refusé', Tool: 'Résultat', Not: 'Non'};
+  english.forEach((row, i) =>
+    assert.equal(outcome(french[i]), pairs[/** @type {keyof typeof pairs} */ (outcome(row))], row),
+  );
+});
