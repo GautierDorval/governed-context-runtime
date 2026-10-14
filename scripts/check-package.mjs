@@ -96,6 +96,8 @@ const licenceFor = path =>
 assert.deepEqual(licences.codePrefixes, ['spec/', 'scripts/', '.github/', 'test/']);
 assert.equal(licences.markdown, 'CC-BY-4.0');
 assert.equal(licences.default, 'CC-BY-4.0');
+// Identity visuals reserved by the owner (2026-10-13), pinned here and not only in the editable policy.
+assert.deepEqual(licences.reserved, ['assets/banner.svg', 'assets/social.svg', 'assets/social.png']);
 assert.deepEqual(Object.entries(licences.licenceTexts), [['LICENSES/CC-BY-4.0.txt', 'CC-BY-4.0']]);
 for (const path of licences.reserved) assert(expected.includes(path), 'reserved path outside the inventory: ' + path);
 

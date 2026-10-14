@@ -45,6 +45,16 @@ const ELEMENTS = {
 };
 const PARENTS = {svg: [''], title: ['svg'], rect: ['svg'], path: ['svg'], text: ['svg']};
 const PREDEFINED = {amp: '&', lt: '<', gt: '>', quot: '"', apos: "'"};
+// XML 1.0 whitespace and Char production; JavaScript whitespace is wider and is not used here.
+const XML_BLANK = /^[ \t\r\n]*$/;
+/** @param {number} code */
+const xmlChar = code =>
+  code === 0x9 ||
+  code === 0xa ||
+  code === 0xd ||
+  (code >= 0x20 && code <= 0xd7ff) ||
+  (code >= 0xe000 && code <= 0xfffd) ||
+  (code >= 0x10000 && code <= 0x10ffff);
 
 /**
  * Decodes the five predefined entities and numeric character references; any other reference is refused.
@@ -58,7 +68,7 @@ function decode(raw) {
     if (Object.hasOwn(PREDEFINED, name)) return PREDEFINED[/** @type {keyof typeof PREDEFINED} */ (name)];
     const numeric = /^#(?:([0-9]{1,7})|x([0-9a-fA-F]{1,6}))$/.exec(name);
     const code = numeric ? Number.parseInt(numeric[1] ?? numeric[2], numeric[1] ? 10 : 16) : NaN;
-    if (!numeric || code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return ((failed = true), '');
+    if (!numeric || !xmlChar(code)) return ((failed = true), '');
     return String.fromCodePoint(code);
   });
   return failed ? null : value;
@@ -73,11 +83,12 @@ export function checkSvg(bytes) {
   if (bytes.length > MAX_BYTES) return ['size: more than ' + MAX_BYTES + ' bytes'];
   let source;
   try {
-    source = new TextDecoder('utf-8', {fatal: true}).decode(bytes);
+    source = new TextDecoder('utf-8', {fatal: true, ignoreBOM: true}).decode(bytes);
   } catch {
     return ['encoding: not UTF-8'];
   }
   if (source.charCodeAt(0) === 0xfeff) return ['encoding: byte order mark'];
+  for (const char of source) if (!xmlChar(char.codePointAt(0) ?? 0)) return ['encoding: character outside XML 1.0'];
   /** @type {string[]} */
   const findings = [];
   /** @type {string[]} */
@@ -95,9 +106,11 @@ export function checkSvg(bytes) {
       const end = source.indexOf('<', index);
       const raw = source.slice(index, end === -1 ? source.length : end);
       const parent = stack.at(-1) ?? '';
-      if (raw.trim() && (!parent || !ELEMENTS[/** @type {keyof typeof ELEMENTS} */ (parent)].text))
+      const blank = XML_BLANK.test(raw);
+      if (!blank && (!parent || !ELEMENTS[/** @type {keyof typeof ELEMENTS} */ (parent)].text))
         return fail('text outside a text element');
-      if (closedRoot && raw.trim()) return fail('content after the root element');
+      if (closedRoot && !blank) return fail('content after the root element');
+      if (raw.includes(']]>')) return fail('character data containing ]]>');
       if (decode(raw) === null) return fail('character reference outside the profile');
       index = end === -1 ? source.length : end;
       continue;
@@ -110,7 +123,9 @@ export function checkSvg(bytes) {
       index += match[0].length;
       continue;
     }
-    const tag = /^<([A-Za-z][A-Za-z0-9:_.-]*)((?:\s+[^\s=/>]+="[^"<]*")*)\s*(\/?)>/.exec(source.slice(index));
+    const tag = /^<([A-Za-z][A-Za-z0-9:_.-]*)((?:[ \t\r\n]+[^ \t\r\n=/>]+="[^"<]*")*)[ \t\r\n]*(\/?)>/.exec(
+      source.slice(index),
+    );
     if (!tag) return fail('markup outside the profile (declaration, instruction, comment, CDATA or malformed tag)');
     const [whole, name, attributeText, selfClosing] = tag;
     if (closedRoot) return fail('content after the root element');
@@ -122,7 +137,7 @@ export function checkSvg(bytes) {
     if (++elements > MAX_ELEMENTS) return fail('too many elements');
     /** @type {Set<string>} */
     const seen = new Set();
-    for (const attribute of attributeText.matchAll(/\s+([^\s=/>]+)="([^"<]*)"/g)) {
+    for (const attribute of attributeText.matchAll(/[ \t\r\n]+([^ \t\r\n=/>]+)="([^"<]*)"/g)) {
       const [, key, raw] = attribute;
       if (seen.has(key)) return fail('duplicate attribute: ' + key);
       seen.add(key);

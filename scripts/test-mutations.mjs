@@ -99,7 +99,30 @@ const MUTANTS = [
 function run(dir, file) {
   const env = {...process.env};
   delete env.NODE_TEST_CONTEXT;
-  return spawnSync(process.execPath, ['--test', file], {cwd: dir, env, encoding: 'utf8'});
+  return spawnSync(process.execPath, ['--test', '--test-reporter=tap', file], {
+    cwd: dir,
+    env,
+    encoding: 'utf8',
+    timeout: 120000,
+  });
+}
+
+/**
+ * Classifies one test run from its process status and its TAP summary.
+ * @param {import('node:child_process').SpawnSyncReturns<string>} result
+ */
+function verdict(result) {
+  const output = (result.stdout ?? '') + (result.stderr ?? '');
+  if (result.error || result.signal || result.status === null) return 'process failure';
+  const count = (/** @type {string} */ label) =>
+    Number(new RegExp('^# ' + label + ' (\\d+)$', 'm').exec(output)?.[1] ?? Number.NaN);
+  const passed = count('pass'),
+    failed = count('fail');
+  if (!Number.isInteger(passed) || !Number.isInteger(failed) || passed + failed === 0) return 'no test report';
+  if (result.status === 0 && failed === 0) return 'pass';
+  if (failed > 0 && /ERR_ASSERTION|AssertionError/.test(output) && !/SyntaxError|ReferenceError/.test(output))
+    return 'assertion failure';
+  return 'other failure';
 }
 
 test('every controlled mutation of the covered verifier paths is detected', async t => {
@@ -112,23 +135,28 @@ test('every controlled mutation of the covered verifier paths is detected', asyn
   const original = await readFile(join(dir, verifier), 'utf8');
   // Controls: the unmodified copy and an equivalent rewrite must both pass, so a detection below
   // cannot come from the copy or the rewrite itself.
-  for (const file of [TEXT, GRAPH]) assert.equal(run(dir, file).status, 0, 'baseline must pass: ' + file);
+  for (const file of [TEXT, GRAPH]) assert.equal(verdict(run(dir, file)), 'pass', 'baseline must pass: ' + file);
   await writeFile(join(dir, verifier), original + '\n// equivalent rewrite\n');
-  for (const file of [TEXT, GRAPH]) assert.equal(run(dir, file).status, 0, 'equivalent rewrite must pass: ' + file);
-  const survivors = [],
-    broken = [];
+  for (const file of [TEXT, GRAPH])
+    assert.equal(verdict(run(dir, file)), 'pass', 'equivalent rewrite must pass: ' + file);
+  /** @type {string[]} */
+  const survivors = [];
+  /** @type {string[]} */
+  const broken = [];
   for (const [name, from, to, file] of MUTANTS) {
     assert.equal(original.split(from).length, 2, 'mutation target must occur exactly once: ' + name);
     await writeFile(
       join(dir, verifier),
       original.replace(from, () => to),
     );
-    const result = run(dir, file);
-    if (result.status === 0) survivors.push(name);
-    else if (/SyntaxError|ReferenceError/.test(result.stdout + result.stderr)) broken.push(name);
+    // Detection requires the named tests to run and fail on an assertion; a crash, a load error,
+    // a signal, a timeout or a missing report is a broken mutant, never a detection.
+    const outcome = verdict(run(dir, file));
+    if (outcome === 'pass') survivors.push(name);
+    else if (outcome !== 'assertion failure') broken.push(name + ': ' + outcome);
   }
   await writeFile(join(dir, verifier), original);
   assert.deepEqual(survivors, [], 'surviving mutants');
-  assert.deepEqual(broken, [], 'mutants must stay valid code, so that detection is behavioural');
+  assert.deepEqual(broken, [], 'every detection must be an assertion failure of the named tests');
   t.diagnostic(`${MUTANTS.length} mutants detected`);
 });

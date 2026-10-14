@@ -18,7 +18,7 @@ These changes are refused by the generator until `package-policy.json` is edited
 - changing a licence class or rule (`licences`);
 - changing `NOTICE.md`, `CITATION.cff` or a licence text (`declarationDigests`).
 
-The checker keeps the official licence texts and the licence split pinned independently of the policy.
+The checker pins, independently of the policy, the official licence texts, the SPDX expression, the reserved identity visuals and the rules for Markdown, code directories and other files. The list of individual code and configuration files comes from the policy and is reviewed with it.
 
 ## Development dependencies
 

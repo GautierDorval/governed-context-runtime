@@ -113,6 +113,22 @@ test('malformed, nested, oversized and trailing content is refused', () => {
   refused(encode(OPEN.slice(0, 40)), /markup outside the profile/);
 });
 
+test('XML 1.0 characters, the CDATA terminator and XML whitespace are enforced', () => {
+  refused(new Uint8Array([0xef, 0xbb, 0xbf, ...encode(OPEN + '</svg>')]), /byte order mark/);
+  for (const code of [0x00, 0x01, 0x08, 0x0b, 0x0c, 0x1f, 0xfffe])
+    refused(wrap('<text x="1" y="1">a' + String.fromCharCode(code) + 'b</text>'), /character outside XML 1.0/);
+  for (const reference of ['&#1;', '&#x1F;', '&#xFFFE;', '&#xD800;'])
+    refused(wrap('<text x="1" y="1">' + reference + '</text>'), /character reference outside the profile/);
+  refused(wrap('<text x="1" y="1">a ]]> b</text>'), /character data containing ]]>/);
+  for (const space of [0xa0, 0x85, 0x2028, 0x3000])
+    refused(
+      wrap('<rect' + String.fromCharCode(space) + 'x="0" y="0" width="1" height="1"/>'),
+      /markup outside the profile|attribute outside/,
+    );
+  assert.deepEqual(checkSvg(wrap('<text x="1" y="1">tab\tand\nnewline &#9;&#xA;</text>')), []);
+  assert.deepEqual(checkSvg(wrap('<rect\tx="0"\ny="0"\r\nwidth="1" height="1"/>')), []);
+});
+
 test('an aria label must point to a declared title', () => {
   refused(
     encode(OPEN.replace('aria-labelledby="t"', 'aria-labelledby="missing"') + '</svg>'),
