@@ -9,6 +9,7 @@ import {spawnSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {verdict} from './mutation-verdict.mjs';
 
 const source = fileURLToPath(new URL('../', import.meta.url));
 const verifier = 'spec/reference/verification.mjs';
@@ -105,24 +106,6 @@ function run(dir, file) {
     encoding: 'utf8',
     timeout: 120000,
   });
-}
-
-/**
- * Classifies one test run from its process status and its TAP summary.
- * @param {import('node:child_process').SpawnSyncReturns<string>} result
- */
-function verdict(result) {
-  const output = (result.stdout ?? '') + (result.stderr ?? '');
-  if (result.error || result.signal || result.status === null) return 'process failure';
-  const count = (/** @type {string} */ label) =>
-    Number(new RegExp('^# ' + label + ' (\\d+)$', 'm').exec(output)?.[1] ?? Number.NaN);
-  const passed = count('pass'),
-    failed = count('fail');
-  if (!Number.isInteger(passed) || !Number.isInteger(failed) || passed + failed === 0) return 'no test report';
-  if (result.status === 0 && failed === 0) return 'pass';
-  if (failed > 0 && /ERR_ASSERTION|AssertionError/.test(output) && !/SyntaxError|ReferenceError/.test(output))
-    return 'assertion failure';
-  return 'other failure';
 }
 
 test('every controlled mutation of the covered verifier paths is detected', async t => {

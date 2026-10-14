@@ -73,13 +73,13 @@ const coverage = checks => {
 
 test('the rebuild reproduces a valid snapshot when nothing is edited (empty graph baseline)', async () => {
   const {result, checks} = await rebuild(() => {});
-  await result;
+  await assert.doesNotReject(result);
   assert.equal(coverage(checks).status, 'PASS');
 });
 
 test('a populated graph is built with the hand-written nodes and dependencies', async () => {
   const {result, checks} = await rebuild(populated, graph => graph, expectedNodes);
-  await result;
+  await assert.doesNotReject(result);
   const {status, nodes} = coverage(checks);
   assert.equal(status, 'PASS');
   assert.equal(nodes.length, 4);
@@ -154,7 +154,7 @@ test('isolated nodes are permitted: a causal context needs no chain pointing to 
     g => g,
     [node('causalContexts', 'cc-a', 0)],
   );
-  await result;
+  await assert.doesNotReject(result);
   assert.equal(coverage(checks).status, 'PASS');
 });
 
@@ -174,7 +174,7 @@ test('v0 dependencies are one level deep, so no cycle can be expressed', async (
     g => g,
     expectedNodes,
   );
-  await result;
+  await assert.doesNotReject(result);
   assert.deepEqual(coverage(checks).nodes[0].dependencies, []);
   // A chain that names another chain resolves to an absent causal context and is refused.
   const toChain = expectedNodes.map(n =>

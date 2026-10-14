@@ -228,19 +228,25 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "9072e2a9f94bccd2609d7916d459f1557bd5fdf8ff070ff03efe81532821a1c4"
+      "sha256": "9650a0466dbc7457a3a934ce6624d43e9c09d394bda772368d165a6d3eeb2b2c"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "862875b51da47fceb95abba11217ff84a4667a47a75aef304d69cb6f84a161bc"
+      "sha256": "de0ea9b33b0ca6bbb3ab194139b06849cd57024d3911c14dd752fcad3a32eefc"
     },
     {
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
       "sha256": "dfded8bbe0f34b101a0aa68182c020f9c1dcd55e9d148fa9e03a947fa87e5db3"
+    },
+    {
+      "path": "scripts/mutation-verdict.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "8fa4c19b28507357b77516394eb12ee0d64743743ed8bc0d8c467201ed3b0ce0"
     },
     {
       "path": "scripts/package-types.d.mts",
@@ -264,7 +270,7 @@
       "path": "scripts/test-mutations.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "e84f24d3bb1f0c5fbd2c38d4f19f5384a91d8cb10ff0d808bc7e52f39bc6cffc"
+      "sha256": "4d5e83c0da2b5b0dd45a9860dc065abae1fc7ca1ceedd8aa64650189a37ea104"
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -432,13 +438,19 @@
       "path": "test/graph.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "84b9200f246c99b8533ede51c3bbfb6d91c4e2b99c7a62eb8789dd0d808bee54"
+      "sha256": "98b8143b0f39c8b500334e81bb979d541b0bf9c098f902c06904ecfef73b6ef7"
+    },
+    {
+      "path": "test/mutation-verdict.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "107d4d91630893111dc55cbe83305844d06ec95b1e803d362ba6d7aa98a14da5"
     },
     {
       "path": "test/schemas.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "11f6a32d506b9dd8ecac8e0d823c77388be974d4b9dcf2267a3af18b96450e36"
+      "sha256": "2d0a0e441cb55b12d09f5fd131bdb18eb235af82b3841e522e9ae965f91a00f2"
     },
     {
       "path": "test/svg-profile.test.mjs",

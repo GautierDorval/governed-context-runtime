@@ -179,7 +179,7 @@ const refusedBy = async (variant, code) => {
 test('the sealing helper alone does not cause a refusal', async () => {
   const variant = await unitVariant(() => {});
   accepts('runtime-snapshot.schema.json', variant.snapshot);
-  await variant.result;
+  await assert.doesNotReject(variant.result);
 });
 
 test('a schema-valid unit without digestAlgorithm is refused by the verifier profile', async () => {
