@@ -29,6 +29,10 @@ Chaque identifiant désigne une chose différente ; une concordance de numéros
 
 L’observation du 12 octobre 2026 a relevé la racine `sha-256:367be59f…`, donnée en entier dans le fichier de preuve. `/v0/lifecycle` liste les racines disponibles aujourd’hui ; il ne dit pas quand chacune a été servie. Une étiquette de version de ce dépôt identifie le contenu du dépôt : elle ne contient ni ne signe une racine de corpus de production, et les clés de la démonstration sont des clés de test.
 
+La [vérification du déploiement du 14 octobre](../../evidence/instance-2026-10-14.json) relève la racine courante `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` pendant la capture du producteur entre 14:53 et 14:54 UTC. La capture REST/MCP et la comparaison des fichiers racine réussissent. Cette observation technique datée ne démontre ni disponibilité future, ni signature de production, ni adoption, ni fidélité des modèles ; le reçu du 12 octobre conserve sa valeur historique.
+
+L’index expose encore `status: stable` ; ce champ ne qualifie ni l’interface ni le profil de signature. Lire les champs `maturity` distincts : interface et recettes d’attestation proposées, signature de test seulement et évaluation scientifique non exécutée. Dans `/v0/health`, `mcpEnabled: false` porte sur `this-resolver-worker-only`. L’adaptateur hébergé séparément est indiqué sous `externalAdapters.mcp` ; sa disponibilité doit être vérifiée à cette adresse. L’observation du 14 octobre comprend des échanges MCP réussis.
+
 ## 1. Choisir un contexte déclaré
 
 Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.

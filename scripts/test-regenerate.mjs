@@ -267,3 +267,50 @@ for (const name of ['rights.json', 'package-manifest.json']) {
     }),
   );
 }
+
+for (const directory of ['.regenerate-staging', '.regenerate']) {
+  for (const fault of ['missing-marker', 'invalid-marker', 'extra-file', 'extra-backup']) {
+    test('recovery preserves ' + directory + ' with ' + fault, async t =>
+      withCopy(t, async dir => {
+        const faultAt = directory === '.regenerate' ? 'published' : 'staged';
+        await rejectsWith(write(dir, {faultAt}), 'simulated_interruption');
+        const state = join(dir, directory);
+        if (fault === 'missing-marker') await rm(join(state, 'owner.json'));
+        if (fault === 'invalid-marker') await writeFile(join(state, 'owner.json'), 'unrelated owner');
+        const extra = fault === 'extra-backup' ? join(state, 'backup', 'user.txt') : join(state, 'user.txt');
+        if (fault.startsWith('extra-')) await writeFile(extra, 'preserve user data');
+        const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+        await rejectsWith(recover(dir), 'unrecognized_recovery_state');
+        assert.deepEqual(
+          [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+          before,
+        );
+        assert((await lstat(state)).isDirectory());
+        if (fault.startsWith('extra-')) assert.equal(await readFile(extra, 'utf8'), 'preserve user data');
+      }),
+    );
+  }
+}
+
+test('CLI recovery preserves an unrelated staging directory', async t =>
+  withCopy(t, async dir => {
+    const staging = join(dir, '.regenerate-staging');
+    await mkdir(staging);
+    await writeFile(join(staging, 'notes.txt'), 'unrelated notes');
+    await rejectsWith(compute(dir), 'incomplete_previous_write');
+    assert.throws(() =>
+      execFileSync(process.execPath, ['scripts/regenerate.mjs', '--recover'], {cwd: dir, stdio: 'pipe'}),
+    );
+    assert.equal(await readFile(join(staging, 'notes.txt'), 'utf8'), 'unrelated notes');
+  }));
+
+test('recovery refuses a directory link instead of traversing it', async t =>
+  withCopy(t, async dir => {
+    const outside = await mkdtemp(join(tmpdir(), 'gcr-unrelated-'));
+    t.after(() => rm(outside, {recursive: true, force: true}));
+    await writeFile(join(outside, 'notes.txt'), 'preserve link target');
+    await symlink(outside, join(dir, '.regenerate-staging'), process.platform === 'win32' ? 'junction' : 'dir');
+    await rejectsWith(recover(dir), 'unrecognized_recovery_state');
+    assert.equal(await readFile(join(outside, 'notes.txt'), 'utf8'), 'preserve link target');
+    assert((await lstat(join(dir, '.regenerate-staging'))).isSymbolicLink());
+  }));
