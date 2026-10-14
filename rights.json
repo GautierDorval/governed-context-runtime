@@ -246,7 +246,7 @@
       "path": "scripts/mutation-verdict.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "e3946902a5d1917a8a101800999815a99b40626a8284c2398c71664ae502b433"
+      "sha256": "c38de38cc1f21fa790ac7d9a1f9e3683a18809da5b87bd4bb861b9d410de4339"
     },
     {
       "path": "scripts/package-types.d.mts",
@@ -444,7 +444,7 @@
       "path": "test/mutation-verdict.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "902b9de0ed4286875dcac6a47416be6b0116d4c4f8bdb9acd42824deb5aa96a9"
+      "sha256": "8071c1f02592157b6f494af9dc7c3055520c5590d1a648adeb87843e5b90728f"
     },
     {
       "path": "test/schemas.test.mjs",
