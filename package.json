@@ -22,9 +22,12 @@
     "regenerate": "node scripts/regenerate.mjs --write",
     "regenerate:check": "node scripts/regenerate.mjs --check",
     "regenerate:recover": "node scripts/regenerate.mjs --recover",
-    "test:dev": "node --test test/schemas.test.mjs"
+    "format": "prettier --write \"scripts/**/*.mjs\" \"test/**/*.mjs\"",
+    "format:check": "prettier --check \"scripts/**/*.mjs\" \"test/**/*.mjs\"",
+    "test:dev": "npm run format:check && node --test test/schemas.test.mjs"
   },
   "devDependencies": {
-    "ajv": "8.20.0"
+    "ajv": "8.20.0",
+    "prettier": "3.9.10"
   }
 }

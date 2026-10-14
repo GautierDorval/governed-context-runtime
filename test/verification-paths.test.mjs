@@ -7,7 +7,8 @@ import assert from 'node:assert/strict';
 import {textBytes, select, artifactPreimage} from '../spec/reference/verification.mjs';
 
 const bytes = (...values) => Uint8Array.from(values);
-const refuses = (fn, code) => assert.throws(fn, error => error.name === 'VerificationError' && error.message === code, code);
+const refuses = (fn, code) =>
+  assert.throws(fn, error => error.name === 'VerificationError' && error.message === code, code);
 
 test('text profile: plain ASCII is unchanged', () => {
   assert.deepEqual(textBytes('abc'), bytes(0x61, 0x62, 0x63));
@@ -89,7 +90,21 @@ test('selectors: absent keys, out-of-range indices and wrong container types are
 });
 
 test('selectors: syntax outside the closed grammar is refused', () => {
-  for (const selector of ['a.b', '$a', '$.', '$..a', '$.list[-1]', '$.list[01]', '$.list[+1]', '$.list[1.0]', '$.list[0][1]', '$.list[]', '$.[0]', '$.a b[x]', '$.list[ 1]']) {
+  for (const selector of [
+    'a.b',
+    '$a',
+    '$.',
+    '$..a',
+    '$.list[-1]',
+    '$.list[01]',
+    '$.list[+1]',
+    '$.list[1.0]',
+    '$.list[0][1]',
+    '$.list[]',
+    '$.[0]',
+    '$.a b[x]',
+    '$.list[ 1]',
+  ]) {
     refuses(() => select(doc, selector), 'unsupported_selector');
   }
   refuses(() => select(doc, 42), 'unsupported_selector');

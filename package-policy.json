@@ -9,6 +9,7 @@
     ".github/dependabot.yml",
     ".github/workflows/verify.yml",
     ".gitignore",
+    ".prettierrc.json",
     "CHANGELOG.md",
     "CITATION.cff",
     "CODE_OF_CONDUCT.md",
@@ -94,6 +95,7 @@
       "package-lock.json",
       ".gitattributes",
       ".gitignore",
+      ".prettierrc.json",
       "rights.json",
       "package-manifest.json",
       "package-policy.json"

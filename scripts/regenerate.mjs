@@ -17,13 +17,20 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const encode = value => Buffer.from(JSON.stringify(value, null, 2) + '\n');
 
 export class RegenerateError extends Error {
-  constructor(code, detail) { super(code + (detail ? ': ' + detail : '')); this.code = code; }
+  constructor(code, detail) {
+    super(code + (detail ? ': ' + detail : ''));
+    this.code = code;
+  }
 }
 
 function parseJson(raw, name) {
   const text = raw.toString('utf8');
   if (text.charCodeAt(0) === 0xfeff) throw new RegenerateError('invalid_json', name + ' starts with a BOM');
-  try { return JSON.parse(text); } catch { throw new RegenerateError('invalid_json', name); }
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new RegenerateError('invalid_json', name);
+  }
 }
 
 async function walk(root, dir = '') {
@@ -33,7 +40,7 @@ async function walk(root, dir = '') {
     const name = dir ? dir + '/' + entry.name : entry.name;
     const stat = await lstat(resolve(root, name));
     if (stat.isSymbolicLink()) throw new RegenerateError('symlink_refused', name);
-    if (stat.isDirectory()) found.push(...await walk(root, name));
+    if (stat.isDirectory()) found.push(...(await walk(root, name)));
     else if (stat.isFile()) found.push(name);
     else throw new RegenerateError('special_file_refused', name);
   }
@@ -51,10 +58,17 @@ export function licenceFor(policy, path) {
 
 export async function compute(root) {
   const policy = parseJson(await readFile(resolve(root, 'package-policy.json')), 'package-policy.json');
-  if (policy.schema !== 'runtime-public-package-policy/1') throw new RegenerateError('unsupported_policy', String(policy.schema));
+  if (policy.schema !== 'runtime-public-package-policy/1')
+    throw new RegenerateError('unsupported_policy', String(policy.schema));
   let pending = null;
-  try { pending = await lstat(resolve(root, STATE_DIR)); } catch {}
-  if (pending) throw new RegenerateError('incomplete_previous_write', 'run --recover to restore the last consistent registries, then --write');
+  try {
+    pending = await lstat(resolve(root, STATE_DIR));
+  } catch {}
+  if (pending)
+    throw new RegenerateError(
+      'incomplete_previous_write',
+      'run --recover to restore the last consistent registries, then --write',
+    );
   const onDisk = (await walk(root)).sort();
   const inventory = [...policy.inventory].sort();
   if (new Set(inventory).size !== inventory.length) throw new RegenerateError('duplicate_inventory_entry');
@@ -65,7 +79,11 @@ export async function compute(root) {
   const bytes = new Map();
   for (const path of inventory) bytes.set(path, await readFile(resolve(root, path)));
   for (const [path, digest] of Object.entries(policy.declarationDigests)) {
-    if (hash(bytes.get(path)) !== digest) throw new RegenerateError('policy_review_required', path + ' differs from the reviewed digest in package-policy.json');
+    if (hash(bytes.get(path)) !== digest)
+      throw new RegenerateError(
+        'policy_review_required',
+        path + ' differs from the reviewed digest in package-policy.json',
+      );
   }
   const previousRights = parseJson(bytes.get('rights.json'), 'rights.json');
   const previousManifest = parseJson(bytes.get('package-manifest.json'), 'package-manifest.json');
@@ -73,9 +91,14 @@ export async function compute(root) {
   const rights = {
     schema: 'runtime-file-rights/1',
     repositoryWideLicense: null,
-    files: inventory.filter(p => !OUTPUTS.includes(p)).map(path => ({
-      path, source: sources.get(path) ?? policy.defaultSource, license: licenceFor(policy, path), sha256: hash(bytes.get(path)),
-    })),
+    files: inventory
+      .filter(p => !OUTPUTS.includes(p))
+      .map(path => ({
+        path,
+        source: sources.get(path) ?? policy.defaultSource,
+        license: licenceFor(policy, path),
+        sha256: hash(bytes.get(path)),
+      })),
     selfAndManifest: policy.selfAndManifest,
   };
   const rightsBytes = encode(rights);
@@ -84,12 +107,17 @@ export async function compute(root) {
     documentVersion: previousManifest.documentVersion,
     fictionalContextRoot: previousManifest.fictionalContextRoot,
     publicEvidencePublicationId: previousManifest.publicEvidencePublicationId,
-    files: inventory.filter(p => p !== 'package-manifest.json').map(path => {
-      const raw = path === 'rights.json' ? rightsBytes : bytes.get(path);
-      return {path, sha256: hash(raw), bytes: raw.length};
-    }),
+    files: inventory
+      .filter(p => p !== 'package-manifest.json')
+      .map(path => {
+        const raw = path === 'rights.json' ? rightsBytes : bytes.get(path);
+        return {path, sha256: hash(raw), bytes: raw.length};
+      }),
   };
-  return new Map([['rights.json', rightsBytes], ['package-manifest.json', encode(manifest)]]);
+  return new Map([
+    ['rights.json', rightsBytes],
+    ['package-manifest.json', encode(manifest)],
+  ]);
 }
 
 export async function check(root) {
@@ -125,7 +153,10 @@ if (invoked) {
   try {
     if (mode === '--check') {
       const stale = await check(root);
-      if (stale.length) { console.error('STALE: ' + stale.join(', ') + ' (run npm run regenerate after review)'); process.exit(1); }
+      if (stale.length) {
+        console.error('STALE: ' + stale.join(', ') + ' (run npm run regenerate after review)');
+        process.exit(1);
+      }
       console.log('PASS: rights.json and package-manifest.json match package-policy.json and the files');
     } else if (mode === '--write') {
       await write(root);
@@ -134,9 +165,11 @@ if (invoked) {
       await recover(root);
       console.log('RECOVERED: last consistent rights.json and package-manifest.json');
     } else {
-      console.error('usage: regenerate.mjs --check | --write | --recover'); process.exit(2);
+      console.error('usage: regenerate.mjs --check | --write | --recover');
+      process.exit(2);
     }
   } catch (error) {
-    console.error('FAIL ' + (error.code || 'error') + ': ' + error.message); process.exit(1);
+    console.error('FAIL ' + (error.code || 'error') + ': ' + error.message);
+    process.exit(1);
   }
 }
