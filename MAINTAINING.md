@@ -43,4 +43,8 @@ Dependabot cannot perform step 2 itself, and no workflow with write access does 
 
 ## Interrupted regeneration
 
-`npm run regenerate` writes through a `.regenerate/` working directory and keeps a backup of the previous registries until both are replaced. If it is interrupted, `npm test` and the generator refuse the intermediate state. Run `npm run regenerate:recover` to restore the last consistent registries, then `npm run regenerate` again.
+`npm run regenerate` prepares both backups and replacement files in `.regenerate-staging/`, then publishes the complete recovery state as `.regenerate/` before replacing either registry. If interrupted, the generator refuses both working directories. Run `npm run regenerate:recover`, then `npm run regenerate` and `npm test`.
+
+Recovery discards unpublished staging files without changing the registries, restores both backups from published state, or finishes cleanup while preserving a completed new pair. Missing backups or invalid JSON are refused before either registry is changed. If both working directories exist, recovery preserves them and refuses the ambiguous state. Do not run writers or recovery concurrently.
+
+An incomplete backup left by an older generator cannot always be recovered automatically. If recovery fails, preserve both working directories and the current registries for diagnosis. Check whether the current pair is intact against a trusted Git revision. If necessary, restore **both** registries from that same revision, preserving other edits. Only after confirming a consistent pair, move the working directories outside the package, then run regeneration and the full tests. Regenerated digests do not prove that recovered metadata was trustworthy.

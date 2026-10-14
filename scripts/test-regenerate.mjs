@@ -250,3 +250,20 @@ test('conflicting staging and published recovery directories are preserved for d
     assert((await lstat(join(dir, '.regenerate'))).isDirectory());
     assert((await lstat(join(dir, '.regenerate-staging'))).isDirectory());
   }));
+
+for (const name of ['rights.json', 'package-manifest.json']) {
+  test('a truncated legacy ' + name + ' backup preserves both current registries', async t =>
+    withCopy(t, async dir => {
+      await rejectsWith(write(dir, {faultAt: 'published'}), 'simulated_interruption');
+      await writeFile(join(dir, 'rights.json'), 'preserve this current content');
+      await writeFile(join(dir, '.regenerate', 'backup', name), '{"schema":');
+      const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+      await rejectsWith(recover(dir), 'invalid_json');
+      assert.deepEqual(
+        [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+        before,
+      );
+      assert((await lstat(join(dir, '.regenerate'))).isDirectory());
+    }),
+  );
+}

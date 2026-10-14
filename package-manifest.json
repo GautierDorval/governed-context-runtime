@@ -81,8 +81,8 @@
     },
     {
       "path": "MAINTAINING.md",
-      "sha256": "17e3225d55e76bc7a092ff08c951f3933472d7eed14fa8e51cfed9ead86e49c3",
-      "bytes": 4171
+      "sha256": "326ef847b8226e89b94febd781eb5b11d2ed87b553ff296db8698bcf1028acaf",
+      "bytes": 5119
     },
     {
       "path": "NOTICE.md",
@@ -201,7 +201,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "d338b78b2c7b3b4763d734b4eddacbbdbcf8cf9941a5c62bdcae0db5fe92d72f",
+      "sha256": "b496ad7c3166dfa4d25effc6b89a4752c3c6c6718402ab382a8907dd2ffb3692",
       "bytes": 17632
     },
     {
@@ -221,8 +221,8 @@
     },
     {
       "path": "scripts/regenerate.mjs",
-      "sha256": "26ed8b7a79edff0ae99f914e5162192d628a3b2aa9aea29410764e4a0d11052e",
-      "bytes": 10427
+      "sha256": "96848cd6d2619bb8f1c5ecb39f53c76c9901a154e3db916964f40c7e653d2be9",
+      "bytes": 10539
     },
     {
       "path": "scripts/svg-profile.mjs",
@@ -236,8 +236,8 @@
     },
     {
       "path": "scripts/test-regenerate.mjs",
-      "sha256": "86e540b0ce469926b535f661d22453c7cddb054b99d19cc08b07f462fd8dcdf1",
-      "bytes": 11590
+      "sha256": "db7e087b21ad4caa694b86055f19647deb8123cc80a391932b876c5df93e35c3",
+      "bytes": 12436
     },
     {
       "path": "spec/LICENSE",

@@ -92,7 +92,7 @@ export async function compute(root) {
     if (await exists(resolve(root, directory)))
       throw new RegenerateError(
         'incomplete_previous_write',
-        'run --recover to restore the last consistent registries, then --write',
+        'run --recover, then --write; if recovery fails, preserve the state and follow MAINTAINING.md',
       );
   }
   const onDisk = (await walk(root)).sort();
@@ -210,8 +210,9 @@ export async function recover(root) {
     return;
   }
   // Read every backup before restoring either registry. Incomplete legacy backups
-  // or damaged recovery state must not partially overwrite the current pair.
+  // or invalid JSON backups must not overwrite either current registry.
   const backups = await Promise.all(OUTPUTS.map(name => readFile(join(state, 'backup', name))));
+  for (const [index, name] of OUTPUTS.entries()) parseJson(backups[index], 'backup/' + name);
   for (const [index, name] of OUTPUTS.entries()) await writeFile(resolve(root, name), backups[index]);
   await rename(state, staging);
   await rm(staging, {recursive: true});
