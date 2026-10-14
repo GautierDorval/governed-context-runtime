@@ -18,6 +18,19 @@
   },
   "scripts": {
     "demo": "node spec/examples/demo.mjs",
-    "test": "node scripts/check-package.mjs && node --test spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json"
+    "test": "node scripts/check-package.mjs && node scripts/regenerate.mjs --check && node --test scripts/test-regenerate.mjs test/verification-paths.test.mjs test/graph.test.mjs test/svg-profile.test.mjs test/editorial.test.mjs test/mutation-verdict.test.mjs scripts/test-mutations.mjs spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json",
+    "regenerate": "node scripts/regenerate.mjs --write",
+    "regenerate:check": "node scripts/regenerate.mjs --check",
+    "regenerate:recover": "node scripts/regenerate.mjs --recover",
+    "format": "prettier --write \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
+    "format:check": "prettier --check \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "test:dev": "npm run format:check && npm run typecheck && node --test test/schemas.test.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "ajv": "8.20.0",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2"
   }
 }

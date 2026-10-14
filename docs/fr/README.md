@@ -11,11 +11,11 @@ npm run demo
 npm test
 ```
 
-Node.js 24.17.0 ou supérieur. Exécuter à la racine du dépôt. État final attendu de la démonstration : `VERIFIED_FICTIONAL_CONTEXT`.
+Node.js 24.17.0 ou supérieur. Exécuter à la racine du dépôt. État final attendu de la démonstration : `VERIFIED_FICTIONAL_CONTEXT`.
 
-![Le consommateur choisit l’intention et la langue. Le runtime distribue le pack précompilé. La vérification et la permission restent locales au consommateur. L’agent produit sa réponse; toute évaluation externe de cette réponse constitue une étape distincte.](../../assets/architecture.svg)
+![Le consommateur choisit l’intention et la langue. Le runtime distribue le pack précompilé. La vérification et la permission restent locales au consommateur. L’agent produit sa réponse ; toute évaluation externe de cette réponse constitue une étape distincte.](../../assets/architecture.fr.svg)
 
-Le consommateur choisit l’intention et la langue. Le runtime distribue le pack précompilé. La vérification et la permission restent locales au consommateur. L’agent produit sa réponse; toute évaluation externe de cette réponse constitue une étape distincte.
+Le consommateur choisit l’intention et la langue. Le runtime distribue le pack précompilé. La vérification et la permission restent locales au consommateur. L’agent produit sa réponse ; toute évaluation externe de cette réponse constitue une étape distincte.
 
 ## L’interface
 
@@ -35,7 +35,7 @@ Sélectionner representation-gap lorsqu’une réponse de modèle déjà identif
 
 ## Exécuter l’exemple
 
-Exécuter npm run demo à la racine du paquet. La fixture fictive fournit un reçu signé, une politique de clé publique de test, la racine attendue, l’instantané et toutes les archives nécessaires. L’horloge fixe appartient à l’exercice, sans prouver une fraîcheur actuelle. Aucune installation, aucun compte privé, téléchargement ou appel à un modèle n’est requis. Pour un usage réel, obtenir séparément la racine attendue et la politique de clés.
+Exécuter npm run demo à la racine du paquet. Le jeu d’essai fictif fournit un reçu signé, une politique de clé publique de test, la racine attendue, l’instantané et toutes les archives nécessaires. L’horloge fixe appartient à l’exercice, sans prouver une fraîcheur actuelle. Aucune installation, aucun compte privé, téléchargement ou appel à un modèle n’est requis. Pour un usage réel, obtenir séparément la racine attendue et la politique de clés.
 
 ## Permission locale
 
@@ -47,7 +47,7 @@ Vérifier l’instantané complet avant d’utiliser une unité. L’enveloppe h
 
 ## Signatures historiques
 
-L’inspection historique d’une signature ne permet pas d’autoriser un usage courant. Le parcours consommateur revérifie toujours le reçu original en mode courant selon sa politique locale. Une date signée par la même clé ne constitue pas un témoin temporel indépendant. Une clé retirée ne peut autoriser un usage courant; une clé révoquée est refusée même pour l’historique. Une politique hors ligne ne permet pas d’établir une compromission ultérieure.
+L’inspection historique d’une signature ne permet pas d’autoriser un usage courant. Le parcours consommateur revérifie toujours le reçu original en mode courant selon sa politique locale. Une date signée par la même clé ne constitue pas un témoin temporel indépendant. Une clé retirée ne peut autoriser un usage courant ; une clé révoquée est refusée même pour l’historique. Une politique hors ligne ne permet pas d’établir une compromission ultérieure.
 
 ## Quand une page suffit
 
@@ -59,9 +59,9 @@ Séparer mesures opérationnelles, vérification technique locale et expérience
 
 ## Limites
 
-L’exemple de preuve publique inclus est synthétique. Son empreinte permet de contrôler l’intégrité du contenu projeté; elle n’authentifie pas sa source. La complétude de la source privée, le déploiement courant, l’adoption spontanée et les effets causaux sur les réponses de modèles ne sont pas établis.
+L’exemple de preuve publique inclus est synthétique. Son empreinte permet de contrôler l’intégrité du contenu projeté ; elle n’authentifie pas sa source. La complétude de la source privée, le déploiement courant, l’adoption spontanée et les effets causaux sur les réponses de modèles ne sont pas établis.
 
-![La racine et la politique de clés épinglées localement précèdent la vérification du reçu. L’instantané complet lie ensuite archives, profils, identités de packs, références d’unités, octets sources et registres de transformations. Les deux étapes doivent réussir avant l’inspection locale. La référence de confiance fournie reste pédagogique.](../../assets/verification.svg)
+![La racine et la politique de clés épinglées localement précèdent la vérification du reçu. L’instantané complet lie ensuite archives, profils, identités de packs, références d’unités, octets sources et registres de transformations. Les deux étapes doivent réussir avant l’inspection locale. La référence de confiance fournie reste pédagogique.](../../assets/verification.fr.svg)
 
 La racine et la politique de clés épinglées localement précèdent la vérification du reçu. L’instantané complet lie ensuite archives, profils, identités de packs, références d’unités, octets sources et registres de transformations. Les deux étapes doivent réussir avant l’inspection locale. La référence de confiance fournie reste pédagogique.
 

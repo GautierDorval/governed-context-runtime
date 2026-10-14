@@ -6,7 +6,7 @@
 
 [![Reference verification](https://github.com/GautierDorval/governed-context-runtime/actions/workflows/verify.yml/badge.svg)](https://github.com/GautierDorval/governed-context-runtime/actions/workflows/verify.yml) [![Release](https://img.shields.io/github/v/release/GautierDorval/governed-context-runtime?include_prereleases&label=release)](https://github.com/GautierDorval/governed-context-runtime/releases) [![Code: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue)](LICENSE) [![Documentation: CC BY 4.0](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey)](LICENSES/CC-BY-4.0.txt)
 
-A versioned context pack brings together the sources, definitions and interpretation boundaries an agent needs for a declared task. A declared context for the task, a reproducible version and explicit interpretation boundaries. Use the reference checks to inspect what you received before passing it into an agent workflow.
+A versioned context pack brings together the sources, definitions and interpretation boundaries an agent needs for a declared task. Each pack is declared for one task, carries a reproducible version and makes its interpretation boundaries explicit. Use the reference checks to inspect what you received before passing it into an agent workflow.
 
 By [Gautier Dorval](https://gautierdorval.com/). [Try the demo](#try-it-locally) · [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md)
 
@@ -26,7 +26,7 @@ Retrieve a declared context from [context.gautierdorval.com](https://context.gau
 
 **[Connect through REST or MCP](docs/en/instance.md)** · [Parcours en français](docs/fr/instance.md) · [Dated service observation](evidence/instance-2026-10-12.json)
 
-On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection, digest checks and client compatibility. These are technical service checks; model experiments remain separate.
+On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection and digest checks, and lists the clients and versions actually tested. These are technical service checks; model experiments remain separate.
 
 ## Try it locally
 

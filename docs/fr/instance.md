@@ -12,6 +12,23 @@ Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a conf
 
 Cette observation établit le fonctionnement décrit à cette date, sans garantir la disponibilité future. Les appels de contrôle sont du trafic technique initié par le producteur, sans appel à un modèle. Ils ne mesurent pas l’adoption ni l’effet du contexte sur une réponse.
 
+## Versions et identifiants
+
+Chaque identifiant désigne une chose différente ; une concordance de numéros d’une ligne à l’autre n’a aucune signification.
+
+| Identifiant | Ce qu’il désigne |
+|---|---|
+| `0.2.0-proposed` dans ce dépôt | Les contrats, le vérificateur et les exemples de référence. Les éditions datées (2026-10-12, 2026-10-13, 2026-10-14) ajoutent documentation, exemples, tests et outils d’entretien sans modifier les octets existants des contrats, du vérificateur ni des exemples. |
+| `runtimeVersion` `0.3.0-proposed` | Le logiciel du Runtime hébergé. |
+| `schemaVersion` `0.1.0-proposed` | Les contrats proposés de l’instantané, de l’inventaire, des archives et des erreurs. |
+| Révision MCP `2026-07-28` | Le profil de protocole servi par l’adaptateur MCP. |
+| `corpusVersion` | Une étiquette de famille. Les instantanés successifs d’une même lignée de corpus gardent la même étiquette, qui n’identifie donc pas le contenu. |
+| Racine de corpus `sha-256:…` | Un instantané exact. C’est le seul identifiant du contenu du corpus. |
+| `version` d’un pack | La version d’un pack dans un instantané, par exemple `0.1.0` ; une même version de pack peut figurer sous plusieurs racines. |
+| `publicationId` dans `evidence/publication.json` | La projection publique synthétique. Ce n’est pas une racine de corpus. |
+
+L’observation du 12 octobre 2026 a relevé la racine `sha-256:367be59f…`, donnée en entier dans le fichier de preuve. `/v0/lifecycle` liste les racines disponibles aujourd’hui ; il ne dit pas quand chacune a été servie. Une étiquette de version de ce dépôt identifie le contenu du dépôt : elle ne contient ni ne signe une racine de corpus de production, et les clés de la démonstration sont des clés de test.
+
 ## 1. Choisir un contexte déclaré
 
 Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.
@@ -31,7 +48,7 @@ Ces commandes lisent les données. La conversion JSON de PowerShell ne conserve 
 
 Une racine ou une empreinte reçue avec le contenu permet de constater une cohérence, mais ne crée pas à elle seule une référence de confiance indépendante. Une empreinte correcte ne prouve ni vérité ni autorité. La décision d’utiliser le contexte appartient au consommateur. Les signatures et clés fournies avec la démonstration restent réservées aux tests ; elles ne sont pas une chaîne de confiance de production.
 
-Pour apprendre le parcours complet avec une fixture fictive et toutes ses archives :
+Pour apprendre le parcours complet avec un jeu d’essai fictif et toutes ses archives :
 
 ```powershell
 npm run demo
@@ -40,7 +57,7 @@ npm test
 
 ## 3. Lire le même pack par MCP
 
-L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas.
+L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas. Les clients effectivement testés sont recensés sous [Clients testés](#clients-testés).
 
 ```powershell
 $mcpUri = 'https://context.gautierdorval.com/mcp'
@@ -90,6 +107,23 @@ if ($observedDigest -ne $envelope.artifactDigest) { throw 'Empreinte incohérent
 PowerShell 7 est requis pour cet exemple. La dernière comparaison contrôle uniquement les octets transportés et leur empreinte déclarée. Elle ne remplace pas la vérification de l’instantané sous une racine épinglée. Aucune réponse de modèle n’est produite.
 
 Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Les arguments sont fermés : identifiants déclarés, langues FR/EN, versions enregistrées et empreintes. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 Kio ; les appels provenant d’un navigateur sont limités aux origines autorisées du site et du Runtime.
+
+## Clients testés
+
+Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP du code publié du Runtime tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
+
+| Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
+|---|---|---|---|---|
+| Script HTTP | PowerShell 7.6.6 `Invoke-RestMethod`, extrait de la section 1 (guides EN et FR) | REST | Registre, pack français et manifeste | Réussi |
+| Script HTTP | PowerShell 7.6.6, extrait MCP de la section 3 (guides EN et FR) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
+| Contrôles HTTP | Node.js 24.17.0 et Python 3.14.6 | REST | 1 781 contrôles chacun : instantané, archives, packs, manifestes, empreintes | Réussi |
+| SDK MCP | `@modelcontextprotocol/client` 2.3.1 sur Node.js 24.17.0 | Streamable HTTP, révision épinglée à `2026-07-28` | Découverte et lecture des ressources, vérification complète de l’instantané, `tools/call`, ressources historiques | Réussi |
+| Client MCP indépendant | Bibliothèque standard de Python 3.14.6 | POST JSON-RPC, `2026-07-28` | Mêmes étapes, écrites séparément | Réussi |
+| Échange ancien | Requête `initialize` de la révision `2025-06-18` | POST JSON-RPC | Une requête | Refusé comme documenté : HTTP 404, JSON-RPC `-32601` |
+| Erreur métier | `tools/call` avec une intention non déclarée | POST JSON-RPC, `2026-07-28` | Une requête | Résultat d’outil avec `isError: true` et la liste des intentions déclarées |
+| Applications agentiques | Claude Code, Codex CLI, Cursor et autres assistants | Sans objet | Aucune | Non testé : chacune exige sa propre configuration vers le point d’accès hébergé, que cette passe n’a pas réalisée |
+
+Le SDK MCP et le client Python indépendant ont joint l’adaptateur par un hôte en boucle locale, avec le résolveur sous workerd. Un client qui exige l’échange `initialize` ne convient pas à ce profil ; cela ne dit rien de la conformité de l’un ou l’autre à sa propre révision. Un adaptateur pour les révisions antérieures est différé : ce serait un changement fonctionnel distinct, pas une correction de guide.
 
 ## Comprendre les états et les preuves
 

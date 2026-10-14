@@ -3,304 +3,10 @@
   "repositoryWideLicense": null,
   "files": [
     {
-      "path": "spec/LICENSE",
-      "source": "spec/LICENSE",
-      "license": "Apache-2.0",
-      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-    },
-    {
-      "path": "spec/context-pack.schema.json",
-      "source": "spec/context-pack.schema.json",
-      "license": "Apache-2.0",
-      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5"
-    },
-    {
-      "path": "spec/context-pack-manifest.schema.json",
-      "source": "spec/context-pack-manifest.schema.json",
-      "license": "Apache-2.0",
-      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289"
-    },
-    {
-      "path": "spec/intent-registry.schema.json",
-      "source": "spec/intent-registry.schema.json",
-      "license": "Apache-2.0",
-      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6"
-    },
-    {
-      "path": "spec/runtime-snapshot.schema.json",
-      "source": "spec/runtime-snapshot.schema.json",
-      "license": "Apache-2.0",
-      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0"
-    },
-    {
-      "path": "spec/attestation-recipes.json",
-      "source": "spec/attestation-recipes.json",
-      "license": "Apache-2.0",
-      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1"
-    },
-    {
-      "path": "spec/reference/verification.mjs",
-      "source": "spec/reference/verification.mjs",
-      "license": "Apache-2.0",
-      "sha256": "bda283c61db54c78aecda23ba02948fb305f96d48821b3ddcfceb3ec2418d7cf"
-    },
-    {
-      "path": "spec/reference/verification.d.mts",
-      "source": "spec/reference/verification.d.mts",
-      "license": "Apache-2.0",
-      "sha256": "62e94a139c28f022095161b19765bd860abe320a5720060f81607a8c1b984977"
-    },
-    {
-      "path": "spec/reference/vectors.json",
-      "source": "spec/reference/vectors.json",
-      "license": "Apache-2.0",
-      "sha256": "326ad909381d8e7f9b4901161e311c3943fb3119f4da00425be7232539b24263"
-    },
-    {
-      "path": "spec/reference/test-vectors.mjs",
-      "source": "spec/reference/test-vectors.mjs",
-      "license": "Apache-2.0",
-      "sha256": "1f4c375a15735b553f3b969c6e8e2a31c9878e9d46c0448b9c570f934bd816b3"
-    },
-    {
-      "path": "spec/reference/signatures.mjs",
-      "source": "spec/reference/signatures.mjs",
-      "license": "Apache-2.0",
-      "sha256": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68"
-    },
-    {
-      "path": "spec/reference/consumer.mjs",
-      "source": "spec/reference/consumer.mjs",
-      "license": "Apache-2.0",
-      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904"
-    },
-    {
-      "path": "spec/reference/test-consumer.mjs",
-      "source": "spec/reference/test-consumer.mjs",
-      "license": "Apache-2.0",
-      "sha256": "8cce57b5cb4ef6831a8de4342c4e8183ffddb45c9d09e987399796fcb61985fa"
-    },
-    {
-      "path": "spec/public-evidence/verify.mjs",
-      "source": "spec/public-evidence/verify.mjs",
-      "license": "Apache-2.0",
-      "sha256": "c4a7bd428e9d799d9549af6f8eb9f4507774ce71ad1f9fb70943f0decfdb8426"
-    },
-    {
-      "path": "spec/public-evidence/fixture.mjs",
-      "source": "spec/public-evidence/fixture.mjs",
-      "license": "Apache-2.0",
-      "sha256": "9cea5adba2955d7e0211d03f7b1a36a613373ecbdbe75f1998db725e4d0431aa"
-    },
-    {
-      "path": "spec/public-evidence/store.mjs",
-      "source": "spec/public-evidence/store.mjs",
-      "license": "Apache-2.0",
-      "sha256": "d29dd7865614b11be0ebf9113b3338474b29e70795ed1e274c489c13c9f72507"
-    },
-    {
-      "path": "spec/public-evidence/test-store.mjs",
-      "source": "spec/public-evidence/test-store.mjs",
-      "license": "Apache-2.0",
-      "sha256": "4d5061535c9cfcebc12e6ca8e06ba0091e02150a28a27f935f10ddfede5dc479"
-    },
-    {
-      "path": "spec/public-evidence/test-publication.mjs",
-      "source": "spec/public-evidence/test-publication.mjs",
-      "license": "Apache-2.0",
-      "sha256": "1a7bae2fbaefd9d71b38af6dc9d03e5e56e4486b6ca5d16877abeae5259c42b2"
-    },
-    {
-      "path": "spec/public-evidence/README.md",
-      "source": "spec/public-evidence/README.md",
-      "license": "CC-BY-4.0",
-      "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c"
-    },
-    {
-      "path": "spec/examples/verify-context.mjs",
-      "source": "spec/examples/verify-context.mjs",
-      "license": "Apache-2.0",
-      "sha256": "729912e1d603a628111842d67d5058ab8a790b4dd4e199f6caf0845f78d3f060"
-    },
-    {
-      "path": "spec/reference/test-public-finish.mjs",
-      "source": "spec/reference/test-public-finish.mjs",
-      "license": "Apache-2.0",
-      "sha256": "5817b2f61a82457ff01c2c63e6e304e9a22874b135c662e22de8554c3ade0ef5"
-    },
-    {
-      "path": "spec/examples/demo.mjs",
-      "source": "spec/examples/demo.mjs",
-      "license": "Apache-2.0",
-      "sha256": "2905dae63337d63aae1f1ffaf1b5c408490ee15422abe7194f85c34721d62ab4"
-    },
-    {
-      "path": "spec/examples/synthetic/bundle.json",
-      "source": "spec/examples/synthetic/bundle.json",
-      "license": "Apache-2.0",
-      "sha256": "0097fe492042f61542d30d48c2dff2918e7f0ba836089dea1a3d6b9645510b74"
-    },
-    {
-      "path": "assets/banner.svg",
-      "source": "editable-project-asset",
-      "license": "All rights reserved",
-      "sha256": "59eaf78d9bf4f680ece853f4f5fe8ab856d6c0ca790110bf595413ef39dc573c"
-    },
-    {
-      "path": "assets/architecture.svg",
-      "source": "editable-project-asset",
-      "license": "CC-BY-4.0",
-      "sha256": "a3e7e2b4971eb54cfa6089ac81fc8fdb1781c53e1278768ec1b49e46130b6440"
-    },
-    {
-      "path": "assets/verification.svg",
-      "source": "editable-project-asset",
-      "license": "CC-BY-4.0",
-      "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
-    },
-    {
-      "path": "assets/social.svg",
-      "source": "editable-project-asset",
-      "license": "All rights reserved",
-      "sha256": "0c8359726c3e6847f05fa16c3444e1eb793d1883202a969ee7d1cfb93e5bc9b4"
-    },
-    {
-      "path": "assets/social.png",
-      "source": "editable-project-asset",
-      "license": "All rights reserved",
-      "sha256": "ae0c8b5dbfd017766950576770576dd238ab1d2aeb65a87d6753c3163afdac00"
-    },
-    {
-      "path": "docs/source.json",
-      "source": "paired-editorial-source",
-      "license": "CC-BY-4.0",
-      "sha256": "01c4bcc2a8d2deae8511d9263e13cb46c622aed4eab5a6e850fdb7274586cd7b"
-    },
-    {
-      "path": "README.md",
-      "source": "paired-editorial-source",
-      "license": "CC-BY-4.0",
-      "sha256": "3dbceebc3addb621a236f4fd14535b336b7c9c82915e823f765605e4a1fcd56d"
-    },
-    {
-      "path": "docs/en/README.md",
-      "source": "paired-editorial-source",
-      "license": "CC-BY-4.0",
-      "sha256": "1248ddc4075dc6fd22e55bf8ce82455f0451224f165ba2fc5d8f959a7da73e69"
-    },
-    {
-      "path": "docs/fr/README.md",
-      "source": "paired-editorial-source",
-      "license": "CC-BY-4.0",
-      "sha256": "e4f345a6161645a875c026edb5163a2f39a173235dcb71f53284c37dc1af6ffd"
-    },
-    {
-      "path": "docs/verification.md",
-      "source": "reviewed-contract-explanation",
-      "license": "CC-BY-4.0",
-      "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6"
-    },
-    {
-      "path": "docs/schemas.md",
-      "source": "reviewed-schema-mapping",
-      "license": "CC-BY-4.0",
-      "sha256": "acb5a256a0b8c58049a59c8b7441f3984cc9483a5767ad80f17ac70cd6d8c218"
-    },
-    {
-      "path": "SECURITY.md",
-      "source": "reviewed-existing-contact",
-      "license": "CC-BY-4.0",
-      "sha256": "111eda455c32bd626ed93312980542b1d311e5afc56524c801a1e9e7e840b0e0"
-    },
-    {
-      "path": "evidence/publication.json",
-      "source": "historical-public-synthetic-example",
-      "license": "CC-BY-4.0",
-      "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4"
-    },
-    {
-      "path": "evidence/README.md",
-      "source": "reviewed-evidence-scope",
-      "license": "CC-BY-4.0",
-      "sha256": "151892705237f32c3a048b9468f126c084450639b849f66c18914404873398dc"
-    },
-    {
-      "path": "NOTICE.md",
-      "source": "rights-boundary",
-      "license": "CC-BY-4.0",
-      "sha256": "7a7934e2ab684919e334e11b13c70f9859087bbc9fa23e140df7662bc65cd385"
-    },
-    {
-      "path": "CONTRIBUTING.md",
-      "source": "contribution-contract",
-      "license": "CC-BY-4.0",
-      "sha256": "bf05dfb19b85b189e2c8c9e8cb701a87a6f0741be1504d1029e1afae4bb641ce"
-    },
-    {
-      "path": "CHANGELOG.md",
-      "source": "edition-notes",
-      "license": "CC-BY-4.0",
-      "sha256": "f89348fa7488c6f3cdae36a2e1d9a66d5a37025ffa8d9718b4b6bc38bf11b8b6"
-    },
-    {
-      "path": "CITATION.cff",
-      "source": "citation",
-      "license": "CC-BY-4.0",
-      "sha256": "e3e06962fd3f6079f7cb4875943a0ddba2585a1be3243da428844dedce2cd80a"
-    },
-    {
-      "path": "package.json",
-      "source": "closed-package-configuration",
-      "license": "Apache-2.0",
-      "sha256": "597a6fdd32dbcfe410f80253dac5d75d0caa0aa7f3b346f154b27ed4cb526d5d"
-    },
-    {
       "path": ".gitattributes",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "b151f36790625936ff2c616f36a98a812643a66c5fd28c2ae1b0f87e97996f6a"
-    },
-    {
-      "path": ".github/workflows/verify.yml",
-      "source": "pinned-read-only-workflow",
-      "license": "Apache-2.0",
-      "sha256": "e0468e017429057462a6d52d8f9cb4390c2a493f4333f910491ea6f59f50e461"
-    },
-    {
-      "path": "scripts/check-package.mjs",
-      "source": "closed-export-verifier",
-      "license": "Apache-2.0",
-      "sha256": "c8f6f7835921512b73f6ccc204999aab9fba86cbaa16dc6a50dba5929c218d52"
-    },
-    {
-      "path": "docs/en/instance.md",
-      "source": "dated-operational-documentation",
-      "license": "CC-BY-4.0",
-      "sha256": "9bfc54fede010798dbf34dc99c1b274c57b1d439db93294fa729341299154e8f"
-    },
-    {
-      "path": "docs/fr/instance.md",
-      "source": "dated-operational-documentation",
-      "license": "CC-BY-4.0",
-      "sha256": "11acdf3edb3f3ba1c9859cbc53454cfc797366c6f40095eebc78c63bd3b6a64c"
-    },
-    {
-      "path": "evidence/instance-2026-10-12.json",
-      "source": "dated-operational-documentation",
-      "license": "CC-BY-4.0",
-      "sha256": "b880ec16f776899ab7cf153574436b1ebcb3da09691dd1b2e36090921f17c920"
-    },
-    {
-      "path": "spec/examples/test-verified-unit.mjs",
-      "source": "spec/examples/test-verified-unit.mjs",
-      "license": "Apache-2.0",
-      "sha256": "c2557e70eed37f1b077d574e7347563f8fbd4d934648ad6f27d420f6e9717e45"
-    },
-    {
-      "path": "spec/examples/verified-unit.mjs",
-      "source": "spec/examples/verified-unit.mjs",
-      "license": "Apache-2.0",
-      "sha256": "81c5e5ca626f4e658db48091d80ee7d19a8688a59ad1ece842223d1401bdab8f"
+      "sha256": "57be89ffb6e2f3824d28a31fe0402c8f7221e5d346f758ae8e7dbf3983bc39a4"
     },
     {
       "path": ".github/ISSUE_TEMPLATE/bug-report.yml",
@@ -324,19 +30,55 @@
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
       "source": "repository-edition-2026-10-13",
       "license": "CC-BY-4.0",
-      "sha256": "5fc26cd88f0b5221ed678dab27b96f00d28bf0be819ff84f8319b25eaa13aa65"
+      "sha256": "7296e5e9f0a9b02f055c28a658acb891327a0607c996546e4486ac43e30c5537"
     },
     {
       "path": ".github/dependabot.yml",
       "source": "repository-edition-2026-10-13",
       "license": "Apache-2.0",
-      "sha256": "5e971ac9ebf4af703c22ea5332246f6a8afc4119ab0598b47f335919b35c653c"
+      "sha256": "87aebf8fc9eeb65360e46e428b4b3a0c700646fafe39c156d8fead86cbb621f5"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "source": "pinned-read-only-workflow",
+      "license": "Apache-2.0",
+      "sha256": "275078b24429400de44f2085997288486cd830609e658fb73dd65fe8386e8d8f"
+    },
+    {
+      "path": ".gitignore",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "ca1838cde9e4cfb493f3ea87a08bf973a9d6102aac688fc8828107d5586042aa"
+    },
+    {
+      "path": ".prettierrc.json",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "fe81a91750af42808baaffa845ebbc8e4426e82de88fd31ea362a61135a7e474"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "source": "edition-notes",
+      "license": "CC-BY-4.0",
+      "sha256": "5215d6ca060dea80588fef3028f6999c266df9be682c4029a03724cc9523e83d"
+    },
+    {
+      "path": "CITATION.cff",
+      "source": "citation",
+      "license": "CC-BY-4.0",
+      "sha256": "e3e06962fd3f6079f7cb4875943a0ddba2585a1be3243da428844dedce2cd80a"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
       "source": "repository-edition-2026-10-13",
       "license": "CC-BY-4.0",
       "sha256": "de51a1d61a6510a739e66c095978b550f7616b5886b8340897c986dcadae099c"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "source": "contribution-contract",
+      "license": "CC-BY-4.0",
+      "sha256": "2d6d1a243b996d58d9014c2792fe4965d54cad02b50e0648d4f96314dc4f4f97"
     },
     {
       "path": "LICENSE",
@@ -349,6 +91,396 @@
       "source": "repository-edition-2026-10-13",
       "license": "CC-BY-4.0",
       "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94"
+    },
+    {
+      "path": "MAINTAINING.md",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "CC-BY-4.0",
+      "sha256": "326ef847b8226e89b94febd781eb5b11d2ed87b553ff296db8698bcf1028acaf"
+    },
+    {
+      "path": "NOTICE.md",
+      "source": "rights-boundary",
+      "license": "CC-BY-4.0",
+      "sha256": "7a7934e2ab684919e334e11b13c70f9859087bbc9fa23e140df7662bc65cd385"
+    },
+    {
+      "path": "README.md",
+      "source": "paired-editorial-source",
+      "license": "CC-BY-4.0",
+      "sha256": "095209f834518ca195b22214eb747cbf3083e670a229a6c89d7d4cf3bd3df76b"
+    },
+    {
+      "path": "SECURITY.md",
+      "source": "reviewed-existing-contact",
+      "license": "CC-BY-4.0",
+      "sha256": "111eda455c32bd626ed93312980542b1d311e5afc56524c801a1e9e7e840b0e0"
+    },
+    {
+      "path": "assets/architecture.fr.svg",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "CC-BY-4.0",
+      "sha256": "9242f807632b3124c6089252192356b8df0149730b25ad90c930bdecddd151fd"
+    },
+    {
+      "path": "assets/architecture.svg",
+      "source": "editable-project-asset",
+      "license": "CC-BY-4.0",
+      "sha256": "a3e7e2b4971eb54cfa6089ac81fc8fdb1781c53e1278768ec1b49e46130b6440"
+    },
+    {
+      "path": "assets/banner.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "59eaf78d9bf4f680ece853f4f5fe8ab856d6c0ca790110bf595413ef39dc573c"
+    },
+    {
+      "path": "assets/social.png",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "ae0c8b5dbfd017766950576770576dd238ab1d2aeb65a87d6753c3163afdac00"
+    },
+    {
+      "path": "assets/social.svg",
+      "source": "editable-project-asset",
+      "license": "All rights reserved",
+      "sha256": "0c8359726c3e6847f05fa16c3444e1eb793d1883202a969ee7d1cfb93e5bc9b4"
+    },
+    {
+      "path": "assets/verification.fr.svg",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "CC-BY-4.0",
+      "sha256": "c43aeed8f03c8f5461c8fe7cb69b9bc38f9102ceb3e14045b96e8490aecf6c8b"
+    },
+    {
+      "path": "assets/verification.svg",
+      "source": "editable-project-asset",
+      "license": "CC-BY-4.0",
+      "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
+    },
+    {
+      "path": "docs/en/README.md",
+      "source": "paired-editorial-source",
+      "license": "CC-BY-4.0",
+      "sha256": "1248ddc4075dc6fd22e55bf8ce82455f0451224f165ba2fc5d8f959a7da73e69"
+    },
+    {
+      "path": "docs/en/instance.md",
+      "source": "dated-operational-documentation",
+      "license": "CC-BY-4.0",
+      "sha256": "af263cead4b3642362e7cb1ca0bdd76bb4fc1051173635c7a72e3590151919b1"
+    },
+    {
+      "path": "docs/fr/README.md",
+      "source": "paired-editorial-source",
+      "license": "CC-BY-4.0",
+      "sha256": "4bf44e44d87f20d7a729d59e349648fab5179bb2cefd1acb3f95aff0f825378d"
+    },
+    {
+      "path": "docs/fr/instance.md",
+      "source": "dated-operational-documentation",
+      "license": "CC-BY-4.0",
+      "sha256": "c2433b609057379a9fd5ee9bc4078ea6b4b344bce63061e09b045c7be718feef"
+    },
+    {
+      "path": "docs/schemas.md",
+      "source": "reviewed-schema-mapping",
+      "license": "CC-BY-4.0",
+      "sha256": "4dc6d482bacaaaec111634f9052154661aa83c7809fb7c306aa5cb44c1fe3e1a"
+    },
+    {
+      "path": "docs/source.json",
+      "source": "paired-editorial-source",
+      "license": "CC-BY-4.0",
+      "sha256": "2b76e83011417ee08f2bcf97bc8f970cf6f307f669924a298fe9b943033f7fe3"
+    },
+    {
+      "path": "docs/verification.md",
+      "source": "reviewed-contract-explanation",
+      "license": "CC-BY-4.0",
+      "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6"
+    },
+    {
+      "path": "evidence/README.md",
+      "source": "reviewed-evidence-scope",
+      "license": "CC-BY-4.0",
+      "sha256": "151892705237f32c3a048b9468f126c084450639b849f66c18914404873398dc"
+    },
+    {
+      "path": "evidence/instance-2026-10-12.json",
+      "source": "dated-operational-documentation",
+      "license": "CC-BY-4.0",
+      "sha256": "b880ec16f776899ab7cf153574436b1ebcb3da09691dd1b2e36090921f17c920"
+    },
+    {
+      "path": "evidence/publication.json",
+      "source": "historical-public-synthetic-example",
+      "license": "CC-BY-4.0",
+      "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4"
+    },
+    {
+      "path": "package-lock.json",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "3f9e402867606c31a81c274d7707656dea83675ff5338dd222a8fe94d7937434"
+    },
+    {
+      "path": "package-policy.json",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "9650a0466dbc7457a3a934ce6624d43e9c09d394bda772368d165a6d3eeb2b2c"
+    },
+    {
+      "path": "package.json",
+      "source": "closed-package-configuration",
+      "license": "Apache-2.0",
+      "sha256": "de0ea9b33b0ca6bbb3ab194139b06849cd57024d3911c14dd752fcad3a32eefc"
+    },
+    {
+      "path": "scripts/check-package.mjs",
+      "source": "closed-export-verifier",
+      "license": "Apache-2.0",
+      "sha256": "dfded8bbe0f34b101a0aa68182c020f9c1dcd55e9d148fa9e03a947fa87e5db3"
+    },
+    {
+      "path": "scripts/mutation-verdict.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "c38de38cc1f21fa790ac7d9a1f9e3683a18809da5b87bd4bb861b9d410de4339"
+    },
+    {
+      "path": "scripts/package-types.d.mts",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "6666b737ede8934842b2c449c0b4c782dabb1305752902f9e5760124e35eed3c"
+    },
+    {
+      "path": "scripts/regenerate.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "96848cd6d2619bb8f1c5ecb39f53c76c9901a154e3db916964f40c7e653d2be9"
+    },
+    {
+      "path": "scripts/svg-profile.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "fd2241c7f8d05d5d4b22dd07827057d0b5eb02ced0fa19dc03c4390a942907b8"
+    },
+    {
+      "path": "scripts/test-mutations.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "4344dbdf80b5f3c237fcb169a539b6413b4c2a2db47bc32c2a778320c8132e8d"
+    },
+    {
+      "path": "scripts/test-regenerate.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "db7e087b21ad4caa694b86055f19647deb8123cc80a391932b876c5df93e35c3"
+    },
+    {
+      "path": "spec/LICENSE",
+      "source": "spec/LICENSE",
+      "license": "Apache-2.0",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "spec/attestation-recipes.json",
+      "source": "spec/attestation-recipes.json",
+      "license": "Apache-2.0",
+      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1"
+    },
+    {
+      "path": "spec/context-pack-manifest.schema.json",
+      "source": "spec/context-pack-manifest.schema.json",
+      "license": "Apache-2.0",
+      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289"
+    },
+    {
+      "path": "spec/context-pack.schema.json",
+      "source": "spec/context-pack.schema.json",
+      "license": "Apache-2.0",
+      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5"
+    },
+    {
+      "path": "spec/examples/demo.mjs",
+      "source": "spec/examples/demo.mjs",
+      "license": "Apache-2.0",
+      "sha256": "2905dae63337d63aae1f1ffaf1b5c408490ee15422abe7194f85c34721d62ab4"
+    },
+    {
+      "path": "spec/examples/synthetic/bundle.json",
+      "source": "spec/examples/synthetic/bundle.json",
+      "license": "Apache-2.0",
+      "sha256": "0097fe492042f61542d30d48c2dff2918e7f0ba836089dea1a3d6b9645510b74"
+    },
+    {
+      "path": "spec/examples/test-verified-unit.mjs",
+      "source": "spec/examples/test-verified-unit.mjs",
+      "license": "Apache-2.0",
+      "sha256": "c2557e70eed37f1b077d574e7347563f8fbd4d934648ad6f27d420f6e9717e45"
+    },
+    {
+      "path": "spec/examples/verified-unit.mjs",
+      "source": "spec/examples/verified-unit.mjs",
+      "license": "Apache-2.0",
+      "sha256": "81c5e5ca626f4e658db48091d80ee7d19a8688a59ad1ece842223d1401bdab8f"
+    },
+    {
+      "path": "spec/examples/verify-context.mjs",
+      "source": "spec/examples/verify-context.mjs",
+      "license": "Apache-2.0",
+      "sha256": "729912e1d603a628111842d67d5058ab8a790b4dd4e199f6caf0845f78d3f060"
+    },
+    {
+      "path": "spec/intent-registry.schema.json",
+      "source": "spec/intent-registry.schema.json",
+      "license": "Apache-2.0",
+      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6"
+    },
+    {
+      "path": "spec/public-evidence/README.md",
+      "source": "spec/public-evidence/README.md",
+      "license": "CC-BY-4.0",
+      "sha256": "086450d831eb144ef2c4a99184808a7bb9ac8c6cf19abfd80ae08067bd69059c"
+    },
+    {
+      "path": "spec/public-evidence/fixture.mjs",
+      "source": "spec/public-evidence/fixture.mjs",
+      "license": "Apache-2.0",
+      "sha256": "9cea5adba2955d7e0211d03f7b1a36a613373ecbdbe75f1998db725e4d0431aa"
+    },
+    {
+      "path": "spec/public-evidence/store.mjs",
+      "source": "spec/public-evidence/store.mjs",
+      "license": "Apache-2.0",
+      "sha256": "d29dd7865614b11be0ebf9113b3338474b29e70795ed1e274c489c13c9f72507"
+    },
+    {
+      "path": "spec/public-evidence/test-publication.mjs",
+      "source": "spec/public-evidence/test-publication.mjs",
+      "license": "Apache-2.0",
+      "sha256": "1a7bae2fbaefd9d71b38af6dc9d03e5e56e4486b6ca5d16877abeae5259c42b2"
+    },
+    {
+      "path": "spec/public-evidence/test-store.mjs",
+      "source": "spec/public-evidence/test-store.mjs",
+      "license": "Apache-2.0",
+      "sha256": "4d5061535c9cfcebc12e6ca8e06ba0091e02150a28a27f935f10ddfede5dc479"
+    },
+    {
+      "path": "spec/public-evidence/verify.mjs",
+      "source": "spec/public-evidence/verify.mjs",
+      "license": "Apache-2.0",
+      "sha256": "c4a7bd428e9d799d9549af6f8eb9f4507774ce71ad1f9fb70943f0decfdb8426"
+    },
+    {
+      "path": "spec/reference/consumer.mjs",
+      "source": "spec/reference/consumer.mjs",
+      "license": "Apache-2.0",
+      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904"
+    },
+    {
+      "path": "spec/reference/signatures.mjs",
+      "source": "spec/reference/signatures.mjs",
+      "license": "Apache-2.0",
+      "sha256": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68"
+    },
+    {
+      "path": "spec/reference/test-consumer.mjs",
+      "source": "spec/reference/test-consumer.mjs",
+      "license": "Apache-2.0",
+      "sha256": "8cce57b5cb4ef6831a8de4342c4e8183ffddb45c9d09e987399796fcb61985fa"
+    },
+    {
+      "path": "spec/reference/test-public-finish.mjs",
+      "source": "spec/reference/test-public-finish.mjs",
+      "license": "Apache-2.0",
+      "sha256": "5817b2f61a82457ff01c2c63e6e304e9a22874b135c662e22de8554c3ade0ef5"
+    },
+    {
+      "path": "spec/reference/test-vectors.mjs",
+      "source": "spec/reference/test-vectors.mjs",
+      "license": "Apache-2.0",
+      "sha256": "1f4c375a15735b553f3b969c6e8e2a31c9878e9d46c0448b9c570f934bd816b3"
+    },
+    {
+      "path": "spec/reference/vectors.json",
+      "source": "spec/reference/vectors.json",
+      "license": "Apache-2.0",
+      "sha256": "326ad909381d8e7f9b4901161e311c3943fb3119f4da00425be7232539b24263"
+    },
+    {
+      "path": "spec/reference/verification.d.mts",
+      "source": "spec/reference/verification.d.mts",
+      "license": "Apache-2.0",
+      "sha256": "ec6e97b003958e7689cce789b663b4e8ca70a6f78f3d1af43291abdc2a107e58"
+    },
+    {
+      "path": "spec/reference/verification.mjs",
+      "source": "spec/reference/verification.mjs",
+      "license": "Apache-2.0",
+      "sha256": "bda283c61db54c78aecda23ba02948fb305f96d48821b3ddcfceb3ec2418d7cf"
+    },
+    {
+      "path": "spec/runtime-snapshot.schema.json",
+      "source": "spec/runtime-snapshot.schema.json",
+      "license": "Apache-2.0",
+      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0"
+    },
+    {
+      "path": "test/editorial.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "6f5643a067490b9b464263a4b574f9bb8d5db732ad55dd2e3cb88f5a850ec22f"
+    },
+    {
+      "path": "test/graph.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "98b8143b0f39c8b500334e81bb979d541b0bf9c098f902c06904ecfef73b6ef7"
+    },
+    {
+      "path": "test/mutation-verdict.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "8071c1f02592157b6f494af9dc7c3055520c5590d1a648adeb87843e5b90728f"
+    },
+    {
+      "path": "test/schemas.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "2d0a0e441cb55b12d09f5fd131bdb18eb235af82b3841e522e9ae965f91a00f2"
+    },
+    {
+      "path": "test/svg-profile.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "9ccf29a138dd72638cb1e75bd87ebc15cce94f6b4eee81ee8120bf1d5ea4365c"
+    },
+    {
+      "path": "test/synthetic-types.d.mts",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "696ed4c94bf4687624ba0d01106647e7f39b43b2cc9583bf4a7c8cf3969abc05"
+    },
+    {
+      "path": "test/synthetic.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "e13f88603e93d2a6a29d2a393ce5406d9c21138d4909c484912a9b42f7e5c2bb"
+    },
+    {
+      "path": "test/verification-paths.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "cf1aba123355976830be7228189b291b02f660f8ea59b37603314ff87aecf767"
+    },
+    {
+      "path": "tsconfig.json",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "295e52d24c56fe4afad1eaeead2afefc679cd212fb053c088dc4a2f4bb46d010"
     }
   ],
   "selfAndManifest": "rights.json and package-manifest.json are project metadata under Apache-2.0"

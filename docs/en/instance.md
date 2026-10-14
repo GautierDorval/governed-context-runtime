@@ -12,6 +12,23 @@ On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP 
 
 This observation establishes the described behaviour at that time, without guaranteeing future availability. These checks are producer-initiated technical traffic, with no model invocation. They do not measure adoption or the effect of context on an answer.
 
+## Versions and identifiers
+
+Each identifier names a different thing; matching numbers carry no meaning across rows.
+
+| Identifier | What it names |
+|---|---|
+| `0.2.0-proposed` in this repository | The reference contracts, verifier and examples. Dated editions (2026-10-12, 2026-10-13, 2026-10-14) add documentation, examples, tests and maintenance tools without changing the existing contract, verifier or example bytes. |
+| `runtimeVersion` `0.3.0-proposed` | The software of the hosted Runtime. |
+| `schemaVersion` `0.1.0-proposed` | The proposed snapshot, inventory, archive and error contracts. |
+| MCP revision `2026-07-28` | The protocol profile served by the MCP adapter. |
+| `corpusVersion` | A family label. Successive snapshots of the same corpus line keep the same label, so it does not identify content. |
+| Corpus root `sha-256:…` | One exact snapshot. It is the only identifier of corpus content. |
+| Pack `version` | The version of one pack within a snapshot, for example `0.1.0`; the same pack version can appear under several roots. |
+| `publicationId` in `evidence/publication.json` | The synthetic public projection. It is not a corpus root. |
+
+The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, given in full in the evidence file. `/v0/lifecycle` lists the roots available now; it does not say when each one was served. A release tag of this repository identifies repository content: it neither contains nor signs a production corpus root, and the demo keys are test keys.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.
@@ -40,7 +57,7 @@ npm test
 
 ## 3. Read the same pack through MCP
 
-The adapter accepts `POST https://context.gautierdorval.com/mcp`. Its served profile uses revision **`2026-07-28`**, `server/discover` discovery and the per-request metadata below. A client requiring the older `initialize` exchange is unsuitable for this profile. Compatibility with a particular application needs verification; an MCP URL alone does not establish it.
+The adapter accepts `POST https://context.gautierdorval.com/mcp`. Its served profile uses revision **`2026-07-28`**, `server/discover` discovery and the per-request metadata below. A client requiring the older `initialize` exchange is unsuitable for this profile. Compatibility with a particular application needs verification; an MCP URL alone does not establish it. The clients actually tested are listed under [Tested clients](#tested-clients).
 
 ```powershell
 $mcpUri = 'https://context.gautierdorval.com/mcp'
@@ -90,6 +107,23 @@ if ($observedDigest -ne $envelope.artifactDigest) { throw 'Digest mismatch' }
 PowerShell 7 is required for this example. The final comparison checks only the transported bytes against their declared digest. It does not replace snapshot verification under a pinned root. No model answer is generated.
 
 The eight tools are `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` and `verify_pack_digest`. Arguments are closed: declared identifiers, FR/EN languages, registered versions and digests. No prompt or arbitrary URL is expected. Requests are limited to 16 KiB; browser calls are limited to the authorized site and Runtime origins.
+
+## Tested clients
+
+Results of **October 14, 2026**, on loopback services: the resolver and the MCP adapter of the published Runtime code ran under workerd (`wrangler dev`) and served the corpus root `sha-256:acf7bc39…`. They show that these clients work with the served contract. They are not observations of the hosted instance, which the dated evidence above covers. Apart from the guide snippets, the clients below are producer checks that are not part of this repository.
+
+| Client type | Client and version | Transport and revision | Steps executed | Result |
+|---|---|---|---|---|
+| HTTP script | PowerShell 7.6.6 `Invoke-RestMethod`, snippet of section 1 (EN and FR guides) | REST | Registry, French pack and manifest | Passed |
+| HTTP script | PowerShell 7.6.6, MCP snippet of section 3 (EN and FR guides) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, base64 decoding, digest comparison | Passed |
+| HTTP checks | Node.js 24.17.0 and Python 3.14.6 | REST | 1,781 checks each: snapshot, archives, packs, manifests, digests | Passed |
+| MCP SDK | `@modelcontextprotocol/client` 2.3.1 on Node.js 24.17.0 | Streamable HTTP, revision pinned to `2026-07-28` | Resource discovery and reading, complete snapshot verification, `tools/call`, historical resources | Passed |
+| Independent MCP client | Python 3.14.6 standard library | POST JSON-RPC, `2026-07-28` | Same steps, written separately | Passed |
+| Older exchange | `initialize` request of revision `2025-06-18` | POST JSON-RPC | One request | Refused as documented: HTTP 404, JSON-RPC `-32601` |
+| Business error | `tools/call` with an undeclared intent | POST JSON-RPC, `2026-07-28` | One request | Tool result with `isError: true` and the list of declared intents |
+| Agentic applications | Claude Code, Codex CLI, Cursor and other assistants | Not applicable | None | Not tested: each needs its own configuration against the hosted endpoint, which this pass did not perform |
+
+The MCP SDK and the independent Python client reached the adapter through a loopback host, with the resolver under workerd. A client that requires the `initialize` exchange is unsuitable for this profile; that says nothing about the conformance of either side to its own revision. An adapter for earlier revisions is deferred: it would be a separate functional change, not a guide correction.
 
 ## Understand the states and evidence
 
