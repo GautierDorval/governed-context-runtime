@@ -35,7 +35,7 @@ L’index expose encore `status: stable` ; ce champ ne qualifie ni l’interfac
 
 L’implémentation des Workers de production est maintenue dans un dépôt privé. Un `sourceCommit` de déploiement comme `7328776…` identifie cette source privée et ne se résout pas dans ce dépôt public de référence. Le code public contient les contrats de référence, les vérificateurs et les exemples, mais pas l’implémentation des Workers de production. Dans les métadonnées de santé, `deployment.timestamp` désigne la création de la version, pas le début de son trafic de production. `sourceCommitVerified: false` demeure une limite de provenance vérifiable indépendamment.
 
-Sur une archive immuable, un instantané adressé par digest ou un pack épinglé par version, `X-Corpus-Root-Digest` peut conserver la racine relevée lors de la mise en cache de cette réponse. Ce n’est pas un signal de fraîcheur du corpus courant. Lire `/v0/snapshot` pour sélectionner la racine courante, puis vérifier l’inventaire choisi et les octets des ressources référencées; distinguer les racines historiques de la découverte courante.
+Sur une archive immuable, un instantané adressé par digest ou un pack épinglé par version, `X-Corpus-Root-Digest` peut conserver la racine relevée lors de la mise en cache de cette réponse. Ce n’est pas un signal de fraîcheur du corpus courant. Lire `/v0/snapshot` pour sélectionner la racine courante, puis vérifier l’inventaire choisi et les octets des ressources référencées. Distinguer les racines historiques de la découverte courante.
 
 ## 1. Choisir un contexte déclaré
 
