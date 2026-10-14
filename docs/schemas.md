@@ -37,3 +37,7 @@ A schema checks the structure of an object that has already been parsed. It cann
 | Graph of the inventory | Equals the nodes built from the packs, in order. | `graph-coverage` |
 
 `test/schemas.test.mjs` runs the four schemas with a closed local catalogue and shows, under a recomputed root, that schema-valid units without these members are refused. It needs the locked development dependencies: `npm ci --ignore-scripts`, then `npm run test:dev`.
+
+## The pinned schema edition
+
+`docs/source.json.publicSpecRepositoryPath` points to commit `d57ee3b`, the merge of pull request #1 on October 11, 2026. The four schemas and `spec/attestation-recipes.json` have kept the same bytes from the initial package (`ca8bc8b`) through later editions; `scripts/check-package.mjs` checks their SHA-256 digests, so a change to any of them requires reviewing the locator. The reference verifier and the examples under `spec/` have changed since `d57ee3b`: for them, use the revision of this repository you are reading.

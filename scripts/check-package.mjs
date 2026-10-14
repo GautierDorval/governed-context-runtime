@@ -21,6 +21,15 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const APACHE_2_0_SHA256 = 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30';
 const CC_BY_4_0_SHA256 = '9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94';
 const SPDX_EXPRESSION = 'Apache-2.0 AND CC-BY-4.0';
+// The schemas and attestation recipes of the edition named by docs/source.json publicSpecRepositoryPath
+// (commit d57ee3b). Later editions keep these bytes; a change requires reviewing that locator.
+const SCHEMA_EDITION = {
+  'spec/context-pack.schema.json': '8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5',
+  'spec/context-pack-manifest.schema.json': 'e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289',
+  'spec/intent-registry.schema.json': 'bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6',
+  'spec/runtime-snapshot.schema.json': '2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0',
+  'spec/attestation-recipes.json': 'f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1',
+};
 const REQUIRED_PATHS = [
   'package-policy.json',
   'rights.json',
@@ -212,6 +221,8 @@ assert.equal(
   docs.publicSpecRepositoryPath,
   'https://github.com/GautierDorval/governed-context-runtime/tree/d57ee3bc6f3edf52019dc8fbe56a18b8f8ddcb9d/spec/',
 );
+for (const [path, digest] of Object.entries(SCHEMA_EDITION))
+  assert.equal(hash(file(path)), digest, path + ' differs from the schema edition named by publicSpecRepositoryPath');
 const fields =
   'title,definition,instance,status,intent,retrieval,localDecision,counterexample,evidence,limits,unitBoundary,historicalBoundary,architectureCaption,verificationCaption,lead,useCase,benefits';
 assert.equal(docs.schema, 'runtime-public-documentation/0.2.0-proposed');

@@ -133,6 +133,15 @@ test('a policy change is never absorbed silently', async t =>
     );
   }));
 
+test('a schema change is refused even after regeneration until its locator is reviewed', async t =>
+  withCopy(t, async dir => {
+    await edit(dir, 'spec/runtime-snapshot.schema.json', text =>
+      text.replace('Additive finite runtime snapshot', 'Edited runtime snapshot'),
+    );
+    await write(dir);
+    assert.match(checker(dir), /^FAIL/, 'the schema edition digest still differs');
+  }));
+
 test('regeneration is idempotent', async t =>
   withCopy(t, async dir => {
     await write(dir);
