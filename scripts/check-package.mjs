@@ -8,6 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import assert from 'node:assert/strict';
 import {strictParse} from '../spec/reference/verification.mjs';
+import {checkSvg} from './svg-profile.mjs';
 /** @import {DocumentationSource, FileRights, PackageJson, PackageLock, PackageManifest, PackagePolicy, SyntheticBundleSummary} from './package-types.d.mts' */
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -115,13 +116,7 @@ for (const item of manifest.files) {
   assert.equal(raw.length, item.bytes, 'length:' + item.path);
   assert.equal(hash(raw), item.sha256, 'digest:' + item.path);
   if (item.path.endsWith('.json')) strictParse(raw);
-  if (item.path.endsWith('.svg')) {
-    const svg = raw.toString();
-    assert(
-      !/<script|<foreignObject|<!ENTITY|<!DOCTYPE|\bon\w+\s*=|\b(?:href|src)\s*=|url\s*\(/i.test(svg),
-      'active SVG',
-    );
-  }
+  if (item.path.endsWith('.svg')) assert.deepEqual(checkSvg(raw), [], 'SVG outside the closed profile: ' + item.path);
 }
 
 /** @type {FileRights} */
