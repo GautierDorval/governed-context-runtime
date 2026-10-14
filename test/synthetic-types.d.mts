@@ -88,13 +88,13 @@ export interface ContextPackManifest {
   [key: string]: unknown;
 }
 
-/** One entry of the check log filled by verifySnapshot. */
-export interface Check {
+/** One entry of the check log filled by verifySnapshot (a type alias, so it is also a Record<string, unknown>). */
+export type Check = {
   id: string;
   expected: unknown;
   actual: unknown;
   status: 'PASS' | 'FAIL';
-}
+};
 
 export interface Sealed {
   snapshot: Snapshot;

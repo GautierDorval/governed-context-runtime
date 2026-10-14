@@ -420,7 +420,7 @@
       "path": "test/synthetic-types.d.mts",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "2137df53834cbef0b4ec9613a6969fc144bbac937b94240c4c7c6303b7b3f0d4"
+      "sha256": "696ed4c94bf4687624ba0d01106647e7f39b43b2cc9583bf4a7c8cf3969abc05"
     },
     {
       "path": "test/synthetic.mjs",
