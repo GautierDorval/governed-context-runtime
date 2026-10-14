@@ -36,8 +36,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "sha256": "ef987da74233ca58869b67ca27e7f32e7b9568a01e9ea8a909ba3643c307df79",
-      "bytes": 744
+      "sha256": "275078b24429400de44f2085997288486cd830609e658fb73dd65fe8386e8d8f",
+      "bytes": 762
     },
     {
       "path": ".gitignore",
@@ -186,7 +186,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "5bb0f7591543b674e7dac3119af30dfbbb96cb6d43e4830e8d7ba2a527454fbf",
+      "sha256": "6410fea50dd20d85e28a75a14e1733b9dc91895b3aa4d90dc1e0a24c96a53879",
       "bytes": 15193
     },
     {

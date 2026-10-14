@@ -42,7 +42,7 @@
       "path": ".github/workflows/verify.yml",
       "source": "pinned-read-only-workflow",
       "license": "Apache-2.0",
-      "sha256": "ef987da74233ca58869b67ca27e7f32e7b9568a01e9ea8a909ba3643c307df79"
+      "sha256": "275078b24429400de44f2085997288486cd830609e658fb73dd65fe8386e8d8f"
     },
     {
       "path": ".gitignore",
