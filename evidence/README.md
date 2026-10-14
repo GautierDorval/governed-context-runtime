@@ -1,16 +1,18 @@
 # Evidence you can reproduce
 
+This directory separates three kinds of material: the fictional offline verification exercise and synthetic metric projection; dated producer observations of the hosted HTTP/MCP service; and model-fidelity experiments, which remain `NOT_RUN`. Start with the [October 14 service observation](instance-2026-10-14.json) for the latest dated producer record in this edition. None of these categories substitutes for another.
+
 Run `npm test` for reference checks, the complete fictional context exercise, and the existing synthetic public-evidence projection. Run `npm run demo` for the shortest path from receipt to verified snapshot.
 
 Both examples are synthetic. They measure no production activity, adoption or effect on model answers. Expected rejection cases are successful controls, not service incidents. The context fixture and evidence publication are distinct artifacts; their identifiers and roots must not be conflated.
 
-The public evidence example preserves measured, measured-zero, partial, unavailable and non-applicable states. Missing values are not zero. Its digest supports integrity checks; it does not authenticate the source or prove completeness of a private source. Real-data export is not supported by this edition. Publication thresholds alone do not prevent inference across reports or overlapping periods.
+The synthetic projection in `evidence/publication.json` preserves measured, measured-zero, partial, unavailable and non-applicable states. Missing values are not zero. Its digest supports integrity checks; it does not authenticate the source or prove completeness of a private source. Real-data export is not supported by this edition. Publication thresholds alone do not prevent inference across reports or overlapping periods.
 
 The reference checks are producer validation. Documentation, a repository and a site rendering of the same evidence are one lineage, not independent confirmations. External model experiments: `NOT_RUN`. Production transport and current deployment are not established by these offline tests.
 
 [Verification limits](../docs/verification.md) · [Synthetic publication](publication.json)
 
-## Hosted instance observation
+## Historical hosted instance observation, October 12, 2026
 
 [October 12, 2026 technical observation](instance-2026-10-12.json) records eight read-only HTTP/JSON-RPC exchanges and their response digests. Its `closureReconciliation` block separately summarizes a later producer reconciliation: 20 attempted requests, of which one HEAD capture failed and was not repeated, and two complete unit records verified against the same root. The producer observed eight MCP tools and identical REST/MCP bytes for one French pack. Raw responses are retained by the producer; this public record is an observation statement, not an independently signed deployment attestation. The offline package tests do not repeat network requests or establish current availability.
 

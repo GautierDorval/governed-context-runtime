@@ -6,7 +6,11 @@ The instance is available at **[context.gautierdorval.com](https://context.gauti
 
 ## Observed status
 
-On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP responses, discovery of eight MCP tools and exact equality of the French `representation-gap` pack received through both transports. The observed registry contains six intents and twelve FR/EN packs. The Runtime declares `0.3.0-proposed`; this repository’s reference edition remains `0.2.0-proposed`. Those versions identify different components.
+The latest dated producer record in this edition is the [October 14, 2026 observation](../../evidence/instance-2026-10-14.json), including its separately timed follow-up reads. It records REST/MCP transport checks and the captured corpus root. It is not a claim of continuous availability. The October 12 check below is historical.
+
+### Historical check, October 12
+
+On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP responses, discovery of eight MCP tools and exact equality of the French `representation-gap` pack received through both transports. The observed registry contains six intents and twelve FR/EN packs. The versions are distinguished in the table below.
 
 [Dated observation and response digests](../../evidence/instance-2026-10-12.json) · [Evidence scope](../../evidence/README.md)
 
@@ -32,6 +36,10 @@ The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, giv
 The later [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the current root `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
 
 The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 14 observation includes successful MCP exchanges.
+
+The production Worker implementation is maintained in a private repository. A deployment `sourceCommit` such as `7328776…` identifies that private source and cannot be resolved in this public reference repository. The public code here contains the reference contracts, verifiers and examples, not the production Worker implementation. In health metadata, `deployment.timestamp` is the version creation time, not the time it started receiving production traffic. `sourceCommitVerified: false` remains a limit on independently verifiable provenance.
+
+On an immutable archive, digest-addressed snapshot or version-pinned pack, `X-Corpus-Root-Digest` can retain the root recorded when that response entered a cache. It is not a freshness signal for the current corpus. Read `/v0/snapshot` to select the current root, then verify the selected inventory and referenced resource bytes; keep historical roots distinct from current discovery.
 
 ## 1. Select a declared context
 
@@ -114,7 +122,7 @@ The eight tools are `list_intents`, `get_intent`, `list_context_packs`, `get_con
 
 ## Tested clients
 
-Results of **October 14, 2026**, on loopback services: the resolver and the MCP adapter of the published Runtime code ran under workerd (`wrangler dev`) and served the corpus root `sha-256:acf7bc39…`. They show that these clients work with the served contract. They are not observations of the hosted instance, which the dated evidence above covers. Apart from the guide snippets, the clients below are producer checks that are not part of this repository.
+Results of **October 14, 2026**, on loopback services: the resolver and the MCP adapter of the privately maintained production Runtime implementation ran under workerd (`wrangler dev`) and served the corpus root `sha-256:acf7bc39…`. They show that these clients work with the served contract. They are not observations of the hosted instance, which the dated evidence above covers. Apart from the guide snippets, the clients below are producer checks that are not part of this repository.
 
 | Client type | Client and version | Transport and revision | Steps executed | Result |
 |---|---|---|---|---|

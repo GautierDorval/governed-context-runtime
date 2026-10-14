@@ -6,7 +6,11 @@ L’instance est accessible sur **[context.gautierdorval.com](https://context.ga
 
 ## État observé
 
-Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a confirmé les réponses HTTP, la découverte des huit outils MCP et l’égalité exacte du pack français `representation-gap` reçu par les deux transports. Le registre observé contient six intentions et douze packs FR/EN. Le Runtime déclare `0.3.0-proposed` ; l’édition de référence de ce dépôt reste `0.2.0-proposed`. Ces versions identifient des composants différents.
+La plus récente observation datée du producteur dans cette édition est celle du [14 octobre 2026](../../evidence/instance-2026-10-14.json), avec ses relectures de suivi horodatées séparément. Elle consigne les vérifications de transport REST/MCP et la racine de corpus capturée, sans garantir une disponibilité continue. Le contrôle du 12 octobre ci-dessous est historique.
+
+### Contrôle historique du 12 octobre
+
+Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a confirmé les réponses HTTP, la découverte des huit outils MCP et l’égalité exacte du pack français `representation-gap` reçu par les deux transports. Le registre observé contient six intentions et douze packs FR/EN. Les versions sont distinguées dans le tableau ci-dessous.
 
 [Observation datée et empreintes des réponses](../../evidence/instance-2026-10-12.json) · [Portée des preuves](../../evidence/README.md)
 
@@ -32,6 +36,10 @@ L’observation du 12 octobre 2026 a relevé la racine `sha-256:367be59f…`, do
 La [vérification du déploiement du 14 octobre](../../evidence/instance-2026-10-14.json) relève la racine courante `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` pendant la capture du producteur entre 14:53 et 14:54 UTC. La capture REST/MCP et la comparaison des fichiers racine réussissent. Cette observation technique datée ne démontre ni disponibilité future, ni signature de production, ni adoption, ni fidélité des modèles ; le reçu du 12 octobre conserve sa valeur historique.
 
 L’index expose encore `status: stable` ; ce champ ne qualifie ni l’interface ni le profil de signature. Lire les champs `maturity` distincts : interface et recettes d’attestation proposées, signature de test seulement et évaluation scientifique non exécutée. Dans `/v0/health`, `mcpEnabled: false` porte sur `this-resolver-worker-only`. L’adaptateur hébergé séparément est indiqué sous `externalAdapters.mcp` ; sa disponibilité doit être vérifiée à cette adresse. L’observation du 14 octobre comprend des échanges MCP réussis.
+
+L’implémentation des Workers de production est maintenue dans un dépôt privé. Un `sourceCommit` de déploiement comme `7328776…` identifie cette source privée et ne se résout pas dans ce dépôt public de référence. Le code public contient les contrats de référence, les vérificateurs et les exemples, mais pas l’implémentation des Workers de production. Dans les métadonnées de santé, `deployment.timestamp` désigne la création de la version, pas le début de son trafic de production. `sourceCommitVerified: false` demeure une limite de provenance vérifiable indépendamment.
+
+Sur une archive immuable, un instantané adressé par digest ou un pack épinglé par version, `X-Corpus-Root-Digest` peut conserver la racine relevée lors de la mise en cache de cette réponse. Ce n’est pas un signal de fraîcheur du corpus courant. Lire `/v0/snapshot` pour sélectionner la racine courante, puis vérifier l’inventaire choisi et les octets des ressources référencées. Distinguer les racines historiques de la découverte courante.
 
 ## 1. Choisir un contexte déclaré
 
@@ -114,7 +122,7 @@ Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_co
 
 ## Clients testés
 
-Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP du code publié du Runtime tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
+Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP de l’implémentation Runtime de production maintenue dans un dépôt privé tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
 
 | Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
 |---|---|---|---|---|

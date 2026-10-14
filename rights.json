@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "8d6a9a157c518f86c8067b1aea15ea61a1d23b9649ffc2d775feccb1714a33f7"
+      "sha256": "63b11ee115769106d5320b4f46ceee3fe08d656ea662502105d2134ad0c1d0b6"
     },
     {
       "path": "CITATION.cff",
@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "095209f834518ca195b22214eb747cbf3083e670a229a6c89d7d4cf3bd3df76b"
+      "sha256": "31b82d37b854cde90f813eefeaa3e1bd560f26abb3ec0f11f1abf0b4f14a9c4c"
     },
     {
       "path": "SECURITY.md",
@@ -162,25 +162,25 @@
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "1248ddc4075dc6fd22e55bf8ce82455f0451224f165ba2fc5d8f959a7da73e69"
+      "sha256": "a92caa6dcc96d9572b6c96998cf4ea43023da8e084275b444509a6949dc7a9a1"
     },
     {
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "932b9c4dd82f8aafb0335994229fb4c5fb3aa0b345878492b55ee6de84d28d14"
+      "sha256": "b40daf51490e11da09c040f68da790b0c6bebcb5baa7d6b6b0e5440d17873d2c"
     },
     {
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "4bf44e44d87f20d7a729d59e349648fab5179bb2cefd1acb3f95aff0f825378d"
+      "sha256": "9c1b7d57507cc7b7f79f64873132cd2d06393552bee32a1980717565b8681faf"
     },
     {
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "8ff198a323215e739a3bf4028253f8e74a9881da4acf47e0367187bb125ff955"
+      "sha256": "2d2535875b5737a033853a23fe6f924d1efdab668e787c60960be34b09b92ffd"
     },
     {
       "path": "docs/schemas.md",
@@ -192,7 +192,7 @@
       "path": "docs/source.json",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "2b76e83011417ee08f2bcf97bc8f970cf6f307f669924a298fe9b943033f7fe3"
+      "sha256": "a8348c5bf8bce9ab8a50b4bad802c5a2c4fef1ff6477ee99fd7312be12fb744b"
     },
     {
       "path": "docs/verification.md",
@@ -204,7 +204,7 @@
       "path": "evidence/README.md",
       "source": "reviewed-evidence-scope",
       "license": "CC-BY-4.0",
-      "sha256": "cb055c620b87dcc802af8f5be8f80d523a04917aca9a330aa4c79e3fe7438a8a"
+      "sha256": "56c3c08fc0093661fb17a20df30c44c72e43731b7385c505545698f8e3fe8fa5"
     },
     {
       "path": "evidence/instance-2026-10-12.json",
@@ -216,7 +216,7 @@
       "path": "evidence/instance-2026-10-14.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "19750aeec4ae383e5764bf8fd5ca3995d0ce14b6510633292b2386a4c2c5c329"
+      "sha256": "e16153d32eb2eced5b65b4d9a253e323c590d4dde568d69247d726f30c0b0293"
     },
     {
       "path": "evidence/publication.json",
@@ -246,7 +246,7 @@
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "dfded8bbe0f34b101a0aa68182c020f9c1dcd55e9d148fa9e03a947fa87e5db3"
+      "sha256": "972672f698684775c10412890918ab070084686b1efc5fccc87172cf825eaf12"
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -258,7 +258,7 @@
       "path": "scripts/package-types.d.mts",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "6666b737ede8934842b2c449c0b4c782dabb1305752902f9e5760124e35eed3c"
+      "sha256": "b0da24f3dca6fd77bd8ed3c41f886984152e06eb3210c72b91dc7de698ccff62"
     },
     {
       "path": "scripts/regenerate.mjs",
@@ -282,7 +282,7 @@
       "path": "scripts/test-regenerate.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "65c939533194ac116595c1506ccf45a0a8428d8b363b3e817957e2e58b0b5d88"
+      "sha256": "a77154f1ab10fe7300fb349566e8c91b055e979b06cdbf16321639dc84299b7d"
     },
     {
       "path": "spec/LICENSE",
@@ -438,7 +438,7 @@
       "path": "test/editorial.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "6f5643a067490b9b464263a4b574f9bb8d5db732ad55dd2e3cb88f5a850ec22f"
+      "sha256": "59ffaaffe7d299c16dc46ea895943ad13b5202721182b1759c45dd1a502821bd"
     },
     {
       "path": "test/graph.test.mjs",

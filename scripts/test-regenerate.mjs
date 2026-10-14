@@ -314,3 +314,23 @@ test('recovery refuses a directory link instead of traversing it', async t =>
     assert.equal(await readFile(join(outside, 'notes.txt'), 'utf8'), 'preserve link target');
     assert((await lstat(join(dir, '.regenerate-staging'))).isSymbolicLink());
   }));
+
+// Child-process version overrides exercise the CLI gate itself without another Node installation.
+for (const version of ['22.22.0', '24.16.999', '24.17.0', '24.18.0', '25.0.0']) {
+  test('package checker enforces the Node minimum at ' + version, () => {
+    const prelude =
+      'data:text/javascript,' +
+      encodeURIComponent(`Object.defineProperty(process.versions, 'node', {value: ${JSON.stringify(version)}});`);
+    const run = () =>
+      execFileSync(process.execPath, ['--import', prelude, 'scripts/check-package.mjs'], {cwd: source, stdio: 'pipe'});
+    if (version === '22.22.0' || version === '24.16.999') {
+      assert.throws(
+        run,
+        error =>
+          error instanceof Error &&
+          'stderr' in error &&
+          String(error.stderr).includes('Node.js >=24.17.0 required; received ' + version),
+      );
+    } else assert.doesNotThrow(run);
+  });
+}

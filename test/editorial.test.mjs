@@ -85,14 +85,69 @@ test('paired English and French fields carry the same numbers', () => {
     assert.deepEqual(numbers(source.fr[field]), numbers(source.en[field]), field);
 });
 
-test('the README opening paragraph ends with the benefits field of its source', async () => {
+test('entry documents bind the hosted service, reference and illustrative context to their source', async () => {
   const readme = await read('README.md');
-  const opening = readme.split('\n\n').find(paragraph => paragraph.startsWith('A versioned context pack'));
-  assert(opening, 'opening paragraph');
-  assert(opening.endsWith(' ' + source.en.benefits), 'rendered from docs/source.json');
-  // The benefits field opens with a full sentence, not a verbless list.
-  assert.match(source.en.benefits, /^Each pack is declared for one task, carries .+ and makes .+ explicit\./);
-  assert.match(source.fr.benefits, /^Chaque pack est déclaré pour une tâche, porte .+ et rend explicites .+\./);
+  const today = readme.indexOf('## What you can use today');
+  const demo = readme.indexOf('## Try it locally');
+  assert(today > 0 && today < demo);
+  assert(readme.indexOf('https://context.gautierdorval.com/') < today);
+  assert(readme.indexOf('This repository provides the proposed contracts') < today);
+  for (const field of ['useCase', 'benefits', 'status', 'architectureCaption'])
+    assert(readme.includes(source.en[field]), 'README source: ' + field);
+  assert(readme.includes('Fictional workshop example'));
+  assert(readme.includes('evidence/instance-2026-10-14.json'));
+  assert(readme.includes('evidence/instance-2026-10-12.json'));
+  for (const lang of ['en', 'fr']) {
+    const guide = await read('docs/' + lang + '/README.md');
+    const fields = lang === 'en' ? source.en : source.fr;
+    for (const [field, value] of Object.entries(fields))
+      assert(guide.includes(value), lang + ' shared field: ' + field);
+    assert(guide.includes('https://context.gautierdorval.com/'));
+    assert(guide.includes('instance.md'));
+    assert(guide.includes('../verification.md'));
+    assert(guide.includes('VERIFIED_FICTIONAL_CONTEXT'));
+    assert(guide.includes('../../evidence/README.md'));
+  }
+});
+
+test('entry links and anchors resolve from each containing document', async () => {
+  const paths = ['README.md', 'docs/en/README.md', 'docs/fr/README.md', 'evidence/README.md'];
+  for (const path of paths) {
+    const body = await read(path);
+    for (const match of body.matchAll(/\]\(([^)\s]+)\)/g)) {
+      const href = match[1];
+      if (/^https?:/.test(href)) continue;
+      const [relative, fragment] = href.split('#');
+      const target = new URL(relative, new URL('../' + path, import.meta.url));
+      const targetText = await readFile(target, 'utf8');
+      if (fragment) {
+        const anchors = [...targetText.matchAll(/^#{1,6} (.+)$/gm)].map(heading =>
+          heading[1]
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}\s_-]/gu, '')
+            .replace(/ /g, '-'),
+        );
+        assert(anchors.includes(decodeURIComponent(fragment)), path + ': ' + href);
+      }
+    }
+  }
+});
+
+test('synthetic evidence and dated service observations remain distinct entry paths', async () => {
+  const evidence = await read('evidence/README.md');
+  assert(evidence.includes('evidence/publication.json'));
+  assert(evidence.includes('instance-2026-10-14.json'));
+  assert(evidence.includes('Historical hosted instance observation, October 12, 2026'));
+  assert(evidence.includes('model-fidelity experiments, which remain `NOT_RUN`'));
+  for (const lang of ['en', 'fr']) {
+    const guide = await read('docs/' + lang + '/README.md');
+    const heading = lang === 'en' ? 'Applications to explore' : 'Applications à explorer';
+    const section = guide.split('## ' + heading + '\n')[1]?.split('\n## ')[0];
+    assert(section, heading);
+    assert.equal(section.split('\n').filter(line => line.startsWith('| ')).length, 4);
+    const instance = await read('docs/' + lang + '/instance.md');
+    assert(instance.indexOf('instance-2026-10-14.json') < instance.indexOf('instance-2026-10-12.json'));
+  }
 });
 
 test('French guides use the French diagrams and every English diagram has a French variant', async () => {

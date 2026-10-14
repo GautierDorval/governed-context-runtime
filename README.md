@@ -6,27 +6,33 @@
 
 [![Reference verification](https://github.com/GautierDorval/governed-context-runtime/actions/workflows/verify.yml/badge.svg)](https://github.com/GautierDorval/governed-context-runtime/actions/workflows/verify.yml) [![Release](https://img.shields.io/github/v/release/GautierDorval/governed-context-runtime?include_prereleases&label=release)](https://github.com/GautierDorval/governed-context-runtime/releases) [![Code: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue)](LICENSE) [![Documentation: CC BY 4.0](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey)](LICENSES/CC-BY-4.0.txt)
 
-A versioned context pack brings together the sources, definitions and interpretation boundaries an agent needs for a declared task. Each pack is declared for one task, carries a reproducible version and makes its interpretation boundaries explicit. Use the reference checks to inspect what you received before passing it into an agent workflow.
+Governed Context Runtime delivers precompiled, versioned context packs with sources and explicit interpretation boundaries for a declared task.
 
-By [Gautier Dorval](https://gautierdorval.com/). [Try the demo](#try-it-locally) · [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md)
+A hosted instance is available at [context.gautierdorval.com](https://context.gautierdorval.com/) over HTTP and through a separate MCP adapter. This repository provides the proposed contracts, verification tools, integration guides and runnable examples for that instance.
 
-## A concrete use case
+By [Gautier Dorval](https://gautierdorval.com/). [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md)
 
-An assistant confuses a fictional workshop’s explanatory policy with permission to act. Select representation-gap and a language, identify the declared pack, then verify its version and boundaries before supplying it as context. The demo performs the verification steps without calling an agent.
+## What you can use today
+
+| Your goal | Available resource | Scope |
+|---|---|---|
+| Retrieve a declared context | [Hosted instance guide](docs/en/instance.md) | The gautierdorval.com corpus; client compatibility is documented separately. |
+| Inspect and verify context artifacts | [Verification guide](docs/verification.md) | Complete snapshot verification under a separately selected trust reference. |
+| Learn the verification path offline | [Local demonstration](#try-it-locally) | Fictional data and test keys; no model invocation. |
+
+The hosted service and this repository have separate publication lifecycles. This repository does not bundle a generic deployment or a production signing infrastructure.
+
+## When context loses meaning
+
+Illustrative example: “Available in Quebec after technical assessment” becomes “Available across Canada.” The service is recognizable, but its geographic scope and a condition have changed. The project explores how to make supplied context and its boundaries identifiable and verifiable before evaluating what an agent preserves in its answer. This fictional example is not an observed model result or an available business pack.
+
+Each pack is declared for one task, carries a reproducible version and makes its interpretation boundaries explicit. Consumers can inspect the context they receive before using it. The fidelity of an agent’s answer is evaluated separately.
 
 ## From selection to use
 
-![Consumer selects; runtime delivers; consumer verifies and permits; agent answers; external evaluation remains separate.](assets/architecture.svg)
+![Consumer selects; runtime delivers; consumer verifies; agent answers; external evaluation remains separate.](assets/architecture.svg)
 
 The consumer selects an intent and language. The runtime delivers the precompiled pack. Verification and permission remain local to the consumer. The agent produces its answer; any external assessment of that answer is a separate step.
-
-## Use the hosted instance
-
-Retrieve a declared context from [context.gautierdorval.com](https://context.gautierdorval.com/), inspect its version and sources, then decide whether to supply it to your assistant. HTTP and a separate MCP adapter expose the same prepared artifacts.
-
-**[Connect through REST or MCP](docs/en/instance.md)** · [Parcours en français](docs/fr/instance.md) · [Dated service observation](evidence/instance-2026-10-12.json)
-
-On October 12, 2026, a producer check confirmed eight MCP tools and matching REST/MCP bytes for the selected French pack. The integration guide explains selection and digest checks, and lists the clients and versions actually tested. These are technical service checks; model experiments remain separate.
 
 ## Try it locally
 
@@ -37,24 +43,32 @@ npm run demo
 npm test
 ```
 
-**Fictional example.** No installation, account or network call is needed. The demo prints `PASS` for the complete verification and for each expected rejection, ending with `VERIFIED_FICTIONAL_CONTEXT`. It uses a public test key, a fixed example clock and a teaching trust anchor.
+**Fictional workshop example.** The existing demonstration checks a policy that explains a workshop without granting permission to act. No installation, account or network call is needed. It uses a public test key, a fixed example clock and a teaching trust anchor. It prints `PASS` for complete verification and each expected rejection, ending with `VERIFIED_FICTIONAL_CONTEXT`.
 
 [Inspect the demo](spec/examples/demo.mjs) · [See the complete fixture](spec/examples/synthetic/bundle.json)
 
 ## What you can verify
 
-- The receipt matches a locally pinned root under a test key policy.
+- The demo receipt matches a locally pinned root under a test key policy.
 - The complete snapshot binds archive bytes, pack identities and unit references.
 - Unknown profiles, conflicting labels and controlled alterations are rejected.
 - Permission stays with the consumer; historical inspection cannot grant current use.
 
-[Verification contract and v0 limits](docs/verification.md) · [Runnable checks](spec/reference/test-public-finish.mjs)
+These checks establish integrity within the documented verification path, not semantic truth, prompt-injection prevention or the fidelity of a model’s answer. [Verification contract and v0 limits](docs/verification.md)
 
-## Explore the reference
+## Applications to explore
 
-[Try the demo](#try-it-locally) · [English guide](docs/en/README.md) · [Guide français](docs/fr/README.md) · [Schemas](docs/schemas.md) · [Evidence](evidence/README.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Rights](NOTICE.md)
+Business assistants, multiagent context transfers and AI response audits can benefit from identifiable context and explicit conditions. Adapted corpora, integration costs and preservation of those conditions still require evaluation. These are research and integration directions, not a catalogue of deployed business solutions. [Needs and open evaluations](docs/en/README.md#applications-to-explore)
 
-Reference edition 0.2.0-proposed. The contracts remain proposed. This package contains offline reference code and fictional examples; it does not bundle a hosted service or production corpus. Integrity does not establish truth, authority or model fidelity. The reference retains the gautierdorval.com instance vocabulary; it is not a qualified generic runtime for arbitrary domains.
+Use a static canonical page for a simple definition or an ordinary editorial citation. A pack is useful when the consumer needs the declared selection, dependencies and integrity scope together; it adds no authority merely by being a pack.
+
+## Explore the reference and evidence
+
+[English guide](docs/en/README.md) · [Guide français](docs/fr/README.md) · [Schemas](docs/schemas.md) · [Evidence](evidence/README.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Rights](NOTICE.md)
+
+The [October 14, 2026 producer observation](evidence/instance-2026-10-14.json) records dated REST/MCP checks. The [October 12 observation](evidence/instance-2026-10-12.json) remains historical. These service observations are separate from the [synthetic publication](evidence/publication.json) and fictional demo. They do not establish continuous availability, spontaneous adoption or model-fidelity effects. The [tested-client matrix](docs/en/instance.md#tested-clients) states the clients and versions actually examined.
+
+Reference edition 0.2.0-proposed. The hosted instance is available separately and has its own publication lifecycle. This repository contains proposed contracts, offline reference code and fictional examples; it does not bundle the hosted service, its production corpus or a turnkey deployment for other domains.
 
 ## Licence
 

@@ -12,6 +12,22 @@ import {checkSvg} from './svg-profile.mjs';
 /** @import {DocumentationSource, FileRights, PackageJson, PackageLock, PackageManifest, PackagePolicy, SyntheticBundleSummary} from './package-types.d.mts' */
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+// Enforce the declared stable Node minimum before accepting any package verification.
+/** @type {PackageJson} */
+const runtimePackage = /** @type {PackageJson} */ (strictParse(await readFile(resolve(root, 'package.json'))));
+assert.match(runtimePackage.engines.node, /^>=\d+\.\d+\.\d+$/, 'supported Node engine declaration');
+assert.match(process.versions.node, /^\d+\.\d+\.\d+$/, 'stable Node version required');
+const minimumNode = runtimePackage.engines.node.slice(2).split('.').map(Number);
+const actualNode = process.versions.node.split('.').map(Number);
+let supportedNode = true;
+for (let index = 0; index < 3; index++) {
+  if (actualNode[index] !== minimumNode[index]) {
+    supportedNode = actualNode[index] > minimumNode[index];
+    break;
+  }
+}
+assert(supportedNode, `Node.js ${runtimePackage.engines.node} required; received ${process.versions.node}`);
+
 /** @param {object} value @param {string} fields */
 const exact = (value, fields) => assert.deepEqual(Object.keys(value).sort(), fields.split(',').sort());
 /** @param {Uint8Array} bytes */
