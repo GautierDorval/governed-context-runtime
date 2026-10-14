@@ -30,19 +30,25 @@
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
       "source": "repository-edition-2026-10-13",
       "license": "CC-BY-4.0",
-      "sha256": "5fc26cd88f0b5221ed678dab27b96f00d28bf0be819ff84f8319b25eaa13aa65"
+      "sha256": "7296e5e9f0a9b02f055c28a658acb891327a0607c996546e4486ac43e30c5537"
     },
     {
       "path": ".github/dependabot.yml",
       "source": "repository-edition-2026-10-13",
       "license": "Apache-2.0",
-      "sha256": "5e971ac9ebf4af703c22ea5332246f6a8afc4119ab0598b47f335919b35c653c"
+      "sha256": "87aebf8fc9eeb65360e46e428b4b3a0c700646fafe39c156d8fead86cbb621f5"
     },
     {
       "path": ".github/workflows/verify.yml",
       "source": "pinned-read-only-workflow",
       "license": "Apache-2.0",
-      "sha256": "569c1558ee632756958afed1e6ba3e391a11f063abeb8f890214d40acffc1cc5"
+      "sha256": "ef987da74233ca58869b67ca27e7f32e7b9568a01e9ea8a909ba3643c307df79"
+    },
+    {
+      "path": ".gitignore",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "ca1838cde9e4cfb493f3ea87a08bf973a9d6102aac688fc8828107d5586042aa"
     },
     {
       "path": "CHANGELOG.md",
@@ -66,7 +72,7 @@
       "path": "CONTRIBUTING.md",
       "source": "contribution-contract",
       "license": "CC-BY-4.0",
-      "sha256": "5fc99656a0c71f201b6386f062a745e9711c4e086fd0855d1e20d7fbe31ee8fe"
+      "sha256": "2d6d1a243b996d58d9014c2792fe4965d54cad02b50e0648d4f96314dc4f4f97"
     },
     {
       "path": "LICENSE",
@@ -84,7 +90,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "62725098f4ee707b5e829b28ced77c5af31aa8dfe4374cc90bc35a1fe8f3a229"
+      "sha256": "dfe4df4b68aeff26d5572ba3ea80840ac9bb0a69f2dacb2bb2814a1f64cce0fc"
     },
     {
       "path": "NOTICE.md",
@@ -162,7 +168,7 @@
       "path": "docs/schemas.md",
       "source": "reviewed-schema-mapping",
       "license": "CC-BY-4.0",
-      "sha256": "acb5a256a0b8c58049a59c8b7441f3984cc9483a5767ad80f17ac70cd6d8c218"
+      "sha256": "4b4480cd81393476f12329d71ad34342c2b9871b5ce3b9ef5501e78ef0987439"
     },
     {
       "path": "docs/source.json",
@@ -195,22 +201,28 @@
       "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4"
     },
     {
+      "path": "package-lock.json",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "ed6615b6b16f0ee1c22640929bf5247753ae516d7300340496552d5083758b6d"
+    },
+    {
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "a4f20db20a82f3fd1882db0fb40b545f40b66cbfd8c9c576ab4b63d2b8c461f9"
+      "sha256": "49033969c63c05d5cd0ca9452e6b82d9da5ebf2b6805c72a789545e4c56c5fc9"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "19f6ed46af375a0974fdc99f0af0e971817427d301aaabf0c4d08efddefeef6b"
+      "sha256": "fc1333c82890f3fac21456d8fc854c0824abd2f241d039b97e372b03cf046b86"
     },
     {
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "22b48923f01733941244c08cdb58e82a0ac436e8f5bc573ae393540110178c1e"
+      "sha256": "a091240076aaf60c0b46c81c6a5e61a00e9391c1d6b5881191fe4988b56bbe7f"
     },
     {
       "path": "scripts/regenerate.mjs",
@@ -384,7 +396,19 @@
       "path": "test/graph.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "d5aae3eaf6408ec72dd411a34622a59ce8b5627ec67dbd2603a2e051225f1474"
+      "sha256": "7d72928acde0242eb297f3278a68092ea52262b54510acbc099c1a95506f4bc9"
+    },
+    {
+      "path": "test/schemas.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "f53c9b77c6d9bac942c8d3bb966f5395d7893dbc11a4270380ecba0960d99247"
+    },
+    {
+      "path": "test/synthetic.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "1123ffd2c659f4c486e632faead37057aa024a2de80bd98386d1ba03bb1ad56b"
     },
     {
       "path": "test/verification-paths.test.mjs",

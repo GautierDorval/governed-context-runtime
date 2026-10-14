@@ -6,4 +6,6 @@ Public CI has read-only repository permissions and no private export or deployme
 
 By submitting a contribution, you agree that it is licensed under the same terms as the material it changes: Apache-2.0 for code and configuration, CC BY 4.0 for documentation (see [NOTICE.md](NOTICE.md)). Participation follows the [code of conduct](CODE_OF_CONDUCT.md). Use the issue forms for reference defects and documentation; pull requests follow the template checklist.
 
-After a reviewed edit, run `npm run regenerate`, review the diff and run `npm test`; adding a file, changing a licence rule or editing `NOTICE.md`, `CITATION.cff` or a licence text is a policy change made in `package-policy.json`. The full procedure, including Dependabot updates of GitHub Actions, is in [MAINTAINING.md](MAINTAINING.md).
+`npm test` and `npm run demo` need no installation. Schema tests use the locked development dependencies: run `npm ci --ignore-scripts`, then `npm run test:dev`. CI runs both.
+
+After a reviewed edit, run `npm run regenerate`, review the diff and run `npm test`; adding a file, changing a licence rule or editing `NOTICE.md`, `CITATION.cff` or a licence text is a policy change made in `package-policy.json`. The full procedure, including Dependabot updates of GitHub Actions and development dependencies, is in [MAINTAINING.md](MAINTAINING.md).

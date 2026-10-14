@@ -13,5 +13,8 @@ jobs:
         with:
           node-version: 24.17.0
       - run: npm test
+      - name: Install locked development dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - run: npm run test:dev
       - name: Tests leave the worktree unchanged
         run: git status --porcelain --untracked-files=all && test -z "$(git status --porcelain --untracked-files=all)"

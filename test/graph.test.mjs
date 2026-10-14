@@ -1,61 +1,22 @@
 // SPDX-License-Identifier: Apache-2.0
-// Exercises graph construction in verifySnapshot, which the published fixture (empty graph) never
-// reached. A fictional variant is rebuilt from the fixture: payload edited, then pack digests,
-// manifest, registry, archives and root recomputed. Expected nodes are written out by hand.
+// Exercises graph construction in verifySnapshot, which the published example (empty graph) never
+// reached. A fictional variant is rebuilt from the example: payload edited, then pack digests,
+// manifests, registry, archives and root recomputed. Expected nodes are written out by hand.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
-import {canonical, digest, strictParse, verifySnapshot} from '../spec/reference/verification.mjs';
+import {inventory, json, pathOf, registryPath, resealPacks, seal, setJson, sources, verify} from './synthetic.mjs';
 
-const bundle = JSON.parse(await readFile(new URL('../spec/examples/synthetic/bundle.json', import.meta.url), 'utf8'));
-const encoder = new TextEncoder(), decoder = new TextDecoder();
-const baseSources = new Map(bundle.snapshot.inventory.items.map(item => {
-  const archive = JSON.parse(Buffer.from(bundle.archives[item.uri], 'base64').toString('utf8'));
-  return [item.sourcePath, Uint8Array.from(Buffer.from(archive.contentBase64, 'base64'))];
-}));
-const registryPath = 'public/context-pack-registry.json';
-const pathOf = url => 'public' + new URL(url).pathname;
-const firstPack = JSON.parse(decoder.decode(baseSources.get(registryPath))).packs[0];
+const firstPack = json(sources(), registryPath).packs[0];
 const payloadPath = pathOf(firstPack.payloadUrl);
 
 async function rebuild(editPayload, editGraph = graph => graph, expectedGraph = []) {
-  const sources = new Map(baseSources);
-  const inventory = structuredClone(bundle.snapshot.inventory);
-  const registry = JSON.parse(decoder.decode(sources.get(registryPath)));
-  for (const [position, pack] of registry.packs.entries()) {
-    const payloadFile = pathOf(pack.payloadUrl), manifestFile = pathOf(pack.manifestUrl);
-    if (payloadFile === payloadPath) {
-      const payload = JSON.parse(decoder.decode(sources.get(payloadFile)));
-      editPayload(payload);
-      sources.set(payloadFile, encoder.encode(JSON.stringify(payload) + '\n'));
-    }
-    const payloadRaw = sources.get(payloadFile);
-    pack.payloadFileDigest = await digest(payloadRaw);
-    pack.payloadDigest = await digest(canonical(strictParse(payloadRaw), {historical: true, nfc: true}));
-    const manifest = JSON.parse(decoder.decode(sources.get(manifestFile)));
-    Object.assign(manifest, {payloadDigest: pack.payloadDigest, payloadFileDigest: pack.payloadFileDigest});
-    const manifestRaw = encoder.encode(JSON.stringify(manifest) + '\n');
-    sources.set(manifestFile, manifestRaw);
-    pack.manifestFileDigest = await digest(manifestRaw);
-    pack.manifestDigest = await digest(canonical(manifest, {historical: true, nfc: true}));
-    Object.assign(inventory.packs[position], pack);
-  }
-  sources.set(registryPath, encoder.encode(JSON.stringify(registry) + '\n'));
-  const archives = new Map();
-  for (const item of inventory.items) {
-    const data = sources.get(item.sourcePath), repositoryDigest = await digest(data);
-    const encoded = canonical({contentBase64: Buffer.from(data).toString('base64'), digest: repositoryDigest, digestAlgorithm: 'sha-256',
-      digestScope: 'repository-bytes', encoding: 'base64', schemaVersion: '0.1.0-proposed', sourcePath: item.sourcePath, type: 'RuntimeSourceArchive'});
-    const envelope = await digest(encoded);
-    Object.assign(item, {repositoryDigest, version: repositoryDigest, byteLength: data.length, digest: envelope, uri: '/v0/artifacts/' + envelope.slice(8)});
-    archives.set(item.uri, encoded);
-  }
-  inventory.graph = editGraph(expectedGraph);
-  const root = await digest(canonical(inventory));
-  const snapshot = {...bundle.snapshot, inventory, corpusRootDigest: root, snapshotId: 'governed-context-runtime:' + root};
-  const checks = [];
-  const result = verifySnapshot(snapshot, async uri => { if (!archives.has(uri)) throw new Error('archive not captured'); return archives.get(uri); }, bundle.expectedIntents, checks);
-  return {result, checks};
+  const sourceMap = sources(), inv = inventory();
+  const payload = json(sourceMap, payloadPath);
+  editPayload(payload);
+  setJson(sourceMap, payloadPath, payload);
+  await resealPacks(sourceMap, inv);
+  inv.graph = editGraph(expectedGraph);
+  return verify(await seal(sourceMap, inv));
 }
 
 const node = (field, semanticId, index, extra = {}) => ({

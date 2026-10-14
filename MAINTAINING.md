@@ -20,12 +20,16 @@ These changes are refused by the generator until `package-policy.json` is edited
 
 The checker keeps the official licence texts and the licence split pinned independently of the policy.
 
-## Dependabot updates of GitHub Actions
+## Development dependencies
 
-Dependabot proposes weekly updates of the pinned Actions. Such a pull request changes `.github/workflows/verify.yml` and therefore fails the `verify` check until its metadata is regenerated. This is intended: an Action update is never accepted without review.
+`npm test` and `npm run demo` use Node.js only. `npm run test:dev` also needs the development dependencies locked in `package-lock.json`: install them with `npm ci --ignore-scripts`. They stay in `node_modules/`, outside the package, and nothing from them is needed at run time. `package.json` declares exact versions, and the checker refuses runtime dependencies, install lifecycle scripts and lockfile entries that are not development packages from the npm registry. Review the licences of the locked packages whenever the lockfile changes.
 
-1. Read the release notes of the proposed Action version and check that the pin is a full commit SHA.
-2. Check out the pull request branch, run `npm ci` if development dependencies are present, then `npm run regenerate`.
+## Dependabot updates
+
+Dependabot proposes weekly updates of the pinned Actions and of the development dependencies. Such a pull request changes `.github/workflows/verify.yml`, or `package.json` and `package-lock.json`, and therefore fails the `verify` check until its metadata is regenerated. This is intended: an update is never accepted without review.
+
+1. Read the release notes of the proposed version. For an Action, check that the pin is a full commit SHA; for an npm package, check that the version stays exact and review the licences of new locked packages.
+2. Check out the pull request branch, run `npm ci --ignore-scripts`, then `npm run regenerate`.
 3. Commit the regenerated `rights.json` and `package-manifest.json` to the same branch and push.
 4. Merge only after `verify` passes.
 

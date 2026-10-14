@@ -17,7 +17,7 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const APACHE_2_0_SHA256 = 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30';
 const CC_BY_4_0_SHA256 = '9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94';
 const SPDX_EXPRESSION = 'Apache-2.0 AND CC-BY-4.0';
-const REQUIRED_PATHS = ['package-policy.json', 'rights.json', 'package-manifest.json', 'scripts/check-package.mjs', 'scripts/regenerate.mjs', 'LICENSE', 'LICENSES/CC-BY-4.0.txt', 'NOTICE.md'];
+const REQUIRED_PATHS = ['package-policy.json', 'rights.json', 'package-manifest.json', 'scripts/check-package.mjs', 'scripts/regenerate.mjs', 'LICENSE', 'LICENSES/CC-BY-4.0.txt', 'NOTICE.md', 'package-lock.json', '.gitignore'];
 
 async function walk(dir = '') {
   const out = [];
@@ -96,6 +96,22 @@ for (const [path, digest] of Object.entries(policy.declarationDigests)) assert.e
 for (const path of ['NOTICE.md', 'CITATION.cff']) assert(Object.hasOwn(policy.declarationDigests, path), path + ' must be pinned by the policy');
 assert.equal(policy.spdx, SPDX_EXPRESSION);
 assert.equal(strictParse(bytes.get('package.json')).license, SPDX_EXPRESSION);
+{
+  // The demo and the verifier run without third-party code; development tools are exact, locked and never run on install.
+  const pkg = strictParse(bytes.get('package.json')), lock = strictParse(bytes.get('package-lock.json'));
+  assert(!Object.hasOwn(pkg, 'dependencies'), 'no runtime dependency');
+  for (const name of ['preinstall', 'install', 'postinstall', 'prepare', 'prepublish', 'prepublishOnly', 'prepack', 'postpack']) assert(!Object.hasOwn(pkg.scripts, name), 'no lifecycle script: ' + name);
+  for (const [name, version] of Object.entries(pkg.devDependencies)) assert.match(version, /^\d+\.\d+\.\d+$/, 'exact development dependency: ' + name);
+  assert.deepEqual([lock.name, lock.version, lock.lockfileVersion], [pkg.name, pkg.version, 3]);
+  assert.deepEqual(lock.packages[''].devDependencies, pkg.devDependencies);
+  assert(!Object.hasOwn(lock.packages[''], 'dependencies'), 'no runtime dependency in the lockfile');
+  for (const [path, entry] of Object.entries(lock.packages)) {
+    if (!path) continue;
+    assert.equal(entry.dev, true, 'development only: ' + path);
+    assert(entry.resolved.startsWith('https://registry.npmjs.org/') && /^sha512-[A-Za-z0-9+/]+=*$/.test(entry.integrity), 'locked registry source: ' + path);
+  }
+  assert.equal(bytes.get('.gitignore').toString(), '/node_modules/\n', 'only locally installed development dependencies are ignored');
+}
 assert(!/^\s*["']?license["']?\s*:/m.test(bytes.get('CITATION.cff').toString()), 'CFF lists alternative licences; the split is declared in NOTICE.md');
 {
   const notice = bytes.get('NOTICE.md').toString();
