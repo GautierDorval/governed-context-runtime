@@ -50,6 +50,7 @@ export interface PackageManifest {
 }
 
 export interface PackageJson {
+  engines: {node: string};
   name: string;
   version: string;
   license: string;

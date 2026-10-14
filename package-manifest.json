@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "8d6a9a157c518f86c8067b1aea15ea61a1d23b9649ffc2d775feccb1714a33f7",
-      "bytes": 2823
+      "sha256": "c3454c0c59c8b6df193ecbaebc91ea68ba7a7720a191e914219ae261dfad12a1",
+      "bytes": 3371
     },
     {
       "path": "CITATION.cff",
@@ -141,8 +141,8 @@
     },
     {
       "path": "docs/en/instance.md",
-      "sha256": "932b9c4dd82f8aafb0335994229fb4c5fb3aa0b345878492b55ee6de84d28d14",
-      "bytes": 15074
+      "sha256": "dfc98e19d97e92a6c34cbabd4a6298d777d725dd01ffba8bc66be8fbfd70ff41",
+      "bytes": 15657
     },
     {
       "path": "docs/fr/README.md",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/fr/instance.md",
-      "sha256": "8ff198a323215e739a3bf4028253f8e74a9881da4acf47e0367187bb125ff955",
-      "bytes": 16861
+      "sha256": "00f59cbb4840f0cf11249c55a0a74401b3c7a8b2b407bd2cf08e3d4f7c443aa6",
+      "bytes": 17515
     },
     {
       "path": "docs/schemas.md",
@@ -181,8 +181,8 @@
     },
     {
       "path": "evidence/instance-2026-10-14.json",
-      "sha256": "19750aeec4ae383e5764bf8fd5ca3995d0ce14b6510633292b2386a4c2c5c329",
-      "bytes": 2436
+      "sha256": "b91f7e826ee617c3370d7d252eeced82d82f64631d4bbce2c284af11f35593c6",
+      "bytes": 3881
     },
     {
       "path": "evidence/publication.json",
@@ -206,13 +206,13 @@
     },
     {
       "path": "rights.json",
-      "sha256": "a7795a8e67b216b5410db724d42a8575aaeda69d892ed1851d36f7b9eca9e1e5",
+      "sha256": "5610b967ea38ee73aaa0d0a9211f0eb061f751e41aab56f58ce46540479007a0",
       "bytes": 17862
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "dfded8bbe0f34b101a0aa68182c020f9c1dcd55e9d148fa9e03a947fa87e5db3",
-      "bytes": 12205
+      "sha256": "972672f698684775c10412890918ab070084686b1efc5fccc87172cf825eaf12",
+      "bytes": 13071
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -221,8 +221,8 @@
     },
     {
       "path": "scripts/package-types.d.mts",
-      "sha256": "6666b737ede8934842b2c449c0b4c782dabb1305752902f9e5760124e35eed3c",
-      "bytes": 1908
+      "sha256": "b0da24f3dca6fd77bd8ed3c41f886984152e06eb3210c72b91dc7de698ccff62",
+      "bytes": 1935
     },
     {
       "path": "scripts/regenerate.mjs",
@@ -241,8 +241,8 @@
     },
     {
       "path": "scripts/test-regenerate.mjs",
-      "sha256": "65c939533194ac116595c1506ccf45a0a8428d8b363b3e817957e2e58b0b5d88",
-      "bytes": 15034
+      "sha256": "a77154f1ab10fe7300fb349566e8c91b055e979b06cdbf16321639dc84299b7d",
+      "bytes": 15923
     },
     {
       "path": "spec/LICENSE",

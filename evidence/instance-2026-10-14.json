@@ -50,6 +50,29 @@
     "declaredOperations": 17,
     "packVersion011": "HTTP 200 in French and English",
     "mcpToolsListed": 8,
-    "scope": "Two clients from one workstation. Observed POP suffixes do not constitute global edge coverage. Earlier or intermediary responses were not available for comparison."
+    "scope": "Two clients from one workstation. Observed POP suffixes do not constitute global edge coverage. Earlier or intermediary responses were not available for comparison.",
+    "capture": {
+      "sha256": "93aa94ed7a74e627d3d492b0f9f9e87dc6b98085c1d394ab4746d67615f0a051",
+      "format": "runtime-followup-capture-manifest/1",
+      "files": 13,
+      "scope": "Eleven retained Node response bodies, their readback metadata, and five PowerShell body hashes and root/header observations. PowerShell response bodies were not retained separately.",
+      "rawResponsesPublished": false
+    }
+  },
+  "declarationReadback": {
+    "startedAt": "2026-10-14T19:39:29.830Z",
+    "finishedAt": "2026-10-14T19:39:36.635Z",
+    "captureSha256": "ee45964ed017b5259bc9b56582282c8daabe7f169d1ad3531a0af551b3bf2ea4",
+    "requests": 13,
+    "corpusRootDigest": "sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0",
+    "sourcePath": "public/governed-context-runtime.json",
+    "archiveUri": "/v0/artifacts/9bd7beb46a4c9b419ca5732887ade0e75a05621d70466b01cadd7f07a8e2db20",
+    "repositoryDigest": "sha-256:777e028721dc6ac12e389de1add4b4a9f7997248cced11d364c425cdbfbf96ad",
+    "byteLength": 3153,
+    "archivedOperations": 17,
+    "liveOperations": 17,
+    "mutableCacheControl": "public, max-age=300, must-revalidate, no-transform",
+    "healthCacheControl": "no-store, no-transform",
+    "scope": "Dated producer reads from one workstation. The archive was decoded and matched to the snapshot repository digest. This does not reconstruct earlier intermediary responses or establish a propagation duration."
   }
 }

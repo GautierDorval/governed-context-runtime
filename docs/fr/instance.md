@@ -33,6 +33,8 @@ La [vérification du déploiement du 14 octobre](../../evidence/instance-2026-10
 
 L’index expose encore `status: stable` ; ce champ ne qualifie ni l’interface ni le profil de signature. Lire les champs `maturity` distincts : interface et recettes d’attestation proposées, signature de test seulement et évaluation scientifique non exécutée. Dans `/v0/health`, `mcpEnabled: false` porte sur `this-resolver-worker-only`. L’adaptateur hébergé séparément est indiqué sous `externalAdapters.mcp` ; sa disponibilité doit être vérifiée à cette adresse. L’observation du 14 octobre comprend des échanges MCP réussis.
 
+L’implémentation des Workers de production est maintenue dans un dépôt privé. Un `sourceCommit` de déploiement comme `7328776…` identifie cette source privée et ne se résout pas dans ce dépôt public de référence. Le code public contient les contrats de référence, les vérificateurs et les exemples, mais pas l’implémentation des Workers de production. Dans les métadonnées de santé, `deployment.timestamp` désigne la création de la version, pas le début de son trafic de production. `sourceCommitVerified: false` demeure une limite de provenance vérifiable indépendamment.
+
 ## 1. Choisir un contexte déclaré
 
 Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.
@@ -114,7 +116,7 @@ Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_co
 
 ## Clients testés
 
-Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP du code publié du Runtime tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
+Résultats du **14 octobre 2026**, sur des services en boucle locale : le résolveur et l’adaptateur MCP de l’implémentation Runtime de production maintenue dans un dépôt privé tournaient sous workerd (`wrangler dev`) et servaient la racine de corpus `sha-256:acf7bc39…`. Ils montrent que ces clients fonctionnent avec le contrat servi. Ce ne sont pas des observations de l’instance hébergée, que couvre la preuve datée ci-dessus. Hormis les extraits des guides, les clients ci-dessous sont des contrôles du producteur qui ne font pas partie de ce dépôt.
 
 | Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
 |---|---|---|---|---|

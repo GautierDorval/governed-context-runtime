@@ -33,6 +33,8 @@ The later [October 14 deployment observation](../../evidence/instance-2026-10-14
 
 The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 14 observation includes successful MCP exchanges.
 
+The production Worker implementation is maintained in a private repository. A deployment `sourceCommit` such as `7328776…` identifies that private source and cannot be resolved in this public reference repository. The public code here contains the reference contracts, verifiers and examples, not the production Worker implementation. In health metadata, `deployment.timestamp` is the version creation time, not the time it started receiving production traffic. `sourceCommitVerified: false` remains a limit on independently verifiable provenance.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.
@@ -114,7 +116,7 @@ The eight tools are `list_intents`, `get_intent`, `list_context_packs`, `get_con
 
 ## Tested clients
 
-Results of **October 14, 2026**, on loopback services: the resolver and the MCP adapter of the published Runtime code ran under workerd (`wrangler dev`) and served the corpus root `sha-256:acf7bc39…`. They show that these clients work with the served contract. They are not observations of the hosted instance, which the dated evidence above covers. Apart from the guide snippets, the clients below are producer checks that are not part of this repository.
+Results of **October 14, 2026**, on loopback services: the resolver and the MCP adapter of the privately maintained production Runtime implementation ran under workerd (`wrangler dev`) and served the corpus root `sha-256:acf7bc39…`. They show that these clients work with the served contract. They are not observations of the hosted instance, which the dated evidence above covers. Apart from the guide snippets, the clients below are producer checks that are not part of this repository.
 
 | Client type | Client and version | Transport and revision | Steps executed | Result |
 |---|---|---|---|---|
