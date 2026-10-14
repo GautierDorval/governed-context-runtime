@@ -1,4 +1,10 @@
+export const PROFILE: 'gd-portable-json-v1';
+export function fail(code: string): never;
 export function canonical(value: unknown, options?: { historical?: boolean; nfc?: boolean }): Uint8Array<ArrayBuffer>;
 export function strictParse(input: string | Uint8Array, options?: { historical?: boolean }): unknown;
 export function digest(bytes: Uint8Array): Promise<string>;
-export function verifySnapshot(snapshot: any, getArchive: (uri: string) => Uint8Array<ArrayBuffer> | Promise<Uint8Array<ArrayBuffer>>, expectedIntents?: unknown): Promise<Record<string, unknown>[]>;
+export function select(value: unknown, selector: string): unknown;
+export function textBytes(value: string): Uint8Array<ArrayBuffer>;
+export function unitPreimage(unit: Record<string, unknown>, source: string | Uint8Array): Uint8Array<ArrayBuffer>;
+export function artifactPreimage(path: string, bytes: Uint8Array, profile?: string): Uint8Array<ArrayBuffer>;
+export function verifySnapshot(snapshot: any, getArchive: (uri: string) => Uint8Array<ArrayBuffer> | Promise<Uint8Array<ArrayBuffer>>, expectedIntents?: unknown, checks?: Record<string, unknown>[]): Promise<Record<string, unknown>[]>;

@@ -4,7 +4,6 @@
 // bytes are written out by hand from the recipe, never computed by the function under test.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-// @ts-expect-error textBytes, select and artifactPreimage are exported by verification.mjs but not yet declared in verification.d.mts (declaration patch P-01).
 import {textBytes, select, artifactPreimage} from '../spec/reference/verification.mjs';
 
 /** @param {...number} values */
@@ -50,7 +49,9 @@ test('text profile: empty and whitespace-only documents become empty bytes', () 
 });
 
 test('text profile: malformed input is refused explicitly', () => {
+  // @ts-expect-error deliberately invalid input, refused by the verifier at run time
   refuses(() => textBytes(42), 'text_required');
+  // @ts-expect-error deliberately invalid input, refused by the verifier at run time
   refuses(() => textBytes(null), 'text_required');
   refuses(() => textBytes('a\ud800b'), 'invalid_unicode');
   refuses(() => textBytes('\udc00'), 'invalid_unicode');
@@ -114,6 +115,8 @@ test('selectors: syntax outside the closed grammar is refused', () => {
   ]) {
     refuses(() => select(doc, selector), 'unsupported_selector');
   }
+  // @ts-expect-error deliberately invalid input, refused by the verifier at run time
   refuses(() => select(doc, 42), 'unsupported_selector');
+  // @ts-expect-error deliberately invalid input, refused by the verifier at run time
   refuses(() => select(doc, null), 'unsupported_selector');
 });

@@ -128,7 +128,6 @@ export async function seal(sourceMap, inv) {
 export function verify({snapshot, getArchive}) {
   /** @type {Check[]} */
   const checks = [];
-  // @ts-expect-error verification.mjs accepts a fourth `checks` argument that verification.d.mts does not declare yet (declaration patch P-01).
   const result = verifySnapshot(snapshot, getArchive, bundle.expectedIntents, checks);
   return {result, checks};
 }

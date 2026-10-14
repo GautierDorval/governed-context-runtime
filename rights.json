@@ -414,7 +414,7 @@
       "path": "spec/reference/verification.d.mts",
       "source": "spec/reference/verification.d.mts",
       "license": "Apache-2.0",
-      "sha256": "62e94a139c28f022095161b19765bd860abe320a5720060f81607a8c1b984977"
+      "sha256": "ec6e97b003958e7689cce789b663b4e8ca70a6f78f3d1af43291abdc2a107e58"
     },
     {
       "path": "spec/reference/verification.mjs",
@@ -468,13 +468,13 @@
       "path": "test/synthetic.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "757966114c7aa9997c2a890b876bbe11ece836b0693bb4265e227a667db27a09"
+      "sha256": "e13f88603e93d2a6a29d2a393ce5406d9c21138d4909c484912a9b42f7e5c2bb"
     },
     {
       "path": "test/verification-paths.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "9a3637cb111eaf9809432418011a0841ae32ac33c1421ec956aa9d4da74e034a"
+      "sha256": "cf1aba123355976830be7228189b291b02f660f8ea59b37603314ff87aecf767"
     },
     {
       "path": "tsconfig.json",
