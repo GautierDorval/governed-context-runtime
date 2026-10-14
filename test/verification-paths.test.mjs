@@ -4,11 +4,18 @@
 // bytes are written out by hand from the recipe, never computed by the function under test.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// @ts-expect-error textBytes, select and artifactPreimage are exported by verification.mjs but not yet declared in verification.d.mts (declaration patch P-01).
 import {textBytes, select, artifactPreimage} from '../spec/reference/verification.mjs';
 
+/** @param {...number} values */
 const bytes = (...values) => Uint8Array.from(values);
+/** @param {() => unknown} fn @param {string} code */
 const refuses = (fn, code) =>
-  assert.throws(fn, error => error.name === 'VerificationError' && error.message === code, code);
+  assert.throws(
+    fn,
+    error => error instanceof Error && error.name === 'VerificationError' && error.message === code,
+    code,
+  );
 
 test('text profile: plain ASCII is unchanged', () => {
   assert.deepEqual(textBytes('abc'), bytes(0x61, 0x62, 0x63));

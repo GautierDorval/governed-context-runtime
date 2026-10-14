@@ -8,9 +8,12 @@ import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import assert from 'node:assert/strict';
 import {strictParse} from '../spec/reference/verification.mjs';
+/** @import {DocumentationSource, FileRights, PackageJson, PackageLock, PackageManifest, PackagePolicy, SyntheticBundleSummary} from './package-types.d.mts' */
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+/** @param {object} value @param {string} fields */
 const exact = (value, fields) => assert.deepEqual(Object.keys(value).sort(), fields.split(',').sort());
+/** @param {Uint8Array} bytes */
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 
 // Official licence texts: constants independent of the editable policy.
@@ -30,7 +33,9 @@ const REQUIRED_PATHS = [
   '.gitignore',
 ];
 
+/** @param {string} [dir] @returns {Promise<string[]>} */
 async function walk(dir = '') {
+  /** @type {string[]} */
   const out = [];
   for (const entry of await readdir(resolve(root, dir), {withFileTypes: true})) {
     // Only the root .git directory and locally installed development dependencies are outside the package.
@@ -47,7 +52,16 @@ async function walk(dir = '') {
   return out;
 }
 
-const policy = strictParse(await readFile(resolve(root, 'package-policy.json')));
+/**
+ * Strict profile parse of a published JSON file, typed with the shape that the assertions below check.
+ * @template T
+ * @param {Uint8Array} raw
+ * @returns {T}
+ */
+const parse = raw => /** @type {T} */ (strictParse(raw));
+
+/** @type {PackagePolicy} */
+const policy = parse(await readFile(resolve(root, 'package-policy.json')));
 exact(policy, 'schema,inventory,licences,declarationDigests,defaultSource,selfAndManifest,spdx');
 assert.equal(policy.schema, 'runtime-public-package-policy/1');
 exact(policy.licences, 'reserved,licenceTexts,codePrefixes,codeFiles,markdown,default');
@@ -58,6 +72,7 @@ assert.deepEqual((await walk()).sort(), expected, 'unexpected or missing file');
 
 // Independent licence evaluator; it must agree with rights.json for every file.
 const licences = policy.licences;
+/** @param {string} path */
 const licenceFor = path =>
   licences.reserved.includes(path)
     ? 'All rights reserved'
@@ -74,7 +89,8 @@ assert.equal(licences.default, 'CC-BY-4.0');
 assert.deepEqual(Object.entries(licences.licenceTexts), [['LICENSES/CC-BY-4.0.txt', 'CC-BY-4.0']]);
 for (const path of licences.reserved) assert(expected.includes(path), 'reserved path outside the inventory: ' + path);
 
-const manifest = strictParse(await readFile(resolve(root, 'package-manifest.json')));
+/** @type {PackageManifest} */
+const manifest = parse(await readFile(resolve(root, 'package-manifest.json')));
 exact(manifest, 'schema,documentVersion,fictionalContextRoot,publicEvidencePublicationId,files');
 assert.equal(manifest.schema, 'runtime-public-package/0.2.0-proposed');
 assert.equal(manifest.documentVersion, '0.2.0-proposed');
@@ -82,7 +98,14 @@ assert.deepEqual(
   manifest.files.map(item => item.path).sort(),
   expected.filter(path => path !== 'package-manifest.json'),
 );
+/** @type {Map<string, Buffer>} */
 const bytes = new Map();
+/** @param {string} path */
+const file = path => {
+  const raw = bytes.get(path);
+  assert(raw, 'not listed in package-manifest.json: ' + path);
+  return raw;
+};
 for (const item of manifest.files) {
   exact(item, 'path,sha256,bytes');
   assert(expected.includes(item.path));
@@ -101,7 +124,8 @@ for (const item of manifest.files) {
   }
 }
 
-const rights = strictParse(bytes.get('rights.json'));
+/** @type {FileRights} */
+const rights = parse(file('rights.json'));
 exact(rights, 'schema,repositoryWideLicense,files,selfAndManifest');
 assert.equal(rights.schema, 'runtime-file-rights/1');
 assert.equal(rights.repositoryWideLicense, null);
@@ -111,7 +135,7 @@ assert.deepEqual(
 );
 for (const row of rights.files) {
   exact(row, 'path,source,license,sha256');
-  assert.equal(row.sha256, hash(bytes.get(row.path)));
+  assert.equal(row.sha256, hash(file(row.path)));
   assert.equal(row.license, licenceFor(row.path), 'licence: ' + row.path);
 }
 assert.equal(rights.selfAndManifest, policy.selfAndManifest);
@@ -124,25 +148,27 @@ assert.equal(
 );
 
 // Declarations: official texts are pinned here; reviewed declarations are pinned in the policy.
-assert.deepEqual(bytes.get('LICENSE'), bytes.get('spec/LICENSE'));
-assert.equal(hash(bytes.get('LICENSE')), APACHE_2_0_SHA256, 'official Apache-2.0 text, verbatim');
+assert.deepEqual(file('LICENSE'), file('spec/LICENSE'));
+assert.equal(hash(file('LICENSE')), APACHE_2_0_SHA256, 'official Apache-2.0 text, verbatim');
 assert.equal(
-  hash(bytes.get('LICENSES/CC-BY-4.0.txt')),
+  hash(file('LICENSES/CC-BY-4.0.txt')),
   CC_BY_4_0_SHA256,
   'official CC BY 4.0 legal code, trailing blank line trimmed',
 );
 assert.equal(policy.declarationDigests.LICENSE, APACHE_2_0_SHA256);
 assert.equal(policy.declarationDigests['LICENSES/CC-BY-4.0.txt'], CC_BY_4_0_SHA256);
 for (const [path, digest] of Object.entries(policy.declarationDigests))
-  assert.equal(hash(bytes.get(path)), digest, path + ' differs from the reviewed policy digest');
+  assert.equal(hash(file(path)), digest, path + ' differs from the reviewed policy digest');
 for (const path of ['NOTICE.md', 'CITATION.cff'])
   assert(Object.hasOwn(policy.declarationDigests, path), path + ' must be pinned by the policy');
 assert.equal(policy.spdx, SPDX_EXPRESSION);
-assert.equal(strictParse(bytes.get('package.json')).license, SPDX_EXPRESSION);
+assert.equal(/** @type {PackageJson} */ (parse(file('package.json'))).license, SPDX_EXPRESSION);
 {
   // The demo and the verifier run without third-party code; development tools are exact, locked and never run on install.
-  const pkg = strictParse(bytes.get('package.json')),
-    lock = strictParse(bytes.get('package-lock.json'));
+  /** @type {PackageJson} */
+  const pkg = parse(file('package.json'));
+  /** @type {PackageLock} */
+  const lock = parse(file('package-lock.json'));
   assert(!Object.hasOwn(pkg, 'dependencies'), 'no runtime dependency');
   for (const name of [
     'preinstall',
@@ -164,26 +190,28 @@ assert.equal(strictParse(bytes.get('package.json')).license, SPDX_EXPRESSION);
     if (!path) continue;
     assert.equal(entry.dev, true, 'development only: ' + path);
     assert(
-      entry.resolved.startsWith('https://registry.npmjs.org/') && /^sha512-[A-Za-z0-9+/]+=*$/.test(entry.integrity),
+      entry.resolved?.startsWith('https://registry.npmjs.org/') &&
+        /^sha512-[A-Za-z0-9+/]+=*$/.test(entry.integrity ?? ''),
       'locked registry source: ' + path,
     );
   }
   assert.equal(
-    bytes.get('.gitignore').toString(),
+    file('.gitignore').toString(),
     '/node_modules/\n',
     'only locally installed development dependencies are ignored',
   );
 }
 assert(
-  !/^\s*["']?license["']?\s*:/m.test(bytes.get('CITATION.cff').toString()),
+  !/^\s*["']?license["']?\s*:/m.test(file('CITATION.cff').toString()),
   'CFF lists alternative licences; the split is declared in NOTICE.md',
 );
 {
-  const notice = bytes.get('NOTICE.md').toString();
+  const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);
 }
 
-const docs = strictParse(bytes.get('docs/source.json'));
+/** @type {DocumentationSource} */
+const docs = parse(file('docs/source.json'));
 exact(docs, 'schema,documentVersion,project,author,authorUrl,repository,publicSpecRepositoryPath,en,fr');
 assert.equal(
   docs.publicSpecRepositoryPath,
@@ -197,12 +225,14 @@ exact(docs.fr, fields);
 assert(!docs.en.limits.includes('authenticates its projected content'));
 assert(docs.en.limits.includes('does not authenticate the source'));
 assert(docs.fr.limits.includes('n’authentifie pas sa source'));
-const fixture = strictParse(bytes.get('spec/examples/synthetic/bundle.json'));
+/** @type {SyntheticBundleSummary} */
+const fixture = parse(file('spec/examples/synthetic/bundle.json'));
 exact(fixture, 'schema,fictional,provenance,expectedRoot,expectedIntents,snapshot,archives,policy,receipt');
 assert.equal(fixture.fictional, true);
 assert.equal(fixture.expectedRoot, manifest.fictionalContextRoot);
 assert.deepEqual(Object.keys(fixture.archives).sort(), fixture.snapshot.inventory.items.map(item => item.uri).sort());
-const publication = strictParse(bytes.get('evidence/publication.json'));
+/** @type {{publicationId: string}} */
+const publication = parse(file('evidence/publication.json'));
 assert.equal(publication.publicationId, manifest.publicEvidencePublicationId);
 console.log(
   `PASS: ${expected.length} fixed paths, ${manifest.files.length} manifest entries, ${rights.files.length} rights entries`,

@@ -22,12 +22,15 @@
     "regenerate": "node scripts/regenerate.mjs --write",
     "regenerate:check": "node scripts/regenerate.mjs --check",
     "regenerate:recover": "node scripts/regenerate.mjs --recover",
-    "format": "prettier --write \"scripts/**/*.mjs\" \"test/**/*.mjs\"",
-    "format:check": "prettier --check \"scripts/**/*.mjs\" \"test/**/*.mjs\"",
-    "test:dev": "npm run format:check && node --test test/schemas.test.mjs"
+    "format": "prettier --write \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
+    "format:check": "prettier --check \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "test:dev": "npm run format:check && npm run typecheck && node --test test/schemas.test.mjs"
   },
   "devDependencies": {
+    "@types/node": "24.19.2",
     "ajv": "8.20.0",
-    "prettier": "3.9.10"
+    "prettier": "3.9.10",
+    "typescript": "7.0.2"
   }
 }

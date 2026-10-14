@@ -10,19 +10,30 @@ import {readdir, readFile, writeFile, rename, lstat, mkdir, rm, copyFile} from '
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {resolve, join} from 'node:path';
+/** @import {FileRights, PackageManifest, PackagePolicy} from './package-types.d.mts' */
 
 const STATE_DIR = '.regenerate';
 const OUTPUTS = ['rights.json', 'package-manifest.json'];
+/** @param {Uint8Array} bytes */
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+/** @param {unknown} value */
 const encode = value => Buffer.from(JSON.stringify(value, null, 2) + '\n');
 
 export class RegenerateError extends Error {
+  /** @param {string} code @param {string} [detail] */
   constructor(code, detail) {
     super(code + (detail ? ': ' + detail : ''));
     this.code = code;
   }
 }
 
+/**
+ * Parses a registry or policy file; the shape is checked by the callers and by check-package.mjs.
+ * @template T
+ * @param {Buffer} raw
+ * @param {string} name
+ * @returns {T}
+ */
 function parseJson(raw, name) {
   const text = raw.toString('utf8');
   if (text.charCodeAt(0) === 0xfeff) throw new RegenerateError('invalid_json', name + ' starts with a BOM');
@@ -33,7 +44,9 @@ function parseJson(raw, name) {
   }
 }
 
+/** @param {string} root @param {string} [dir] @returns {Promise<string[]>} */
 async function walk(root, dir = '') {
+  /** @type {string[]} */
   const found = [];
   for (const entry of await readdir(resolve(root, dir), {withFileTypes: true})) {
     if (!dir && (entry.name === '.git' || entry.name === 'node_modules')) continue;
@@ -47,6 +60,7 @@ async function walk(root, dir = '') {
   return found;
 }
 
+/** @param {PackagePolicy} policy @param {string} path */
 export function licenceFor(policy, path) {
   const rules = policy.licences;
   if (rules.reserved.includes(path)) return 'All rights reserved';
@@ -56,7 +70,9 @@ export function licenceFor(policy, path) {
   return rules.default;
 }
 
+/** @param {string} root @returns {Promise<Map<string, Buffer>>} */
 export async function compute(root) {
+  /** @type {PackagePolicy} */
   const policy = parseJson(await readFile(resolve(root, 'package-policy.json')), 'package-policy.json');
   if (policy.schema !== 'runtime-public-package-policy/1')
     throw new RegenerateError('unsupported_policy', String(policy.schema));
@@ -76,17 +92,26 @@ export async function compute(root) {
   const missing = inventory.filter(p => !onDisk.includes(p));
   if (unexpected.length) throw new RegenerateError('unexpected_file', unexpected.join(', '));
   if (missing.length) throw new RegenerateError('missing_file', missing.join(', '));
+  /** @type {Map<string, Buffer>} */
   const bytes = new Map();
   for (const path of inventory) bytes.set(path, await readFile(resolve(root, path)));
+  /** @param {string} path */
+  const file = path => {
+    const raw = bytes.get(path);
+    if (!raw) throw new RegenerateError('policy_review_required', path + ' is not in the admitted inventory');
+    return raw;
+  };
   for (const [path, digest] of Object.entries(policy.declarationDigests)) {
-    if (hash(bytes.get(path)) !== digest)
+    if (hash(file(path)) !== digest)
       throw new RegenerateError(
         'policy_review_required',
         path + ' differs from the reviewed digest in package-policy.json',
       );
   }
-  const previousRights = parseJson(bytes.get('rights.json'), 'rights.json');
-  const previousManifest = parseJson(bytes.get('package-manifest.json'), 'package-manifest.json');
+  /** @type {FileRights} */
+  const previousRights = parseJson(file('rights.json'), 'rights.json');
+  /** @type {PackageManifest} */
+  const previousManifest = parseJson(file('package-manifest.json'), 'package-manifest.json');
   const sources = new Map((previousRights.files || []).map(row => [row.path, row.source]));
   const rights = {
     schema: 'runtime-file-rights/1',
@@ -97,7 +122,7 @@ export async function compute(root) {
         path,
         source: sources.get(path) ?? policy.defaultSource,
         license: licenceFor(policy, path),
-        sha256: hash(bytes.get(path)),
+        sha256: hash(file(path)),
       })),
     selfAndManifest: policy.selfAndManifest,
   };
@@ -110,7 +135,7 @@ export async function compute(root) {
     files: inventory
       .filter(p => p !== 'package-manifest.json')
       .map(path => {
-        const raw = path === 'rights.json' ? rightsBytes : bytes.get(path);
+        const raw = path === 'rights.json' ? rightsBytes : file(path);
         return {path, sha256: hash(raw), bytes: raw.length};
       }),
   };
@@ -120,13 +145,16 @@ export async function compute(root) {
   ]);
 }
 
+/** @param {string} root @returns {Promise<string[]>} */
 export async function check(root) {
   const outputs = await compute(root);
+  /** @type {string[]} */
   const stale = [];
   for (const [name, raw] of outputs) if (!raw.equals(await readFile(resolve(root, name)))) stale.push(name);
   return stale;
 }
 
+/** @param {string} root @param {{faultAfterFirstRename?: boolean}} [options] */
 export async function write(root, {faultAfterFirstRename = false} = {}) {
   const outputs = await compute(root);
   const state = resolve(root, STATE_DIR);
@@ -140,6 +168,7 @@ export async function write(root, {faultAfterFirstRename = false} = {}) {
   await rm(state, {recursive: true});
 }
 
+/** @param {string} root */
 export async function recover(root) {
   const state = resolve(root, STATE_DIR);
   for (const name of OUTPUTS) await copyFile(join(state, 'backup', name), resolve(root, name));
@@ -169,7 +198,10 @@ if (invoked) {
       process.exit(2);
     }
   } catch (error) {
-    console.error('FAIL ' + (error.code || 'error') + ': ' + error.message);
+    const known = error instanceof RegenerateError;
+    console.error(
+      'FAIL ' + (known ? error.code : 'error') + ': ' + (error instanceof Error ? error.message : String(error)),
+    );
     process.exit(1);
   }
 }

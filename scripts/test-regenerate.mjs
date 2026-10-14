@@ -8,11 +8,14 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {check, write, recover, compute} from './regenerate.mjs';
+import {check, write, recover, compute, RegenerateError} from './regenerate.mjs';
+/** @import {FileRights} from './package-types.d.mts' */
 
 const source = fileURLToPath(new URL('../', import.meta.url));
+/** @param {Uint8Array} bytes */
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 
+/** @param {import('node:test').TestContext} t @param {(dir: string) => Promise<void>} body */
 async function withCopy(t, body) {
   const dir = await mkdtemp(join(tmpdir(), 'gcr-maintenance-'));
   t.after(() => rm(dir, {recursive: true, force: true}));
@@ -22,26 +25,24 @@ async function withCopy(t, body) {
   });
   return body(dir);
 }
+/** @param {string} dir */
 function checker(dir) {
   try {
     execFileSync(process.execPath, ['scripts/check-package.mjs'], {cwd: dir, stdio: 'pipe'});
     return 'PASS';
   } catch (error) {
-    return (
-      'FAIL ' +
-      (error.stderr || '')
-        .toString()
-        .split('\n')
-        .find(line => /Error|Assertion|expected|message/.test(line))
-    );
+    const stderr = error instanceof Error && 'stderr' in error ? String(error.stderr ?? '') : '';
+    return 'FAIL ' + stderr.split('\n').find(line => /Error|Assertion|expected|message/.test(line));
   }
 }
+/** @param {string} dir @param {string} path @param {(text: string) => string} change */
 async function edit(dir, path, change) {
   const file = join(dir, path);
   await writeFile(file, change((await readFile(file)).toString('utf8')));
 }
+/** @param {Promise<unknown>} promise @param {string} code */
 async function rejectsWith(promise, code) {
-  await assert.rejects(promise, error => error.code === code, 'expected ' + code);
+  await assert.rejects(promise, error => error instanceof RegenerateError && error.code === code, 'expected ' + code);
 }
 
 test('the published package is consistent and regeneration is a no-op', async t =>
@@ -65,7 +66,9 @@ test('a same-length Action SHA change is a change until metadata is regenerated'
   withCopy(t, async dir => {
     const workflow = '.github/workflows/verify.yml';
     const before = await readFile(join(dir, workflow), 'utf8');
-    const pinned = before.match(/actions\/checkout@([0-9a-f]{40})/)[1];
+    const match = before.match(/actions\/checkout@([0-9a-f]{40})/);
+    assert(match, 'the workflow pins actions/checkout by full SHA');
+    const pinned = match[1];
     const replacement = pinned.split('').reverse().join('');
     await edit(dir, workflow, text => text.replace(pinned, replacement));
     assert.equal((await readFile(join(dir, workflow))).length, Buffer.byteLength(before));
@@ -89,6 +92,7 @@ test('an unexpected file is refused even when added to a hand-edited manifest', 
 test('a missing rights entry is refused', async t =>
   withCopy(t, async dir => {
     await edit(dir, 'rights.json', text => {
+      /** @type {FileRights} */
       const rights = JSON.parse(text);
       rights.files = rights.files.filter(row => row.path !== 'docs/en/README.md');
       return JSON.stringify(rights, null, 2) + '\n';
@@ -101,7 +105,8 @@ test('a symbolic link is refused', async t =>
     try {
       await symlink(join(dir, 'README.md'), join(dir, 'docs', 'link.md'));
     } catch (error) {
-      if (['EPERM', 'EACCES'].includes(error.code)) return t.skip('symlinks need privileges on this platform');
+      const code = error instanceof Error && 'code' in error ? error.code : undefined;
+      if (code === 'EPERM' || code === 'EACCES') return t.skip('symlinks need privileges on this platform');
       throw error;
     }
     assert.equal((await lstat(join(dir, 'docs', 'link.md'))).isSymbolicLink(), true);
@@ -119,9 +124,10 @@ test('a policy change is never absorbed silently', async t =>
     );
     await edit(dir, 'rights.json', text => text.replace('"license": "All rights reserved"', '"license": "CC-BY-4.0"'));
     await write(dir);
+    /** @type {FileRights} */
     const rights = JSON.parse(await readFile(join(dir, 'rights.json'), 'utf8'));
     assert.equal(
-      rights.files.find(row => row.path === 'assets/banner.svg').license,
+      rights.files.find(row => row.path === 'assets/banner.svg')?.license,
       'All rights reserved',
       'the rule, not the edited registry, decides',
     );

@@ -95,6 +95,7 @@ const MUTANTS = [
   ['graph: selector index shifted', 'selector: `$.${field}[${i}]`', 'selector: `$.${field}[${i + 1}]`', GRAPH],
 ];
 
+/** @param {string} dir @param {string} file */
 function run(dir, file) {
   const env = {...process.env};
   delete env.NODE_TEST_CONTEXT;

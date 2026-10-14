@@ -5,13 +5,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {inventory, json, pathOf, registryPath, resealPacks, seal, setJson, sources, verify} from './synthetic.mjs';
+/** @import {Check, ContextPack, GraphNode, PackEntry} from './synthetic-types.d.mts' */
 
-const firstPack = json(sources(), registryPath).packs[0];
+/** @type {{packs: PackEntry[]}} */
+const registry = json(sources(), registryPath);
+const firstPack = registry.packs[0];
 const payloadPath = pathOf(firstPack.payloadUrl);
 
+/**
+ * @param {(payload: ContextPack) => void} editPayload
+ * @param {(graph: GraphNode[]) => GraphNode[]} [editGraph]
+ * @param {GraphNode[]} [expectedGraph]
+ */
 async function rebuild(editPayload, editGraph = graph => graph, expectedGraph = []) {
   const sourceMap = sources(),
     inv = inventory();
+  /** @type {ContextPack} */
   const payload = json(sourceMap, payloadPath);
   editPayload(payload);
   setJson(sourceMap, payloadPath, payload);
@@ -20,6 +29,12 @@ async function rebuild(editPayload, editGraph = graph => graph, expectedGraph = 
   return verify(await seal(sourceMap, inv));
 }
 
+/**
+ * A graph node written out by hand from the construction rule.
+ * @param {string} field @param {string} semanticId @param {number} index
+ * @param {Partial<GraphNode>} [extra]
+ * @returns {GraphNode}
+ */
 const node = (field, semanticId, index, extra = {}) => ({
   id: firstPack.packId + '/' + field + '/' + semanticId,
   semanticId,
@@ -29,6 +44,7 @@ const node = (field, semanticId, index, extra = {}) => ({
   dependencies: [],
   ...extra,
 });
+/** @param {ContextPack} payload */
 const populated = payload => {
   payload.causalContexts = [{id: 'cc-a'}];
   payload.applicabilityChains = [{id: 'ac-a', linkedCausalContextId: 'cc-a'}];
@@ -41,21 +57,32 @@ const expectedNodes = [
   node('weightingRules', 'w-a', 0, {ruleSourcePath: 'public/fictional-policy.json'}),
   node('answerBoundaries', 'ab-a', 0),
 ];
+/** @param {Promise<unknown>} promise @param {string} code */
 const refuses = async (promise, code) =>
-  assert.rejects(promise, error => error.name === 'VerificationError' && error.message === code, code);
+  assert.rejects(
+    promise,
+    error => error instanceof Error && error.name === 'VerificationError' && error.message === code,
+    code,
+  );
+/** @param {Check[]} checks */
+const coverage = checks => {
+  const check = checks.find(entry => entry.id === 'graph-coverage');
+  assert(check, 'graph-coverage was checked');
+  return {status: check.status, nodes: /** @type {GraphNode[]} */ (check.actual)};
+};
 
 test('the rebuild reproduces a valid snapshot when nothing is edited (empty graph baseline)', async () => {
   const {result, checks} = await rebuild(() => {});
   await result;
-  assert.equal(checks.find(check => check.id === 'graph-coverage').status, 'PASS');
+  assert.equal(coverage(checks).status, 'PASS');
 });
 
 test('a populated graph is built with the hand-written nodes and dependencies', async () => {
   const {result, checks} = await rebuild(populated, graph => graph, expectedNodes);
   await result;
-  const coverage = checks.find(check => check.id === 'graph-coverage');
-  assert.equal(coverage.status, 'PASS');
-  assert.equal(coverage.actual.length, 4);
+  const {status, nodes} = coverage(checks);
+  assert.equal(status, 'PASS');
+  assert.equal(nodes.length, 4);
 });
 
 test('a graph inventory that omits a node is refused under a recomputed root', async () => {
@@ -128,7 +155,7 @@ test('isolated nodes are permitted: a causal context needs no chain pointing to 
     [node('causalContexts', 'cc-a', 0)],
   );
   await result;
-  assert.equal(checks.find(check => check.id === 'graph-coverage').status, 'PASS');
+  assert.equal(coverage(checks).status, 'PASS');
 });
 
 test('an inventory that declares another relation or another traversal order is refused', async () => {
@@ -148,7 +175,7 @@ test('v0 dependencies are one level deep, so no cycle can be expressed', async (
     expectedNodes,
   );
   await result;
-  assert.deepEqual(checks.find(check => check.id === 'graph-coverage').actual[0].dependencies, []);
+  assert.deepEqual(coverage(checks).nodes[0].dependencies, []);
   // A chain that names another chain resolves to an absent causal context and is refused.
   const toChain = expectedNodes.map(n =>
     n.kind === 'applicabilityChains' ? {...n, dependencies: [firstPack.packId + '/causalContexts/ac-a']} : n,

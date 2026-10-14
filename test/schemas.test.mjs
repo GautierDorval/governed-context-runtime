@@ -6,8 +6,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import Ajv2020 from 'ajv/dist/2020.js';
+import {Ajv2020} from 'ajv/dist/2020.js';
 import {inventory, json, pathOf, registryPath, seal, setJson, sources, verify, bundle} from './synthetic.mjs';
+/** @import {Check, ContextPack, ContextPackManifest, PackEntry, Snapshot, Unit} from './synthetic-types.d.mts' */
 
 const FILES = [
   'context-pack.schema.json',
@@ -16,6 +17,7 @@ const FILES = [
   'runtime-snapshot.schema.json',
 ];
 const BASE = 'https://gautierdorval.com/spec/governed-context-runtime/';
+/** @type {{$id: string, $schema: string}[]} */
 const schemas = await Promise.all(
   FILES.map(async file => JSON.parse(await readFile(new URL('../spec/' + file, import.meta.url), 'utf8'))),
 );
@@ -30,16 +32,21 @@ const catalogue = () => {
   return ajv;
 };
 const ajv = catalogue();
+/** @param {string} file */
 const validator = file => ajv.getSchema(BASE + file);
+/** @param {string} file @param {unknown} value */
 const valid = (file, value) => {
   const validate = validator(file);
+  assert(validate, 'schema registered: ' + file);
   const ok = validate(value);
   return {ok, errors: (validate.errors ?? []).map(error => error.instancePath + ' ' + error.keyword)};
 };
+/** @param {string} file @param {unknown} value */
 const accepts = (file, value) => {
   const {ok, errors} = valid(file, value);
   assert.equal(ok, true, file + ': ' + errors.join(', '));
 };
+/** @param {string} file @param {unknown} value @param {string} keyword */
 const rejects = (file, value, keyword) => {
   const {ok, errors} = valid(file, value);
   assert.equal(ok, false, file + ' accepted an invalid object');
@@ -50,9 +57,12 @@ const rejects = (file, value, keyword) => {
 };
 
 const base = sources();
-const packs = json(base, registryPath).packs;
-const payloads = packs.map(pack => json(base, pathOf(pack.payloadUrl)));
-const manifests = packs.map(pack => json(base, pathOf(pack.manifestUrl)));
+/** @type {{packs: PackEntry[]}} */
+const registry = json(base, registryPath);
+/** @type {ContextPack[]} */
+const payloads = registry.packs.map(pack => json(base, pathOf(pack.payloadUrl)));
+/** @type {ContextPackManifest[]} */
+const manifests = registry.packs.map(pack => json(base, pathOf(pack.manifestUrl)));
 
 test('the catalogue holds exactly the four local schemas, each declaring draft 2020-12 and its documented identifier', () => {
   assert.deepEqual(
@@ -76,7 +86,7 @@ test('a reference outside the catalogue fails at compilation and is never fetche
   ]) {
     assert.throws(
       () => local.compile({$schema: 'https://json-schema.org/draft/2020-12/schema', $ref: ref}),
-      error => error.constructor.name === 'MissingRefError',
+      error => error instanceof Error && error.constructor.name === 'MissingRefError',
       ref,
     );
   }
@@ -126,9 +136,10 @@ test('structural violations are refused by each schema', () => {
   const {generatedBy, ...withoutGenerator} = manifests[0];
   rejects('context-pack-manifest.schema.json', withoutGenerator, 'required');
 
-  const registry = json(base, 'public/intent-registry.json');
-  rejects('intent-registry.schema.json', {...registry, type: 'IntentRegistry'}, 'const');
-  rejects('intent-registry.schema.json', {...registry, unexpected: []}, 'additionalProperties');
+  /** @type {Record<string, unknown>} */
+  const intents = json(base, 'public/intent-registry.json');
+  rejects('intent-registry.schema.json', {...intents, type: 'IntentRegistry'}, 'const');
+  rejects('intent-registry.schema.json', {...intents, unexpected: []}, 'additionalProperties');
 });
 
 test('format is an annotation under the default 2020-12 vocabulary, not an assertion', () => {
@@ -142,20 +153,23 @@ test('format is an annotation under the default 2020-12 vocabulary, not an asser
 // Profile requirements stricter than the historical schemas: a schema-valid object can still be
 // refused by the verifier. Each case is sealed under a recomputed root, so the refusal comes from
 // the profile rule and not from a digest mismatch.
+/** @param {(unit: Unit) => void} edit */
 async function unitVariant(edit) {
   const sourceMap = sources(),
     inv = inventory();
-  const registry = json(sourceMap, 'public/attested-interpretive-units.json');
-  edit(registry.units[0]);
-  setJson(sourceMap, 'public/attested-interpretive-units.json', registry);
-  inv.units = registry.units;
+  /** @type {{units: Unit[]}} */
+  const units = json(sourceMap, 'public/attested-interpretive-units.json');
+  edit(units.units[0]);
+  setJson(sourceMap, 'public/attested-interpretive-units.json', units);
+  inv.units = units.units;
   const sealed = await seal(sourceMap, inv);
   return {snapshot: sealed.snapshot, ...verify(sealed)};
 }
+/** @param {{snapshot: Snapshot, result: Promise<unknown>, checks: Check[]}} variant @param {string} code */
 const refusedBy = async (variant, code) => {
   const refusal = assert.rejects(
     variant.result,
-    error => error.name === 'VerificationError' && error.message === code,
+    error => error instanceof Error && error.name === 'VerificationError' && error.message === code,
     code,
   );
   accepts('runtime-snapshot.schema.json', variant.snapshot);
