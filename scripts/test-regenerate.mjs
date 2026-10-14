@@ -2,7 +2,7 @@
 // Maintenance path tests. Every case runs in a temporary copy of the package, removed afterwards.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {cp, mkdtemp, rm, readFile, writeFile, symlink, lstat} from 'node:fs/promises';
+import {cp, mkdtemp, rm, readFile, writeFile, symlink, lstat, mkdir} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -167,4 +167,86 @@ test('an interrupted write is reported and the last consistent registries are re
     );
     await write(dir);
     assert.equal(checker(dir), 'PASS');
+  }));
+
+for (const faultAt of /** @type {const} */ ([
+  'staging-created',
+  'first-backup',
+  'staged',
+  'published',
+  'first-replacement',
+])) {
+  test('recovery preserves the previous registries after interruption at ' + faultAt, async t =>
+    withCopy(t, async dir => {
+      const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+      await edit(dir, 'docs/en/README.md', text => text + '\nA pending clarification.\n');
+      await rejectsWith(write(dir, {faultAt}), 'simulated_interruption');
+      await rejectsWith(compute(dir), 'incomplete_previous_write');
+      assert.match(checker(dir), /^FAIL/);
+      await recover(dir);
+      assert.deepEqual(
+        [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+        before,
+      );
+      await write(dir);
+      assert.equal(checker(dir), 'PASS');
+    }),
+  );
+}
+
+test('CLI recovery discards a partial staging backup without changing the registries', async t =>
+  withCopy(t, async dir => {
+    const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+    await rejectsWith(write(dir, {faultAt: 'first-backup'}), 'simulated_interruption');
+    await writeFile(join(dir, '.regenerate-staging', 'backup', 'rights.json'), 'partial copy');
+    execFileSync(process.execPath, ['scripts/regenerate.mjs', '--recover'], {cwd: dir, stdio: 'pipe'});
+    assert.deepEqual(
+      [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+      before,
+    );
+    assert.equal(checker(dir), 'PASS');
+  }));
+
+test('interrupted cleanup keeps the completed new registries', async t =>
+  withCopy(t, async dir => {
+    const before = await readFile(join(dir, 'rights.json'));
+    await edit(dir, 'docs/en/README.md', text => text + '\nA completed clarification.\n');
+    await rejectsWith(write(dir, {faultAt: 'cleanup-started'}), 'simulated_interruption');
+    const committed = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+    assert.notDeepEqual(committed[0], before);
+    await rm(join(dir, '.regenerate-staging', 'backup', 'rights.json'));
+    await rejectsWith(compute(dir), 'incomplete_previous_write');
+    await recover(dir);
+    assert.deepEqual(
+      [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+      committed,
+    );
+    assert.equal(checker(dir), 'PASS');
+  }));
+
+test('missing recovery backup refuses restoration before changing either registry', async t =>
+  withCopy(t, async dir => {
+    await rejectsWith(write(dir, {faultAt: 'published'}), 'simulated_interruption');
+    await writeFile(join(dir, 'rights.json'), 'preserve this current content');
+    await rm(join(dir, '.regenerate', 'backup', 'package-manifest.json'));
+    const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+    await assert.rejects(recover(dir), error => error instanceof Error && 'code' in error && error.code === 'ENOENT');
+    assert.deepEqual(
+      [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+      before,
+    );
+  }));
+
+test('conflicting staging and published recovery directories are preserved for diagnosis', async t =>
+  withCopy(t, async dir => {
+    await rejectsWith(write(dir, {faultAt: 'published'}), 'simulated_interruption');
+    await mkdir(join(dir, '.regenerate-staging'));
+    const before = [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))];
+    await rejectsWith(recover(dir), 'ambiguous_recovery_state');
+    assert.deepEqual(
+      [await readFile(join(dir, 'rights.json')), await readFile(join(dir, 'package-manifest.json'))],
+      before,
+    );
+    assert((await lstat(join(dir, '.regenerate'))).isDirectory());
+    assert((await lstat(join(dir, '.regenerate-staging'))).isDirectory());
   }));

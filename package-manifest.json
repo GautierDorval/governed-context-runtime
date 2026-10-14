@@ -201,7 +201,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "274907012374a5933b0aa44ac38aae50afc1ea67c7fa43d2714ffeb1c5e0f318",
+      "sha256": "d338b78b2c7b3b4763d734b4eddacbbdbcf8cf9941a5c62bdcae0db5fe92d72f",
       "bytes": 17632
     },
     {
@@ -221,8 +221,8 @@
     },
     {
       "path": "scripts/regenerate.mjs",
-      "sha256": "ce6895a07014200766d1aea67b688272186315f7b0c68ba7f6bbbd05dd2781b4",
-      "bytes": 8758
+      "sha256": "26ed8b7a79edff0ae99f914e5162192d628a3b2aa9aea29410764e4a0d11052e",
+      "bytes": 10427
     },
     {
       "path": "scripts/svg-profile.mjs",
@@ -236,8 +236,8 @@
     },
     {
       "path": "scripts/test-regenerate.mjs",
-      "sha256": "ee87d34f07ca32ee932861eec7e5ff00e5fa62e71dc4e78c011b751c7ade7fb8",
-      "bytes": 7574
+      "sha256": "86e540b0ce469926b535f661d22453c7cddb054b99d19cc08b07f462fd8dcdf1",
+      "bytes": 11590
     },
     {
       "path": "spec/LICENSE",

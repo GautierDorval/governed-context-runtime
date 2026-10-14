@@ -13,6 +13,7 @@ import {resolve, join} from 'node:path';
 /** @import {FileRights, PackageManifest, PackagePolicy} from './package-types.d.mts' */
 
 const STATE_DIR = '.regenerate';
+const STAGING_DIR = '.regenerate-staging';
 const OUTPUTS = ['rights.json', 'package-manifest.json'];
 /** @param {Uint8Array} bytes */
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -70,21 +71,30 @@ export function licenceFor(policy, path) {
   return rules.default;
 }
 
+/** @param {string} path */
+async function exists(path) {
+  try {
+    await lstat(path);
+    return true;
+  } catch (error) {
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return false;
+    throw error;
+  }
+}
+
 /** @param {string} root @returns {Promise<Map<string, Buffer>>} */
 export async function compute(root) {
   /** @type {PackagePolicy} */
   const policy = parseJson(await readFile(resolve(root, 'package-policy.json')), 'package-policy.json');
   if (policy.schema !== 'runtime-public-package-policy/1')
     throw new RegenerateError('unsupported_policy', String(policy.schema));
-  let pending = null;
-  try {
-    pending = await lstat(resolve(root, STATE_DIR));
-  } catch {}
-  if (pending)
-    throw new RegenerateError(
-      'incomplete_previous_write',
-      'run --recover to restore the last consistent registries, then --write',
-    );
+  for (const directory of [STATE_DIR, STAGING_DIR]) {
+    if (await exists(resolve(root, directory)))
+      throw new RegenerateError(
+        'incomplete_previous_write',
+        'run --recover to restore the last consistent registries, then --write',
+      );
+  }
   const onDisk = (await walk(root)).sort();
   const inventory = [...policy.inventory].sort();
   if (new Set(inventory).size !== inventory.length) throw new RegenerateError('duplicate_inventory_entry');
@@ -154,25 +164,57 @@ export async function check(root) {
   return stale;
 }
 
-/** @param {string} root @param {{faultAfterFirstRename?: boolean}} [options] */
-export async function write(root, {faultAfterFirstRename = false} = {}) {
+/**
+ * @param {string} root
+ * @param {{faultAfterFirstRename?: boolean, faultAt?: 'staging-created'|'first-backup'|'staged'|'published'|'first-replacement'|'cleanup-started'}} [options]
+ */
+export async function write(root, {faultAfterFirstRename = false, faultAt} = {}) {
   const outputs = await compute(root);
   const state = resolve(root, STATE_DIR);
-  await mkdir(join(state, 'backup'), {recursive: true});
-  for (const name of OUTPUTS) await copyFile(resolve(root, name), join(state, 'backup', name));
-  for (const [name, raw] of outputs) await writeFile(join(state, name + '.new'), raw);
+  const staging = resolve(root, STAGING_DIR);
+  /** @param {string} point */
+  const interrupt = point => {
+    if (faultAt === point || (faultAfterFirstRename && point === 'first-replacement'))
+      throw new RegenerateError('simulated_interruption');
+  };
+  // Only publish the recovery directory once every backup and replacement is complete.
+  // An unpublished staging directory can always be discarded without touching the registries.
+  await mkdir(staging);
+  await mkdir(join(staging, 'backup'));
+  interrupt('staging-created');
+  for (const [index, name] of OUTPUTS.entries()) {
+    await copyFile(resolve(root, name), join(staging, 'backup', name));
+    if (index === 0) interrupt('first-backup');
+  }
+  for (const [name, raw] of outputs) await writeFile(join(staging, name + '.new'), raw);
+  interrupt('staged');
+  await rename(staging, state);
+  interrupt('published');
   for (const [index, name] of OUTPUTS.entries()) {
     await rename(join(state, name + '.new'), resolve(root, name));
-    if (faultAfterFirstRename && index === 0) throw new RegenerateError('simulated_interruption');
+    if (index === 0) interrupt('first-replacement');
   }
-  await rm(state, {recursive: true});
+  // Both registries are committed. Make interrupted cleanup disposable as well.
+  await rename(state, staging);
+  interrupt('cleanup-started');
+  await rm(staging, {recursive: true});
 }
 
 /** @param {string} root */
 export async function recover(root) {
   const state = resolve(root, STATE_DIR);
-  for (const name of OUTPUTS) await copyFile(join(state, 'backup', name), resolve(root, name));
-  await rm(state, {recursive: true});
+  const staging = resolve(root, STAGING_DIR);
+  if (await exists(staging)) {
+    if (await exists(state)) throw new RegenerateError('ambiguous_recovery_state');
+    await rm(staging, {recursive: true});
+    return;
+  }
+  // Read every backup before restoring either registry. Incomplete legacy backups
+  // or damaged recovery state must not partially overwrite the current pair.
+  const backups = await Promise.all(OUTPUTS.map(name => readFile(join(state, 'backup', name))));
+  for (const [index, name] of OUTPUTS.entries()) await writeFile(resolve(root, name), backups[index]);
+  await rename(state, staging);
+  await rm(staging, {recursive: true});
 }
 
 const invoked = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
