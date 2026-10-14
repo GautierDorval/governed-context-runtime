@@ -168,7 +168,7 @@
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "dfc98e19d97e92a6c34cbabd4a6298d777d725dd01ffba8bc66be8fbfd70ff41"
+      "sha256": "ab9db6eb8c8ff2027d37066e9d63523ea2f505bd0eeed1a346f6f64f99767ede"
     },
     {
       "path": "docs/fr/README.md",
@@ -180,7 +180,7 @@
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "00f59cbb4840f0cf11249c55a0a74401b3c7a8b2b407bd2cf08e3d4f7c443aa6"
+      "sha256": "9c7fe13c1f56acdcf81eb7f6536ae1f20b6fd75611031939cb00b6d4759c2bd9"
     },
     {
       "path": "docs/schemas.md",
@@ -216,7 +216,7 @@
       "path": "evidence/instance-2026-10-14.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "b91f7e826ee617c3370d7d252eeced82d82f64631d4bbce2c284af11f35593c6"
+      "sha256": "e16153d32eb2eced5b65b4d9a253e323c590d4dde568d69247d726f30c0b0293"
     },
     {
       "path": "evidence/publication.json",

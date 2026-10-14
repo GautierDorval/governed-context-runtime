@@ -35,6 +35,8 @@ The index still exposes `status: stable`; this field does not qualify the interf
 
 The production Worker implementation is maintained in a private repository. A deployment `sourceCommit` such as `7328776…` identifies that private source and cannot be resolved in this public reference repository. The public code here contains the reference contracts, verifiers and examples, not the production Worker implementation. In health metadata, `deployment.timestamp` is the version creation time, not the time it started receiving production traffic. `sourceCommitVerified: false` remains a limit on independently verifiable provenance.
 
+On an immutable archive, digest-addressed snapshot or version-pinned pack, `X-Corpus-Root-Digest` can retain the root recorded when that response entered a cache. It is not a freshness signal for the current corpus. Read `/v0/snapshot` to select the current root, then verify the selected inventory and referenced resource bytes; keep historical roots distinct from current discovery.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.
