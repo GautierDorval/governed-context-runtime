@@ -13,3 +13,5 @@ jobs:
         with:
           node-version: 24.17.0
       - run: npm test
+      - name: Tests leave the worktree unchanged
+        run: git status --porcelain --untracked-files=all && test -z "$(git status --porcelain --untracked-files=all)"

@@ -18,6 +18,9 @@
   },
   "scripts": {
     "demo": "node spec/examples/demo.mjs",
-    "test": "node scripts/check-package.mjs && node --test spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json"
+    "test": "node scripts/check-package.mjs && node scripts/regenerate.mjs --check && node --test scripts/test-regenerate.mjs spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json",
+    "regenerate": "node scripts/regenerate.mjs --write",
+    "regenerate:check": "node scripts/regenerate.mjs --check",
+    "regenerate:recover": "node scripts/regenerate.mjs --recover"
   }
 }
