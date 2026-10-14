@@ -1,5 +1,9 @@
 # Changes
 
+## Service and reference positioning, 2026-10-14
+
+Clarified the hosted HTTP service and separate MCP adapter, the contents of this reference repository, and applications that remain to be evaluated. Reorganized the three entry paths, paired English/French guides and the distinction between synthetic evidence and dated producer observations. No new Runtime capability, contract, production signing service or model-fidelity result.
+
 ## Evidence and provenance clarification, 2026-10-14
 
 Bound the retained follow-up records to a SHA-256 manifest and added a direct read of the exact declaration archived in the current snapshot (17 operations). Both guides explicitly identify the production implementation as private and distinguish version creation from traffic activation. Package verification now enforces the declared Node.js minimum; boundary tests cover rejected and accepted versions. This reference-package update does not activate or attest a new production deployment.

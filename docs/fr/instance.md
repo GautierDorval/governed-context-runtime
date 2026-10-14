@@ -6,7 +6,11 @@ L’instance est accessible sur **[context.gautierdorval.com](https://context.ga
 
 ## État observé
 
-Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a confirmé les réponses HTTP, la découverte des huit outils MCP et l’égalité exacte du pack français `representation-gap` reçu par les deux transports. Le registre observé contient six intentions et douze packs FR/EN. Le Runtime déclare `0.3.0-proposed` ; l’édition de référence de ce dépôt reste `0.2.0-proposed`. Ces versions identifient des composants différents.
+La plus récente observation datée du producteur dans cette édition est celle du [14 octobre 2026](../../evidence/instance-2026-10-14.json), avec ses relectures de suivi horodatées séparément. Elle consigne les vérifications de transport REST/MCP et la racine de corpus capturée, sans garantir une disponibilité continue. Le contrôle du 12 octobre ci-dessous est historique.
+
+### Contrôle historique du 12 octobre
+
+Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a confirmé les réponses HTTP, la découverte des huit outils MCP et l’égalité exacte du pack français `representation-gap` reçu par les deux transports. Le registre observé contient six intentions et douze packs FR/EN. Les versions sont distinguées dans le tableau ci-dessous.
 
 [Observation datée et empreintes des réponses](../../evidence/instance-2026-10-12.json) · [Portée des preuves](../../evidence/README.md)
 

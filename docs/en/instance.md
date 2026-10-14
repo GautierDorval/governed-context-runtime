@@ -6,7 +6,11 @@ The instance is available at **[context.gautierdorval.com](https://context.gauti
 
 ## Observed status
 
-On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP responses, discovery of eight MCP tools and exact equality of the French `representation-gap` pack received through both transports. The observed registry contains six intents and twelve FR/EN packs. The Runtime declares `0.3.0-proposed`; this repository’s reference edition remains `0.2.0-proposed`. Those versions identify different components.
+The latest dated producer record in this edition is the [October 14, 2026 observation](../../evidence/instance-2026-10-14.json), including its separately timed follow-up reads. It records REST/MCP transport checks and the captured corpus root. It is not a claim of continuous availability. The October 12 check below is historical.
+
+### Historical check, October 12
+
+On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP responses, discovery of eight MCP tools and exact equality of the French `representation-gap` pack received through both transports. The observed registry contains six intents and twelve FR/EN packs. The versions are distinguished in the table below.
 
 [Dated observation and response digests](../../evidence/instance-2026-10-12.json) · [Evidence scope](../../evidence/README.md)
 
