@@ -1,71 +1,90 @@
 // SPDX-License-Identifier: Apache-2.0
-// Classifies one `node --test --test-reporter=tap` run of the mutation harness. A run is a pass
-// only with exit status 0 and no failure; it is an assertion failure only with exit status 1, a
-// complete and consistent TAP summary, and every failing test reporting an assertion error at the
-// top level of its diagnostic block. Every other result is reported by name and never counts as
-// a detected mutant.
+// Runs one test file for the mutation harness and classifies the outcome from the structured
+// events of the node:test runner (run() API), never from printed text: a test file cannot forge
+// them by writing to its output. A mutant counts as detected only when every failing top-level
+// test failed on an assertion and the runner's own summary agrees.
+import {run} from 'node:test';
+import {join} from 'node:path';
 
 /**
- * @typedef {{status: number | null, signal?: string | null, error?: Error, stdout?: string | null, stderr?: string | null}} RunResult
+ * @typedef {{name: string, failureType: string | undefined, causeName: string | undefined, causeCode: string | undefined}} Failure
+ * @typedef {{tests: number, passed: number, failed: number, cancelled: number, skipped: number, todo: number}} Counts
+ * @typedef {{failures: Failure[], counts?: Counts, success?: boolean, error?: string}} RunRecord
  * @typedef {'pass' | 'assertion failure' | 'process failure' | 'no test report' | 'inconsistent report' | 'other failure'} Verdict
  */
 
 /**
- * @param {string} output
- * @param {string} label
+ * @param {unknown} value
+ * @param {string} key
+ * @returns {string | undefined}
  */
-const count = (output, label) => {
-  const match = new RegExp('^# ' + label + ' (\\d+)$', 'm').exec(output);
-  return match ? Number(match[1]) : Number.NaN;
+const field = (value, key) => {
+  if (!value || typeof value !== 'object' || !(key in value)) return undefined;
+  const found = /** @type {Record<string, unknown>} */ (value)[key];
+  return found === undefined || found === null ? undefined : String(found);
 };
 
 /**
- * Top-level failing tests with the first-level keys of their diagnostic blocks.
- * @param {string} output
+ * Runs one file in its own process and records the runner's events.
+ * @param {string} cwd
+ * @param {string} file
+ * @param {number} [timeout]
+ * @returns {Promise<RunRecord>}
  */
-export function failures(output) {
-  const lines = output.split(/\r?\n/);
-  /** @type {{name: string, keys: Record<string, string>}[]} */
-  const found = [];
-  for (let i = 0; i < lines.length; i++) {
-    const head = /^not ok \d+ - (.*)$/.exec(lines[i]);
-    if (!head) continue;
-    /** @type {Record<string, string>} */
-    const keys = {};
-    for (let j = i + 1; j < lines.length && !/^(?:ok|not ok) \d+ /.test(lines[j]) && !/^# /.test(lines[j]); j++) {
-      const key = /^ {2}(failureType|code|name): '([^']*)'$/.exec(lines[j]);
-      if (key && !(key[1] in keys)) keys[key[1]] = key[2];
+export async function runFile(cwd, file, timeout = 120000) {
+  /** @type {RunRecord} */
+  const record = {failures: []};
+  // A run nested in an outer test runner only reports its own files once the child context marker
+  // is absent from this process; it is restored afterwards.
+  const context = process.env.NODE_TEST_CONTEXT;
+  delete process.env.NODE_TEST_CONTEXT;
+  try {
+    for await (const event of run({
+      files: [join(cwd, file)],
+      cwd,
+      isolation: 'process',
+      concurrency: 1,
+      timeout,
+    })) {
+      if (event.type === 'test:fail' && event.data.nesting === 0) {
+        const error = event.data.details.error;
+        record.failures.push({
+          name: event.data.name,
+          failureType: field(error, 'failureType'),
+          causeName: field(error.cause, 'name'),
+          causeCode: field(error.cause, 'code'),
+        });
+      }
+      // The summary without a file is the runner's total for this run.
+      if (event.type === 'test:summary' && event.data.file === undefined) {
+        record.counts = event.data.counts;
+        record.success = event.data.success;
+      }
     }
-    found.push({name: head[1], keys});
+  } catch (error) {
+    record.error = error instanceof Error ? error.message : String(error);
+  } finally {
+    if (context !== undefined) process.env.NODE_TEST_CONTEXT = context;
   }
-  return found;
+  return record;
 }
 
 /**
- * @param {RunResult} result
+ * @param {RunRecord} record
  * @returns {Verdict}
  */
-export function verdict(result) {
-  if (result.error || result.signal || result.status === null) return 'process failure';
-  const output = result.stdout ?? '';
-  const [tests, passed, failed, cancelled, skipped, todo] = [
-    'tests',
-    'pass',
-    'fail',
-    'cancelled',
-    'skipped',
-    'todo',
-  ].map(label => count(output, label));
-  if (![tests, passed, failed, cancelled, skipped, todo].every(Number.isInteger) || tests === 0)
-    return 'no test report';
-  const failing = failures(output);
-  if (passed + failed + cancelled + skipped + todo !== tests || failing.length !== failed || cancelled > 0)
-    return 'inconsistent report';
-  if (failed === 0) return result.status === 0 ? 'pass' : 'inconsistent report';
-  if (result.status !== 1) return 'inconsistent report';
-  const assertion = failing.every(
-    ({keys}) =>
-      keys.failureType === 'testCodeFailure' && keys.code === 'ERR_ASSERTION' && keys.name === 'AssertionError',
+export function verdict(record) {
+  if (record.error) return 'process failure';
+  const counts = record.counts;
+  if (!counts || counts.tests === 0) return 'no test report';
+  if (counts.cancelled > 0 || record.failures.length !== counts.failed) return 'inconsistent report';
+  if (counts.failed === 0) return record.success === true ? 'pass' : 'inconsistent report';
+  if (record.success !== false) return 'inconsistent report';
+  const assertions = record.failures.every(
+    failure =>
+      failure.failureType === 'testCodeFailure' &&
+      failure.causeName === 'AssertionError' &&
+      failure.causeCode === 'ERR_ASSERTION',
   );
-  return assertion ? 'assertion failure' : 'other failure';
+  return assertions ? 'assertion failure' : 'other failure';
 }

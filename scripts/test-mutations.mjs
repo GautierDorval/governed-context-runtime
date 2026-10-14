@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 // Controlled mutations of the verifier paths covered by test/. Each mutant is applied to a
-// temporary copy of the package, never to the files under test, and must make the named tests fail.
+// temporary copy of the package, never to the files under test, and must make the named tests fail
+// on an assertion, as reported by the node:test runner's structured events (scripts/mutation-verdict.mjs).
 // A mutation whose original text is not found exactly once fails loudly instead of being skipped.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {cp, mkdtemp, rm, readFile, writeFile} from 'node:fs/promises';
-import {spawnSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {verdict} from './mutation-verdict.mjs';
+import {runFile, verdict} from './mutation-verdict.mjs';
 
 const source = fileURLToPath(new URL('../', import.meta.url));
 const verifier = 'spec/reference/verification.mjs';
@@ -96,18 +96,6 @@ const MUTANTS = [
   ['graph: selector index shifted', 'selector: `$.${field}[${i}]`', 'selector: `$.${field}[${i + 1}]`', GRAPH],
 ];
 
-/** @param {string} dir @param {string} file */
-function run(dir, file) {
-  const env = {...process.env};
-  delete env.NODE_TEST_CONTEXT;
-  return spawnSync(process.execPath, ['--test', '--test-reporter=tap', file], {
-    cwd: dir,
-    env,
-    encoding: 'utf8',
-    timeout: 120000,
-  });
-}
-
 test('every controlled mutation of the covered verifier paths is detected', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'gcr-mutations-'));
   t.after(() => rm(dir, {recursive: true, force: true}));
@@ -118,10 +106,11 @@ test('every controlled mutation of the covered verifier paths is detected', asyn
   const original = await readFile(join(dir, verifier), 'utf8');
   // Controls: the unmodified copy and an equivalent rewrite must both pass, so a detection below
   // cannot come from the copy or the rewrite itself.
-  for (const file of [TEXT, GRAPH]) assert.equal(verdict(run(dir, file)), 'pass', 'baseline must pass: ' + file);
+  for (const file of [TEXT, GRAPH])
+    assert.equal(verdict(await runFile(dir, file)), 'pass', 'baseline must pass: ' + file);
   await writeFile(join(dir, verifier), original + '\n// equivalent rewrite\n');
   for (const file of [TEXT, GRAPH])
-    assert.equal(verdict(run(dir, file)), 'pass', 'equivalent rewrite must pass: ' + file);
+    assert.equal(verdict(await runFile(dir, file)), 'pass', 'equivalent rewrite must pass: ' + file);
   /** @type {string[]} */
   const survivors = [];
   /** @type {string[]} */
@@ -134,7 +123,7 @@ test('every controlled mutation of the covered verifier paths is detected', asyn
     );
     // Detection requires the named tests to run and fail on an assertion; a crash, a load error,
     // a signal, a timeout or a missing report is a broken mutant, never a detection.
-    const outcome = verdict(run(dir, file));
+    const outcome = verdict(await runFile(dir, file));
     if (outcome === 'pass') survivors.push(name);
     else if (outcome !== 'assertion failure') broken.push(name + ': ' + outcome);
   }

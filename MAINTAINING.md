@@ -39,7 +39,7 @@ Dependabot cannot perform step 2 itself, and no workflow with write access does 
 
 `test/` exercises verifier paths that the synthetic example alone does not reach: the historical text profile `utf8-nfc-lf-trimmed-v0`, indexed selectors and graph construction. Expected bytes and graph nodes are written out by hand from the recipe; they are never computed by the function under test.
 
-`scripts/test-mutations.mjs` applies controlled mutations to a temporary copy of `spec/reference/verification.mjs` and requires each one to make these tests fail. When a reviewed change to the verifier moves or rewrites a mutated line, the harness stops with "mutation target must occur exactly once": update the mutation list in the same pull request rather than deleting the case.
+`scripts/test-mutations.mjs` applies controlled mutations to a temporary copy of `spec/reference/verification.mjs` and requires each one to make these tests fail on an assertion. `scripts/mutation-verdict.mjs` reads that outcome from the structured events of the `node:test` runner, not from printed output; a crash, a timeout or an inconsistent count is reported as a broken mutant, never as a detection. When a reviewed change to the verifier moves or rewrites a mutated line, the harness stops with "mutation target must occur exactly once": update the mutation list in the same pull request rather than deleting the case.
 
 ## Interrupted regeneration
 

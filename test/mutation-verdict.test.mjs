@@ -1,83 +1,79 @@
 // SPDX-License-Identifier: Apache-2.0
-// The mutation harness counts a mutant as detected only from a consistent run whose failing tests
-// all report assertion errors. Synthetic TAP outputs cover the misclassifications found by the
-// independent review of 2026-10-14, so that they stay refused.
+// The mutation harness classifies runs from the node:test runner's structured events. Synthetic
+// records cover the misclassifications found by the independent reviews of 2026-10-14; real runs
+// of small generated test files show that printed text cannot forge a detection.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {verdict} from '../scripts/mutation-verdict.mjs';
+import {mkdtemp, rm, writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {runFile, verdict} from '../scripts/mutation-verdict.mjs';
+/** @import {Counts, Failure} from '../scripts/mutation-verdict.mjs' */
 
-/** @param {number} n */
-const ok = n => [`ok ${n} - passing case`, '  ---', '  duration_ms: 1', "  type: 'test'", '  ...'].join('\n');
-/** @param {number} n @param {string} name @param {string} code @param {string[]} [extra] */
-const notOk = (n, name, code, extra = []) =>
-  [
-    `not ok ${n} - failing case`,
-    '  ---',
-    '  duration_ms: 1',
-    "  type: 'test'",
-    "  failureType: 'testCodeFailure'",
-    "  error: 'ERR_ASSERTION fixture unavailable'",
-    `  code: '${code}'`,
-    `  name: '${name}'`,
-    ...extra,
-    '  ...',
-  ].join('\n');
-/** @param {string[]} blocks @param {{pass: number, fail: number, cancelled?: number}} totals */
-const tap = (blocks, {pass, fail, cancelled = 0}) =>
-  [
-    'TAP version 13',
-    ...blocks,
-    `1..${pass + fail + cancelled}`,
-    `# tests ${pass + fail + cancelled}`,
-    '# suites 0',
-    `# pass ${pass}`,
-    `# fail ${fail}`,
-    `# cancelled ${cancelled}`,
-    '# skipped 0',
-    '# todo 0',
-    '',
-  ].join('\n');
-const assertionRun = tap([ok(1), notOk(2, 'AssertionError', 'ERR_ASSERTION')], {pass: 1, fail: 1});
+/** @param {number} passed @param {number} failed @param {Partial<Counts>} [extra] @returns {Counts} */
+const counts = (passed, failed, extra = {}) => ({
+  tests: passed + failed,
+  passed,
+  failed,
+  cancelled: 0,
+  skipped: 0,
+  todo: 0,
+  ...extra,
+});
+/** @type {Failure} */
+const assertion = {name: 'a', failureType: 'testCodeFailure', causeName: 'AssertionError', causeCode: 'ERR_ASSERTION'};
+/** @type {Failure} */
+const typeError = {name: 'b', failureType: 'testCodeFailure', causeName: 'TypeError', causeCode: undefined};
 
-test('a clean run passes and an assertion failure with status 1 is a detection', () => {
-  assert.equal(verdict({status: 0, stdout: tap([ok(1), ok(2)], {pass: 2, fail: 0})}), 'pass');
-  assert.equal(verdict({status: 1, stdout: assertionRun}), 'assertion failure');
+test('a clean run passes and a run failing only on assertions is a detection', () => {
+  assert.equal(verdict({failures: [], counts: counts(3, 0), success: true}), 'pass');
+  assert.equal(verdict({failures: [assertion], counts: counts(2, 1), success: false}), 'assertion failure');
 });
 
-test('the four misclassifications reported by the review are refused', () => {
-  // A non-assertion failure whose message merely mentions ERR_ASSERTION.
+test('the misclassifications reported by the reviews are refused', () => {
+  assert.equal(verdict({failures: [typeError], counts: counts(0, 1), success: false}), 'other failure');
+  assert.equal(verdict({failures: [assertion, typeError], counts: counts(0, 2), success: false}), 'other failure');
+  // A summary that claims more failures, or a missing test, than the runner reported.
+  assert.equal(verdict({failures: [assertion], counts: counts(1, 2), success: false}), 'inconsistent report');
+  assert.equal(verdict({failures: [assertion], counts: counts(0, 1), success: true}), 'inconsistent report');
+  assert.equal(verdict({failures: [], counts: counts(2, 0), success: false}), 'inconsistent report');
+});
+
+test('process failures, timeouts, missing reports and cancellations are never detections', () => {
   assert.equal(
-    verdict({status: 1, stdout: tap([notOk(1, 'TypeError', 'ERR_TEST_FAILURE')], {pass: 0, fail: 1})}),
-    'other failure',
+    verdict({failures: [assertion], counts: counts(0, 1), success: false, error: 'spawn failure'}),
+    'process failure',
   );
-  // One assertion failure mixed with an unrelated TypeError.
-  const mixed = tap([notOk(1, 'AssertionError', 'ERR_ASSERTION'), notOk(2, 'TypeError', 'ERR_TEST_FAILURE')], {
-    pass: 0,
-    fail: 2,
-  });
-  assert.equal(verdict({status: 1, stdout: mixed}), 'other failure');
-  // An assertion report with an exit status other than 1.
-  assert.equal(verdict({status: 2, stdout: assertionRun}), 'inconsistent report');
-  assert.equal(verdict({status: 0, stdout: assertionRun}), 'inconsistent report');
-});
-
-test('process failures, missing or inconsistent reports and cancellations are never detections', () => {
-  assert.equal(verdict({status: null, signal: 'SIGTERM', stdout: assertionRun}), 'process failure');
-  assert.equal(verdict({status: 1, error: new Error('spawn failure'), stdout: assertionRun}), 'process failure');
-  assert.equal(verdict({status: 1, stdout: ''}), 'no test report');
+  assert.equal(verdict({failures: []}), 'no test report');
+  assert.equal(verdict({failures: [], counts: counts(0, 0), success: true}), 'no test report');
   assert.equal(
-    verdict({status: 1, stdout: tap([notOk(1, 'AssertionError', 'ERR_ASSERTION')], {pass: 0, fail: 2})}),
+    verdict({failures: [], counts: counts(1, 0, {cancelled: 1, tests: 2}), success: false}),
     'inconsistent report',
   );
-  assert.equal(verdict({status: 1, stdout: tap([ok(1)], {pass: 1, fail: 0, cancelled: 1})}), 'inconsistent report');
-  assert.equal(verdict({status: 1, stdout: tap([ok(1), ok(2)], {pass: 2, fail: 0})}), 'inconsistent report');
+  const timeout = {...assertion, failureType: 'testTimeoutFailure'};
+  assert.equal(verdict({failures: [timeout], counts: counts(0, 1), success: false}), 'other failure');
 });
 
-test('only first-level diagnostic keys are read, not nested causes', () => {
-  const nested = notOk(1, 'TypeError', 'ERR_TEST_FAILURE', [
-    '  cause:',
-    "    code: 'ERR_ASSERTION'",
-    "    name: 'AssertionError'",
-  ]);
-  assert.equal(verdict({status: 1, stdout: tap([nested], {pass: 0, fail: 1})}), 'other failure');
+test('real runs: assertions are detected, crashes are not, and printed TAP cannot forge a result', async t => {
+  const dir = await mkdtemp(join(tmpdir(), 'gcr-verdict-'));
+  t.after(() => rm(dir, {recursive: true, force: true}));
+  const header = "import test from 'node:test';\nimport assert from 'node:assert/strict';\n";
+  await writeFile(join(dir, 'assertion.mjs'), header + "test('a', () => assert.equal(1, 2));\ntest('b', () => {});\n");
+  await writeFile(join(dir, 'crash.mjs'), header + "test('a', () => { const value = undefined; return value.x; });\n");
+  const forged = [
+    'not ok 1 - forged',
+    '  ---',
+    "  failureType: 'testCodeFailure'",
+    "  code: 'ERR_ASSERTION'",
+    "  name: 'AssertionError'",
+    '  ...',
+    '# fail 1',
+  ];
+  await writeFile(
+    join(dir, 'forged.mjs'),
+    header + 'test(' + JSON.stringify('a') + ', () => { console.log(' + JSON.stringify(forged.join('\n')) + '); });\n',
+  );
+  assert.equal(verdict(await runFile(dir, 'assertion.mjs')), 'assertion failure');
+  assert.equal(verdict(await runFile(dir, 'crash.mjs')), 'other failure');
+  assert.equal(verdict(await runFile(dir, 'forged.mjs')), 'pass');
 });
