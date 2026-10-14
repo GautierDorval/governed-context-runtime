@@ -14,6 +14,8 @@ import {resolve, join} from 'node:path';
 
 const STATE_DIR = '.regenerate';
 const STAGING_DIR = '.regenerate-staging';
+const OWNER_FILE = 'owner.json';
+const OWNER_BYTES = Buffer.from('{"schema":"runtime-regeneration-state/1"}\n');
 const OUTPUTS = ['rights.json', 'package-manifest.json'];
 /** @param {Uint8Array} bytes */
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -79,6 +81,29 @@ async function exists(path) {
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return false;
     throw error;
+  }
+}
+
+// Recovery owns only marked directories with a closed layout. Unknown state is preserved.
+// This is a local ownership check, not protection against concurrent or hostile writers.
+/** @param {string} directory */
+async function requireOwnedState(directory) {
+  const fail = () => new RegenerateError('unrecognized_recovery_state', directory);
+  if (!(await lstat(directory)).isDirectory()) throw fail();
+  const marker = join(directory, OWNER_FILE);
+  if (!(await exists(marker)) || !(await lstat(marker)).isFile()) throw fail();
+  if (!(await readFile(marker)).equals(OWNER_BYTES)) throw fail();
+  for (const name of await readdir(directory)) {
+    const path = join(directory, name);
+    const stat = await lstat(path);
+    if (name === 'backup') {
+      if (!stat.isDirectory()) throw fail();
+      for (const backup of await readdir(path)) {
+        if (!OUTPUTS.includes(backup) || !(await lstat(join(path, backup))).isFile()) throw fail();
+      }
+    } else if (![OWNER_FILE, ...OUTPUTS.map(output => output + '.new')].includes(name) || !stat.isFile()) {
+      throw fail();
+    }
   }
 }
 
@@ -178,8 +203,9 @@ export async function write(root, {faultAfterFirstRename = false, faultAt} = {})
       throw new RegenerateError('simulated_interruption');
   };
   // Only publish the recovery directory once every backup and replacement is complete.
-  // An unpublished staging directory can always be discarded without touching the registries.
+  // Recognized unpublished staging can be discarded without touching the registries.
   await mkdir(staging);
+  await writeFile(join(staging, OWNER_FILE), OWNER_BYTES, {flag: 'wx'});
   await mkdir(join(staging, 'backup'));
   interrupt('staging-created');
   for (const [index, name] of OUTPUTS.entries()) {
@@ -206,9 +232,11 @@ export async function recover(root) {
   const staging = resolve(root, STAGING_DIR);
   if (await exists(staging)) {
     if (await exists(state)) throw new RegenerateError('ambiguous_recovery_state');
+    await requireOwnedState(staging);
     await rm(staging, {recursive: true});
     return;
   }
+  await requireOwnedState(state);
   // Read every backup before restoring either registry. Incomplete legacy backups
   // or invalid JSON backups must not overwrite either current registry.
   const backups = await Promise.all(OUTPUTS.map(name => readFile(join(state, 'backup', name))));

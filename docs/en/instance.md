@@ -29,6 +29,10 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, given in full in the evidence file. `/v0/lifecycle` lists the roots available now; it does not say when each one was served. A release tag of this repository identifies repository content: it neither contains nor signs a production corpus root, and the demo keys are test keys.
 
+The later [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the current root `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
+
+The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 14 observation includes successful MCP exchanges.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.

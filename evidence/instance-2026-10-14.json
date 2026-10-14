@@ -1,0 +1,55 @@
+{
+  "schema": "runtime-public-deployment-observation/1",
+  "observer": "producer",
+  "population": "producer-initiated-technical-checks",
+  "origin": "https://context.gautierdorval.com",
+  "startedAt": "2026-10-14T14:53:42.181Z",
+  "finishedAt": "2026-10-14T14:54:18.524Z",
+  "runtimeVersion": "0.3.0-proposed",
+  "corpusRootDigest": "sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0",
+  "status": "PASS",
+  "capture": {
+    "sha256": "2b5242c794cafd60e9aafd512eaab4607615808c17680d67ea10428eaaa29778",
+    "requests": 354,
+    "responseBytes": 7377648,
+    "redirects": 0,
+    "retries": 0,
+    "snapshotEntriesVerified": 10,
+    "distinctSnapshotRoots": 9,
+    "mcpArtifactReads": 184,
+    "independentPythonChecks": 17754
+  },
+  "rootFiles": {
+    "targets": 119,
+    "requests": 122,
+    "responseBytes": 3381441,
+    "comparison": "deployed source Git blob bytes",
+    "sha256": "14d56b702bb510426d83a766f03d194e0761feaadfaaf348b463277ae4146797"
+  },
+  "rawResponsesPublished": false,
+  "modelInvocation": false,
+  "limitations": [
+    "Dated producer observation. Capture digests identify records retained by the producer; their bodies are not included here.",
+    "The separate Python implementation checks captured bytes within the same producer evidence lineage, not an independent organization or authenticated deployment attestation.",
+    "The current snapshot is also listed by its digest: ten verified entries represent nine distinct roots, not ten deployments.",
+    "Technical integrity and observed transport do not establish semantic truth, adoption, model fidelity, source authority or future availability.",
+    "No production signing key or external-model experiment is established. The reference package remains 0.2.0-proposed."
+  ],
+  "followupReadback": {
+    "startedAt": "2026-10-14T17:10:22.350Z",
+    "lastPowerShellResponseAt": "2026-10-14T17:13:30.8325864+00:00",
+    "nodeRequests": 11,
+    "powerShellRequests": 5,
+    "observedPopSuffixes": [
+      "BOS",
+      "CDG",
+      "YYZ"
+    ],
+    "sameRootInHeadersAndBodies": true,
+    "capabilitiesMatchesObservedOpenApiSchema": true,
+    "declaredOperations": 17,
+    "packVersion011": "HTTP 200 in French and English",
+    "mcpToolsListed": 8,
+    "scope": "Two clients from one workstation. Observed POP suffixes do not constitute global edge coverage. Earlier or intermediary responses were not available for comparison."
+  }
+}
