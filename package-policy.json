@@ -39,6 +39,7 @@
     "rights.json",
     "scripts/check-package.mjs",
     "scripts/regenerate.mjs",
+    "scripts/test-mutations.mjs",
     "scripts/test-regenerate.mjs",
     "spec/LICENSE",
     "spec/attestation-recipes.json",
@@ -64,7 +65,9 @@
     "spec/reference/vectors.json",
     "spec/reference/verification.d.mts",
     "spec/reference/verification.mjs",
-    "spec/runtime-snapshot.schema.json"
+    "spec/runtime-snapshot.schema.json",
+    "test/graph.test.mjs",
+    "test/verification-paths.test.mjs"
   ],
   "licences": {
     "reserved": [
@@ -78,7 +81,8 @@
     "codePrefixes": [
       "spec/",
       "scripts/",
-      ".github/"
+      ".github/",
+      "test/"
     ],
     "codeFiles": [
       "LICENSE",

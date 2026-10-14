@@ -71,8 +71,8 @@
     },
     {
       "path": "MAINTAINING.md",
-      "sha256": "8fbc81220b93e0fb4dc78323371bc4a11971766a6270bceb35b4a5510428fdee",
-      "bytes": 2306
+      "sha256": "62725098f4ee707b5e829b28ced77c5af31aa8dfe4374cc90bc35a1fe8f3a229",
+      "bytes": 3031
     },
     {
       "path": "NOTICE.md",
@@ -166,28 +166,33 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "e5b4cb2aa902ec4795710089813e6492b043f5ea0cef549dff0d11a34e27bf23",
-      "bytes": 3207
+      "sha256": "a4f20db20a82f3fd1882db0fb40b545f40b66cbfd8c9c576ab4b63d2b8c461f9",
+      "bytes": 3323
     },
     {
       "path": "package.json",
-      "sha256": "f4e715aaaf94f2896a693e2e15e5b6c4a6f8f60113feb7438d3b7ed68d2e724a",
-      "bytes": 1327
+      "sha256": "19f6ed46af375a0974fdc99f0af0e971817427d301aaabf0c4d08efddefeef6b",
+      "bytes": 1407
     },
     {
       "path": "rights.json",
-      "sha256": "868123decf9275fd889394533d61f4722b72363f930851d19643dc84421d586f",
-      "bytes": 13664
+      "sha256": "cda26272aaa79df9378f272c0c7a877945a677c58e2b3d6916bea5a9db8a59d2",
+      "bytes": 14335
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "1bbca70d4a0d3f97998f878cb6a7567b53739b2425b5592444e452694d7d4667",
-      "bytes": 8491
+      "sha256": "22b48923f01733941244c08cdb58e82a0ac436e8f5bc573ae393540110178c1e",
+      "bytes": 8500
     },
     {
       "path": "scripts/regenerate.mjs",
       "sha256": "82c48bf847177794c2f43acc2c055ef9cd5cb16fdeb1461bad205e90e76e62cc",
       "bytes": 7309
+    },
+    {
+      "path": "scripts/test-mutations.mjs",
+      "sha256": "3242c71c58b47e84b07d66080bc239e7ae3a909327ee4ee72bfd7f3db19e0b87",
+      "bytes": 5350
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -318,6 +323,16 @@
       "path": "spec/runtime-snapshot.schema.json",
       "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0",
       "bytes": 3234
+    },
+    {
+      "path": "test/graph.test.mjs",
+      "sha256": "d5aae3eaf6408ec72dd411a34622a59ce8b5627ec67dbd2603a2e051225f1474",
+      "bytes": 8437
+    },
+    {
+      "path": "test/verification-paths.test.mjs",
+      "sha256": "dc1d0237e01028c40b7b3a8b9c99ca4b89e9af80e1b59c049bce34165f50a0ca",
+      "bytes": 5183
     }
   ]
 }

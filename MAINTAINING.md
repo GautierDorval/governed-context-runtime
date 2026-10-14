@@ -31,6 +31,12 @@ Dependabot proposes weekly updates of the pinned Actions. Such a pull request ch
 
 Dependabot cannot perform step 2 itself, and no workflow with write access does it automatically.
 
+## Verifier path tests and mutations
+
+`test/` exercises verifier paths that the synthetic example alone does not reach: the historical text profile `utf8-nfc-lf-trimmed-v0`, indexed selectors and graph construction. Expected bytes and graph nodes are written out by hand from the recipe; they are never computed by the function under test.
+
+`scripts/test-mutations.mjs` applies controlled mutations to a temporary copy of `spec/reference/verification.mjs` and requires each one to make these tests fail. When a reviewed change to the verifier moves or rewrites a mutated line, the harness stops with "mutation target must occur exactly once": update the mutation list in the same pull request rather than deleting the case.
+
 ## Interrupted regeneration
 
 `npm run regenerate` writes through a `.regenerate/` working directory and keeps a backup of the previous registries until both are replaced. If it is interrupted, `npm test` and the generator refuse the intermediate state. Run `npm run regenerate:recover` to restore the last consistent registries, then `npm run regenerate` again.

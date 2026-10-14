@@ -84,7 +84,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "8fbc81220b93e0fb4dc78323371bc4a11971766a6270bceb35b4a5510428fdee"
+      "sha256": "62725098f4ee707b5e829b28ced77c5af31aa8dfe4374cc90bc35a1fe8f3a229"
     },
     {
       "path": "NOTICE.md",
@@ -198,25 +198,31 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "e5b4cb2aa902ec4795710089813e6492b043f5ea0cef549dff0d11a34e27bf23"
+      "sha256": "a4f20db20a82f3fd1882db0fb40b545f40b66cbfd8c9c576ab4b63d2b8c461f9"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "f4e715aaaf94f2896a693e2e15e5b6c4a6f8f60113feb7438d3b7ed68d2e724a"
+      "sha256": "19f6ed46af375a0974fdc99f0af0e971817427d301aaabf0c4d08efddefeef6b"
     },
     {
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "1bbca70d4a0d3f97998f878cb6a7567b53739b2425b5592444e452694d7d4667"
+      "sha256": "22b48923f01733941244c08cdb58e82a0ac436e8f5bc573ae393540110178c1e"
     },
     {
       "path": "scripts/regenerate.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
       "sha256": "82c48bf847177794c2f43acc2c055ef9cd5cb16fdeb1461bad205e90e76e62cc"
+    },
+    {
+      "path": "scripts/test-mutations.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "3242c71c58b47e84b07d66080bc239e7ae3a909327ee4ee72bfd7f3db19e0b87"
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -373,6 +379,18 @@
       "source": "spec/runtime-snapshot.schema.json",
       "license": "Apache-2.0",
       "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0"
+    },
+    {
+      "path": "test/graph.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "d5aae3eaf6408ec72dd411a34622a59ce8b5627ec67dbd2603a2e051225f1474"
+    },
+    {
+      "path": "test/verification-paths.test.mjs",
+      "source": "repository-maintenance-2026-10-14",
+      "license": "Apache-2.0",
+      "sha256": "dc1d0237e01028c40b7b3a8b9c99ca4b89e9af80e1b59c049bce34165f50a0ca"
     }
   ],
   "selfAndManifest": "rights.json and package-manifest.json are project metadata under Apache-2.0"

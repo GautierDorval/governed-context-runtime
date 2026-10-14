@@ -50,7 +50,7 @@ const licenceFor = path =>
       : path.endsWith('.md') ? licences.markdown
         : licences.codePrefixes.some(prefix => path.startsWith(prefix)) || licences.codeFiles.includes(path) ? 'Apache-2.0'
           : licences.default;
-assert.deepEqual(licences.codePrefixes, ['spec/', 'scripts/', '.github/']);
+assert.deepEqual(licences.codePrefixes, ['spec/', 'scripts/', '.github/', 'test/']);
 assert.equal(licences.markdown, 'CC-BY-4.0');
 assert.equal(licences.default, 'CC-BY-4.0');
 assert.deepEqual(Object.entries(licences.licenceTexts), [['LICENSES/CC-BY-4.0.txt', 'CC-BY-4.0']]);
