@@ -31,7 +31,7 @@ Ces commandes lisent les données. La conversion JSON de PowerShell ne conserve 
 
 Une racine ou une empreinte reçue avec le contenu permet de constater une cohérence, mais ne crée pas à elle seule une référence de confiance indépendante. Une empreinte correcte ne prouve ni vérité ni autorité. La décision d’utiliser le contexte appartient au consommateur. Les signatures et clés fournies avec la démonstration restent réservées aux tests ; elles ne sont pas une chaîne de confiance de production.
 
-Pour apprendre le parcours complet avec une fixture fictive et toutes ses archives :
+Pour apprendre le parcours complet avec un jeu d’essai fictif et toutes ses archives :
 
 ```powershell
 npm run demo
