@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "f89348fa7488c6f3cdae36a2e1d9a66d5a37025ffa8d9718b4b6bc38bf11b8b6"
+      "sha256": "5215d6ca060dea80588fef3028f6999c266df9be682c4029a03724cc9523e83d"
     },
     {
       "path": "CITATION.cff",
@@ -168,7 +168,7 @@
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "db7e54473024d3b1a05f482f0d48e4dab0d7bdc41314766e8a6c5379041d2e65"
+      "sha256": "af263cead4b3642362e7cb1ca0bdd76bb4fc1051173635c7a72e3590151919b1"
     },
     {
       "path": "docs/fr/README.md",
@@ -180,7 +180,7 @@
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "ac68669a09f5449680d6ea0995ff12ee8c0cc8daeb1157aaa2dfdf90ec731704"
+      "sha256": "c2433b609057379a9fd5ee9bc4078ea6b4b344bce63061e09b045c7be718feef"
     },
     {
       "path": "docs/schemas.md",

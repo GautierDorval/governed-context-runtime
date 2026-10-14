@@ -1,5 +1,9 @@
 # Changes
 
+## Maintenance edition, 2026-10-14
+
+Public maintenance: `package-policy.json` and `scripts/regenerate.mjs` recompute `rights.json` and `package-manifest.json` after a reviewed edit, and `npm test` stays read-only and dependency-free. Added tests for the historical text profile, indexed selectors, graph construction and controlled verifier mutations. The four JSON Schemas are executed with a closed local catalogue, and SVG assets are checked against a closed profile. Scripts and tests are formatted and type-checked with locked development dependencies (`npm ci --ignore-scripts`, then `npm run test:dev`). Actions are pinned to checkout v7.0.1 and setup-node v7.1.0, and Dependabot also watches npm. Documentation: French diagrams, French typography, the README benefits sentence, a tested-client matrix and a table of versions and identifiers. Reference edition 0.2.0-proposed: existing contract, verifier, example and evidence bytes are unchanged.
+
 ## Repository edition, 2026-10-13
 
 Licences clarified: Apache-2.0 for code and configuration, CC BY 4.0 for documentation, diagrams and evidence, identity visuals reserved. Added a code of conduct, issue forms, a pull request template, Dependabot for GitHub Actions, README status badges and citation metadata. No contract, verifier or example behaviour changed.

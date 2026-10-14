@@ -12,6 +12,23 @@ Le **12 octobre 2026 à 02:18 UTC**, un contrôle technique du producteur a conf
 
 Cette observation établit le fonctionnement décrit à cette date, sans garantir la disponibilité future. Les appels de contrôle sont du trafic technique initié par le producteur, sans appel à un modèle. Ils ne mesurent pas l’adoption ni l’effet du contexte sur une réponse.
 
+## Versions et identifiants
+
+Chaque identifiant désigne une chose différente ; une concordance de numéros d’une ligne à l’autre n’a aucune signification.
+
+| Identifiant | Ce qu’il désigne |
+|---|---|
+| `0.2.0-proposed` dans ce dépôt | Les contrats, le vérificateur et les exemples de référence. Les éditions datées (2026-10-12, 2026-10-13, 2026-10-14) ajoutent documentation, exemples, tests et outils d’entretien sans modifier les octets existants des contrats, du vérificateur ni des exemples. |
+| `runtimeVersion` `0.3.0-proposed` | Le logiciel du Runtime hébergé. |
+| `schemaVersion` `0.1.0-proposed` | Les contrats proposés de l’instantané, de l’inventaire, des archives et des erreurs. |
+| Révision MCP `2026-07-28` | Le profil de protocole servi par l’adaptateur MCP. |
+| `corpusVersion` | Une étiquette de famille. Les instantanés successifs d’une même lignée de corpus gardent la même étiquette, qui n’identifie donc pas le contenu. |
+| Racine de corpus `sha-256:…` | Un instantané exact. C’est le seul identifiant du contenu du corpus. |
+| `version` d’un pack | La version d’un pack dans un instantané, par exemple `0.1.0` ; une même version de pack peut figurer sous plusieurs racines. |
+| `publicationId` dans `evidence/publication.json` | La projection publique synthétique. Ce n’est pas une racine de corpus. |
+
+L’observation du 12 octobre 2026 a relevé la racine `sha-256:367be59f…`, donnée en entier dans le fichier de preuve. `/v0/lifecycle` liste les racines disponibles aujourd’hui ; il ne dit pas quand chacune a été servie. Une étiquette de version de ce dépôt identifie le contenu du dépôt : elle ne contient ni ne signe une racine de corpus de production, et les clés de la démonstration sont des clés de test.
+
 ## 1. Choisir un contexte déclaré
 
 Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.

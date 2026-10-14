@@ -12,6 +12,23 @@ On **October 12, 2026 at 02:18 UTC**, a producer technical check confirmed HTTP 
 
 This observation establishes the described behaviour at that time, without guaranteeing future availability. These checks are producer-initiated technical traffic, with no model invocation. They do not measure adoption or the effect of context on an answer.
 
+## Versions and identifiers
+
+Each identifier names a different thing; matching numbers carry no meaning across rows.
+
+| Identifier | What it names |
+|---|---|
+| `0.2.0-proposed` in this repository | The reference contracts, verifier and examples. Dated editions (2026-10-12, 2026-10-13, 2026-10-14) add documentation, examples, tests and maintenance tools without changing the existing contract, verifier or example bytes. |
+| `runtimeVersion` `0.3.0-proposed` | The software of the hosted Runtime. |
+| `schemaVersion` `0.1.0-proposed` | The proposed snapshot, inventory, archive and error contracts. |
+| MCP revision `2026-07-28` | The protocol profile served by the MCP adapter. |
+| `corpusVersion` | A family label. Successive snapshots of the same corpus line keep the same label, so it does not identify content. |
+| Corpus root `sha-256:…` | One exact snapshot. It is the only identifier of corpus content. |
+| Pack `version` | The version of one pack within a snapshot, for example `0.1.0`; the same pack version can appear under several roots. |
+| `publicationId` in `evidence/publication.json` | The synthetic public projection. It is not a corpus root. |
+
+The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, given in full in the evidence file. `/v0/lifecycle` lists the roots available now; it does not say when each one was served. A release tag of this repository identifies repository content: it neither contains nor signs a production corpus root, and the demo keys are test keys.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.
