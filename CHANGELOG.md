@@ -1,5 +1,9 @@
 # Changes
 
+## Verification guide clarification, 2026-10-17
+
+The verification guide names the historical-inspection entry point (`verifyTestReceipt` in `historical` mode), states that `decideConsumption` evaluates current use only, and explains why a revoked key is reported as `KEY_NOT_ACTIVE` by the consumer and as `key_revoked` by the signature layer. No code, contract, example or evidence change.
+
 ## Service and reference positioning, 2026-10-14
 
 Clarified the hosted HTTP service and separate MCP adapter, the contents of this reference repository, and applications that remain to be evaluated. Reorganized the three entry paths, paired English/French guides and the distinction between synthetic evidence and dated producer observations. No new Runtime capability, contract, production signing service or model-fidelity result.

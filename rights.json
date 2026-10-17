@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "63b11ee115769106d5320b4f46ceee3fe08d656ea662502105d2134ad0c1d0b6"
+      "sha256": "4280ea6486e8a49be700cea0274f0d4579485d2cdad25acc4410a7071073a3bb"
     },
     {
       "path": "CITATION.cff",
@@ -198,7 +198,7 @@
       "path": "docs/verification.md",
       "source": "reviewed-contract-explanation",
       "license": "CC-BY-4.0",
-      "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6"
+      "sha256": "4bb5b1a91863f4cc60b4ce2c5ffa4de23da39086a39f78035067a4a791010e08"
     },
     {
       "path": "evidence/README.md",
