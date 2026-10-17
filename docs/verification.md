@@ -26,7 +26,7 @@ The project’s detached JWS test format uses Ed25519 and an instance-specific m
 
 Historical verification can inspect an expired receipt or a retired key; it cannot authorize current consumption. Revoked keys are rejected in either mode. A signed issue date is not independent evidence of time. Current use reruns the original receipt against the current local policy. Offline verification does not establish later compromise or revocation. The demonstration’s fixed clock and bundled key are deliberately educational.
 
-Historical inspection is available through `verifyTestReceipt` with `mode: 'historical'`. The consumer wrapper `decideConsumption` evaluates current use only. It presents every known key to the signature check, then applies the local disposition: a retired or revoked key returns `KEY_NOT_ACTIVE` at stage `LOCAL_DISPOSITION` with `signatureValid: true`, whereas `verifyTestReceipt` itself rejects a revoked key with `key_revoked`. Both refuse; the reason names the layer that refused.
+Historical inspection is available through `verifyTestReceipt` with `mode: 'historical'`. The consumer wrapper `decideConsumption` evaluates current use only. It presents every known key to the technical receipt verification. Only after that verification succeeds does it apply the local disposition: a retired or revoked key then returns `KEY_NOT_ACTIVE` at stage `LOCAL_DISPOSITION` with `signatureValid: true`. A technical failure takes precedence, for example `invalid_signature` or `freshness_policy` at stage `TECHNICAL_VERIFICATION`. `verifyTestReceipt` itself rejects a revoked key with `key_revoked`. Both paths refuse; the reason names the layer that refused.
 
 ## Update boundary
 

@@ -2,7 +2,7 @@
 
 ## Verification guide clarification, 2026-10-17
 
-The verification guide names the historical-inspection entry point (`verifyTestReceipt` in `historical` mode), states that `decideConsumption` evaluates current use only, and explains why a revoked key is reported as `KEY_NOT_ACTIVE` by the consumer and as `key_revoked` by the signature layer. No code, contract, example or evidence change.
+The verification guide names the historical-inspection entry point (`verifyTestReceipt` in `historical` mode), states that `decideConsumption` evaluates current use only, and explains why a revoked key is reported as `KEY_NOT_ACTIVE` by the consumer, once technical verification has succeeded, and as `key_revoked` by the signature layer. No code, contract, example or evidence change.
 
 ## Service and reference positioning, 2026-10-14
 

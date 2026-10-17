@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "4280ea6486e8a49be700cea0274f0d4579485d2cdad25acc4410a7071073a3bb",
-      "bytes": 4197
+      "sha256": "d386af5a8c0baa5148e5c6b749e1c06cecb721096a9b7df10fc817506464afaf",
+      "bytes": 4241
     },
     {
       "path": "CITATION.cff",
@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/verification.md",
-      "sha256": "4bb5b1a91863f4cc60b4ce2c5ffa4de23da39086a39f78035067a4a791010e08",
-      "bytes": 4827
+      "sha256": "f08edadfcd883d420b4a49ac7e5e179e2b6985baddece47fcbb0c297deec9dd5",
+      "bytes": 5011
     },
     {
       "path": "evidence/README.md",
@@ -206,7 +206,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "ebd8f7a819517e2ad6cfcca9694b10bd107eeb4fea353b01bf0a19665b5b30bd",
+      "sha256": "2d07914f7e80b3e387ccda8072ac741ea5f4c75cfe59f530f36ff91d62095b08",
       "bytes": 17862
     },
     {
