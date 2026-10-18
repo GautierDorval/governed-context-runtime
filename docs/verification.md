@@ -28,6 +28,8 @@ Historical verification can inspect an expired receipt or a retired key; it cann
 
 Historical inspection is available through `verifyTestReceipt` in `spec/reference/signatures.mjs`. Set `mode: 'historical'` in its fourth argument: `verifyTestReceipt(artifact, jwks, policy, {expectedRoot, now, mode: 'historical'})`. It takes a separate JWKS (`{keys: [...]}`); its `policy.keys` entries are `{kid, jwkDigest, status, notBefore, notAfter}` rules, unlike the consumer's entries that include `jwk`. It also requires `minimumSequence` and `maxAgeSeconds` to be positive safe integers, and `clockSkewSeconds` to be a non-negative safe integer, even in historical mode. Historical mode skips the current-use sequence, active-key and freshness checks; it still validates the policy structure and refuses revoked keys.
 
+The `now` option in the fourth argument must also be a safe integer in both modes, even though historical mode does not use it for freshness. Invalid numeric policy fields produce `verifier_policy_missing`; an invalid `now` produces the same error after the signature and root checks succeed.
+
 The consumer wrapper `decideConsumption` evaluates current use only. It presents every known key to the technical receipt verification. Only after that verification succeeds does it apply the local disposition: a retired or revoked key then returns `KEY_NOT_ACTIVE` at stage `LOCAL_DISPOSITION` with `signatureValid: true`. A technical failure takes precedence, for example `invalid_signature` or `freshness_policy` at stage `TECHNICAL_VERIFICATION`. `verifyTestReceipt` itself rejects a revoked key with `key_revoked`. Both paths refuse a revoked key; the reason names the layer that refused.
 
 ## Update boundary

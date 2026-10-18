@@ -20,12 +20,14 @@ for (const [name,mutate] of Object.entries({missing:p=>null,format:p=>({...p,for
 }
 test('cryptographically valid but locally unauthorized is explicit',async()=>{const p=clone(policy);p.allowedKids=[];const r=await decideConsumption(p,artifact);assert.equal(r.signatureValid,true);assert.equal(r.reason,'LOCAL_USE_NOT_ALLOWED')});
 for (const status of ['retired','revoked']) {
- test('valid signature with '+status+' key is refused at local disposition',async()=>{
-  const p=clone(policy);p.keys[0].status=status;p.allowedKids=[];
-  const result=await decideConsumption(p,artifact);
-  assert.equal(result.decision,'REFUSED');assert.equal(result.reason,'KEY_NOT_ACTIVE');
-  assert.equal(result.stage,'LOCAL_DISPOSITION');assert.equal(result.signatureValid,true);
- });
+ for (const allowed of [true,false]) {
+  test('valid signature with '+status+' key, allowed kid: '+allowed,async()=>{
+   const p=clone(policy);p.keys[0].status=status;p.allowedKids=allowed?[jwk.kid]:[];
+   const result=await decideConsumption(p,artifact);
+   assert.equal(result.decision,'REFUSED');assert.equal(result.reason,'KEY_NOT_ACTIVE');
+   assert.equal(result.stage,'LOCAL_DISPOSITION');assert.equal(result.signatureValid,true);
+  });
+ }
  test('expired receipt with '+status+' key is refused before local disposition',async()=>{
   const p=clone(policy);p.keys[0].status=status;p.allowedKids=[];p.now=receipt.expiresAt+1;p.maxAgeSeconds=1000;
   const result=await decideConsumption(p,artifact);

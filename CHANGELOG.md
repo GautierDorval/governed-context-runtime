@@ -2,7 +2,7 @@
 
 ## Verification boundary regression tests, 2026-10-18
 
-Added permanent regression tests for retired and revoked keys, technical-error precedence, current-only consumer use, and the direct verifier's current/historical behavior. The verification guide now states the required policy fields and their numeric constraints in both modes. The existing reference behavior, error names, contracts, examples and evidence remain unchanged.
+Added permanent regression tests for retired and revoked keys with both allowed and disallowed key identifiers, technical-error precedence, current-only consumer use, and the direct verifier's current/historical behavior. The verification guide now states the required policy fields, numeric constraints and verification-time requirements in both modes. The existing reference behavior, error names, contracts, examples and evidence remain unchanged.
 
 ## Verification guide clarification, 2026-10-17
 

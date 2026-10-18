@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "0a5c64b7414e11a4a6176ad8129631288c6d138d801a6cd0172fb68c6a62e869"
+      "sha256": "77d6871cbe8f229ff9bfc51a3554218047566cdaa07aafca1327539a0f7438bd"
     },
     {
       "path": "CITATION.cff",
@@ -198,7 +198,7 @@
       "path": "docs/verification.md",
       "source": "reviewed-contract-explanation",
       "license": "CC-BY-4.0",
-      "sha256": "95db7fe2bbb8b0f4fc21e0fbcb68e4bffbed62e1ff9de878fbaf3360040fb39a"
+      "sha256": "8c43f4bc61f70787a9c691420c8d0009e3ba71476059017e73a0fb0ec2ddddd1"
     },
     {
       "path": "evidence/README.md",
@@ -396,13 +396,13 @@
       "path": "spec/reference/test-consumer.mjs",
       "source": "spec/reference/test-consumer.mjs",
       "license": "Apache-2.0",
-      "sha256": "c7fbcd902cd08e437cccbe88a4a1cbcb6196bce2c10ead79aac8c36b2a9c3eb0"
+      "sha256": "aae540d53412873175bb88adb3cd2db713185e5e77ae33e048a8b4c257b96fc5"
     },
     {
       "path": "spec/reference/test-public-finish.mjs",
       "source": "spec/reference/test-public-finish.mjs",
       "license": "Apache-2.0",
-      "sha256": "19e51a9fdc5667f443f1d5e1104817cede474fe9ba31d5fa0a544dd269e11fe9"
+      "sha256": "75abfdbcdc2c71e3aa107f2e6d3cf038a016d16736c88fb5cc512b42d6afeed7"
     },
     {
       "path": "spec/reference/test-vectors.mjs",

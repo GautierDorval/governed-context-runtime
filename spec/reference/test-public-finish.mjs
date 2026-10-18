@@ -72,6 +72,17 @@ for (const mode of ['current','historical']) {
   const result=await verifyTestReceipt(b.receipt,{keys:[k.jwk]},{...p,minimumSequence:1,maxAgeSeconds:1,clockSkewSeconds:0,keys:[rule]},{expectedRoot:p.expectedRoot,now,mode});
   assert.equal(result.signatureValid,true);assert.equal(result.mode,mode);assert.equal(result.currentStatusVerified,false);
  });
+ for (const [name,now] of [['missing',undefined],['fractional',0.5],['unsafe-integer',Number.MAX_SAFE_INTEGER+1],['non-finite',Infinity],['non-numeric','110']]) {
+  test('direct verifier '+mode+' rejects invalid now: '+name,async()=>{
+   const b=clone(),p=b.policy,k=p.keys[0];
+   const rule={kid:k.jwk.kid,jwkDigest:k.jwkDigest,status:'active',notBefore:k.notBefore,notAfter:k.notAfter};
+   const options={expectedRoot:p.expectedRoot,mode};if (name!=='missing') options.now=now;
+   await assert.rejects(
+    ()=>verifyTestReceipt(b.receipt,{keys:[k.jwk]},{...p,keys:[rule]},options),
+    {name:'VerificationError',message:'verifier_policy_missing'}
+   );
+  });
+ }
  for (const field of ['minimumSequence','maxAgeSeconds','clockSkewSeconds']) {
   for (const invalid of ['missing','fractional','negative','unsafe-integer','minimum-boundary']) {
    if (field==='clockSkewSeconds' && invalid==='minimum-boundary') continue;
