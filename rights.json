@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "77d6871cbe8f229ff9bfc51a3554218047566cdaa07aafca1327539a0f7438bd"
+      "sha256": "69ec6ff5a2bf14170976915341d2e7dd4c93ce226d2605267618ed9144963019"
     },
     {
       "path": "CITATION.cff",
@@ -402,7 +402,7 @@
       "path": "spec/reference/test-public-finish.mjs",
       "source": "spec/reference/test-public-finish.mjs",
       "license": "Apache-2.0",
-      "sha256": "75abfdbcdc2c71e3aa107f2e6d3cf038a016d16736c88fb5cc512b42d6afeed7"
+      "sha256": "eacb2159f655315743e795155e4a14309b7f54a18270c37b3defb4536aaf780f"
     },
     {
       "path": "spec/reference/test-vectors.mjs",
