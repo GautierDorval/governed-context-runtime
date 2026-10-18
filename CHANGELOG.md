@@ -1,5 +1,9 @@
 # Changes
 
+## Verification error-order regression tests, 2026-10-18
+
+Added four tests for current and historical verification: an invalid signature or mismatched root remains the reported error when the verification time is also invalid. Each case preserves a valid verification and checks the individual fault before combining it with an invalid time. This locks the existing documented error order without changing the verifier or its error names.
+
 ## Verification boundary regression tests, 2026-10-18
 
 Added permanent regression tests for retired and revoked keys with both allowed and disallowed key identifiers, technical-error precedence, current-only consumer use, and the direct verifier's current/historical behavior. The verification guide now states the required policy fields, numeric constraints and verification-time requirements in both modes. The existing reference behavior, error names, contracts, examples and evidence remain unchanged.
