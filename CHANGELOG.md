@@ -1,5 +1,9 @@
 # Changes
 
+## Verification boundary regression tests, 2026-10-18
+
+Added permanent regression tests for retired and revoked keys with both allowed and disallowed key identifiers, technical-error precedence, current-only consumer use, and the direct verifier's current/historical behavior. The verification guide now states the required policy fields, numeric constraints and verification-time requirements in both modes. The existing reference behavior, error names, contracts, examples and evidence remain unchanged.
+
 ## Verification guide clarification, 2026-10-17
 
 The verification guide names the historical-inspection entry point (`verifyTestReceipt` in `historical` mode), states that `decideConsumption` evaluates current use only, and explains why a revoked key is reported as `KEY_NOT_ACTIVE` by the consumer, once technical verification has succeeded, and as `key_revoked` by the signature layer. No code, contract, example or evidence change.
