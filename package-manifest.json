@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/verification.md",
-      "sha256": "f08edadfcd883d420b4a49ac7e5e179e2b6985baddece47fcbb0c297deec9dd5",
-      "bytes": 5011
+      "sha256": "305db0a0af56bddd6752f85a9ec0296915fb06726d76035bfa6b37cc5415ea7a",
+      "bytes": 5349
     },
     {
       "path": "evidence/README.md",
@@ -206,7 +206,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "2d07914f7e80b3e387ccda8072ac741ea5f4c75cfe59f530f36ff91d62095b08",
+      "sha256": "3135e8a1a0894167650ff9f665ac95d6c79388e221c297ae0433a36b08557aac",
       "bytes": 17862
     },
     {
