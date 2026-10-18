@@ -19,8 +19,35 @@ for (const [name,mutate] of Object.entries({missing:p=>null,format:p=>({...p,for
  test('invalid policy precedes all artifact access: '+name,async()=>{let touched=false;const a=new Proxy({}, {get(){touched=true;throw Error('must not evaluate')}});const result=await decideConsumption(mutate(clone(policy)),a);assert.equal(result.artifactEvaluated,false);assert.equal(result.decision,null);assert.equal(touched,false)});
 }
 test('cryptographically valid but locally unauthorized is explicit',async()=>{const p=clone(policy);p.allowedKids=[];const r=await decideConsumption(p,artifact);assert.equal(r.signatureValid,true);assert.equal(r.reason,'LOCAL_USE_NOT_ALLOWED')});
-test('revoked known key is separate from bad crypto',async()=>{const p=clone(policy);p.keys[0].status='revoked';assert.equal((await decideConsumption(p,artifact)).reason,'KEY_NOT_ACTIVE')});
-test('double fault: bad signature precedes disposition and permission',async()=>{const p=clone(policy);p.allowedKids=[];p.keys[0].status='revoked';const a=clone(artifact);const parts=a.detachedJws.split('.');const sig=Buffer.from(parts[2],'base64url');sig[0]^=1;parts[2]=sig.toString('base64url');a.detachedJws=parts.join('.');assert.equal((await decideConsumption(p,a)).reason,'invalid_signature')});
+for (const status of ['retired','revoked']) {
+ test('valid signature with '+status+' key is refused at local disposition',async()=>{
+  const p=clone(policy);p.keys[0].status=status;p.allowedKids=[];
+  const result=await decideConsumption(p,artifact);
+  assert.equal(result.decision,'REFUSED');assert.equal(result.reason,'KEY_NOT_ACTIVE');
+  assert.equal(result.stage,'LOCAL_DISPOSITION');assert.equal(result.signatureValid,true);
+ });
+ test('expired receipt with '+status+' key is refused before local disposition',async()=>{
+  const p=clone(policy);p.keys[0].status=status;p.allowedKids=[];p.now=receipt.expiresAt+1;p.maxAgeSeconds=1000;
+  const result=await decideConsumption(p,artifact);
+  assert.equal(result.decision,'REFUSED');assert.equal(result.reason,'freshness_policy');
+  assert.equal(result.stage,'TECHNICAL_VERIFICATION');assert.notEqual(result.signatureValid,true);
+ });
+}
+test('consumer historical option cannot bypass current freshness checks',async()=>{
+ const p=clone(policy);p.now=receipt.expiresAt+1;p.maxAgeSeconds=1000;
+ const current=await decideConsumption(p,artifact);
+ const historicalOption=await decideConsumption(p,artifact,{mode:'historical'});
+ assert.equal(current.decision,'REFUSED');assert.equal(current.reason,'freshness_policy');
+ assert.equal(current.stage,'TECHNICAL_VERIFICATION');assert.deepEqual(historicalOption,current);
+});
+test('double fault: bad signature precedes disposition and permission',async()=>{
+ const p=clone(policy);p.allowedKids=[];p.keys[0].status='revoked';
+ const a=clone(artifact),parts=a.detachedJws.split('.'),sig=Buffer.from(parts[2],'base64url');
+ sig[0]^=1;parts[2]=sig.toString('base64url');a.detachedJws=parts.join('.');
+ const result=await decideConsumption(p,a);
+ assert.equal(result.decision,'REFUSED');assert.equal(result.reason,'invalid_signature');
+ assert.equal(result.stage,'TECHNICAL_VERIFICATION');assert.notEqual(result.signatureValid,true);
+});
 test('double fault: unknown key precedes invalid signature',async()=>{const a=clone(artifact);const parts=a.detachedJws.split('.');parts[0]=Buffer.from(canonical({alg:'Ed25519',kid:'unknown',typ:'application/vnd.gautierdorval.runtime-test-publication+json'})).toString('base64url');a.detachedJws=parts.join('.');assert.equal((await decideConsumption(policy,a)).reason,'unknown_or_duplicate_kid')});
 test('different signed root rejected before local permission',async()=>{const a=signTestReceipt({...receipt,corpusRootDigest:'sha-256:'+'b'.repeat(64)},privateKey,jwk.kid,{testOnly:true});assert.equal((await decideConsumption(policy,a)).reason,'receipt_root')});
 test('DSSE cannot enter the JWS path',async()=>{assert.equal((await decideConsumption(policy,{payload:'e30=',signatures:[]})).reason,'signature_required')});
