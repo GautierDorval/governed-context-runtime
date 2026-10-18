@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "63b11ee115769106d5320b4f46ceee3fe08d656ea662502105d2134ad0c1d0b6",
-      "bytes": 3805
+      "sha256": "d386af5a8c0baa5148e5c6b749e1c06cecb721096a9b7df10fc817506464afaf",
+      "bytes": 4241
     },
     {
       "path": "CITATION.cff",
@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/verification.md",
-      "sha256": "47eeeca2aca047a0b3d4082ee4050a29139125abdc913eabb3806e9106a419a6",
-      "bytes": 4340
+      "sha256": "305db0a0af56bddd6752f85a9ec0296915fb06726d76035bfa6b37cc5415ea7a",
+      "bytes": 5349
     },
     {
       "path": "evidence/README.md",
@@ -206,7 +206,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "83b90600164e7362d9ddca1ffcfcfecc3b958727c1ca4f79545cca4c99010f51",
+      "sha256": "3135e8a1a0894167650ff9f665ac95d6c79388e221c297ae0433a36b08557aac",
       "bytes": 17862
     },
     {

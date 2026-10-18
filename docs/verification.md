@@ -26,6 +26,10 @@ The project’s detached JWS test format uses Ed25519 and an instance-specific m
 
 Historical verification can inspect an expired receipt or a retired key; it cannot authorize current consumption. Revoked keys are rejected in either mode. A signed issue date is not independent evidence of time. Current use reruns the original receipt against the current local policy. Offline verification does not establish later compromise or revocation. The demonstration’s fixed clock and bundled key are deliberately educational.
 
+Historical inspection is available through `verifyTestReceipt` in `spec/reference/signatures.mjs`. Set `mode: 'historical'` in its fourth argument: `verifyTestReceipt(artifact, jwks, policy, {expectedRoot, now, mode: 'historical'})`. It takes a separate JWKS (`{keys: [...]}`); its `policy.keys` entries are `{kid, jwkDigest, status, notBefore, notAfter}` rules, unlike the consumer's entries that include `jwk`.
+
+The consumer wrapper `decideConsumption` evaluates current use only. It presents every known key to the technical receipt verification. Only after that verification succeeds does it apply the local disposition: a retired or revoked key then returns `KEY_NOT_ACTIVE` at stage `LOCAL_DISPOSITION` with `signatureValid: true`. A technical failure takes precedence, for example `invalid_signature` or `freshness_policy` at stage `TECHNICAL_VERIFICATION`. `verifyTestReceipt` itself rejects a revoked key with `key_revoked`. Both paths refuse a revoked key; the reason names the layer that refused.
+
 ## Update boundary
 
 This edition pins one expected root. A valid signature for a different root is rejected. It does not implement automatic updates, persistent anti-rollback state or an external timestamp service. Those are separate consumer-profile designs; the TUF threat model is relevant, but its timestamp metadata is not itself an independent RFC 3161 timestamp.
