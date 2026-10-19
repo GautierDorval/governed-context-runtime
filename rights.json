@@ -183,6 +183,12 @@
       "sha256": "2df1da876a34c3aff3fbbbf450c47334fbd171f92fa94ee6f49f2f757707970a"
     },
     {
+      "path": "docs/handoff-2026-10-19.md",
+      "source": "repository-maintenance-2026-10-19",
+      "license": "CC-BY-4.0",
+      "sha256": "3d63d613a29a004447115f19d125a0de019d842dddaf3fad06af8c4c37efd1a0"
+    },
+    {
       "path": "docs/schemas.md",
       "source": "reviewed-schema-mapping",
       "license": "CC-BY-4.0",
@@ -240,7 +246,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "3d772905648f69b411c6b9bda4f4d86d46a8be0ed6e6ca92f32df0c1379860bf"
+      "sha256": "a8f3c6bfb81bb145bb3e3702dac8bf4d326b30044af480ce6afd24fc008c3ee2"
     },
     {
       "path": "package.json",

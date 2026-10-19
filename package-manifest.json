@@ -155,6 +155,11 @@
       "bytes": 19046
     },
     {
+      "path": "docs/handoff-2026-10-19.md",
+      "sha256": "3d63d613a29a004447115f19d125a0de019d842dddaf3fad06af8c4c37efd1a0",
+      "bytes": 15873
+    },
+    {
       "path": "docs/schemas.md",
       "sha256": "4dc6d482bacaaaec111634f9052154661aa83c7809fb7c306aa5cb44c1fe3e1a",
       "bytes": 4653
@@ -201,8 +206,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "3d772905648f69b411c6b9bda4f4d86d46a8be0ed6e6ca92f32df0c1379860bf",
-      "bytes": 3950
+      "sha256": "a8f3c6bfb81bb145bb3e3702dac8bf4d326b30044af480ce6afd24fc008c3ee2",
+      "bytes": 3984
     },
     {
       "path": "package.json",
@@ -211,8 +216,8 @@
     },
     {
       "path": "rights.json",
-      "sha256": "f166f52a9348aee2a628b53c55952f2272806c1ecb6e122eb5c0d8cab7447b0e",
-      "bytes": 18092
+      "sha256": "f45c6e3d924eb6fd911dcbf282d5ea9a4d09ab456e032a3229092389721c5c6b",
+      "bytes": 18315
     },
     {
       "path": "scripts/check-package.mjs",
