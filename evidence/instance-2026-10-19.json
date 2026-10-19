@@ -94,7 +94,8 @@
     "sourceCommitDeclared": true,
     "sourceCommitVerified": false,
     "productionSource": "private repository, separate from this reference edition",
-    "referenceEdition": "0.2.0-proposed"
+    "referenceEdition": "0.2.0-proposed",
+    "runtimeVersionEvidence": "Declared by the deployed candidate source; the health body and its runtimeVersion field were not retained by this observation."
   },
   "rawResponsesPublished": false,
   "modelInvocation": false,
@@ -105,6 +106,7 @@
     "Operator probes can enter ordinary service telemetry. No synthetic exclusion, external adoption or traffic total is inferred.",
     "Historical pack responses remain bound to their recorded historical corpus root; they are not relabelled with the current root.",
     "Technical transport and byte integrity do not establish semantic truth, source authority, production signing, adoption or model fidelity.",
-    "Offline repository tests do not repeat these network checks. External model experiments remain NOT_RUN."
+    "Offline repository tests do not repeat these network checks. External model experiments remain NOT_RUN.",
+    "This observation establishes the state checked after deployment, not a causal change in response bytes: only two root routes differed from the baseline; the compared MCP pack bytes were unchanged."
   ]
 }

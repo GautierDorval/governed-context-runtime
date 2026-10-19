@@ -22,7 +22,7 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 | Identifier | What it names |
 |---|---|
-| `0.2.0-proposed` in this repository | The reference contracts, verifier and examples. Dated editions (2026-10-12, 2026-10-13, 2026-10-14) add documentation, examples, tests and maintenance tools without changing the existing contract, verifier or example bytes. |
+| `0.2.0-proposed` in this repository | The reference contracts, verifier and examples. Dated editions (2026-10-12, 2026-10-13, 2026-10-14, 2026-10-17, 2026-10-18, 2026-10-19) add documentation, examples, tests and maintenance tools without changing the existing contract, verifier or example bytes. |
 | `runtimeVersion` `0.3.0-proposed` | The software of the hosted Runtime. |
 | `schemaVersion` `0.1.0-proposed` | The proposed snapshot, inventory, archive and error contracts. |
 | MCP revision `2026-07-28` | The protocol profile served by the MCP adapter. |
@@ -33,9 +33,9 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, given in full in the evidence file. `/v0/lifecycle` lists the roots available now; it does not say when each one was served. A release tag of this repository identifies repository content: it neither contains nor signs a production corpus root, and the demo keys are test keys.
 
-The historical [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the current root `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
+The historical [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the root then current, `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
 
-The [October 19 observation](../../evidence/instance-2026-10-19.json) records the current root `sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4` during the final application capture from 14:11:55 to 14:12:13 UTC. The current French and English `interpretive-governance-overview` packs use version `0.1.1`; the separately checked English `0.1.0` pack retains its historical root. Pack versions are selected per intent: the `representation-gap` examples below still select its current `0.1.0` version.
+The [October 19 observation](../../evidence/instance-2026-10-19.json) records the current root `sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4` during the final application capture from 14:11:55 to 14:12:13 UTC. The current French and English `interpretive-governance-overview` packs use version `0.1.1`; the separately checked English `0.1.0` pack retains its historical root. Pack versions are selected per intent: the `representation-gap` examples below explicitly pin version `0.1.0`.
 
 The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 19 observation includes successful MCP exchanges.
 
