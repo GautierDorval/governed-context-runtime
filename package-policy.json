@@ -37,6 +37,7 @@
     "evidence/README.md",
     "evidence/instance-2026-10-12.json",
     "evidence/instance-2026-10-14.json",
+    "evidence/instance-2026-10-19.json",
     "evidence/publication.json",
     "package-lock.json",
     "package-manifest.json",
@@ -121,7 +122,7 @@
     "LICENSES/CC-BY-4.0.txt": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94",
     "NOTICE.md": "7a7934e2ab684919e334e11b13c70f9859087bbc9fa23e140df7662bc65cd385"
   },
-  "defaultSource": "repository-maintenance-2026-10-14",
+  "defaultSource": "repository-maintenance-2026-10-19",
   "selfAndManifest": "rights.json and package-manifest.json are project metadata under Apache-2.0",
   "spdx": "Apache-2.0 AND CC-BY-4.0"
 }

@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "69ec6ff5a2bf14170976915341d2e7dd4c93ce226d2605267618ed9144963019",
-      "bytes": 5188
+      "sha256": "62ca13ccf67e10c68f537632639d3ec7bd75910bab9aac57c9042ca72833d433",
+      "bytes": 5753
     },
     {
       "path": "CITATION.cff",
@@ -91,8 +91,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "31b82d37b854cde90f813eefeaa3e1bd560f26abb3ec0f11f1abf0b4f14a9c4c",
-      "bytes": 6505
+      "sha256": "86d19ff3fabf583c35eb24fb2e6deebd775a9e907070b40f17c17023c76b842f",
+      "bytes": 6693
     },
     {
       "path": "SECURITY.md",
@@ -141,8 +141,8 @@
     },
     {
       "path": "docs/en/instance.md",
-      "sha256": "b40daf51490e11da09c040f68da790b0c6bebcb5baa7d6b6b0e5440d17873d2c",
-      "bytes": 16312
+      "sha256": "08a10c53eb9ad4feeb2a7779b0244ae99c4c29b1efe7f1b17f6363be7508c9d4",
+      "bytes": 16983
     },
     {
       "path": "docs/fr/README.md",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/fr/instance.md",
-      "sha256": "2d2535875b5737a033853a23fe6f924d1efdab668e787c60960be34b09b92ffd",
-      "bytes": 18299
+      "sha256": "2df1da876a34c3aff3fbbbf450c47334fbd171f92fa94ee6f49f2f757707970a",
+      "bytes": 19046
     },
     {
       "path": "docs/schemas.md",
@@ -171,8 +171,8 @@
     },
     {
       "path": "evidence/README.md",
-      "sha256": "56c3c08fc0093661fb17a20df30c44c72e43731b7385c505545698f8e3fe8fa5",
-      "bytes": 3542
+      "sha256": "dc60a8657ed8d3fea4c0473403872fa345459d41aa70fb2712cf1ce4601ea8dc",
+      "bytes": 4562
     },
     {
       "path": "evidence/instance-2026-10-12.json",
@@ -183,6 +183,11 @@
       "path": "evidence/instance-2026-10-14.json",
       "sha256": "e16153d32eb2eced5b65b4d9a253e323c590d4dde568d69247d726f30c0b0293",
       "bytes": 3989
+    },
+    {
+      "path": "evidence/instance-2026-10-19.json",
+      "sha256": "74503371f7e6a60bf93f0218da194a4000d2f6c514cb60e748e83763c5852ad1",
+      "bytes": 5188
     },
     {
       "path": "evidence/publication.json",
@@ -196,8 +201,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "f331322d7c159c221178969c88ea4317a45178172adbdf05465d5c31a96ee001",
-      "bytes": 3909
+      "sha256": "3d772905648f69b411c6b9bda4f4d86d46a8be0ed6e6ca92f32df0c1379860bf",
+      "bytes": 3950
     },
     {
       "path": "package.json",
@@ -206,8 +211,8 @@
     },
     {
       "path": "rights.json",
-      "sha256": "f62c04338b8d226851082db8965448ddec8c061a75e680a0963cbbba183e5992",
-      "bytes": 17862
+      "sha256": "f166f52a9348aee2a628b53c55952f2272806c1ecb6e122eb5c0d8cab7447b0e",
+      "bytes": 18092
     },
     {
       "path": "scripts/check-package.mjs",
@@ -371,8 +376,8 @@
     },
     {
       "path": "test/editorial.test.mjs",
-      "sha256": "59ffaaffe7d299c16dc46ea895943ad13b5202721182b1759c45dd1a502821bd",
-      "bytes": 8661
+      "sha256": "3a8dad75691c5c6d48d9c35789cabe6ecdb9b8da0e4739c2864c9966b8be0efe",
+      "bytes": 8841
     },
     {
       "path": "test/graph.test.mjs",

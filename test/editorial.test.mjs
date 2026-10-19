@@ -95,6 +95,7 @@ test('entry documents bind the hosted service, reference and illustrative contex
   for (const field of ['useCase', 'benefits', 'status', 'architectureCaption'])
     assert(readme.includes(source.en[field]), 'README source: ' + field);
   assert(readme.includes('Fictional workshop example'));
+  assert(readme.includes('evidence/instance-2026-10-19.json'));
   assert(readme.includes('evidence/instance-2026-10-14.json'));
   assert(readme.includes('evidence/instance-2026-10-12.json'));
   for (const lang of ['en', 'fr']) {
@@ -136,6 +137,7 @@ test('entry links and anchors resolve from each containing document', async () =
 test('synthetic evidence and dated service observations remain distinct entry paths', async () => {
   const evidence = await read('evidence/README.md');
   assert(evidence.includes('evidence/publication.json'));
+  assert(evidence.includes('instance-2026-10-19.json'));
   assert(evidence.includes('instance-2026-10-14.json'));
   assert(evidence.includes('Historical hosted instance observation, October 12, 2026'));
   assert(evidence.includes('model-fidelity experiments, which remain `NOT_RUN`'));
@@ -146,7 +148,8 @@ test('synthetic evidence and dated service observations remain distinct entry pa
     assert(section, heading);
     assert.equal(section.split('\n').filter(line => line.startsWith('| ')).length, 4);
     const instance = await read('docs/' + lang + '/instance.md');
-    assert(instance.indexOf('instance-2026-10-14.json') < instance.indexOf('instance-2026-10-12.json'));
+    assert(instance.indexOf('instance-2026-10-19.json') < instance.indexOf('instance-2026-10-12.json'));
+    assert(instance.includes('instance-2026-10-14.json'));
   }
 });
 

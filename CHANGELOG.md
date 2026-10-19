@@ -1,5 +1,9 @@
 # Changes
 
+## Production observation, 2026-10-19
+
+Added the dated producer record after the coordinated Runtime, MCP and root-file deployment: 564 root responses, six MCP exchanges with five direct comparisons, and a separate GET/HEAD smoke over 156 indexed Runtime resources. Updated the entry links and paired instance guides to the observed corpus root, preserving the October 12 and 14 records and the distinct historical pack root. The reference edition remains 0.2.0-proposed; no contract, verifier, fictional fixture, production signing claim or model result changes.
+
 ## Verification error-order regression tests, 2026-10-18
 
 Added four tests for current and historical verification: an invalid signature or mismatched root remains the reported error when the verification time is also invalid. Each case preserves a valid verification and checks the individual fault before combining it with an invalid time. This locks the existing documented error order without changing the verifier or its error names.
