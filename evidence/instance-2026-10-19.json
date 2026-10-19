@@ -1,0 +1,110 @@
+{
+  "schema": "runtime-public-deployment-observation/1",
+  "observer": "producer",
+  "population": "producer-initiated-technical-checks",
+  "origin": "https://context.gautierdorval.com",
+  "startedAt": "2026-10-19T14:11:55.743047+00:00",
+  "finishedAt": "2026-10-19T14:13:30.5713657Z",
+  "runtimeVersion": "0.3.0-proposed",
+  "corpusRootDigest": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+  "status": "PASS",
+  "rootFiles": {
+    "routes": 282,
+    "responses": 564,
+    "surfaces": [
+      "direct-root-worker",
+      "public-domain"
+    ],
+    "comparison": "Exact response-body SHA-256 against candidate source bytes; direct/public parity, HTTP 200, non-HTML content type and CORS checked",
+    "candidateDifferences": []
+  },
+  "mcp": {
+    "jsonRpcRequests": 6,
+    "directRuntimeComparisons": 5,
+    "toolsListed": 8,
+    "checks": {
+      "discovery": {
+        "tools": [
+          "get_attested_unit",
+          "get_context_pack",
+          "get_intent",
+          "get_pack_manifest",
+          "list_context_packs",
+          "list_intents",
+          "verify_pack_digest",
+          "verify_unit_digest"
+        ]
+      },
+      "current-snapshot": {
+        "sha256": "2280b609926d1ea421ad998d978408bc146699ed29c50ba1a22d60ae24b2335d",
+        "bytes": 96114,
+        "corpusRoot": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "route": "/v0/snapshot"
+      },
+      "list-intents": {
+        "sha256": "610f877e44435c1e5f0f46a1b584cb937ad7a84a627855e43143c157a8209bb9",
+        "bytes": 10209,
+        "corpusRoot": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "route": "/v0/intents"
+      },
+      "current-pack-fr": {
+        "sha256": "979da3ad164fa14eed40993e75af83a385dea407e794f7089941f739301c8cef",
+        "bytes": 6471,
+        "corpusRoot": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "route": "/v0/packs/interpretive-governance-overview/fr"
+      },
+      "current-pack-en": {
+        "sha256": "7033f35cc870b8676cc8eb19adb4249179aa85452d97c88169a134c184adb8fe",
+        "bytes": 6153,
+        "corpusRoot": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "route": "/v0/packs/interpretive-governance-overview/en"
+      },
+      "historical-pack": {
+        "sha256": "0d645632fe79a715e86f3b333f7f9b9a30bca1ed9bdbb90896983332130fa331",
+        "bytes": 6153,
+        "corpusRoot": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+        "route": "/v0/packs/interpretive-governance-overview/en?version=0.1.0"
+      }
+    }
+  },
+  "applicationProof": {
+    "startedAt": "2026-10-19T14:11:55.743047+00:00",
+    "finishedAt": "2026-10-19T14:12:13.380185+00:00",
+    "runtimeHealthRequests": 1,
+    "totalRequests": 576,
+    "networkEvidence": true,
+    "proofSha256": "739e7a4fbd32de286b3dcca7046cd6dca19a6acc578e1783368094ea0283e6ab",
+    "retainedData": "Per-route hashes, byte lengths, decoded MCP artifact digests, checks and timestamps; full raw HTTP response bodies are not retained in this report."
+  },
+  "runtimeSmoke": {
+    "startedAt": "2026-10-19T14:12:36.0508703Z",
+    "finishedAt": "2026-10-19T14:13:30.5713657Z",
+    "mode": "full",
+    "indexedResources": 156,
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "robots": "present",
+    "ledgerEnabled": true,
+    "exitCode": 0,
+    "stdoutSha256": "9ed6df8b09eaf48b9d20564b914ecb06fafd13be62d1242cc7ac3d43487f76a3"
+  },
+  "provenance": {
+    "sourceCommitDeclared": true,
+    "sourceCommitVerified": false,
+    "productionSource": "private repository, separate from this reference edition",
+    "referenceEdition": "0.2.0-proposed"
+  },
+  "rawResponsesPublished": false,
+  "modelInvocation": false,
+  "limitations": [
+    "Dated producer observation from one workstation. These checks do not establish continuous availability or global edge propagation.",
+    "Proof digests identify retained producer records; these records are not published here and are not an independently authenticated deployment attestation.",
+    "The 576 application requests cover one final capture. Baseline, transition checks, earlier diagnostics and the separate Runtime smoke are excluded from that count.",
+    "Operator probes can enter ordinary service telemetry. No synthetic exclusion, external adoption or traffic total is inferred.",
+    "Historical pack responses remain bound to their recorded historical corpus root; they are not relabelled with the current root.",
+    "Technical transport and byte integrity do not establish semantic truth, source authority, production signing, adoption or model fidelity.",
+    "Offline repository tests do not repeat these network checks. External model experiments remain NOT_RUN."
+  ]
+}

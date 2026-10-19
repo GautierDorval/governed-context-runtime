@@ -6,7 +6,7 @@ The instance is available at **[context.gautierdorval.com](https://context.gauti
 
 ## Observed status
 
-The latest dated producer record in this edition is the [October 14, 2026 observation](../../evidence/instance-2026-10-14.json), including its separately timed follow-up reads. It records REST/MCP transport checks and the captured corpus root. It is not a claim of continuous availability. The October 12 check below is historical.
+The latest dated producer record in this edition is the [October 19, 2026 observation](../../evidence/instance-2026-10-19.json). It records 564 root-file responses, six MCP exchanges with five direct Runtime comparisons, and a separate GET/HEAD smoke over 156 indexed resources. These checks passed after the coordinated service deployment. They do not establish continuous availability. The October 12 and 14 records below are historical.
 
 ### Historical check, October 12
 
@@ -33,9 +33,11 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 The observation of October 12, 2026 recorded the root `sha-256:367be59f…`, given in full in the evidence file. `/v0/lifecycle` lists the roots available now; it does not say when each one was served. A release tag of this repository identifies repository content: it neither contains nor signs a production corpus root, and the demo keys are test keys.
 
-The later [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the current root `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
+The historical [October 14 deployment observation](../../evidence/instance-2026-10-14.json) records the current root `sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0` during the producer capture at 14:53–14:54 UTC. REST/MCP capture and root-file comparison passed. This dated technical observation does not establish future availability, production signing, adoption or model fidelity; the October 12 receipt remains historical evidence.
 
-The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 14 observation includes successful MCP exchanges.
+The [October 19 observation](../../evidence/instance-2026-10-19.json) records the current root `sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4` during the final application capture from 14:11:55 to 14:12:13 UTC. The current French and English `interpretive-governance-overview` packs use version `0.1.1`; the separately checked English `0.1.0` pack retains its historical root. Pack versions are selected per intent: the `representation-gap` examples below still select its current `0.1.0` version.
+
+The index still exposes `status: stable`; this field does not qualify the interface or signing profile. Read the separate `maturity` fields: interface and attestation recipes are proposed, signing is test-only and scientific evaluation is not run. In `/v0/health`, `mcpEnabled: false` is scoped to `this-resolver-worker-only`. The separately hosted adapter is identified under `externalAdapters.mcp`; its availability must be checked at that endpoint. The October 19 observation includes successful MCP exchanges.
 
 The production Worker implementation is maintained in a private repository. A deployment `sourceCommit` such as `7328776…` identifies that private source and cannot be resolved in this public reference repository. The public code here contains the reference contracts, verifiers and examples, not the production Worker implementation. In health metadata, `deployment.timestamp` is the version creation time, not the time it started receiving production traffic. `sourceCommitVerified: false` remains a limit on independently verifiable provenance.
 
