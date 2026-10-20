@@ -75,7 +75,7 @@ there is no revocation feed or global authorization cache.
 provide the finite offline CLI and the third-party report protocol.
 
 
-### Library input failures and legacy envelope latitude
+### Library input failures
 
 `consumeVerifiedPack` captures the policy, receipt, snapshot and optional catalogue
 before its first asynchronous check. It returns `REFUSED` for domain decisions and
@@ -84,10 +84,44 @@ reject the promise; callback failures also propagate. Library callers must handl
 both outcomes. Input failures never call the consumer. The lower-level
 `decideConsumption` retains its policy-before-artifact-validation contract.
 
-B01 establishes canonical JSON envelope bytes. It does not additionally close the
-legacy archive member set or require zero unused base64 padding bits. These two
-legacy representations still require their own complete envelope digest, address
-and separately admitted root; neither substitutes bytes under an existing root.
-A stricter archive profile is deferred for compatibility review, not silently
-added to this correction. MCP artifact extraction already requires canonical
-base64 round-tripping, independently of this historical archive profile.
+### Strict archive acceptance after the P3 compatibility review
+
+The shared snapshot verifier now requires exactly these eight own members in each
+source-archive envelope: `contentBase64`, `digest`, `digestAlgorithm`, `digestScope`,
+`encoding`, `schemaVersion`, `sourcePath` and `type`. Missing, additional or replaced
+members, and a non-object envelope, are refused as `archive_fields`. Metadata values
+still undergo the existing checks. This is a verifier acceptance restriction for
+the existing wire envelope, not a new schema identifier or canonical JSON recipe.
+
+`contentBase64` must use the standard padded base64 spelling, without whitespace
+or URL-alphabet aliases. Syntax failures remain `invalid_base64`; a spelling that
+decodes but does not re-encode identically is refused as `noncanonical_base64`.
+In particular, unused padding bits must be zero. Empty and unpadded complete
+three-octet groups are canonical when they represent the actual source bytes.
+The reference explicitly chooses the decoder rejection permitted by
+[RFC 4648 section 3.5](https://www.rfc-editor.org/rfc/rfc4648#section-3.5);
+it does not claim that every base64 decoder must reject nonzero padding bits.
+
+Order is preserved: inventory/root checks, raw envelope digest and address, strict
+JSON parsing, canonical JSON byte equality, exact member set, metadata and source
+association, base64 checks, then decoded source digest and length. A correct hash
+of a deliberately rebuilt envelope does not waive any later check. Unit and pack
+inspection, including the signed whole-pack consumer, use this same verifier.
+No legacy-mode option or automatic normalization is introduced.
+
+Compatibility is intentionally narrower than the pre-P3 implementation. The checked
+historical and semantic fixtures, their roots and the v0 unit preimages remain
+unchanged. Previously accepted custom members or noncanonical base64 spellings are
+now refused, even under a newly admitted root. Producers using those representations
+must rebuild conforming envelopes and inventory identities and obtain a separately
+admitted receipt when applicable; consumers must not rewrite or resign them to make
+a check pass. No migration, root admission or production-profile change is performed
+by this reference update. The outer MCP artifact encoding is a separate boundary
+and keeps its existing canonical-base64 check.
+
+The [P3 mandate](archive-profile-p3-2026-10-20.md) records the authorized scope.
+Reproduce its focused controls with:
+
+```powershell
+node --test spec/reference/test-archive-profile.mjs
+```

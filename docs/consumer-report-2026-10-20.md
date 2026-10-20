@@ -199,11 +199,13 @@ language; contradictions are refused as `case_language_mismatch`. The default
 case follows an explicit FR/EN choice. The fixed negative `wrong-language` case
 still exercises the complete verification path.
 
-The observed legacy latitude for additional archive members and nonzero unused
-base64 padding bits is retained and documented. It is outside B01's canonical
-JSON byte guarantee, needs a new envelope/root admission, and was already present
-before this lot. Closing it changes compatibility; it is deferred explicitly for
-a separately reviewed profile, with no assertion that B01 closes those properties.
+At that review, the observed legacy latitude for additional archive members and
+nonzero unused base64 padding bits was retained and documented. It was outside
+B01's canonical JSON byte guarantee and already present before that lot. Its
+closure was deferred because it changes compatibility; B01 alone did not close
+those properties. That deferral is superseded by the later authorized
+[P3 archive acceptance work](archive-profile-p3-2026-10-20.md), which rejects both
+representations by default. See the [current compatibility rules](verification.md#strict-archive-acceptance-after-the-p3-compatibility-review).
 
 The first audit exercised 136 B01/B02 controls successfully and additional
 consumer/MCP/document/kit probes. It reported its own erroneous assertions

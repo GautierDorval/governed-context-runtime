@@ -101,8 +101,8 @@
     },
     {
       "path": "spec/reference/verification.mjs",
-      "bytes": 19579,
-      "sha256": "7353e1ae7ef56f6977fcc113e70ed883467ae27eb0d05094daf312b3e32a7c62"
+      "bytes": 20248,
+      "sha256": "0b9a97a468942d1160a7408d10ff11d17da8df44be53781429a53be81b05159e"
     },
     {
       "path": "spec/runtime-snapshot.schema.json",
