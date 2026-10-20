@@ -230,6 +230,10 @@ assert(
   !/^\s*["']?license["']?\s*:/m.test(file('CITATION.cff').toString()),
   'CFF lists alternative licences; the split is declared in NOTICE.md',
 );
+assert(
+  !/^\s*["']?date-released["']?\s*:/m.test(file('CITATION.cff').toString()),
+  'candidate CFF must omit date-released',
+);
 {
   const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);

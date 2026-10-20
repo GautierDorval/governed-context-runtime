@@ -20,6 +20,7 @@ identifiers, roots, signatures and historical v0 preimages are preserved. The
 reference remains an unreleased proposed edition, without a new tag or production
 claim. See [verification and compatibility](docs/verification.md#strict-archive-acceptance-after-the-p3-compatibility-review)
 and the [P3 mandate](records/archive-profile-p3-2026-10-20.md).
+
 ## Prepared next edition, 2026-10-20
 
 - Reject noncanonical source archive envelopes even under a newly admitted root.

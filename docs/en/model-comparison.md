@@ -2,7 +2,7 @@
 
 Language: English · [Français](../model-comparison.md)
 
-**Status: `NOT_RUN`.** No model call, remote judge, observed response or score is produced. Protocol `four-condition-pilot-1` prepares an experiment on seven cases of one fictional service. It retains the equal-information control of the [previous protocol](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md), which planned 280 responses without execution. This plan specifies 560 per configuration.
+**Status: `NOT_RUN`.** No model call, remote judge, observed response or score is produced. Protocol `four-condition-pilot-2` prepares an experiment on seven cases of one fictional service. It retains the equal-information control of the [previous protocol](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md), which planned 280 responses without execution. This plan specifies 560 per configuration.
 
 The [versioned plan](../../spec/examples/semantic-boundaries/experiment-plan.json), [rubric](../../spec/examples/semantic-boundaries/judging-rubric.json) and [prose map](../../spec/examples/semantic-boundaries/prose-coverage.json) fix inputs, expectations, counts and limits. None is given to the model.
 
@@ -15,26 +15,26 @@ The [versioned plan](../../spec/examples/semantic-boundaries/experiment-plan.jso
 | `canonical_prose` | Added natural FR or EN service document | Practical comparison with this documentary alternative |
 | `no_documentation` | Empty document block, same case evidence and question | Effect of having the documentary information |
 
-Compare pack/exhaustive text, pack/prose, then each documented condition against no documentation. Prose changes wording, length, redundancy, vocabulary and metadata together. The empty arm also lacks service rules. No contrast establishes an effect specific to the entire Runtime architecture; subtracting differences is not an exact causal decomposition.
+Compare pack/exhaustive text, pack/prose, then each documented condition against no documentation. Prose changes wording, length, redundancy, vocabulary and metadata together. The empty arm receives no service document, but shared case questions and English evidence codes can already suggest service vocabulary, including assessment or documented location. The same codes remain in French trials. This contrast measures added documentation beyond those shared cues, not an absence of all service information. No contrast establishes an effect specific to the entire Runtime architecture; subtracting differences is not an exact causal decomposition.
 
 ## Sources, coverage and lengths
 
 [content.json](../../spec/examples/semantic-boundaries/content.json) remains the fictional source. Packs, exhaustive texts and [comparison-map.json](../../spec/examples/semantic-boundaries/comparison-map.json) are unchanged. Controls preserve all 129 values, types, positions, references and metadata per language. Explicit equality does not imply identical model interpretation.
 
-The [FR](../../spec/examples/semantic-boundaries/fr.canonical-prose.md) and [EN prose](../../spec/examples/semantic-boundaries/en.canonical-prose.md) naturally explain facts, joint conditions, exclusions, evidence, contradictions, action boundaries, local priority and references. They remain outside the historical bundle. Their map enumerates source units, groupings and technical omissions: digests, unit profiles, versions and duplicate projections are not all transmitted. Prose therefore claims no equality of all 129 values. Tests check references and declared coverage; semantic fidelity still needs editorial reading.
+The [FR](../../spec/examples/semantic-boundaries/fr.canonical-prose.md) and [EN prose](../../spec/examples/semantic-boundaries/en.canonical-prose.md) naturally explain facts, joint conditions, exclusions, evidence, contradictions, action boundaries, local priority and references. They remain outside the historical bundle. Their map enumerates source units, groupings and technical omissions: digests, unit profiles, versions and duplicate projections are not all transmitted. Prose therefore claims no equality of all 129 values. Tests check references and declared coverage; semantic fidelity still needs editorial reading. Only content.json supplies normative prose content; scenario-specific Ontario examples and elaborations from the teaching answers have been removed. A separate authorization remains necessary because the source itself states that rule. Coverage tests prove pointer resolution and exact identifier anchors, not meaning preservation after an editorial rewrite.
 
 Historical pack/text measures remain in `comparison-map.json`: FR 10,328/17,538 bytes and 10,170/16,993 Unicode scalars; EN 9,956/16,392 bytes and 9,955/16,391 scalars. Separate prose measurements:
 
 | Language | UTF-8 bytes | Unicode scalars | Tokens |
 |---|---:|---:|---|
-| FR | 4359 | 4184 | NOT_RUN |
-| EN | 3909 | 3904 | NOT_RUN |
+| FR | 3825 | 3682 | NOT_RUN |
+| EN | 3427 | 3422 | NOT_RUN |
 
 No padding equalizes lengths. Tokens must be measured with the chosen tokenizer before calls. A configuration unable to receive complete inputs stops; adaptation requires a new plan version, never silent truncation.
 
 ## Identical input apart from the document
 
-The model receives only its language's common instruction, the chosen document between identical `<documentation>` delimiters, then the question and case evidence. The document block is empty for `no_documentation`. No quality label, illustrative answer, rubric, correspondence map or hidden source is added. Each trial uses a new conversation without tools, browsing, retrieval or prior-trial memory.
+The model receives only its language's common instruction, the chosen document between identical `<documentation>` delimiters, then the question and case evidence. The document block is empty for `no_documentation`. No case ID, classification, quality label, illustrative answer, rubric, correspondence map or hidden source is added. The [pure assembler](../../spec/examples/semantic-boundaries/assemble-prompt.mjs) selects only evidence and the localized question; tests pin exact emitted bytes and reject leakage of sentinel teaching fields. Each trial uses a new conversation without tools, browsing, retrieval or prior-trial memory.
 
 English instruction, fixed in the plan:
 
@@ -44,9 +44,9 @@ The corresponding French instruction is fixed in the same plan. The output ceili
 
 ## Budget, order and errors
 
-`7 cases × 2 languages × 4 conditions × 10 repetitions = 560 responses` per configuration. There are 140 four-condition blocks. Rotate the declared order left by `b mod 4` for block index `b`. The fixed case/language/repetition iteration yields 35 appearances of each condition at each global position, but only two or three per position in each ten-repeat subgroup. No random shuffle or seed is needed for this reproducible order.
+`7 cases × 2 languages × 4 conditions × 10 repetitions = 560 responses` per configuration. There are 140 four-condition blocks. For zero-based case `c`, language `l` and repetition `r`, rotate the declared order left by `(c + 2*l + r) mod 4`; blocks still follow the declared case/language/repetition order. The fixed case/language/repetition iteration yields 35 appearances of each condition at each global position, but only two or three per position in each ten-repeat subgroup. Each condition appears 17 or 18 times at each position within a language. Case index changes the rotation, but repetition still follows a fixed modulo-four pattern; this is not randomized assignment. No random seed is claimed.
 
-Trial IDs include configuration, case, language, repetition and condition. At most one additional technical attempt is allowed after the planned pass for transport failure, transient provider error or an empty technical nonresponse: at most 560 retries and 1,120 total attempts per configuration. Preserve the first trace and parent ID. A semantic refusal or poor answer is never replaced to obtain a better score. The first completed response is retained. Judge calls and retries require their own budget before execution.
+Opaque trial IDs use configuration and sequence number. Case, language, repetition, condition and position are retained as separate metadata, never in model input. At most one additional technical attempt is allowed after the planned pass for transport failure or an explicit transient provider error before any completed response: at most 560 retries and 1,120 total attempts per configuration. Preserve the first trace and parent ID. A semantic refusal or poor answer is never replaced to obtain a better score. The first completed response is retained, including an empty response or one truncated at 512 tokens. Neither is retried. Mark empty/truncated responses, preserve finish reasons, judge only visible content under the same rubric and do not assume an unseen continuation. Empty responses have UNDETERMINED utility, with UNSCORABLE dimensions where necessary; missing content never earns retention credit. Judge calls and retries require their own budget before execution.
 
 ## Judge against available information
 

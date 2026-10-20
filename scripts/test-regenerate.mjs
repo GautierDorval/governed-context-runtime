@@ -371,3 +371,20 @@ for (const variant of ['docs', 'cff', 'lock-root', 'package-and-lock']) {
     }),
   );
 }
+
+for (const field of ['date-released', '"date-released"']) {
+  test('candidate citation refuses an anticipated release date after refreshed digests: ' + field, async t =>
+    withCopy(t, async dir => {
+      await edit(dir, 'CITATION.cff', text => text + field + ': 2026-10-20\n');
+      const raw = await readFile(join(dir, 'CITATION.cff'));
+      await edit(dir, 'package-policy.json', text => {
+        const value = JSON.parse(text);
+        value.declarationDigests['CITATION.cff'] = hash(raw);
+        return JSON.stringify(value, null, 2) + '\n';
+      });
+      await write(dir);
+      assert.deepEqual(await check(dir), []);
+      assert.match(checker(dir), /^FAIL .*candidate CFF must omit date-released/);
+    }),
+  );
+}

@@ -61,11 +61,23 @@ npm run demo:semantics -- en
 npm run reproduce -- --policy spec/examples/reproduction/policy.json --suite
 ```
 
-All final commands exit 0. The main suite has **433 tests: 432 pass, 0 fail, 1 Windows symlink skip**, plus **27 detected mutants** and the fictional demonstration/projection checks. Development has **34 pass, 0 fail, 0 skip**. The two semantic demonstrations return `VERIFIED_FICTIONAL_SEMANTIC_CONTEXT`. The reproduction suite returns `PRODUCER_REPRODUCED` with 16 case verdicts `PASS`; its refusals never deliver content. The Windows skip is retained as a platform limit, not a pass; a Linux CI result must identify its own commit and counts.
+All final commands exit 0. The main suite has **439 tests: 438 pass, 0 fail, 1 Windows symlink skip**, plus **27 detected mutants** and the fictional demonstration/projection checks. Development has **34 pass, 0 fail, 0 skip**. The two semantic demonstrations return `VERIFIED_FICTIONAL_SEMANTIC_CONTEXT`. The reproduction suite returns `PRODUCER_REPRODUCED` with 16 case verdicts `PASS`; its refusals never deliver content. The Windows skip is retained as a platform limit, not a pass; a Linux CI result must identify its own commit and counts.
 
-The new pilot tests check exact input identities and all coverage pointers, 129 classified pack leaves per language, 560 unique trial identities, 35 appearances per condition at each global position, honest unknowns and condition-specific judging applicability. They cannot prove semantic equivalence of prose; Codex separately read both prose versions against the fictional source. `prose-coverage.json` records the independent review as pending at preparation time; the final review receipt belongs to the immutable containing commit, not to a fabricated experiment result.
+The new pilot tests check exact input identities and all coverage pointers, 129 classified pack leaves per language, 560 unique trial identities, 35 appearances per condition at each global position, honest unknowns and condition-specific judging applicability. They cannot prove semantic equivalence of prose; Codex separately read both prose versions against the fictional source. `prose-coverage.json` records the initial independent review and the need for a separate final correction receipt. That receipt belongs to the immutable containing commit, not to a fabricated experiment result.
 
 Initial harness mistakes (a demonstration flag and a missing preview index) were corrected and their failed logs retained. The initial adapter binding also identified a real representation distinction: the producer serves canonical JSON while the manifest's file digest names the original repository file. The final explicit canonical profile was tested positively and negatively; the producer, fixtures and verifier were not changed to hide that distinction.
+
+## Consolidated review corrections
+
+Claude reviewed initial candidate `df2816da972cdf79ff463f1cbb5217208288a3df` and returned `PASS_WITH_RESERVATIONS` with two P2 and seven P3 findings. Codex corrected the applicable findings as one batch before requesting a final review:
+
+- Removed scenario-specific prose illustrations and extra explanations. `content.json` remains the sole normative source; the separate-decision/authorization sentence is retained because it is explicitly present in that source, not borrowed solely from a teaching answer.
+- Added a pure prompt assembler selecting only evidence and the localized question. Case IDs/classification remain external metadata; opaque trial IDs identify traces. Exact-byte tests cover every arm/language and sentinel teaching fields. No provider or execution engine is added.
+- Versioned the corrected plan as `four-condition-pilot-2`, balanced positions to 17/18 per language and 35 globally, and pinned the declared order and agreement formulas. Fixed evidence codes can still cue service vocabulary in both languages; the documentation now states that limitation.
+- Excluded completed empty and token-truncated responses from retries, preserving their accounting and judging rules. Corrected coverage identifier anchors and expanded its source-specific reasons; pointer/hash tests still cannot certify prose meaning after arbitrary edits.
+- Repaired relocated frontmatter links and accidental French spacing in the English mandate, restored the missing changelog separator, and added two candidate CFF-date rejection controls even after declaration hashes are refreshed.
+
+The asymmetric French protocol path is intentional compatibility with the existing path required by the mandate, explicitly labelled and cross-linked; relocating every historical language path was not required. Private evidence access, semantic editorial judgment and the Windows-only skip remain bounded limitations. The final corrected revision and final review result are recorded outside this commit.
 
 ## Visual scope
 

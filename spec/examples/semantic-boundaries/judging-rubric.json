@@ -1,6 +1,6 @@
 {
   "schema": "runtime-pilot-judging/1",
-  "protocolVersion": "four-condition-pilot-1",
+  "protocolVersion": "four-condition-pilot-2",
   "status": "PREPARED",
   "labels": [
     "PASS",

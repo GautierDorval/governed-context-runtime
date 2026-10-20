@@ -91,6 +91,7 @@
     "spec/examples/reproduction/run.mjs",
     "spec/examples/reproduction/test-kit.mjs",
     "spec/examples/semantic-boundaries/README.md",
+    "spec/examples/semantic-boundaries/assemble-prompt.mjs",
     "spec/examples/semantic-boundaries/bundle.json",
     "spec/examples/semantic-boundaries/comparison-map.json",
     "spec/examples/semantic-boundaries/content.json",

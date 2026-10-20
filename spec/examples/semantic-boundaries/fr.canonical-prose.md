@@ -3,7 +3,7 @@
 <a id="identity"></a>
 ## Une offre fictive pour cet exercice
 
-Le service technique fictif Atelier Boréal, appelé « Fictional Boreal Workshop technical service » en anglais, sert uniquement à cet exercice documentaire proposé. Il ne représente aucune offre réelle. Son identifiant est `fictional-boreal-service`. Ses adresses fictives sont `https://example.invalid/fr/atelier-boreal` et `https://example.invalid/en/boreal-workshop` ; elles ne doivent pas être consultées.
+Le service technique fictif Atelier Boréal, appelé « Fictional Boreal Workshop technical service » en anglais, sert uniquement à cet exercice documentaire proposé. Il ne représente aucune offre réelle. Son identifiant est `fictional-boreal-service`. Ses adresses fictives sont `https://example.invalid/fr/atelier-boreal` et `https://example.invalid/en/boreal-workshop`. Ce sont des identifiants fictifs inertes.
 
 <a id="scope"></a>
 ## Expliquer une disponibilité conditionnelle
@@ -18,12 +18,12 @@ Le projet doit être situé au Québec et disposer d’une évaluation technique
 <a id="evidence"></a>
 ## Les preuves et leurs limites
 
-Une pièce doit établir le lieu du projet. Le dossier d’évaluation doit être daté, identifier ce même projet et porter une conclusion technique favorable. L’évaluation d’un autre projet ne peut pas lui être transférée. Une preuve absente laisse la conclusion indéterminée : son absence ne signifie pas qu’elle est défavorable. Des pièces situant le même projet au Québec et en Ontario constituent une contradiction à clarifier. Il faut la conserver, sans choisir automatiquement la version favorable ni inventer le lieu.
+Une pièce doit établir le lieu du projet. Le dossier d’évaluation doit être daté, identifier ce même projet et porter une conclusion technique favorable. L’évaluation d’un autre projet ne peut pas lui être transférée. Une preuve absente laisse la conclusion indéterminée. Des éléments contradictoires exigent clarification, sans choisir automatiquement la version favorable.
 
 <a id="exclusions"></a>
 ## Les exclusions déclarées
 
-Un projet situé hors Québec ou dont l’évaluation technique propre au projet est défavorable correspond à une exclusion déclarée. Une localisation au Québec ne remplace pas une évaluation favorable. Une localisation inconnue ne prouve pas que le projet est hors territoire.
+Un projet situé hors Québec ou dont l’évaluation technique propre au projet est défavorable correspond à une exclusion déclarée.
 
 <a id="priority"></a>
 ## Une priorité documentaire locale
@@ -38,9 +38,9 @@ Même lorsque les éléments pédagogiques satisfont les conditions, la document
 <a id="references"></a>
 ## Sources et relations utiles
 
-La source fictive est `/semantic-boundaries/content.json`. La chaîne `project-assessment-chain` relie les conditions et preuves du projet au contexte `quebec-conditional-service`. La règle `retain-conditions-and-uncertainty` demande de conserver Québec, l’évaluation favorable et les limites de conclusion, et de citer cette source et cette chaîne dans l’explication. Ces relations décrivent l’exercice et n’authentifient aucune source extérieure.
+La source fictive est `/semantic-boundaries/content.json`. La chaîne `project-assessment-chain` relie les conditions et preuves du projet au contexte `quebec-conditional-service`. La règle `retain-conditions-and-uncertainty` demande de conserver Québec, l’évaluation favorable et les limites de conclusion, et de citer cette source et cette chaîne dans l’explication.
 
 <a id="consumer"></a>
 ## Rôle du consommateur et du Runtime
 
-Le consommateur choisit l’intention `representation-gap` pour expliquer ces conditions. Le Runtime transporte un pack déjà préparé ; il ne choisit pas l’intention depuis du texte libre, ne compose pas le pack à la requête, ne produit pas de réponse et ne décide ni de l’admissibilité du projet ni d’une permission d’action. Les contrôles d’intégrité lient les octets à une racine choisie ; ils ne prouvent ni la vérité des règles ni la fidélité d’une réponse. Ce matériel fictif ne contient aucune réponse de modèle observée, signature ou permission d’exécution.
+Le consommateur choisit l’intention `representation-gap` pour expliquer ces conditions. Le Runtime transporte un pack déjà préparé ; il ne choisit pas l’intention depuis du texte libre, ne compose pas le pack à la requête, ne produit pas de réponse et ne décide ni de l’admissibilité du projet ni d’une permission d’action. Ce matériel fictif ne contient aucune réponse de modèle observée, signature ou permission d’exécution.

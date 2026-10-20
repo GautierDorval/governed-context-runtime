@@ -2,7 +2,7 @@
 
 Langue : français · [English](en/model-comparison.md)
 
-**Statut : `NOT_RUN`.** Aucun appel de modèle, juge distant, réponse observée ou score n’est produit. Le protocole `four-condition-pilot-1` prépare une expérience sur sept cas d’un service fictif. Il conserve le témoin à information égale du [protocole antérieur](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md) ; celui-ci prévoyait 280 réponses, sans exécution. Le présent plan en prévoit 560 par configuration.
+**Statut : `NOT_RUN`.** Aucun appel de modèle, juge distant, réponse observée ou score n’est produit. Le protocole `four-condition-pilot-2` prépare une expérience sur sept cas d’un service fictif. Il conserve le témoin à information égale du [protocole antérieur](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md) ; celui-ci prévoyait 280 réponses, sans exécution. Le présent plan en prévoit 560 par configuration.
 
 Le [plan versionné](../spec/examples/semantic-boundaries/experiment-plan.json), la [grille](../spec/examples/semantic-boundaries/judging-rubric.json) et la [carte de prose](../spec/examples/semantic-boundaries/prose-coverage.json) fixent les entrées, attentes, effectifs et limites. Ces documents ne sont pas transmis au modèle.
 
@@ -15,7 +15,7 @@ Le [plan versionné](../spec/examples/semantic-boundaries/experiment-plan.json),
 | `canonical_prose` | Fiche naturelle FR ou EN ajoutée | Comparaison pratique avec cette alternative documentaire |
 | `no_documentation` | Bloc documentaire vide, mêmes faits de cas et question | Effet de la disponibilité des informations documentaires |
 
-Comparer pack/texte exhaustif, pack/prose, puis chaque condition documentée à l’absence de documentation. La prose combine des différences de formulation, longueur, redondance, vocabulaire et métadonnées. Le bras vide manque aussi des règles du service. Aucun contraste ne prouve un effet propre à toute l’architecture Runtime ; soustraire plusieurs écarts ne fournit pas une décomposition causale exacte.
+Comparer pack/texte exhaustif, pack/prose, puis chaque condition documentée à l’absence de documentation. La prose combine des différences de formulation, longueur, redondance, vocabulaire et métadonnées. Le bras sans document conserve les questions et codes de preuve anglais communs, y compris des indices de vocabulaire sur l’évaluation et le lieu documenté. Ces codes restent identiques en français. Le contraste mesure donc l’apport du document au-delà de ces indices communs, sans prétendre supprimer toute information sur le service. Aucun contraste ne prouve un effet propre à toute l’architecture Runtime ; soustraire plusieurs écarts ne fournit pas une décomposition causale exacte.
 
 ## Sources, couverture et longueurs
 
@@ -27,14 +27,16 @@ Les mesures historiques pack/texte restent dans `comparison-map.json` : FR 10�
 
 | Langue | Octets UTF-8 | Scalaires Unicode | Jetons |
 |---|---:|---:|---|
-| FR | 4359 | 4184 | NOT_RUN |
-| EN | 3909 | 3904 | NOT_RUN |
+| FR | 3825 | 3682 | NOT_RUN |
+| EN | 3427 | 3422 | NOT_RUN |
 
 Aucun remplissage n’égalise les longueurs. Les jetons seront mesurés avec le jetoniseur effectivement choisi, avant les appels. Une configuration incapable de recevoir les entrées complètes s’arrête ; toute adaptation exige une nouvelle version du plan, sans troncature silencieuse.
 
+La prose normative provient seulement de `content.json` ; les illustrations propres aux cas, dont Ontario, sont retirées. La décision et l’autorisation distinctes restent présentes parce que la source énonce elle-même cette règle. Les contrôles de couverture valident chemins et ancres des identifiants, pas le sens d’une réécriture après mise à jour des empreintes ; une revue éditoriale reste nécessaire.
+
 ## Entrées identiques hors document
 
-Le modèle reçoit uniquement la consigne commune de sa langue, le document choisi entre les mêmes délimiteurs `<documentation>`, puis la question et les éléments du cas. Le bloc est vide dans `no_documentation`. Aucun label de qualité, réponse illustrative, grille, carte de correspondance ou source cachée ne s’ajoute. Chaque essai ouvre une conversation neuve, sans outils, navigation, récupération ni mémoire d’un essai précédent.
+Le modèle reçoit uniquement la consigne commune de sa langue, le document choisi entre les mêmes délimiteurs `<documentation>`, puis la question et les éléments du cas. Le bloc est vide dans `no_documentation`. Aucun identifiant de cas, classification, label de qualité, réponse illustrative, grille, carte de correspondance ou source cachée ne s’ajoute. L’[assembleur pur](../spec/examples/semantic-boundaries/assemble-prompt.mjs) ne transmet que les preuves du cas et sa question localisée, avec le document sélectionné. Ses tests vérifient les octets émis et l’absence de champs pédagogiques sentinelles. Chaque essai ouvre une conversation neuve, sans outils, navigation, récupération ni mémoire d’un essai précédent.
 
 Consigne FR, figée dans le plan :
 
@@ -44,9 +46,9 @@ La consigne EN correspondante est figée dans le même plan. Le plafond est 512 
 
 ## Budget, ordre et erreurs
 
-`7 cas × 2 langues × 4 conditions × 10 répétitions = 560 réponses` attendues par configuration. Il y a 140 blocs de quatre conditions. Pour le bloc d’indice `b`, faire une rotation gauche de l’ordre déclaré de `b mod 4`. L’itération case/langue/répétition fixée dans le plan donne 35 occurrences de chaque condition à chaque position globale, mais seulement deux ou trois par position dans un sous-groupe de dix répétitions. Aucun mélange aléatoire ni graine n’est nécessaire à cet ordre reproductible.
+`7 cas × 2 langues × 4 conditions × 10 répétitions = 560 réponses` attendues par configuration. Il y a 140 blocs de quatre conditions. Pour les indices de cas `c`, de langue `l` et de répétition `r` partant de zéro, faire une rotation gauche de `(c + 2*l + r) mod 4`. L’ordre des blocs cas/langue/répétition reste fixé. Chaque condition occupe chaque position 17 ou 18 fois par langue, 35 fois globalement et deux ou trois fois par sous-groupe de dix répétitions. Le cas modifie la rotation ; la répétition reste liée à un motif fixe modulo quatre. Ce n’est pas une affectation aléatoire et aucune graine n’est revendiquée.
 
-Chaque essai identifie configuration, cas, langue, répétition et condition. Une seule tentative technique supplémentaire est permise, après le passage prévu, pour un échec de transport, une erreur transitoire du fournisseur ou une non-réponse technique vide. Le plafond est donc 560 reprises, 1 120 tentatives au maximum par configuration. Garder la trace initiale et l’identifiant parent. Une réponse sémantique refusée ou insatisfaisante n’est jamais remplacée pour obtenir un meilleur résultat. La première réponse complète est l’observation retenue. Les appels de juges et leurs reprises demandent un budget distinct avant exécution.
+Les identifiants d’essai opaques contiennent la configuration et un numéro séquentiel. Cas, langue, répétition, condition et position restent des métadonnées distinctes, hors de l’entrée du modèle. Une seule tentative technique supplémentaire est permise, après le passage prévu, pour un échec de transport ou une erreur transitoire explicite du fournisseur avant toute réponse terminée. Le plafond est donc 560 reprises, 1 120 tentatives au maximum par configuration. Garder la trace initiale et l’identifiant parent. Une réponse sémantique refusée ou insatisfaisante n’est jamais remplacée pour obtenir un meilleur résultat. La première réponse terminée est conservée, y compris une réponse vide ou tronquée à 512 jetons, sans reprise. Conserver les marqueurs et motifs de fin. Le jugement porte sur le contenu visible ; `UNSCORABLE` s’applique si une dimension ne peut pas être évaluée. Une réponse vide a une utilité `UNDETERMINED` et ne reçoit aucun crédit de conservation pour du contenu absent. Aucune continuation n’est supposée. Les appels de juges et leurs reprises demandent un budget distinct avant exécution.
 
 ## Juger selon l’information disponible
 
@@ -77,3 +79,5 @@ L’analyse primaire est descriptive par cas, langue, condition et dimension : 
 Dix répétitions ne créent pas 70 scénarios indépendants. Les deux langues ne créent pas deux domaines indépendants : il reste sept cas d’un service fictif. Un résultat nul ne prouve ni équivalence générale ni inutilité du Runtime. Le cas d’action mesure des formulations de permission, sans outil ni blocage réel de réservation, paiement ou travaux. À octets transmis identiques, le vérificateur en amont n’est pas un traitement visible du modèle ; admission, sélection, refus et traçabilité restent reliés aux tests techniques et à la trousse. Une future expérience complète conserverait aussi les refus et erreurs avant le modèle.
 
 Avant l’expérience, figer révision, empreintes, configuration, ordre, budgets de juges et politique de conservation. Conserver requêtes sans secrets, réponses brutes, paramètres, jetons réellement observés, erreurs, jugements et arbitrages. Le plan garde les destinations de résultats null, `observedResponses: []` et `scores: null`. Aucun expéditeur d’API n’est ajouté. Les [tests de préparation](../test/pilot-plan.test.mjs) contrôlent les actifs, sans simuler des réponses de modèle.
+
+Le chemin français historique `docs/model-comparison.md` est conservé pour les liens existants, avec sa langue et son équivalent anglais explicitement indiqués.

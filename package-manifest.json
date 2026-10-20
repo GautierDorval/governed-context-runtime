@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "f233eb1bb6ce2f0788e1089e1445967b4f39c23e5b51bb14650b0f859296cbd2",
-      "bytes": 10266
+      "sha256": "d5eb9827accdeb7bacacd84c6094128ef5ff496e728bd3639c411914797c6ad9",
+      "bytes": 10267
     },
     {
       "path": "CITATION.cff",
@@ -81,8 +81,8 @@
     },
     {
       "path": "MAINTAINING.md",
-      "sha256": "5715d9f51e03b0212ab162af5d731db6152abf8fbaf2db17d36f4d1dbfe83738",
-      "bytes": 7344
+      "sha256": "32f66d65a40211ea66e2e575dd01144042d4fc99308d4d518331e2f308a26c61",
+      "bytes": 7485
     },
     {
       "path": "NOTICE.md",
@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/model-comparison.md",
-      "sha256": "dbe2f3e08b68aed167bede28184b9ac81eba196797a0caa2f8c05ab7e229dbdb",
-      "bytes": 9710
+      "sha256": "4a115bf6fc37d31996939ea61334f193adf70107c18581472b3a85a4cd994550",
+      "bytes": 11335
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -206,8 +206,8 @@
     },
     {
       "path": "docs/model-comparison.md",
-      "sha256": "34cf10e4e762c9c1a902dbdcf1eedc99d03098c7581f1a81f4a18e890fff9e58",
-      "bytes": 11109
+      "sha256": "9657d249d4c2072ee787a0d7adc003d531960beaa0490072487338c17fc8e830",
+      "bytes": 12927
     },
     {
       "path": "docs/observations.md",
@@ -276,8 +276,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "02bf482afd802bc2388667ced44f5c931cd0dc63a8f9830c086f9eeef292f3eb",
-      "bytes": 6857
+      "sha256": "cdebba5b1e00df9affaccb667b0fa4d6c635f33e61b56bb337fe922dd94d3ed7",
+      "bytes": 6918
     },
     {
       "path": "package.json",
@@ -291,13 +291,13 @@
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
-      "sha256": "2b5215068f4cb23b861b5ad804a936a637f6e5ab0ffa8699f4abcbe748fc96c9",
-      "bytes": 8798
+      "sha256": "58da56c814316b4b212583a2cac4b9959df9567fe300e28b12b37351d584e534",
+      "bytes": 8806
     },
     {
       "path": "records/consumer-mandate-2026-10-20.md",
-      "sha256": "bcba199d395a5f556811cbdd26ffeb8b733b8766da8f9c095411ad9f31c81c60",
-      "bytes": 7805
+      "sha256": "bb7eb5c2389557736b685da2c77c335cedb98eb427ecbd3c5b846bfd6ffa3317",
+      "bytes": 7777
     },
     {
       "path": "records/consumer-report-2026-10-20.md",
@@ -306,23 +306,23 @@
     },
     {
       "path": "records/handoff-2026-10-19.md",
-      "sha256": "55164966243bda9b300b8fe952977139e8d5fd9c0f928ae52ee7238e74cb258d",
-      "bytes": 17904
+      "sha256": "b3b58cbffbe4f21ceffb7175bfe40f8ce0d118216b57e5649bd141d5b07ac8ba",
+      "bytes": 17912
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
-      "sha256": "6611e413e9a8b673dee242894542c32025eecea56e57f5284c1409f771a14786",
-      "bytes": 10064
+      "sha256": "6e4d68bde18f277f61cbfb2a4b504f1e8c5d4e0065ac2c4405079a9bfbdce02a",
+      "bytes": 12115
     },
     {
       "path": "rights.json",
-      "sha256": "d8cae38bc531e40c9245b6a94af75737d10164f8d387bb2c9b78041cb48b78ff",
-      "bytes": 32882
+      "sha256": "9d0c2af6e63bf1949443e493d2c9eec54e9ac78a92a0a2a087dd6a93cec028df",
+      "bytes": 33132
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "ae997fbd8279ea495fbe38e356fa8356eb56114273b62fbc0f5144833714f71f",
-      "bytes": 13739
+      "sha256": "512c8aa287fbf02fdfe689ad78abd66a415153d29a7f3d24378342bb3f557440",
+      "bytes": 13870
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -356,8 +356,8 @@
     },
     {
       "path": "scripts/test-regenerate.mjs",
-      "sha256": "041d2896121d89e4ed9b97d383da2fa4eca4e25abf776fbd3413040859324083",
-      "bytes": 17571
+      "sha256": "1822ccf16ca25a309a2be99f4f4bbb94933a28edfa11e495893d3f68bb67c476",
+      "bytes": 18303
     },
     {
       "path": "spec/LICENSE",
@@ -450,6 +450,11 @@
       "bytes": 6126
     },
     {
+      "path": "spec/examples/semantic-boundaries/assemble-prompt.mjs",
+      "sha256": "baa215c03f667415974d903a4ed0f781c2f2f43ccec36e819fc27c573e43f6ed",
+      "bytes": 1381
+    },
+    {
       "path": "spec/examples/semantic-boundaries/bundle.json",
       "sha256": "a4740cd7627d39b7f360bd44d500485a4fbff5f780bc80d9413202c67b9f23cd",
       "bytes": 140159
@@ -471,8 +476,8 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/en.canonical-prose.md",
-      "sha256": "8cf83c941cd2b6821482a1120e1f7e5673a409a91ae8377d0f0315e494ec13aa",
-      "bytes": 3909
+      "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c",
+      "bytes": 3427
     },
     {
       "path": "spec/examples/semantic-boundaries/en.canonical-text.md",
@@ -496,13 +501,13 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/experiment-plan.json",
-      "sha256": "46a72eaceea568ff888f245379c1708e6d4972e495145ca4969c29522d014511",
-      "bytes": 8235
+      "sha256": "43ae193f6c3da69e938d7cd8797c57349d2689e110623c8fed4ac6e3545d2431",
+      "bytes": 9767
     },
     {
       "path": "spec/examples/semantic-boundaries/fr.canonical-prose.md",
-      "sha256": "617869768d396f46b1b89080b4fa5d9f6a12c7f69939df126a6fc0a2f8fde9f3",
-      "bytes": 4359
+      "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9",
+      "bytes": 3825
     },
     {
       "path": "spec/examples/semantic-boundaries/fr.canonical-text.md",
@@ -526,13 +531,13 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/judging-rubric.json",
-      "sha256": "0cccac2db0bfc2b860eb6cedf0e92135f344835cb15f819cd731507344590951",
+      "sha256": "7211679b7c8acc36c87906478ec02f1cfa33e824b1f7b54b473c4fede90e8526",
       "bytes": 25131
     },
     {
       "path": "spec/examples/semantic-boundaries/prose-coverage.json",
-      "sha256": "5e3376aa2dba12d1d7bb7dcc1c1216579514e2cb6d078ca7d724ba33115ed888",
-      "bytes": 101049
+      "sha256": "f10771ed9d71c8f8137c4c5152115a5fe5feec25c2e2412eadf9a13a193bc2d1",
+      "bytes": 104291
     },
     {
       "path": "spec/examples/semantic-boundaries/scenarios.json",
@@ -661,8 +666,8 @@
     },
     {
       "path": "test/editorial.test.mjs",
-      "sha256": "18721173486c55b824b5dc7167b055eb615f67038d2b5fb4def7513e936d4e9e",
-      "bytes": 9074
+      "sha256": "4f7844be0f9f0daa5ee08e8ca834e575c25b0f5a36c06f7a63383b76dbcfdfd2",
+      "bytes": 9354
     },
     {
       "path": "test/graph.test.mjs",
@@ -686,8 +691,8 @@
     },
     {
       "path": "test/pilot-plan.test.mjs",
-      "sha256": "133c17b840e416d4b70947848f99608c24a9370f8db0e525c26daaede93cf21e",
-      "bytes": 8161
+      "sha256": "f57c0bf95e0b2082577a1be181c52b4906fd826f6f2465733e512429453fcefb",
+      "bytes": 13086
     },
     {
       "path": "test/qualification.test.mjs",

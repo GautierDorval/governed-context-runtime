@@ -115,7 +115,12 @@ test('entry links and anchors resolve from each containing document', async () =
   const policy = JSON.parse(await read('package-policy.json'));
   const paths = policy.inventory.filter((/** @type {string} */ path) => path.endsWith('.md'));
   for (const path of paths) {
-    const body = (await read(path)).replace(/```[\s\S]*?```/g, '').replace(/`[^`]*`/g, '');
+    const original = await read(path);
+    const related = original.match(/^related_documents:\r?\n((?:  - .+\r?\n)+)/m);
+    if (related)
+      for (const item of related[1].matchAll(/^  - (.+)$/gm))
+        await readFile(new URL(item[1].trim(), new URL('../' + path, import.meta.url)));
+    const body = original.replace(/```[\s\S]*?```/g, '').replace(/`[^`]*`/g, '');
     for (const match of body.matchAll(/\]\(([^)\s]+)\)/g)) {
       const href = match[1];
       if (/^[a-z][a-z0-9+.-]*:/i.test(href)) continue;

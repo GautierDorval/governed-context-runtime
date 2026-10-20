@@ -6,231 +6,233 @@
   "editorialReview": {
     "producer": "Codex",
     "scope": "Bilingual source-to-prose reading; automated references do not prove paraphrase meaning",
-    "independentReview": "PENDING"
+    "independentReview": "Initial df2816d review identified case-specific elaborations; corrected candidate requires a separate exact-commit final receipt.",
+    "policy": "Normative source is content.json only. No scenario-specific illustration or teaching-answer phrase is added unless already stated in that source. Semantic review is required for edits; hashes and pointers alone do not establish paraphrase meaning.",
+    "caseSpecificAdditions": []
   },
   "locales": {
     "fr": {
       "file": "fr.canonical-prose.md",
-      "sha256": "617869768d396f46b1b89080b4fa5d9f6a12c7f69939df126a6fc0a2f8fde9f3",
-      "bytes": 4359,
-      "unicodeScalars": 4184,
+      "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9",
+      "bytes": 3825,
+      "unicodeScalars": 3682,
       "tokenCount": null,
       "sourceUnits": [
         {
           "sourcePointer": "/locales/fr/selectionBoundary/agentSelectedIntent",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/fr/selectionBoundary/runtimeSelectedIntentFromFreeText",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/fr/selectionBoundary/runtimeComposedAtRequestTime",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/fr/selectionBoundary/runtimeProducedAnswer",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/fr/selectionBoundary/note",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/id",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/surface_topic",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/trigger",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/symptom",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/risk",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/latent_need",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/canonical_surfaces/0",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/intended_consequence",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/2",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/id",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/linkedCausalContextId",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/id",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/labelFr",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/labelEn",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/triggerSituation",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/latentNeed",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/activationConditions/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/activationConditions/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/nonApplicabilityConditions/0",
           "disposition": "covered",
           "section": "exclusions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Outside-Quebec and unfavourable project-specific assessment exclusions."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/nonApplicabilityConditions/1",
           "disposition": "covered",
           "section": "exclusions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Outside-Quebec and unfavourable project-specific assessment exclusions."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/requiredEvidence/0",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/requiredEvidence/1",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/2",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicabilityAbuseBoundaries/0",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/applicabilityAbuseBoundaries/1",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/fr/applicabilityChains/0/riskClass",
@@ -254,61 +256,61 @@
           "sourcePointer": "/locales/fr/weightingRules/0/ruleId",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/fr/weightingRules/0/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/weightingRules/0/rule",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/0/ruleId",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/0/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/0/rule",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/1/ruleId",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/1/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/fr/answerBoundaries/1/rule",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/fictional",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/identity",
@@ -326,7 +328,10 @@
           "sourcePointer": "/sourceNotice",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately.",
+          "additionalSections": [
+            "consumer"
+          ]
         }
       ],
       "packTerminalCoverage": [
@@ -627,7 +632,7 @@
         {
           "packPointer": "/weightingRules/0/sourceArtifact",
           "disposition": "covered",
-          "section": "priority",
+          "section": "references",
           "reason": "Mapped to natural prose; wording and length differ."
         },
         {
@@ -663,7 +668,7 @@
         {
           "packPointer": "/answerBoundaries/1/sourceArtifact",
           "disposition": "covered",
-          "section": "actions",
+          "section": "references",
           "reason": "Mapped to natural prose; wording and length differ."
         },
         {
@@ -1108,226 +1113,226 @@
     },
     "en": {
       "file": "en.canonical-prose.md",
-      "sha256": "8cf83c941cd2b6821482a1120e1f7e5673a409a91ae8377d0f0315e494ec13aa",
-      "bytes": 3909,
-      "unicodeScalars": 3904,
+      "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c",
+      "bytes": 3427,
+      "unicodeScalars": 3422,
       "tokenCount": null,
       "sourceUnits": [
         {
           "sourcePointer": "/locales/en/selectionBoundary/agentSelectedIntent",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/en/selectionBoundary/runtimeSelectedIntentFromFreeText",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/en/selectionBoundary/runtimeComposedAtRequestTime",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/en/selectionBoundary/runtimeProducedAnswer",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/en/selectionBoundary/note",
           "disposition": "covered",
           "section": "consumer",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Consumer-selected intent and precompiled transport; no Runtime inference, composition, answer or authorization."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/id",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/surface_topic",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/trigger",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/symptom",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/risk",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/latent_need",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/canonical_surfaces/0",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/intended_consequence",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/2",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/id",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/linkedCausalContextId",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/id",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/labelFr",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/labelEn",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/triggerSituation",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/latentNeed",
           "disposition": "covered",
           "section": "scope",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "General project request, risk of losing scope/conditions, and preservation of unknown conclusions."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/activationConditions/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/activationConditions/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/nonApplicabilityConditions/0",
           "disposition": "covered",
           "section": "exclusions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Outside-Quebec and unfavourable project-specific assessment exclusions."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/nonApplicabilityConditions/1",
           "disposition": "covered",
           "section": "exclusions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Outside-Quebec and unfavourable project-specific assessment exclusions."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/requiredEvidence/0",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/requiredEvidence/1",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/0",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/1",
           "disposition": "covered",
           "section": "conditions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Joint Quebec location and written favourable project-specific assessment; no inferred scope extension or established eligibility."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/2",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicabilityAbuseBoundaries/0",
           "disposition": "covered",
           "section": "evidence",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Documented location, dated same-project assessment and no transfer between projects."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/applicabilityAbuseBoundaries/1",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/en/applicabilityChains/0/riskClass",
@@ -1351,61 +1356,61 @@
           "sourcePointer": "/locales/en/weightingRules/0/ruleId",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/en/weightingRules/0/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/weightingRules/0/rule",
           "disposition": "covered",
           "section": "priority",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explicit restrictions precede promotion locally; missing evidence and contradiction stay unresolved, without universal source authority."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/0/ruleId",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/0/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/0/rule",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/1/ruleId",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/1/sourceArtifact",
           "disposition": "covered",
           "section": "references",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Fictional source, chain, causal-context and retention-rule identifiers and relationships."
         },
         {
           "sourcePointer": "/locales/en/answerBoundaries/1/rule",
           "disposition": "covered",
           "section": "actions",
-          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+          "reason": "Explanation alone grants no booking, payment or work permission; a separate decision and authorization remain required."
         },
         {
           "sourcePointer": "/fictional",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately."
         },
         {
           "sourcePointer": "/identity",
@@ -1423,7 +1428,10 @@
           "sourcePointer": "/sourceNotice",
           "disposition": "covered",
           "section": "identity",
-          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+          "reason": "Fictional service identity, labels and inert locators; exact dataset version metadata is accounted separately.",
+          "additionalSections": [
+            "consumer"
+          ]
         }
       ],
       "packTerminalCoverage": [
@@ -1724,7 +1732,7 @@
         {
           "packPointer": "/weightingRules/0/sourceArtifact",
           "disposition": "covered",
-          "section": "priority",
+          "section": "references",
           "reason": "Mapped to natural prose; wording and length differ."
         },
         {
@@ -1760,7 +1768,7 @@
         {
           "packPointer": "/answerBoundaries/1/sourceArtifact",
           "disposition": "covered",
-          "section": "actions",
+          "section": "references",
           "reason": "Mapped to natural prose; wording and length differ."
         },
         {
