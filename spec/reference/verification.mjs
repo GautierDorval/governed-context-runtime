@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 // Independent reference implementation. No network or generator dependencies.
 export const PROFILE = 'gd-portable-json-v1';
+// Closed acceptance rules for the existing archive envelope; no wire-profile rewrite.
+const ARCHIVE_FIELDS = Object.freeze(['contentBase64', 'digest', 'digestAlgorithm', 'digestScope', 'encoding', 'schemaVersion', 'sourcePath', 'type']);
 export const fail = code => { const error = new Error(code); error.name = 'VerificationError'; throw error; };
 const encoder = new TextEncoder();
 const decoder = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true });
@@ -195,10 +197,16 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
     const archive = strictParse(encoded);
     const canonicalEnvelope = canonical(archive);
     if (encoded.length !== canonicalEnvelope.length || encoded.some((byte, index) => byte !== canonicalEnvelope[index])) fail('noncanonical_archive_envelope');
+    if (!archive || typeof archive !== 'object' || Array.isArray(archive)
+      || Object.keys(archive).length !== ARCHIVE_FIELDS.length
+      || !ARCHIVE_FIELDS.every(key => Object.hasOwn(archive, key))) fail('archive_fields');
     for (const [key,value] of Object.entries({type:'RuntimeSourceArchive',schemaVersion:'0.1.0-proposed',encoding:'base64',digestScope:'repository-bytes',digestAlgorithm:'sha-256'})) same('archive-profile:' + key, value, archive[key]);
     same('archive-source:' + item.sourcePath, item.sourcePath, archive.sourcePath);
     if (typeof archive.contentBase64 !== 'string' || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(archive.contentBase64)) fail('invalid_base64');
-    const data = Uint8Array.from(atob(archive.contentBase64), c => c.charCodeAt(0));
+    const decoded = atob(archive.contentBase64);
+    // A permissive decoder can map nonzero pad bits to the same bytes. Never normalize them.
+    if (btoa(decoded) !== archive.contentBase64) fail('noncanonical_base64');
+    const data = Uint8Array.from(decoded, c => c.charCodeAt(0));
     same('source-bytes:' + item.sourcePath, item.repositoryDigest, await digest(data));
     same('source-declaration:' + item.sourcePath, item.repositoryDigest, archive.digest);
     same('source-length:' + item.sourcePath, item.byteLength, data.length);

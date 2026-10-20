@@ -7,8 +7,8 @@ producer: Codex
 role: executor
 auditor: Claude
 business_owner: Gautier Dorval
-status: approved-for-execution
-claimed_stage: intended
+status: locally-qualified
+claimed_stage: locally-tested
 created_on: 2026-10-20
 verified_head: f20d155b204c9ceae2e0981d632da1f8db21847f
 verified_origin_main: f20d155b204c9ceae2e0981d632da1f8db21847f
@@ -85,3 +85,43 @@ regression. Read this repository's maintenance rules, verification implementatio
 consumers, tests, package policy and verification-only workflow. The doctor and
 private execution evidence are retained under the lot identifier
 `archive-profile-p3-20261020`; no private path or configuration is published.
+
+
+## Local execution result
+
+The shared verifier enforces the exact eight-member envelope and a lossless
+standard-base64 decode/re-encode check. No consumer fallback, schema identifier,
+dependency or historical byte format changed. The reproduction kit manifest was
+explicitly rebuilt to identify the updated verifier; it was not silently ignored.
+The verification guide and changelog describe the intentional compatibility
+restriction and the requirement for separately admitted replacement identities.
+
+The 69 focused tests first produced 25 passes and 44 failures on the unchanged
+implementation, then 69 passes with the correction. Those 44 failures include
+new error-contract expectations; they are not 44 independent accepted attacks.
+Positive controls include empty, textual and binary source bytes. Counterexamples
+cover all 15 four-bit and 3 two-bit padding aliases, unknown/missing/substituted
+members, non-object envelopes and the earlier integrity checks. Valid ephemeral
+Ed25519 receipts and deliberately admitted new roots still produce snapshot-stage
+refusals with zero consumer callbacks. The original pin rejects before archive
+access. No production key or authority was used.
+
+Local Node 24.17.0 validation on Windows:
+
+- `npm test`: 412 tests, 411 passed, zero failed, one platform-dependent symbolic
+  link test skipped; all 25 controlled mutants detected.
+- `npm run test:dev`: formatting and type checks passed; 34 tests passed.
+- 25 protected files are byte-identical to the admitted base, including all
+  semantic example files; both snapshots verify, both roots are unchanged and all
+  15 unit preimages are identical, including the original v0 preimage.
+- Three local Markdown previews were captured and visually inspected at 390 x 844
+  and 1365 x 900, without horizontal overflow or unreadable wrapping. This checks
+  the changed guide/changelog content in a local renderer, not GitHub's live UI.
+
+The first complete run correctly refused the outdated kit manifest in four CLI
+tests. After explicit manifest regeneration, the complete run passed. Logs retain
+both results. The development checks had already passed and their inputs did not
+change during that manifest correction. Private evidence is retained under the
+lot identifier above. The final independent audit, exact remote commit and CI
+result are recorded separately on the associated draft PR; this local record
+alone does not claim those later states or authorize integration.

@@ -60,7 +60,7 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "70d69eff27eb92de1b26efef3369fe76200b8fc59482e16c07da56a27596437e"
+      "sha256": "e07a55516df9d50fa4e2e953c55475ee31bbdf010c411eeadd2515b030e71c01"
     },
     {
       "path": "CITATION.cff",
@@ -162,7 +162,7 @@
       "path": "docs/archive-profile-p3-2026-10-20.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "eaa84185bb8395e9f6f611e526975c7df058edd3b4e3f23fd45c9c3d171789d5"
+      "sha256": "ff2f43daa37af6687a0a3e7921b45310c827f97605bbd32b5e08d12590404412"
     },
     {
       "path": "docs/consumer-mandate-2026-10-20.md",
@@ -264,7 +264,7 @@
       "path": "docs/verification.md",
       "source": "reviewed-contract-explanation",
       "license": "CC-BY-4.0",
-      "sha256": "697f011a693e2bdf5af11284981f4b36111d4b53d6cf61d49ca9336a3963c1c1"
+      "sha256": "6d45e3951bdd8abc528a2ea35c024abd3de3957d589c6fe4b2c118001ef99ed6"
     },
     {
       "path": "evidence/README.md",
@@ -312,13 +312,13 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "b1c8c853ef9d6a38cb49e86e52b55e2e30df0329cc0c833bc5be442c75cedbeb"
+      "sha256": "8f4ca666610a0c4d1ad9d4e4d246812be99e0954d2f6c0d4453f7337878976ee"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "229789ccf73810bd7bb5ca6131150abd0782bb296049074a34a609ceb3e947c7"
+      "sha256": "ac31f12ce06677cae72cac9d10655057691063e5a42793643d84baa53583fe36"
     },
     {
       "path": "scripts/check-package.mjs",
@@ -354,7 +354,7 @@
       "path": "scripts/test-mutations.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "4344dbdf80b5f3c237fcb169a539b6413b4c2a2db47bc32c2a778320c8132e8d"
+      "sha256": "d15ea079e2250f0c811de4e651ab9e574be425e1692e7ede1a22550bd0493b67"
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -438,7 +438,7 @@
       "path": "spec/examples/reproduction/manifest.json",
       "source": "consumer-reproduction-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7ffcc3837fb40c2ba89df04f077b777632e33ea4d221f1ac633addecc2456356"
+      "sha256": "81ea5024442eedfabb1f16783fd8bde587431e47edb7203177d9453c6678bf41"
     },
     {
       "path": "spec/examples/reproduction/policy.json",
@@ -645,6 +645,12 @@
       "sha256": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68"
     },
     {
+      "path": "spec/reference/test-archive-profile.mjs",
+      "source": "consumer-reproduction-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "1d720781e398aaf05f9508ddae8b787565fed1b64d90962e389c47eda05ba374"
+    },
+    {
       "path": "spec/reference/test-consumer.mjs",
       "source": "spec/reference/test-consumer.mjs",
       "license": "Apache-2.0",
@@ -678,7 +684,7 @@
       "path": "spec/reference/verification.mjs",
       "source": "spec/reference/verification.mjs",
       "license": "Apache-2.0",
-      "sha256": "7353e1ae7ef56f6977fcc113e70ed883467ae27eb0d05094daf312b3e32a7c62"
+      "sha256": "0b9a97a468942d1160a7408d10ff11d17da8df44be53781429a53be81b05159e"
     },
     {
       "path": "spec/runtime-snapshot.schema.json",

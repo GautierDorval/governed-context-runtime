@@ -85,5 +85,24 @@ now select the historical `fictional-1` pack version and are executed from both
 guides by the CLI tests. The pack wrapper captures its receipt before asynchronous
 policy checks. Invocation-error behavior and exact nominal case/language binding
 are explicit. The dated client table labels the replaced October 14 MCP snippet.
-Closing legacy archive members and canonical base64 padding remains a separately
-reviewed compatibility change; it is not part of B01's JSON-byte guarantee.
+At that review, closing legacy archive members and canonical base64 padding was
+deferred as a separate compatibility change. The P3 entry below records the later
+authorized tightening; B01's JSON-byte guarantee alone does not establish it.
+
+
+## P3 strict archive acceptance, 2026-10-20
+
+The shared verifier now requires exactly the eight established source-archive
+members and canonical standard base64, including zero unused padding bits. It
+refuses extra or missing members with `archive_fields`, and a decodable spelling
+that does not round-trip with `noncanonical_base64`. Existing raw digest/address
+and canonical JSON checks still run first. Unit and pack consumers inherit these
+checks; there is no legacy fallback or silent byte normalization.
+
+This intentionally narrows accepted inputs. Envelopes previously accepted with
+custom fields or noncanonical base64 require a conforming rebuild and separately
+admitted identity; no such migration is performed here. Existing fixtures, schema
+identifiers, roots, signatures and historical v0 preimages are preserved. The
+reference remains an unreleased proposed edition, without a new tag or production
+claim. See [verification and compatibility](docs/verification.md#strict-archive-acceptance-after-the-p3-compatibility-review)
+and the [P3 mandate](docs/archive-profile-p3-2026-10-20.md).

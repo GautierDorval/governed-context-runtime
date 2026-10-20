@@ -14,9 +14,23 @@ import {runFile, verdict} from './mutation-verdict.mjs';
 const source = fileURLToPath(new URL('../', import.meta.url));
 const verifier = 'spec/reference/verification.mjs';
 const TEXT = 'test/verification-paths.test.mjs',
-  GRAPH = 'test/graph.test.mjs';
+  GRAPH = 'test/graph.test.mjs',
+  ARCHIVE = 'spec/reference/test-archive-profile.mjs';
 
 const MUTANTS = [
+  ['archive: open member set', "fail('archive_fields');", '{}', ARCHIVE],
+  [
+    'archive: cardinality without membership',
+    '|| !ARCHIVE_FIELDS.every(key => Object.hasOwn(archive, key))',
+    '',
+    ARCHIVE,
+  ],
+  [
+    'archive: nonzero pad bits accepted',
+    "if (btoa(decoded) !== archive.contentBase64) fail('noncanonical_base64');",
+    '',
+    ARCHIVE,
+  ],
   ['text: JavaScript trim instead of the Python whitespace set', ".replace(ws, '')", '.trim()', TEXT],
   [
     'text: U+0085 dropped from the leading set',
@@ -106,10 +120,10 @@ test('every controlled mutation of the covered verifier paths is detected', asyn
   const original = await readFile(join(dir, verifier), 'utf8');
   // Controls: the unmodified copy and an equivalent rewrite must both pass, so a detection below
   // cannot come from the copy or the rewrite itself.
-  for (const file of [TEXT, GRAPH])
+  for (const file of [TEXT, GRAPH, ARCHIVE])
     assert.equal(verdict(await runFile(dir, file)), 'pass', 'baseline must pass: ' + file);
   await writeFile(join(dir, verifier), original + '\n// equivalent rewrite\n');
-  for (const file of [TEXT, GRAPH])
+  for (const file of [TEXT, GRAPH, ARCHIVE])
     assert.equal(verdict(await runFile(dir, file)), 'pass', 'equivalent rewrite must pass: ' + file);
   /** @type {string[]} */
   const survivors = [];
