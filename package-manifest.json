@@ -135,6 +135,11 @@
       "bytes": 3467
     },
     {
+      "path": "docs/consumer-mandate-2026-10-20.md",
+      "sha256": "75b6f525d151d9cab971df804a7b35c05fa1d6218167e9074f30a7a3bf476a9d",
+      "bytes": 7769
+    },
+    {
       "path": "docs/en/README.md",
       "sha256": "a92caa6dcc96d9572b6c96998cf4ea43023da8e084275b444509a6949dc7a9a1",
       "bytes": 8565
@@ -206,8 +211,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "a8f3c6bfb81bb145bb3e3702dac8bf4d326b30044af480ce6afd24fc008c3ee2",
-      "bytes": 3984
+      "sha256": "e0b671f532937fe68211698e38fc2d26a6468cec7e75451cb01ed07ed4f53db2",
+      "bytes": 4155
     },
     {
       "path": "package.json",
@@ -216,8 +221,8 @@
     },
     {
       "path": "rights.json",
-      "sha256": "04301e90ab1cac61e9c46d03e12bd8f792ad021f191ce853d1c93d541dd1dd6e",
-      "bytes": 18315
+      "sha256": "4e8842a9581b4f2c5c53261c08ca4a9213213f62fb35c53ae43629251ed0d449",
+      "bytes": 18546
     },
     {
       "path": "scripts/check-package.mjs",

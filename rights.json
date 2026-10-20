@@ -159,6 +159,12 @@
       "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
     },
     {
+      "path": "docs/consumer-mandate-2026-10-20.md",
+      "source": "consumer-reproduction-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "75b6f525d151d9cab971df804a7b35c05fa1d6218167e9074f30a7a3bf476a9d"
+    },
+    {
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
@@ -246,7 +252,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "a8f3c6bfb81bb145bb3e3702dac8bf4d326b30044af480ce6afd24fc008c3ee2"
+      "sha256": "e0b671f532937fe68211698e38fc2d26a6468cec7e75451cb01ed07ed4f53db2"
     },
     {
       "path": "package.json",
