@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {loadDemo} from './demo.mjs';
-import {canonical,digest,strictParse,unitPreimage} from '../reference/verification.mjs';
+import {canonical,digest,strictParse,unitPreimage,unitDigestCoverage} from '../reference/verification.mjs';
 import {inspectVerifiedUnit} from './verified-unit.mjs';
 const bundle=await loadDemo(),unit=bundle.snapshot.inventory.units[0];
 const fromArchive=uri=>Buffer.from(bundle.archives[uri],'base64');
@@ -27,7 +27,7 @@ async function rebuilt(edits={},units){
 }
 const inspectRebuilt=({snapshot,archives},record=snapshot.inventory.units[0])=>inspectVerifiedUnit({snapshotBytes:canonical(snapshot),unitBytes:canonical(record),expectedRoot:snapshot.corpusRootDigest,expectedIntents:bundle.expectedIntents,getArchive:uri=>archives[uri]});
 const editRecipe=change=>({'spec/governed-context-runtime/attestation-recipes.json':text=>{const recipes=JSON.parse(text);change(recipes.profiles[unit.canonicalization]);return JSON.stringify(recipes);}});
-test('complete snapshot binds unit and exposes recipe-derived coverage',async()=>{
+test('complete snapshot binds unit and exposes effective algorithm coverage',async()=>{
  const r=await inspectVerifiedUnit(input());assert.equal(r.verification.snapshotMembership,'verified-complete-record');
  assert.equal(r.verification.signatureTrust,'not-established');assert.equal(r.verification.usePermission,'not-evaluated');
  assert(r.verification.legacyDigest.recordFieldsCovered.includes('canonicalText'));
@@ -77,10 +77,10 @@ test('caller cannot change verified archive bytes before use',async()=>{
 test('in-memory rebuild preserves the reference result',async()=>{
  assert.equal((await inspectRebuilt(await rebuilt())).selectedValue,false);
 });
-test('profile without preimage fields reports no covered record field',async()=>{
+test('known v0 without optional declaration still reports its seven hashed fields',async()=>{
  const r=await inspectRebuilt(await rebuilt(editRecipe(profile=>{delete profile.requiredFieldsInPreimage;})));
- assert.deepEqual(r.verification.legacyDigest.recordFieldsCovered,[]);
- assert.deepEqual(r.verification.legacyDigest.recordFieldsOutsideDigest,Object.keys(unit));
+ assert.deepEqual(r.verification.legacyDigest.recordFieldsCovered,['unitId','sourcePath','selector','claimClass','authorityScope','canonicalSource','canonicalText']);
+ assert(r.verification.legacyDigest.recordFieldsOutsideDigest.includes('forbiddenTransformations'));
 });
 test('non-list coverage in the archived recipe is rejected',async()=>{
  const corpus=await rebuilt(editRecipe(profile=>{profile.requiredFieldsInPreimage=profile.requiredFieldsInPreimage.join('');}));
@@ -91,4 +91,40 @@ test('membership compares exact bytes without Unicode normalization',async()=>{
  const corpus=await rebuilt({[registry]:text=>{const j=JSON.parse(text);j.units[0].forbiddenTransformations=[nfc];return JSON.stringify(j);}},units=>{const copy=structuredClone(units);copy[0].forbiddenTransformations=[nfc];return copy;});
  assert.equal((await inspectRebuilt(corpus)).selectedValue,false);
  await assert.rejects(()=>inspectRebuilt(corpus,{...corpus.snapshot.inventory.units[0],forbiddenTransformations:[nfd]}),/unit_snapshot_membership/);
+});
+
+const actualV0=['unitId','sourcePath','selector','claimClass','authorityScope','canonicalSource','canonicalText'];
+for(const [name,declared] of Object.entries({overstated:[...actualV0,'forbiddenTransformations','selectedValueType'],incomplete:actualV0.slice(1),empty:[],duplicate:[...actualV0,actualV0[0]],null:null,nonstring:[...actualV0,1]})) {
+ test('v0 coverage rejects contradictory declaration: '+name,async()=>{
+  const corpus=await rebuilt(editRecipe(profile=>{profile.requiredFieldsInPreimage=declared;}));
+  assert.notEqual(corpus.snapshot.corpusRootDigest,bundle.policy.expectedRoot);
+  await assert.rejects(()=>inspectRebuilt(corpus),/invalid_recipe_coverage/);
+ });
+}
+test('v0 coverage permutation is accepted with stable effective order',async()=>{
+ const r=await inspectRebuilt(await rebuilt(editRecipe(profile=>{profile.requiredFieldsInPreimage=actualV0.toReversed();})));
+ assert.deepEqual(r.verification.legacyDigest.recordFieldsCovered,actualV0);
+});
+test('returned coverage cannot alter a later inspection',async()=>{
+ const r=await inspectVerifiedUnit(input());
+ try{r.verification.legacyDigest.recordFieldsCovered.push('forbiddenTransformations');}catch(e){assert(e instanceof TypeError);}
+ assert.deepEqual((await inspectVerifiedUnit(input())).verification.legacyDigest.recordFieldsCovered,actualV0);
+});
+test('changed recipe under original root refuses before archives',async()=>{
+ const corpus=await rebuilt(editRecipe(profile=>{profile.requiredFieldsInPreimage.push('forbiddenTransformations');}));
+ let reads=0;
+ await assert.rejects(()=>inspectVerifiedUnit({...input(),snapshotBytes:canonical(corpus.snapshot),getArchive:()=>{reads++;throw Error('unreachable');}}),/unexpected_corpus_root/);
+ assert.equal(reads,0);
+});
+
+test('selected-value profiles never claim direct record coverage',()=>{
+ for(const canonicalization of ['utf8-nfc-lf-trimmed-v0','deterministic-json-sort-keys-v0']){
+  const u={digestScope:'selected_unit_only',canonicalization};
+  assert.deepEqual(unitDigestCoverage(u,{}),[]);
+  assert.deepEqual(unitDigestCoverage(u,{requiredFieldsInPreimage:[]}),[]);
+  for(const requiredFieldsInPreimage of [['canonicalText'],['selectedValueType'],null,''])
+   assert.throws(()=>unitDigestCoverage(u,{requiredFieldsInPreimage}),/invalid_recipe_coverage/);
+ }
+ assert.throws(()=>unitDigestCoverage({digestScope:'selected_unit_only',canonicalization:'unknown'},{}),/unknown_profile/);
+ assert.throws(()=>unitDigestCoverage(unit,undefined),/unknown_profile/);
 });

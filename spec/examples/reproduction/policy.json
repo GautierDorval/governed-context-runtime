@@ -1,0 +1,32 @@
+{
+  "allowedKids": [
+    "fictional-demo-key"
+  ],
+  "clockSkewSeconds": 0,
+  "expectedRoot": "sha-256:5f100cbe2bd6358025500a1d88b6162441fd554ce1ca6c2fb5b9111aad197edb",
+  "format": "detached-jws-ed25519-test-v1",
+  "keys": [
+    {
+      "jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "fictional-demo-key",
+        "kty": "OKP",
+        "use": "sig",
+        "x": "cnPYOt8U_uYisvy7wLXTp0AV-lZM8bBE7q3uhV9eMnI"
+      },
+      "jwkDigest": "sha-256:0ce30b483366509fbaeacb313b17230b138e3726ebcbe726c48e0f502955dfac",
+      "notAfter": 1791684000,
+      "notBefore": 1791676740,
+      "status": "active"
+    }
+  ],
+  "maxAgeSeconds": 3600,
+  "minimumSequence": 1,
+  "now": 1791676800,
+  "purposes": [
+    "inspect-context"
+  ],
+  "schema": "runtime-local-consumer/0.1.0-proposed",
+  "testOnly": true
+}

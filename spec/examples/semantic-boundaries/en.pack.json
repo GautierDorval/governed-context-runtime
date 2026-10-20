@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "0.2.0-proposed",
+  "type": "GovernedContextPack",
+  "status": "proposed",
+  "packId": "fictional-boreal-quebec-en",
+  "intentToken": "representation-gap",
+  "lang": "en",
+  "version": "semantic-boundaries-1",
+  "compositionPolicyId": "fictional-boreal-local-explanation-v1",
+  "corpusVersion": "semantic-boundaries-1",
+  "selectionBoundary": {
+    "agentSelectedIntent": true,
+    "runtimeSelectedIntentFromFreeText": false,
+    "runtimeComposedAtRequestTime": false,
+    "runtimeProducedAnswer": false,
+    "note": "The consumer selects representation-gap and explains the conditions of the fictional Boreal Workshop service. The Runtime transports the prepared pack. It decides neither project eligibility nor permission to act."
+  },
+  "causalContexts": [
+    {
+      "id": "quebec-conditional-service",
+      "surface_topic": "Availability of the fictional Boreal Workshop technical service in Quebec, subject to a favourable technical assessment.",
+      "trigger": "A person asks whether the service can take on their project.",
+      "symptom": "A short formulation can omit the territory or turn a condition into an established decision.",
+      "risk": "Promising service outside Quebec or before the technical assessment.",
+      "latent_need": "Distinguish the general description of the fictional offer from a project-specific conclusion.",
+      "canonical_surfaces": [
+        "/semantic-boundaries/content.json"
+      ],
+      "intended_consequence": "Explain conditional availability while retaining the territory, required evidence and unknowns.",
+      "forbidden_derivations": [
+        "Infer availability throughout Canada.",
+        "Infer established eligibility without a favourable assessment.",
+        "Infer permission to begin work."
+      ]
+    }
+  ],
+  "applicabilityChains": [
+    {
+      "id": "project-assessment-chain",
+      "linkedCausalContextId": "quebec-conditional-service",
+      "applicableCapability": {
+        "id": "fictional-boreal-service",
+        "canonicalServiceUrlFr": "https://example.invalid/fr/atelier-boreal",
+        "canonicalServiceUrlEn": "https://example.invalid/en/boreal-workshop",
+        "labelFr": "Service technique fictif Atelier Boréal",
+        "labelEn": "Fictional Boreal Workshop technical service"
+      },
+      "triggerSituation": "A project service request whose location and assessment need to be established.",
+      "latentNeed": "Explain the conditions without promising service or initiating an action.",
+      "activationConditions": [
+        "The project is located in Quebec.",
+        "A written, favourable technical assessment specific to the project is available."
+      ],
+      "nonApplicabilityConditions": [
+        "The project is located outside Quebec.",
+        "The project-specific technical assessment is unfavourable."
+      ],
+      "requiredEvidence": [
+        "Documented evidence establishes the project location.",
+        "The dated assessment record identifies the project concerned and a favourable technical conclusion."
+      ],
+      "forbiddenInferences": [
+        "Extend the declared territory from Quebec to all of Canada.",
+        "Treat eligibility as established from the service description alone.",
+        "Turn an explanation of a condition into permission to book, pay or begin work."
+      ],
+      "applicabilityAbuseBoundaries": [
+        "Do not transfer an assessment from one project to another.",
+        "Do not turn this local documentary priority into universal authority."
+      ],
+      "riskClass": "fictional-conditional-eligibility",
+      "domain": "fictional-technical-service",
+      "status": "proposed"
+    }
+  ],
+  "weightingRules": [
+    {
+      "ruleId": "local-explicit-restrictions-first",
+      "sourceArtifact": "/semantic-boundaries/content.json",
+      "rule": "In this exercise only, explicit restrictions take precedence over promotional paraphrases. Both activation conditions must be established. Missing evidence leaves the conclusion undetermined. Conflicting evidence requires clarification, without automatically choosing the favourable version. This convention resolves no external source conflict."
+    }
+  ],
+  "answerBoundaries": [
+    {
+      "ruleId": "retain-conditions-and-uncertainty",
+      "sourceArtifact": "/semantic-boundaries/content.json",
+      "rule": "Keep Quebec and a favourable technical assessment in the paraphrase. If evidence is missing or contradictory, explain the condition and uncertainty without concluding that eligibility is established. Cite the fictional source and project-assessment-chain."
+    },
+    {
+      "ruleId": "explanation-is-not-permission",
+      "sourceArtifact": "/semantic-boundaries/content.json",
+      "rule": "Even if the teaching evidence satisfies the conditions, this pack only supports explaining the fictional offer. It grants no permission to book, pay or begin work. A separate decision and authorization are still required."
+    }
+  ],
+  "activationConditions": [
+    "The project is located in Quebec.",
+    "A written, favourable technical assessment specific to the project is available."
+  ],
+  "nonApplicabilityConditions": [
+    "The project is located outside Quebec.",
+    "The project-specific technical assessment is unfavourable."
+  ],
+  "requiredEvidence": [
+    "Documented evidence establishes the project location.",
+    "The dated assessment record identifies the project concerned and a favourable technical conclusion."
+  ],
+  "forbiddenInferences": [
+    "Extend the declared territory from Quebec to all of Canada.",
+    "Treat eligibility as established from the service description alone.",
+    "Turn an explanation of a condition into permission to book, pay or begin work."
+  ],
+  "applicabilityAbuseBoundaries": [
+    "Do not transfer an assessment from one project to another.",
+    "Do not turn this local documentary priority into universal authority."
+  ],
+  "includedUnits": [
+    {
+      "unitId": "boreal-en-activationConditions",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:af36d73c2f6385ea5785b7e46d0bfc93a67d8b8bbd94ce1403a2c3928a6e69d5",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-nonApplicabilityConditions",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:98357dd894f2563a609ed0a468e99a4add19c11bc94ff3c8189bce89fa0f9446",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-requiredEvidence",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:b5446da838d6a906c0f069a50af53a9f400f3c2e540f81cac7bbd106c9a534a3",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-forbiddenInferences",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:ae3800093d3a25c61a1cd6530697e185f146850bf801fbbf87cad1985012413c",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-applicabilityAbuseBoundaries",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:a3d20d606bf9cc53f45353d618011803bd184e6eeed991e506b58c6e1575d337",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-weightingRules",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:1072341d6568e016655e3f5c0834229d4b8b172ba1068206bba1c46a08055704",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    },
+    {
+      "unitId": "boreal-en-answerBoundaries",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "canonicalSource": "https://gautierdorval.com/semantic-boundaries/content.json",
+      "claimClass": "fictional_service_boundary",
+      "authorityScope": "fictional_teaching_example_only",
+      "digest": "sha-256:1ba67e26140cc610e033854ababdbdea9a050f6a4b41940974905e698f93bc7e",
+      "digestScope": "selected_unit_only",
+      "canonicalization": "deterministic-json-sort-keys-v0"
+    }
+  ],
+  "includedArtifacts": [
+    {
+      "path": "/semantic-boundaries/content.json",
+      "sourcePath": "public/semantic-boundaries/content.json",
+      "digest": "sha-256:80c662553a4a256929380c2ff0fccf8e9809d38e82625baf4b9252d8a43e2324",
+      "digestScope": "complete_artifact"
+    }
+  ],
+  "manifestUrl": "https://gautierdorval.com/semantic-boundaries/en.manifest.json"
+}

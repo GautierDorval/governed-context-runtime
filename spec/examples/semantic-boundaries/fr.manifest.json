@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "0.2.0-proposed",
+  "type": "GovernedContextPackManifest",
+  "status": "proposed",
+  "packId": "fictional-boreal-quebec-fr",
+  "intentToken": "representation-gap",
+  "lang": "fr",
+  "version": "semantic-boundaries-1",
+  "payloadUrl": "https://gautierdorval.com/semantic-boundaries/fr.json",
+  "payloadDigest": "sha-256:0c9c2cd0f69cc4ee2be87f042b48c3812c39ed854b9e08d04448d45530bb6c1b",
+  "payloadDigestScope": "canonical-json",
+  "payloadFileDigest": "sha-256:5332c7ba1a4df913496cb7ec45ce3ee3793234d07ca8377dec89736396153235",
+  "payloadFileDigestScope": "repository-bytes",
+  "canonicalizationPolicyId": "gd-deterministic-json-v1",
+  "fileEncoding": "utf-8",
+  "fileLineEndings": "lf",
+  "compositionPolicyId": "fictional-boreal-local-explanation-v1",
+  "corpusVersion": "semantic-boundaries-1",
+  "includedUnitIds": [
+    "boreal-fr-activationConditions",
+    "boreal-fr-nonApplicabilityConditions",
+    "boreal-fr-requiredEvidence",
+    "boreal-fr-forbiddenInferences",
+    "boreal-fr-applicabilityAbuseBoundaries",
+    "boreal-fr-weightingRules",
+    "boreal-fr-answerBoundaries"
+  ],
+  "includedArtifacts": [
+    "/semantic-boundaries/content.json"
+  ],
+  "generatedBy": "build_governed_context_packs.py"
+}

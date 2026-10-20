@@ -1,0 +1,30 @@
+{
+  "schema": "runtime-external-reproduction-report/1",
+  "status": "PREPARED",
+  "externalReproduction": "NOT_RUN",
+  "codeCommit": null,
+  "kitDigest": null,
+  "utc": null,
+  "environment": {
+    "os": null,
+    "node": null
+  },
+  "reproducer": {
+    "role": null,
+    "relationshipToProducer": null
+  },
+  "commands": [],
+  "cases": [],
+  "exitCodes": [],
+  "structuredCaptures": [],
+  "divergences": [],
+  "limits": [
+    "Reference verifier reused; this is not an independent cryptographic reimplementation.",
+    "No production observation or model-fidelity measurement."
+  ],
+  "review": {
+    "status": "NOT_RUN",
+    "reviewerRole": null,
+    "evidence": []
+  }
+}

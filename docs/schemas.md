@@ -41,3 +41,9 @@ A schema checks the structure of an object that has already been parsed. It cann
 ## The pinned schema edition
 
 `docs/source.json.publicSpecRepositoryPath` points to commit `d57ee3b`, the merge of pull request #1 on October 11, 2026. The four schemas and `spec/attestation-recipes.json` have kept the same bytes from the initial package (`ca8bc8b`) through later editions; `scripts/check-package.mjs` checks their SHA-256 digests, so a change to any of them requires reviewing the locator. The reference verifier and the examples under `spec/` have changed since `d57ee3b`: for them, use the revision of this repository you are reading.
+
+## Companion contracts
+
+Interpretation is documented in the [English](en/pack-semantics.md) and [French](fr/pack-semantics.md) semantic guides without altering these historical schema bytes.
+The [observation catalogue](observations.md) is separate from the four Runtime schemas.
+The [reproduction kit](en/reproduction.md) resolves all schema identities locally.

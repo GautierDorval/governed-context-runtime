@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 // Consumer-side integration example. No network, signature or permission decision.
-import {strictParse,canonical,verifySnapshot,select,fail} from '../reference/verification.mjs';
+import {strictParse,canonical,verifySnapshot,select,fail,unitDigestCoverage} from '../reference/verification.mjs';
 
 export async function inspectVerifiedUnit({snapshotBytes,unitBytes,expectedRoot,getArchive,expectedIntents}) {
   if (!/^sha-256:[a-f0-9]{64}$/.test(expectedRoot ?? '')) fail('pinned_root_required');
@@ -25,9 +25,8 @@ export async function inspectVerifiedUnit({snapshotBytes,unitBytes,expectedRoot,
   const recipes=strictParse(source('spec/governed-context-runtime/attestation-recipes.json'));
   const recipe=recipes.profiles && Object.hasOwn(recipes.profiles,unit.canonicalization) ? recipes.profiles[unit.canonicalization] : undefined;
   if(!recipe || typeof recipe!=='object') fail('unknown_profile');
-  // Coverage is derived from the recipe inside the verified snapshot, not a second list.
-  const covered=recipe.requiredFieldsInPreimage ?? [];
-  if(!Array.isArray(covered) || !covered.every(field=>typeof field==='string')) fail('invalid_recipe_coverage');
+  // Validate optional metadata against the same definition used by the v0 preimage.
+  const covered=unitDigestCoverage(unit,recipe);
   return {
     unit,
     selectedValue:select(strictParse(source(unit.sourcePath),{historical:true}),unit.selector),

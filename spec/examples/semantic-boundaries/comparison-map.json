@@ -1,0 +1,1581 @@
+{
+  "status": "NOT_RUN",
+  "fictional": true,
+  "representation": "complete-pack-versus-field-labelled-text",
+  "locales": {
+    "en": {
+      "packFile": "en.pack.json",
+      "textFile": "en.canonical-text.md",
+      "packBytes": 9956,
+      "textBytes": 16392,
+      "packUnicodeScalars": 9955,
+      "textUnicodeScalars": 16391,
+      "packDigest": "sha-256:f23da03ec5c0e9a798539bca87ad33a55becd0a15b2b26118efd0f54d1bc7e59",
+      "textDigest": "sha-256:b34758d03733500048415dfb0ed9d1116a62058d8fb29d5f3e0a9ddc9d0206f9",
+      "tokenizerMeasurement": "NOT_RUN: record model-specific token counts before any authorized experiment",
+      "rows": [
+        {
+          "id": "value-001",
+          "packPointer": "/schemaVersion",
+          "textLine": 1,
+          "value": "0.2.0-proposed"
+        },
+        {
+          "id": "value-002",
+          "packPointer": "/type",
+          "textLine": 3,
+          "value": "GovernedContextPack"
+        },
+        {
+          "id": "value-003",
+          "packPointer": "/status",
+          "textLine": 5,
+          "value": "proposed"
+        },
+        {
+          "id": "value-004",
+          "packPointer": "/packId",
+          "textLine": 7,
+          "value": "fictional-boreal-quebec-en"
+        },
+        {
+          "id": "value-005",
+          "packPointer": "/intentToken",
+          "textLine": 9,
+          "value": "representation-gap"
+        },
+        {
+          "id": "value-006",
+          "packPointer": "/lang",
+          "textLine": 11,
+          "value": "en"
+        },
+        {
+          "id": "value-007",
+          "packPointer": "/version",
+          "textLine": 13,
+          "value": "semantic-boundaries-1"
+        },
+        {
+          "id": "value-008",
+          "packPointer": "/compositionPolicyId",
+          "textLine": 15,
+          "value": "fictional-boreal-local-explanation-v1"
+        },
+        {
+          "id": "value-009",
+          "packPointer": "/corpusVersion",
+          "textLine": 17,
+          "value": "semantic-boundaries-1"
+        },
+        {
+          "id": "value-010",
+          "packPointer": "/selectionBoundary/agentSelectedIntent",
+          "textLine": 19,
+          "value": true
+        },
+        {
+          "id": "value-011",
+          "packPointer": "/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "textLine": 21,
+          "value": false
+        },
+        {
+          "id": "value-012",
+          "packPointer": "/selectionBoundary/runtimeComposedAtRequestTime",
+          "textLine": 23,
+          "value": false
+        },
+        {
+          "id": "value-013",
+          "packPointer": "/selectionBoundary/runtimeProducedAnswer",
+          "textLine": 25,
+          "value": false
+        },
+        {
+          "id": "value-014",
+          "packPointer": "/selectionBoundary/note",
+          "textLine": 27,
+          "value": "The consumer selects representation-gap and explains the conditions of the fictional Boreal Workshop service. The Runtime transports the prepared pack. It decides neither project eligibility nor permission to act."
+        },
+        {
+          "id": "value-015",
+          "packPointer": "/causalContexts/0/id",
+          "textLine": 29,
+          "value": "quebec-conditional-service"
+        },
+        {
+          "id": "value-016",
+          "packPointer": "/causalContexts/0/surface_topic",
+          "textLine": 31,
+          "value": "Availability of the fictional Boreal Workshop technical service in Quebec, subject to a favourable technical assessment."
+        },
+        {
+          "id": "value-017",
+          "packPointer": "/causalContexts/0/trigger",
+          "textLine": 33,
+          "value": "A person asks whether the service can take on their project."
+        },
+        {
+          "id": "value-018",
+          "packPointer": "/causalContexts/0/symptom",
+          "textLine": 35,
+          "value": "A short formulation can omit the territory or turn a condition into an established decision."
+        },
+        {
+          "id": "value-019",
+          "packPointer": "/causalContexts/0/risk",
+          "textLine": 37,
+          "value": "Promising service outside Quebec or before the technical assessment."
+        },
+        {
+          "id": "value-020",
+          "packPointer": "/causalContexts/0/latent_need",
+          "textLine": 39,
+          "value": "Distinguish the general description of the fictional offer from a project-specific conclusion."
+        },
+        {
+          "id": "value-021",
+          "packPointer": "/causalContexts/0/canonical_surfaces/0",
+          "textLine": 41,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-022",
+          "packPointer": "/causalContexts/0/intended_consequence",
+          "textLine": 43,
+          "value": "Explain conditional availability while retaining the territory, required evidence and unknowns."
+        },
+        {
+          "id": "value-023",
+          "packPointer": "/causalContexts/0/forbidden_derivations/0",
+          "textLine": 45,
+          "value": "Infer availability throughout Canada."
+        },
+        {
+          "id": "value-024",
+          "packPointer": "/causalContexts/0/forbidden_derivations/1",
+          "textLine": 47,
+          "value": "Infer established eligibility without a favourable assessment."
+        },
+        {
+          "id": "value-025",
+          "packPointer": "/causalContexts/0/forbidden_derivations/2",
+          "textLine": 49,
+          "value": "Infer permission to begin work."
+        },
+        {
+          "id": "value-026",
+          "packPointer": "/applicabilityChains/0/id",
+          "textLine": 51,
+          "value": "project-assessment-chain"
+        },
+        {
+          "id": "value-027",
+          "packPointer": "/applicabilityChains/0/linkedCausalContextId",
+          "textLine": 53,
+          "value": "quebec-conditional-service"
+        },
+        {
+          "id": "value-028",
+          "packPointer": "/applicabilityChains/0/applicableCapability/id",
+          "textLine": 55,
+          "value": "fictional-boreal-service"
+        },
+        {
+          "id": "value-029",
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "textLine": 57,
+          "value": "https://example.invalid/fr/atelier-boreal"
+        },
+        {
+          "id": "value-030",
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "textLine": 59,
+          "value": "https://example.invalid/en/boreal-workshop"
+        },
+        {
+          "id": "value-031",
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelFr",
+          "textLine": 61,
+          "value": "Service technique fictif Atelier Boréal"
+        },
+        {
+          "id": "value-032",
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelEn",
+          "textLine": 63,
+          "value": "Fictional Boreal Workshop technical service"
+        },
+        {
+          "id": "value-033",
+          "packPointer": "/applicabilityChains/0/triggerSituation",
+          "textLine": 65,
+          "value": "A project service request whose location and assessment need to be established."
+        },
+        {
+          "id": "value-034",
+          "packPointer": "/applicabilityChains/0/latentNeed",
+          "textLine": 67,
+          "value": "Explain the conditions without promising service or initiating an action."
+        },
+        {
+          "id": "value-035",
+          "packPointer": "/applicabilityChains/0/activationConditions/0",
+          "textLine": 69,
+          "value": "The project is located in Quebec."
+        },
+        {
+          "id": "value-036",
+          "packPointer": "/applicabilityChains/0/activationConditions/1",
+          "textLine": 71,
+          "value": "A written, favourable technical assessment specific to the project is available."
+        },
+        {
+          "id": "value-037",
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/0",
+          "textLine": 73,
+          "value": "The project is located outside Quebec."
+        },
+        {
+          "id": "value-038",
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/1",
+          "textLine": 75,
+          "value": "The project-specific technical assessment is unfavourable."
+        },
+        {
+          "id": "value-039",
+          "packPointer": "/applicabilityChains/0/requiredEvidence/0",
+          "textLine": 77,
+          "value": "Documented evidence establishes the project location."
+        },
+        {
+          "id": "value-040",
+          "packPointer": "/applicabilityChains/0/requiredEvidence/1",
+          "textLine": 79,
+          "value": "The dated assessment record identifies the project concerned and a favourable technical conclusion."
+        },
+        {
+          "id": "value-041",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/0",
+          "textLine": 81,
+          "value": "Extend the declared territory from Quebec to all of Canada."
+        },
+        {
+          "id": "value-042",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/1",
+          "textLine": 83,
+          "value": "Treat eligibility as established from the service description alone."
+        },
+        {
+          "id": "value-043",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/2",
+          "textLine": 85,
+          "value": "Turn an explanation of a condition into permission to book, pay or begin work."
+        },
+        {
+          "id": "value-044",
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "textLine": 87,
+          "value": "Do not transfer an assessment from one project to another."
+        },
+        {
+          "id": "value-045",
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "textLine": 89,
+          "value": "Do not turn this local documentary priority into universal authority."
+        },
+        {
+          "id": "value-046",
+          "packPointer": "/applicabilityChains/0/riskClass",
+          "textLine": 91,
+          "value": "fictional-conditional-eligibility"
+        },
+        {
+          "id": "value-047",
+          "packPointer": "/applicabilityChains/0/domain",
+          "textLine": 93,
+          "value": "fictional-technical-service"
+        },
+        {
+          "id": "value-048",
+          "packPointer": "/applicabilityChains/0/status",
+          "textLine": 95,
+          "value": "proposed"
+        },
+        {
+          "id": "value-049",
+          "packPointer": "/weightingRules/0/ruleId",
+          "textLine": 97,
+          "value": "local-explicit-restrictions-first"
+        },
+        {
+          "id": "value-050",
+          "packPointer": "/weightingRules/0/sourceArtifact",
+          "textLine": 99,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-051",
+          "packPointer": "/weightingRules/0/rule",
+          "textLine": 101,
+          "value": "In this exercise only, explicit restrictions take precedence over promotional paraphrases. Both activation conditions must be established. Missing evidence leaves the conclusion undetermined. Conflicting evidence requires clarification, without automatically choosing the favourable version. This convention resolves no external source conflict."
+        },
+        {
+          "id": "value-052",
+          "packPointer": "/answerBoundaries/0/ruleId",
+          "textLine": 103,
+          "value": "retain-conditions-and-uncertainty"
+        },
+        {
+          "id": "value-053",
+          "packPointer": "/answerBoundaries/0/sourceArtifact",
+          "textLine": 105,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-054",
+          "packPointer": "/answerBoundaries/0/rule",
+          "textLine": 107,
+          "value": "Keep Quebec and a favourable technical assessment in the paraphrase. If evidence is missing or contradictory, explain the condition and uncertainty without concluding that eligibility is established. Cite the fictional source and project-assessment-chain."
+        },
+        {
+          "id": "value-055",
+          "packPointer": "/answerBoundaries/1/ruleId",
+          "textLine": 109,
+          "value": "explanation-is-not-permission"
+        },
+        {
+          "id": "value-056",
+          "packPointer": "/answerBoundaries/1/sourceArtifact",
+          "textLine": 111,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-057",
+          "packPointer": "/answerBoundaries/1/rule",
+          "textLine": 113,
+          "value": "Even if the teaching evidence satisfies the conditions, this pack only supports explaining the fictional offer. It grants no permission to book, pay or begin work. A separate decision and authorization are still required."
+        },
+        {
+          "id": "value-058",
+          "packPointer": "/activationConditions/0",
+          "textLine": 115,
+          "value": "The project is located in Quebec."
+        },
+        {
+          "id": "value-059",
+          "packPointer": "/activationConditions/1",
+          "textLine": 117,
+          "value": "A written, favourable technical assessment specific to the project is available."
+        },
+        {
+          "id": "value-060",
+          "packPointer": "/nonApplicabilityConditions/0",
+          "textLine": 119,
+          "value": "The project is located outside Quebec."
+        },
+        {
+          "id": "value-061",
+          "packPointer": "/nonApplicabilityConditions/1",
+          "textLine": 121,
+          "value": "The project-specific technical assessment is unfavourable."
+        },
+        {
+          "id": "value-062",
+          "packPointer": "/requiredEvidence/0",
+          "textLine": 123,
+          "value": "Documented evidence establishes the project location."
+        },
+        {
+          "id": "value-063",
+          "packPointer": "/requiredEvidence/1",
+          "textLine": 125,
+          "value": "The dated assessment record identifies the project concerned and a favourable technical conclusion."
+        },
+        {
+          "id": "value-064",
+          "packPointer": "/forbiddenInferences/0",
+          "textLine": 127,
+          "value": "Extend the declared territory from Quebec to all of Canada."
+        },
+        {
+          "id": "value-065",
+          "packPointer": "/forbiddenInferences/1",
+          "textLine": 129,
+          "value": "Treat eligibility as established from the service description alone."
+        },
+        {
+          "id": "value-066",
+          "packPointer": "/forbiddenInferences/2",
+          "textLine": 131,
+          "value": "Turn an explanation of a condition into permission to book, pay or begin work."
+        },
+        {
+          "id": "value-067",
+          "packPointer": "/applicabilityAbuseBoundaries/0",
+          "textLine": 133,
+          "value": "Do not transfer an assessment from one project to another."
+        },
+        {
+          "id": "value-068",
+          "packPointer": "/applicabilityAbuseBoundaries/1",
+          "textLine": 135,
+          "value": "Do not turn this local documentary priority into universal authority."
+        },
+        {
+          "id": "value-069",
+          "packPointer": "/includedUnits/0/unitId",
+          "textLine": 137,
+          "value": "boreal-en-activationConditions"
+        },
+        {
+          "id": "value-070",
+          "packPointer": "/includedUnits/0/sourcePath",
+          "textLine": 139,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-071",
+          "packPointer": "/includedUnits/0/canonicalSource",
+          "textLine": 141,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-072",
+          "packPointer": "/includedUnits/0/claimClass",
+          "textLine": 143,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-073",
+          "packPointer": "/includedUnits/0/authorityScope",
+          "textLine": 145,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-074",
+          "packPointer": "/includedUnits/0/digest",
+          "textLine": 147,
+          "value": "sha-256:af36d73c2f6385ea5785b7e46d0bfc93a67d8b8bbd94ce1403a2c3928a6e69d5"
+        },
+        {
+          "id": "value-075",
+          "packPointer": "/includedUnits/0/digestScope",
+          "textLine": 149,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-076",
+          "packPointer": "/includedUnits/0/canonicalization",
+          "textLine": 151,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-077",
+          "packPointer": "/includedUnits/1/unitId",
+          "textLine": 153,
+          "value": "boreal-en-nonApplicabilityConditions"
+        },
+        {
+          "id": "value-078",
+          "packPointer": "/includedUnits/1/sourcePath",
+          "textLine": 155,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-079",
+          "packPointer": "/includedUnits/1/canonicalSource",
+          "textLine": 157,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-080",
+          "packPointer": "/includedUnits/1/claimClass",
+          "textLine": 159,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-081",
+          "packPointer": "/includedUnits/1/authorityScope",
+          "textLine": 161,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-082",
+          "packPointer": "/includedUnits/1/digest",
+          "textLine": 163,
+          "value": "sha-256:98357dd894f2563a609ed0a468e99a4add19c11bc94ff3c8189bce89fa0f9446"
+        },
+        {
+          "id": "value-083",
+          "packPointer": "/includedUnits/1/digestScope",
+          "textLine": 165,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-084",
+          "packPointer": "/includedUnits/1/canonicalization",
+          "textLine": 167,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-085",
+          "packPointer": "/includedUnits/2/unitId",
+          "textLine": 169,
+          "value": "boreal-en-requiredEvidence"
+        },
+        {
+          "id": "value-086",
+          "packPointer": "/includedUnits/2/sourcePath",
+          "textLine": 171,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-087",
+          "packPointer": "/includedUnits/2/canonicalSource",
+          "textLine": 173,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-088",
+          "packPointer": "/includedUnits/2/claimClass",
+          "textLine": 175,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-089",
+          "packPointer": "/includedUnits/2/authorityScope",
+          "textLine": 177,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-090",
+          "packPointer": "/includedUnits/2/digest",
+          "textLine": 179,
+          "value": "sha-256:b5446da838d6a906c0f069a50af53a9f400f3c2e540f81cac7bbd106c9a534a3"
+        },
+        {
+          "id": "value-091",
+          "packPointer": "/includedUnits/2/digestScope",
+          "textLine": 181,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-092",
+          "packPointer": "/includedUnits/2/canonicalization",
+          "textLine": 183,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-093",
+          "packPointer": "/includedUnits/3/unitId",
+          "textLine": 185,
+          "value": "boreal-en-forbiddenInferences"
+        },
+        {
+          "id": "value-094",
+          "packPointer": "/includedUnits/3/sourcePath",
+          "textLine": 187,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-095",
+          "packPointer": "/includedUnits/3/canonicalSource",
+          "textLine": 189,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-096",
+          "packPointer": "/includedUnits/3/claimClass",
+          "textLine": 191,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-097",
+          "packPointer": "/includedUnits/3/authorityScope",
+          "textLine": 193,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-098",
+          "packPointer": "/includedUnits/3/digest",
+          "textLine": 195,
+          "value": "sha-256:ae3800093d3a25c61a1cd6530697e185f146850bf801fbbf87cad1985012413c"
+        },
+        {
+          "id": "value-099",
+          "packPointer": "/includedUnits/3/digestScope",
+          "textLine": 197,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-100",
+          "packPointer": "/includedUnits/3/canonicalization",
+          "textLine": 199,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-101",
+          "packPointer": "/includedUnits/4/unitId",
+          "textLine": 201,
+          "value": "boreal-en-applicabilityAbuseBoundaries"
+        },
+        {
+          "id": "value-102",
+          "packPointer": "/includedUnits/4/sourcePath",
+          "textLine": 203,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-103",
+          "packPointer": "/includedUnits/4/canonicalSource",
+          "textLine": 205,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-104",
+          "packPointer": "/includedUnits/4/claimClass",
+          "textLine": 207,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-105",
+          "packPointer": "/includedUnits/4/authorityScope",
+          "textLine": 209,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-106",
+          "packPointer": "/includedUnits/4/digest",
+          "textLine": 211,
+          "value": "sha-256:a3d20d606bf9cc53f45353d618011803bd184e6eeed991e506b58c6e1575d337"
+        },
+        {
+          "id": "value-107",
+          "packPointer": "/includedUnits/4/digestScope",
+          "textLine": 213,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-108",
+          "packPointer": "/includedUnits/4/canonicalization",
+          "textLine": 215,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-109",
+          "packPointer": "/includedUnits/5/unitId",
+          "textLine": 217,
+          "value": "boreal-en-weightingRules"
+        },
+        {
+          "id": "value-110",
+          "packPointer": "/includedUnits/5/sourcePath",
+          "textLine": 219,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-111",
+          "packPointer": "/includedUnits/5/canonicalSource",
+          "textLine": 221,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-112",
+          "packPointer": "/includedUnits/5/claimClass",
+          "textLine": 223,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-113",
+          "packPointer": "/includedUnits/5/authorityScope",
+          "textLine": 225,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-114",
+          "packPointer": "/includedUnits/5/digest",
+          "textLine": 227,
+          "value": "sha-256:1072341d6568e016655e3f5c0834229d4b8b172ba1068206bba1c46a08055704"
+        },
+        {
+          "id": "value-115",
+          "packPointer": "/includedUnits/5/digestScope",
+          "textLine": 229,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-116",
+          "packPointer": "/includedUnits/5/canonicalization",
+          "textLine": 231,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-117",
+          "packPointer": "/includedUnits/6/unitId",
+          "textLine": 233,
+          "value": "boreal-en-answerBoundaries"
+        },
+        {
+          "id": "value-118",
+          "packPointer": "/includedUnits/6/sourcePath",
+          "textLine": 235,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-119",
+          "packPointer": "/includedUnits/6/canonicalSource",
+          "textLine": 237,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-120",
+          "packPointer": "/includedUnits/6/claimClass",
+          "textLine": 239,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-121",
+          "packPointer": "/includedUnits/6/authorityScope",
+          "textLine": 241,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-122",
+          "packPointer": "/includedUnits/6/digest",
+          "textLine": 243,
+          "value": "sha-256:1ba67e26140cc610e033854ababdbdea9a050f6a4b41940974905e698f93bc7e"
+        },
+        {
+          "id": "value-123",
+          "packPointer": "/includedUnits/6/digestScope",
+          "textLine": 245,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-124",
+          "packPointer": "/includedUnits/6/canonicalization",
+          "textLine": 247,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-125",
+          "packPointer": "/includedArtifacts/0/path",
+          "textLine": 249,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-126",
+          "packPointer": "/includedArtifacts/0/sourcePath",
+          "textLine": 251,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-127",
+          "packPointer": "/includedArtifacts/0/digest",
+          "textLine": 253,
+          "value": "sha-256:80c662553a4a256929380c2ff0fccf8e9809d38e82625baf4b9252d8a43e2324"
+        },
+        {
+          "id": "value-128",
+          "packPointer": "/includedArtifacts/0/digestScope",
+          "textLine": 255,
+          "value": "complete_artifact"
+        },
+        {
+          "id": "value-129",
+          "packPointer": "/manifestUrl",
+          "textLine": 257,
+          "value": "https://gautierdorval.com/semantic-boundaries/en.manifest.json"
+        }
+      ]
+    },
+    "fr": {
+      "packFile": "fr.pack.json",
+      "textFile": "fr.canonical-text.md",
+      "packBytes": 10328,
+      "textBytes": 17538,
+      "packUnicodeScalars": 10170,
+      "textUnicodeScalars": 16993,
+      "packDigest": "sha-256:5332c7ba1a4df913496cb7ec45ce3ee3793234d07ca8377dec89736396153235",
+      "textDigest": "sha-256:704cd853c77aa2c8726441f38f7a25f3569bce7dbb40e4eabc449e7e96d82c4b",
+      "tokenizerMeasurement": "NOT_RUN: record model-specific token counts before any authorized experiment",
+      "rows": [
+        {
+          "id": "value-001",
+          "packPointer": "/schemaVersion",
+          "textLine": 1,
+          "value": "0.2.0-proposed"
+        },
+        {
+          "id": "value-002",
+          "packPointer": "/type",
+          "textLine": 3,
+          "value": "GovernedContextPack"
+        },
+        {
+          "id": "value-003",
+          "packPointer": "/status",
+          "textLine": 5,
+          "value": "proposed"
+        },
+        {
+          "id": "value-004",
+          "packPointer": "/packId",
+          "textLine": 7,
+          "value": "fictional-boreal-quebec-fr"
+        },
+        {
+          "id": "value-005",
+          "packPointer": "/intentToken",
+          "textLine": 9,
+          "value": "representation-gap"
+        },
+        {
+          "id": "value-006",
+          "packPointer": "/lang",
+          "textLine": 11,
+          "value": "fr"
+        },
+        {
+          "id": "value-007",
+          "packPointer": "/version",
+          "textLine": 13,
+          "value": "semantic-boundaries-1"
+        },
+        {
+          "id": "value-008",
+          "packPointer": "/compositionPolicyId",
+          "textLine": 15,
+          "value": "fictional-boreal-local-explanation-v1"
+        },
+        {
+          "id": "value-009",
+          "packPointer": "/corpusVersion",
+          "textLine": 17,
+          "value": "semantic-boundaries-1"
+        },
+        {
+          "id": "value-010",
+          "packPointer": "/selectionBoundary/agentSelectedIntent",
+          "textLine": 19,
+          "value": true
+        },
+        {
+          "id": "value-011",
+          "packPointer": "/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "textLine": 21,
+          "value": false
+        },
+        {
+          "id": "value-012",
+          "packPointer": "/selectionBoundary/runtimeComposedAtRequestTime",
+          "textLine": 23,
+          "value": false
+        },
+        {
+          "id": "value-013",
+          "packPointer": "/selectionBoundary/runtimeProducedAnswer",
+          "textLine": 25,
+          "value": false
+        },
+        {
+          "id": "value-014",
+          "packPointer": "/selectionBoundary/note",
+          "textLine": 27,
+          "value": "Le consommateur choisit representation-gap et explique les conditions du service fictif Atelier Boréal. Le Runtime transporte le pack préparé. Il ne décide ni de l’admissibilité du projet ni de l’autorisation d’une action."
+        },
+        {
+          "id": "value-015",
+          "packPointer": "/causalContexts/0/id",
+          "textLine": 29,
+          "value": "quebec-conditional-service"
+        },
+        {
+          "id": "value-016",
+          "packPointer": "/causalContexts/0/surface_topic",
+          "textLine": 31,
+          "value": "Disponibilité du service technique fictif Atelier Boréal au Québec, sous réserve d’une évaluation technique favorable."
+        },
+        {
+          "id": "value-017",
+          "packPointer": "/causalContexts/0/trigger",
+          "textLine": 33,
+          "value": "Une personne demande si le service peut prendre en charge son projet."
+        },
+        {
+          "id": "value-018",
+          "packPointer": "/causalContexts/0/symptom",
+          "textLine": 35,
+          "value": "Une formulation courte peut supprimer le territoire ou faire passer une condition pour une décision acquise."
+        },
+        {
+          "id": "value-019",
+          "packPointer": "/causalContexts/0/risk",
+          "textLine": 37,
+          "value": "Promettre une prise en charge hors Québec ou avant l’évaluation technique."
+        },
+        {
+          "id": "value-020",
+          "packPointer": "/causalContexts/0/latent_need",
+          "textLine": 39,
+          "value": "Distinguer la description générale de l’offre fictive et la conclusion propre à un projet."
+        },
+        {
+          "id": "value-021",
+          "packPointer": "/causalContexts/0/canonical_surfaces/0",
+          "textLine": 41,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-022",
+          "packPointer": "/causalContexts/0/intended_consequence",
+          "textLine": 43,
+          "value": "Expliquer la disponibilité conditionnelle en conservant le territoire, la preuve requise et les inconnues."
+        },
+        {
+          "id": "value-023",
+          "packPointer": "/causalContexts/0/forbidden_derivations/0",
+          "textLine": 45,
+          "value": "Déduire une disponibilité partout au Canada."
+        },
+        {
+          "id": "value-024",
+          "packPointer": "/causalContexts/0/forbidden_derivations/1",
+          "textLine": 47,
+          "value": "Déduire une admissibilité acquise sans évaluation favorable."
+        },
+        {
+          "id": "value-025",
+          "packPointer": "/causalContexts/0/forbidden_derivations/2",
+          "textLine": 49,
+          "value": "Déduire une permission d’engager des travaux."
+        },
+        {
+          "id": "value-026",
+          "packPointer": "/applicabilityChains/0/id",
+          "textLine": 51,
+          "value": "project-assessment-chain"
+        },
+        {
+          "id": "value-027",
+          "packPointer": "/applicabilityChains/0/linkedCausalContextId",
+          "textLine": 53,
+          "value": "quebec-conditional-service"
+        },
+        {
+          "id": "value-028",
+          "packPointer": "/applicabilityChains/0/applicableCapability/id",
+          "textLine": 55,
+          "value": "fictional-boreal-service"
+        },
+        {
+          "id": "value-029",
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "textLine": 57,
+          "value": "https://example.invalid/fr/atelier-boreal"
+        },
+        {
+          "id": "value-030",
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "textLine": 59,
+          "value": "https://example.invalid/en/boreal-workshop"
+        },
+        {
+          "id": "value-031",
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelFr",
+          "textLine": 61,
+          "value": "Service technique fictif Atelier Boréal"
+        },
+        {
+          "id": "value-032",
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelEn",
+          "textLine": 63,
+          "value": "Fictional Boreal Workshop technical service"
+        },
+        {
+          "id": "value-033",
+          "packPointer": "/applicabilityChains/0/triggerSituation",
+          "textLine": 65,
+          "value": "Demande de prise en charge d’un projet dont le lieu et l’évaluation doivent être établis."
+        },
+        {
+          "id": "value-034",
+          "packPointer": "/applicabilityChains/0/latentNeed",
+          "textLine": 67,
+          "value": "Expliquer les conditions sans promettre une prise en charge ni engager une action."
+        },
+        {
+          "id": "value-035",
+          "packPointer": "/applicabilityChains/0/activationConditions/0",
+          "textLine": 69,
+          "value": "Le projet se situe au Québec."
+        },
+        {
+          "id": "value-036",
+          "packPointer": "/applicabilityChains/0/activationConditions/1",
+          "textLine": 71,
+          "value": "Une évaluation technique écrite, favorable et propre au projet est disponible."
+        },
+        {
+          "id": "value-037",
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/0",
+          "textLine": 73,
+          "value": "Le projet se situe hors du Québec."
+        },
+        {
+          "id": "value-038",
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/1",
+          "textLine": 75,
+          "value": "L’évaluation technique propre au projet est défavorable."
+        },
+        {
+          "id": "value-039",
+          "packPointer": "/applicabilityChains/0/requiredEvidence/0",
+          "textLine": 77,
+          "value": "Un élément documenté établit le lieu du projet."
+        },
+        {
+          "id": "value-040",
+          "packPointer": "/applicabilityChains/0/requiredEvidence/1",
+          "textLine": 79,
+          "value": "Le compte rendu daté de l’évaluation indique le projet visé et une conclusion technique favorable."
+        },
+        {
+          "id": "value-041",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/0",
+          "textLine": 81,
+          "value": "Étendre le territoire déclaré du Québec à l’ensemble du Canada."
+        },
+        {
+          "id": "value-042",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/1",
+          "textLine": 83,
+          "value": "Tenir l’admissibilité pour acquise à partir de la seule description du service."
+        },
+        {
+          "id": "value-043",
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/2",
+          "textLine": 85,
+          "value": "Transformer l’explication d’une condition en autorisation de réservation, de paiement ou de travaux."
+        },
+        {
+          "id": "value-044",
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "textLine": 87,
+          "value": "Ne pas transférer l’évaluation d’un projet à un autre projet."
+        },
+        {
+          "id": "value-045",
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "textLine": 89,
+          "value": "Ne pas transformer cette priorité documentaire locale en autorité universelle."
+        },
+        {
+          "id": "value-046",
+          "packPointer": "/applicabilityChains/0/riskClass",
+          "textLine": 91,
+          "value": "fictional-conditional-eligibility"
+        },
+        {
+          "id": "value-047",
+          "packPointer": "/applicabilityChains/0/domain",
+          "textLine": 93,
+          "value": "fictional-technical-service"
+        },
+        {
+          "id": "value-048",
+          "packPointer": "/applicabilityChains/0/status",
+          "textLine": 95,
+          "value": "proposed"
+        },
+        {
+          "id": "value-049",
+          "packPointer": "/weightingRules/0/ruleId",
+          "textLine": 97,
+          "value": "local-explicit-restrictions-first"
+        },
+        {
+          "id": "value-050",
+          "packPointer": "/weightingRules/0/sourceArtifact",
+          "textLine": 99,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-051",
+          "packPointer": "/weightingRules/0/rule",
+          "textLine": 101,
+          "value": "Dans cet exercice seulement, les restrictions explicites priment sur une reformulation promotionnelle. Les deux conditions d’activation doivent être établies. Une preuve manquante laisse la conclusion indéterminée. Des éléments contradictoires exigent clarification, sans choisir automatiquement le plus favorable. Cette convention ne tranche aucun conflit de sources extérieur."
+        },
+        {
+          "id": "value-052",
+          "packPointer": "/answerBoundaries/0/ruleId",
+          "textLine": 103,
+          "value": "retain-conditions-and-uncertainty"
+        },
+        {
+          "id": "value-053",
+          "packPointer": "/answerBoundaries/0/sourceArtifact",
+          "textLine": 105,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-054",
+          "packPointer": "/answerBoundaries/0/rule",
+          "textLine": 107,
+          "value": "Conserver Québec et évaluation technique favorable dans la reformulation. Si une preuve manque ou se contredit, expliquer la condition et l’incertitude sans conclure à l’admissibilité acquise. Citer la source fictive et la chaîne project-assessment-chain."
+        },
+        {
+          "id": "value-055",
+          "packPointer": "/answerBoundaries/1/ruleId",
+          "textLine": 109,
+          "value": "explanation-is-not-permission"
+        },
+        {
+          "id": "value-056",
+          "packPointer": "/answerBoundaries/1/sourceArtifact",
+          "textLine": 111,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-057",
+          "packPointer": "/answerBoundaries/1/rule",
+          "textLine": 113,
+          "value": "Même si les éléments pédagogiques satisfont les conditions, ce pack permet seulement d’expliquer l’offre fictive. Il ne constitue aucune permission de réserver, de payer ou de lancer des travaux. Une décision et une autorisation distinctes restent nécessaires."
+        },
+        {
+          "id": "value-058",
+          "packPointer": "/activationConditions/0",
+          "textLine": 115,
+          "value": "Le projet se situe au Québec."
+        },
+        {
+          "id": "value-059",
+          "packPointer": "/activationConditions/1",
+          "textLine": 117,
+          "value": "Une évaluation technique écrite, favorable et propre au projet est disponible."
+        },
+        {
+          "id": "value-060",
+          "packPointer": "/nonApplicabilityConditions/0",
+          "textLine": 119,
+          "value": "Le projet se situe hors du Québec."
+        },
+        {
+          "id": "value-061",
+          "packPointer": "/nonApplicabilityConditions/1",
+          "textLine": 121,
+          "value": "L’évaluation technique propre au projet est défavorable."
+        },
+        {
+          "id": "value-062",
+          "packPointer": "/requiredEvidence/0",
+          "textLine": 123,
+          "value": "Un élément documenté établit le lieu du projet."
+        },
+        {
+          "id": "value-063",
+          "packPointer": "/requiredEvidence/1",
+          "textLine": 125,
+          "value": "Le compte rendu daté de l’évaluation indique le projet visé et une conclusion technique favorable."
+        },
+        {
+          "id": "value-064",
+          "packPointer": "/forbiddenInferences/0",
+          "textLine": 127,
+          "value": "Étendre le territoire déclaré du Québec à l’ensemble du Canada."
+        },
+        {
+          "id": "value-065",
+          "packPointer": "/forbiddenInferences/1",
+          "textLine": 129,
+          "value": "Tenir l’admissibilité pour acquise à partir de la seule description du service."
+        },
+        {
+          "id": "value-066",
+          "packPointer": "/forbiddenInferences/2",
+          "textLine": 131,
+          "value": "Transformer l’explication d’une condition en autorisation de réservation, de paiement ou de travaux."
+        },
+        {
+          "id": "value-067",
+          "packPointer": "/applicabilityAbuseBoundaries/0",
+          "textLine": 133,
+          "value": "Ne pas transférer l’évaluation d’un projet à un autre projet."
+        },
+        {
+          "id": "value-068",
+          "packPointer": "/applicabilityAbuseBoundaries/1",
+          "textLine": 135,
+          "value": "Ne pas transformer cette priorité documentaire locale en autorité universelle."
+        },
+        {
+          "id": "value-069",
+          "packPointer": "/includedUnits/0/unitId",
+          "textLine": 137,
+          "value": "boreal-fr-activationConditions"
+        },
+        {
+          "id": "value-070",
+          "packPointer": "/includedUnits/0/sourcePath",
+          "textLine": 139,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-071",
+          "packPointer": "/includedUnits/0/canonicalSource",
+          "textLine": 141,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-072",
+          "packPointer": "/includedUnits/0/claimClass",
+          "textLine": 143,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-073",
+          "packPointer": "/includedUnits/0/authorityScope",
+          "textLine": 145,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-074",
+          "packPointer": "/includedUnits/0/digest",
+          "textLine": 147,
+          "value": "sha-256:bb7af3328d3c25427c542d3b337fdfb307de0e21a993dd9f20e278c28078836c"
+        },
+        {
+          "id": "value-075",
+          "packPointer": "/includedUnits/0/digestScope",
+          "textLine": 149,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-076",
+          "packPointer": "/includedUnits/0/canonicalization",
+          "textLine": 151,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-077",
+          "packPointer": "/includedUnits/1/unitId",
+          "textLine": 153,
+          "value": "boreal-fr-nonApplicabilityConditions"
+        },
+        {
+          "id": "value-078",
+          "packPointer": "/includedUnits/1/sourcePath",
+          "textLine": 155,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-079",
+          "packPointer": "/includedUnits/1/canonicalSource",
+          "textLine": 157,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-080",
+          "packPointer": "/includedUnits/1/claimClass",
+          "textLine": 159,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-081",
+          "packPointer": "/includedUnits/1/authorityScope",
+          "textLine": 161,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-082",
+          "packPointer": "/includedUnits/1/digest",
+          "textLine": 163,
+          "value": "sha-256:17911b0bea80c98a3ace926d813c7112cf7531fc112e0450392f6eaf37843d0e"
+        },
+        {
+          "id": "value-083",
+          "packPointer": "/includedUnits/1/digestScope",
+          "textLine": 165,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-084",
+          "packPointer": "/includedUnits/1/canonicalization",
+          "textLine": 167,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-085",
+          "packPointer": "/includedUnits/2/unitId",
+          "textLine": 169,
+          "value": "boreal-fr-requiredEvidence"
+        },
+        {
+          "id": "value-086",
+          "packPointer": "/includedUnits/2/sourcePath",
+          "textLine": 171,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-087",
+          "packPointer": "/includedUnits/2/canonicalSource",
+          "textLine": 173,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-088",
+          "packPointer": "/includedUnits/2/claimClass",
+          "textLine": 175,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-089",
+          "packPointer": "/includedUnits/2/authorityScope",
+          "textLine": 177,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-090",
+          "packPointer": "/includedUnits/2/digest",
+          "textLine": 179,
+          "value": "sha-256:4932488cf8c2c7bddce4fe2a11d72066eeabe4df99c4cd2d8442dad194218f9e"
+        },
+        {
+          "id": "value-091",
+          "packPointer": "/includedUnits/2/digestScope",
+          "textLine": 181,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-092",
+          "packPointer": "/includedUnits/2/canonicalization",
+          "textLine": 183,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-093",
+          "packPointer": "/includedUnits/3/unitId",
+          "textLine": 185,
+          "value": "boreal-fr-forbiddenInferences"
+        },
+        {
+          "id": "value-094",
+          "packPointer": "/includedUnits/3/sourcePath",
+          "textLine": 187,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-095",
+          "packPointer": "/includedUnits/3/canonicalSource",
+          "textLine": 189,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-096",
+          "packPointer": "/includedUnits/3/claimClass",
+          "textLine": 191,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-097",
+          "packPointer": "/includedUnits/3/authorityScope",
+          "textLine": 193,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-098",
+          "packPointer": "/includedUnits/3/digest",
+          "textLine": 195,
+          "value": "sha-256:186ab2eb47187a3c9a7b79c6a9a4cbc62cc27539bdaa26b29bbcd73b25413600"
+        },
+        {
+          "id": "value-099",
+          "packPointer": "/includedUnits/3/digestScope",
+          "textLine": 197,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-100",
+          "packPointer": "/includedUnits/3/canonicalization",
+          "textLine": 199,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-101",
+          "packPointer": "/includedUnits/4/unitId",
+          "textLine": 201,
+          "value": "boreal-fr-applicabilityAbuseBoundaries"
+        },
+        {
+          "id": "value-102",
+          "packPointer": "/includedUnits/4/sourcePath",
+          "textLine": 203,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-103",
+          "packPointer": "/includedUnits/4/canonicalSource",
+          "textLine": 205,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-104",
+          "packPointer": "/includedUnits/4/claimClass",
+          "textLine": 207,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-105",
+          "packPointer": "/includedUnits/4/authorityScope",
+          "textLine": 209,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-106",
+          "packPointer": "/includedUnits/4/digest",
+          "textLine": 211,
+          "value": "sha-256:d17df962abe78b4cdf80be3dc333c442e722eb58baab94e048925b1ac0cb94e8"
+        },
+        {
+          "id": "value-107",
+          "packPointer": "/includedUnits/4/digestScope",
+          "textLine": 213,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-108",
+          "packPointer": "/includedUnits/4/canonicalization",
+          "textLine": 215,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-109",
+          "packPointer": "/includedUnits/5/unitId",
+          "textLine": 217,
+          "value": "boreal-fr-weightingRules"
+        },
+        {
+          "id": "value-110",
+          "packPointer": "/includedUnits/5/sourcePath",
+          "textLine": 219,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-111",
+          "packPointer": "/includedUnits/5/canonicalSource",
+          "textLine": 221,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-112",
+          "packPointer": "/includedUnits/5/claimClass",
+          "textLine": 223,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-113",
+          "packPointer": "/includedUnits/5/authorityScope",
+          "textLine": 225,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-114",
+          "packPointer": "/includedUnits/5/digest",
+          "textLine": 227,
+          "value": "sha-256:b40e28f52be4259111198f0e138f799a72c2bde0e8cbd4de8b361176ce2897af"
+        },
+        {
+          "id": "value-115",
+          "packPointer": "/includedUnits/5/digestScope",
+          "textLine": 229,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-116",
+          "packPointer": "/includedUnits/5/canonicalization",
+          "textLine": 231,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-117",
+          "packPointer": "/includedUnits/6/unitId",
+          "textLine": 233,
+          "value": "boreal-fr-answerBoundaries"
+        },
+        {
+          "id": "value-118",
+          "packPointer": "/includedUnits/6/sourcePath",
+          "textLine": 235,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-119",
+          "packPointer": "/includedUnits/6/canonicalSource",
+          "textLine": 237,
+          "value": "https://gautierdorval.com/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-120",
+          "packPointer": "/includedUnits/6/claimClass",
+          "textLine": 239,
+          "value": "fictional_service_boundary"
+        },
+        {
+          "id": "value-121",
+          "packPointer": "/includedUnits/6/authorityScope",
+          "textLine": 241,
+          "value": "fictional_teaching_example_only"
+        },
+        {
+          "id": "value-122",
+          "packPointer": "/includedUnits/6/digest",
+          "textLine": 243,
+          "value": "sha-256:629d447ab8964e582eebeda3def2334aee4ad0a5f0ccff83b1a63f8888988edb"
+        },
+        {
+          "id": "value-123",
+          "packPointer": "/includedUnits/6/digestScope",
+          "textLine": 245,
+          "value": "selected_unit_only"
+        },
+        {
+          "id": "value-124",
+          "packPointer": "/includedUnits/6/canonicalization",
+          "textLine": 247,
+          "value": "deterministic-json-sort-keys-v0"
+        },
+        {
+          "id": "value-125",
+          "packPointer": "/includedArtifacts/0/path",
+          "textLine": 249,
+          "value": "/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-126",
+          "packPointer": "/includedArtifacts/0/sourcePath",
+          "textLine": 251,
+          "value": "public/semantic-boundaries/content.json"
+        },
+        {
+          "id": "value-127",
+          "packPointer": "/includedArtifacts/0/digest",
+          "textLine": 253,
+          "value": "sha-256:80c662553a4a256929380c2ff0fccf8e9809d38e82625baf4b9252d8a43e2324"
+        },
+        {
+          "id": "value-128",
+          "packPointer": "/includedArtifacts/0/digestScope",
+          "textLine": 255,
+          "value": "complete_artifact"
+        },
+        {
+          "id": "value-129",
+          "packPointer": "/manifestUrl",
+          "textLine": 257,
+          "value": "https://gautierdorval.com/semantic-boundaries/fr.manifest.json"
+        }
+      ]
+    }
+  }
+}
