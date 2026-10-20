@@ -1,0 +1,2207 @@
+{
+  "schema": "runtime-pilot-prose-coverage/1",
+  "status": "PREPARED",
+  "source": "content.json",
+  "claim": "Editorial mapping of factual and normative coverage; not equality of all 129 terminal values and not proof of semantic fidelity.",
+  "editorialReview": {
+    "producer": "Codex",
+    "scope": "Bilingual source-to-prose reading; automated references do not prove paraphrase meaning",
+    "independentReview": "PENDING"
+  },
+  "locales": {
+    "fr": {
+      "file": "fr.canonical-prose.md",
+      "sha256": "617869768d396f46b1b89080b4fa5d9f6a12c7f69939df126a6fc0a2f8fde9f3",
+      "bytes": 4359,
+      "unicodeScalars": 4184,
+      "tokenCount": null,
+      "sourceUnits": [
+        {
+          "sourcePointer": "/locales/fr/selectionBoundary/agentSelectedIntent",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/selectionBoundary/runtimeComposedAtRequestTime",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/selectionBoundary/runtimeProducedAnswer",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/selectionBoundary/note",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/surface_topic",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/trigger",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/symptom",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/risk",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/latent_need",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/canonical_surfaces/0",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/intended_consequence",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/causalContexts/0/forbidden_derivations/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/linkedCausalContextId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/id",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/labelFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicableCapability/labelEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/triggerSituation",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/latentNeed",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/activationConditions/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/activationConditions/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/nonApplicabilityConditions/0",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/nonApplicabilityConditions/1",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/requiredEvidence/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/requiredEvidence/1",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/forbiddenInferences/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/riskClass",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/domain",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/fr/applicabilityChains/0/status",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/fr/weightingRules/0/ruleId",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/weightingRules/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/weightingRules/0/rule",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/0/ruleId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/0/rule",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/1/ruleId",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/1/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/fr/answerBoundaries/1/rule",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/fictional",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/identity",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/version",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/sourceNotice",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        }
+      ],
+      "packTerminalCoverage": [
+        {
+          "packPointer": "/schemaVersion",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/type",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/status",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/packId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/intentToken",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/lang",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/version",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/compositionPolicyId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/corpusVersion",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/selectionBoundary/agentSelectedIntent",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeComposedAtRequestTime",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeProducedAnswer",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/note",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/surface_topic",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/trigger",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/symptom",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/risk",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/latent_need",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/canonical_surfaces/0",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/intended_consequence",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/linkedCausalContextId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/id",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/triggerSituation",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/latentNeed",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/activationConditions/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/activationConditions/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/0",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/1",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/requiredEvidence/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/requiredEvidence/1",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/riskClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/domain",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/status",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/weightingRules/0/ruleId",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/weightingRules/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/weightingRules/0/rule",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/ruleId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/rule",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/ruleId",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/sourceArtifact",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/rule",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/activationConditions/0",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/activationConditions/1",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/nonApplicabilityConditions/0",
+          "disposition": "collapsed-projection",
+          "section": "exclusions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/nonApplicabilityConditions/1",
+          "disposition": "collapsed-projection",
+          "section": "exclusions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/requiredEvidence/0",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/requiredEvidence/1",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/0",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/1",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/2",
+          "disposition": "collapsed-projection",
+          "section": "actions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/applicabilityAbuseBoundaries/0",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/applicabilityAbuseBoundaries/1",
+          "disposition": "collapsed-projection",
+          "section": "priority",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/includedUnits/0/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/path",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/manifestUrl",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        }
+      ]
+    },
+    "en": {
+      "file": "en.canonical-prose.md",
+      "sha256": "8cf83c941cd2b6821482a1120e1f7e5673a409a91ae8377d0f0315e494ec13aa",
+      "bytes": 3909,
+      "unicodeScalars": 3904,
+      "tokenCount": null,
+      "sourceUnits": [
+        {
+          "sourcePointer": "/locales/en/selectionBoundary/agentSelectedIntent",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/selectionBoundary/runtimeComposedAtRequestTime",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/selectionBoundary/runtimeProducedAnswer",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/selectionBoundary/note",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/surface_topic",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/trigger",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/symptom",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/risk",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/latent_need",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/canonical_surfaces/0",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/intended_consequence",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/causalContexts/0/forbidden_derivations/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/linkedCausalContextId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/id",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/labelFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicableCapability/labelEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/triggerSituation",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/latentNeed",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/activationConditions/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/activationConditions/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/nonApplicabilityConditions/0",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/nonApplicabilityConditions/1",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/requiredEvidence/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/requiredEvidence/1",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/forbiddenInferences/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/riskClass",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/domain",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/en/applicabilityChains/0/status",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Technical classification/status label; proposed fictional scope retained in identity, exact label not transmitted."
+        },
+        {
+          "sourcePointer": "/locales/en/weightingRules/0/ruleId",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/weightingRules/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/weightingRules/0/rule",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/0/ruleId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/0/rule",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/1/ruleId",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/1/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/locales/en/answerBoundaries/1/rule",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Natural-language grouping; identifiers and rules retain their exercise scope."
+        },
+        {
+          "sourcePointer": "/fictional",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/identity",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/version",
+          "disposition": "omitted",
+          "section": null,
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        },
+        {
+          "sourcePointer": "/sourceNotice",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Fictional scope retained; exact dataset identity/version belongs to the recorded input manifest."
+        }
+      ],
+      "packTerminalCoverage": [
+        {
+          "packPointer": "/schemaVersion",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/type",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/status",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/packId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/intentToken",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/lang",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/version",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/compositionPolicyId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/corpusVersion",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/selectionBoundary/agentSelectedIntent",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeSelectedIntentFromFreeText",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeComposedAtRequestTime",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/runtimeProducedAnswer",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/selectionBoundary/note",
+          "disposition": "covered",
+          "section": "consumer",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/surface_topic",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/trigger",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/symptom",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/risk",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/latent_need",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/canonical_surfaces/0",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/intended_consequence",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/causalContexts/0/forbidden_derivations/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/id",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/linkedCausalContextId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/id",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/canonicalServiceUrlEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelFr",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicableCapability/labelEn",
+          "disposition": "covered",
+          "section": "identity",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/triggerSituation",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/latentNeed",
+          "disposition": "covered",
+          "section": "scope",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/activationConditions/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/activationConditions/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/0",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/nonApplicabilityConditions/1",
+          "disposition": "covered",
+          "section": "exclusions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/requiredEvidence/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/requiredEvidence/1",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/0",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/1",
+          "disposition": "covered",
+          "section": "conditions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/forbiddenInferences/2",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/0",
+          "disposition": "covered",
+          "section": "evidence",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/applicabilityAbuseBoundaries/1",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/riskClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/domain",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/applicabilityChains/0/status",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/weightingRules/0/ruleId",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/weightingRules/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/weightingRules/0/rule",
+          "disposition": "covered",
+          "section": "priority",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/ruleId",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/sourceArtifact",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/0/rule",
+          "disposition": "covered",
+          "section": "references",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/ruleId",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/sourceArtifact",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/answerBoundaries/1/rule",
+          "disposition": "covered",
+          "section": "actions",
+          "reason": "Mapped to natural prose; wording and length differ."
+        },
+        {
+          "packPointer": "/activationConditions/0",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/activationConditions/1",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/nonApplicabilityConditions/0",
+          "disposition": "collapsed-projection",
+          "section": "exclusions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/nonApplicabilityConditions/1",
+          "disposition": "collapsed-projection",
+          "section": "exclusions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/requiredEvidence/0",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/requiredEvidence/1",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/0",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/1",
+          "disposition": "collapsed-projection",
+          "section": "conditions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/forbiddenInferences/2",
+          "disposition": "collapsed-projection",
+          "section": "actions",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/applicabilityAbuseBoundaries/0",
+          "disposition": "collapsed-projection",
+          "section": "evidence",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/applicabilityAbuseBoundaries/1",
+          "disposition": "collapsed-projection",
+          "section": "priority",
+          "reason": "Duplicate of applicability-chain values, stated once."
+        },
+        {
+          "packPointer": "/includedUnits/0/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/0/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/1/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/2/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/3/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/4/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/5/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/unitId",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/canonicalSource",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/claimClass",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/authorityScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedUnits/6/canonicalization",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/path",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/sourcePath",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/digest",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/includedArtifacts/0/digestScope",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        },
+        {
+          "packPointer": "/manifestUrl",
+          "disposition": "omitted-technical",
+          "section": null,
+          "reason": "Exact format/version, projection, unit digest/profile, archival locator or manifest metadata omitted; no byte-verification equivalence claimed."
+        }
+      ]
+    }
+  }
+}

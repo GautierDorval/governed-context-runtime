@@ -51,3 +51,5 @@ All three records declare `rawResponsesPublished: false` and `modelInvocation: f
 The negative tests cover missing members, unknown/mixed variants, malformed digests, invalid counts and dates, impossible or misplaced intervals, submillisecond reversals, inconsistent totals, request order, current-root disagreement and declared-success contradictions. Historical SHA-256 guards additionally prevent the test fixtures from being silently rewritten to satisfy the new contracts.
 
 [Evidence and provenance](../evidence/README.md) · [Hosted diagnostic dossier, NOT_RUN](hosted-diagnostics.md)
+
+[Français](fr/observations.md) · [October 20 local qualification, separate record](en/qualification.md)

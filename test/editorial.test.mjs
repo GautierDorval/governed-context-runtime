@@ -112,12 +112,13 @@ test('entry documents bind the hosted service, reference and illustrative contex
 });
 
 test('entry links and anchors resolve from each containing document', async () => {
-  const paths = ['README.md', 'docs/en/README.md', 'docs/fr/README.md', 'evidence/README.md'];
+  const policy = JSON.parse(await read('package-policy.json'));
+  const paths = policy.inventory.filter((/** @type {string} */ path) => path.endsWith('.md'));
   for (const path of paths) {
-    const body = await read(path);
+    const body = (await read(path)).replace(/```[\s\S]*?```/g, '').replace(/`[^`]*`/g, '');
     for (const match of body.matchAll(/\]\(([^)\s]+)\)/g)) {
       const href = match[1];
-      if (/^https?:/.test(href)) continue;
+      if (/^[a-z][a-z0-9+.-]*:/i.test(href)) continue;
       const [relative, fragment] = href.split('#');
       const target = new URL(relative, new URL('../' + path, import.meta.url));
       const targetText = await readFile(target, 'utf8');
@@ -128,6 +129,7 @@ test('entry links and anchors resolve from each containing document', async () =
             .replace(/[^\p{L}\p{N}\s_-]/gu, '')
             .replace(/ /g, '-'),
         );
+        anchors.push(...[...targetText.matchAll(/<a id="([^"]+)"><\/a>/g)].map(match => match[1]));
         assert(anchors.includes(decodeURIComponent(fragment)), path + ': ' + href);
       }
     }

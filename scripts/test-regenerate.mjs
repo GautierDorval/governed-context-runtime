@@ -334,3 +334,40 @@ for (const version of ['22.22.0', '24.16.999', '24.17.0', '24.18.0', '25.0.0']) 
     } else assert.doesNotThrow(run);
   });
 }
+
+for (const variant of ['docs', 'cff', 'lock-root', 'package-and-lock']) {
+  test('edition consistency refuses regenerated drift: ' + variant, async t =>
+    withCopy(t, async dir => {
+      if (variant === 'cff') {
+        await edit(dir, 'CITATION.cff', text => text.replace(/^version: .+$/m, 'version: 9.9.9-proposed'));
+        const raw = await readFile(join(dir, 'CITATION.cff'));
+        await edit(dir, 'package-policy.json', text => {
+          const value = JSON.parse(text);
+          value.declarationDigests['CITATION.cff'] = hash(raw);
+          return JSON.stringify(value, null, 2) + '\n';
+        });
+      } else {
+        const paths =
+          variant === 'docs'
+            ? ['docs/source.json']
+            : variant === 'lock-root'
+              ? ['package-lock.json']
+              : ['package.json', 'package-lock.json'];
+        for (const path of paths)
+          await edit(dir, path, text => {
+            const value = JSON.parse(text);
+            if (variant === 'docs') value.documentVersion = '9.9.9-proposed';
+            else if (variant === 'lock-root') value.packages[''].version = '9.9.9-proposed';
+            else {
+              value.version = '9.9.9-proposed';
+              if (value.packages) value.packages[''].version = value.version;
+            }
+            return JSON.stringify(value, null, 2) + '\n';
+          });
+      }
+      await write(dir);
+      assert.deepEqual(await check(dir), [], 'digests are current; the rejection must concern edition identity');
+      assert.match(checker(dir), /^FAIL .*edition:/, 'a refreshed manifest must not hide mixed edition metadata');
+    }),
+  );
+}

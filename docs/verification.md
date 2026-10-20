@@ -119,7 +119,7 @@ a check pass. No migration, root admission or production-profile change is perfo
 by this reference update. The outer MCP artifact encoding is a separate boundary
 and keeps its existing canonical-base64 check.
 
-The [P3 mandate](archive-profile-p3-2026-10-20.md) records the authorized scope.
+The [P3 mandate](../records/archive-profile-p3-2026-10-20.md) records the authorized scope.
 Reproduce its focused controls with:
 
 ```powershell

@@ -121,7 +121,9 @@ for (const path of licences.reserved) assert(expected.includes(path), 'reserved 
 const manifest = parse(await readFile(resolve(root, 'package-manifest.json')));
 exact(manifest, 'schema,documentVersion,fictionalContextRoot,publicEvidencePublicationId,files');
 assert.equal(manifest.schema, 'runtime-public-package/0.2.0-proposed');
-assert.equal(manifest.documentVersion, '0.2.0-proposed');
+const REFERENCE_EDITION = '0.2.1-proposed';
+assert.equal(manifest.documentVersion, REFERENCE_EDITION, 'edition: manifest');
+assert.equal(runtimePackage.version, REFERENCE_EDITION, 'edition: package');
 assert.deepEqual(
   manifest.files.map(item => item.path).sort(),
   expected.filter(path => path !== 'package-manifest.json'),
@@ -206,6 +208,7 @@ assert.equal(/** @type {PackageJson} */ (parse(file('package.json'))).license, S
   for (const [name, version] of Object.entries(pkg.devDependencies))
     assert.match(version, /^\d+\.\d+\.\d+$/, 'exact development dependency: ' + name);
   assert.deepEqual([lock.name, lock.version, lock.lockfileVersion], [pkg.name, pkg.version, 3]);
+  assert.equal(lock.packages[''].version, pkg.version, 'edition: lockfile root package');
   assert.deepEqual(lock.packages[''].devDependencies, pkg.devDependencies);
   assert(!Object.hasOwn(lock.packages[''], 'dependencies'), 'no runtime dependency in the lockfile');
   for (const [path, entry] of Object.entries(lock.packages)) {
@@ -234,6 +237,15 @@ assert(
 
 /** @type {DocumentationSource} */
 const docs = parse(file('docs/source.json'));
+assert.equal(docs.documentVersion, REFERENCE_EDITION, 'edition: documentation source');
+// This is the repository CFF profile, not a general YAML or CFF validator.
+const citationVersions = [
+  ...file('CITATION.cff')
+    .toString()
+    .matchAll(/^version: ([^\r\n]+)$/gm),
+];
+assert.equal(citationVersions.length, 1, 'edition: exactly one plain CFF version');
+assert.equal(citationVersions[0][1], REFERENCE_EDITION, 'edition: CFF');
 exact(docs, 'schema,documentVersion,project,author,authorUrl,repository,publicSpecRepositoryPath,en,fr');
 assert.equal(
   docs.publicSpecRepositoryPath,

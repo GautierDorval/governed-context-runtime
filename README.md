@@ -19,6 +19,10 @@ By [Gautier Dorval](https://gautierdorval.com/). [English guide](docs/en/README.
 | Retrieve a declared context | [Hosted instance guide](docs/en/instance.md) | The gautierdorval.com corpus; client compatibility is documented separately. |
 | Inspect and verify context artifacts | [Verification guide](docs/verification.md) | Complete snapshot verification under a separately selected trust reference. |
 | Learn the verification path offline | [Local demonstration](#try-it-locally) | Fictional data and test keys; no model invocation. |
+| Inspect a complete pack | [Consumer kit](docs/en/reproduction.md) | Admission, inspection and permission remain distinct. |
+| Understand semantic boundaries | [Example and glossary](docs/en/pack-semantics.md) | Fictional exercise, no observed model answer. |
+| Examine local evidence | [Qualification](docs/en/qualification.md) | Retained assets and local adapter, no current hosted diagnosis. |
+| Prepare a comparison | [Four-condition pilot](docs/en/model-comparison.md) | 560 planned responses per configuration, **NOT_RUN**. |
 
 The hosted service and this repository have separate publication lifecycles. This repository does not bundle a generic deployment or a production signing infrastructure.
 
@@ -68,15 +72,17 @@ Use a static canonical page for a simple definition or an ordinary editorial cit
 
 The [October 19, 2026 producer observation](evidence/instance-2026-10-19.json) records the deployed service checks: 564 root-file responses, six MCP exchanges with five direct comparisons, and a separate Runtime smoke over 156 indexed resources. The [October 14](evidence/instance-2026-10-14.json) and [October 12](evidence/instance-2026-10-12.json) observations remain historical. These service observations are separate from the [synthetic publication](evidence/publication.json) and fictional demo. They do not establish continuous availability, spontaneous adoption or model-fidelity effects. The [tested-client matrix](docs/en/instance.md#tested-clients) states the clients and versions actually examined.
 
-Reference edition 0.2.0-proposed. The hosted instance is available separately and has its own publication lifecycle. This repository contains proposed contracts, offline reference code and fictional examples; it does not bundle the hosted service, its production corpus or a turnkey deployment for other domains.
-
-## Licence
-
-Code and configuration are available under the [Apache License 2.0](LICENSE). Documentation, diagrams and evidence are available under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). The project identity visuals are not licensed for reuse. See [rights and licences](NOTICE.md) and the per-file [rights register](rights.json). Participation follows the [code of conduct](CODE_OF_CONDUCT.md).
+Reference edition 0.2.1-proposed is prepared as a candidate, not yet a tagged release. Contracts remain proposed; the hosted service follows a separate publication lifecycle. Cite the exact executed commit until this edition is published. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
 
 ## Offline consumer and interpretation boundaries
 
 Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/reproduction.md),
 [English pack semantics](docs/en/pack-semantics.md) or [French semantics](docs/fr/pack-semantics.md).
-The [prepared comparison protocol](docs/model-comparison.md) has not run a model.
+The [English pilot](docs/en/model-comparison.md) and [French pilot](docs/model-comparison.md) prepare four conditions and 560 responses per future configuration: **NOT_RUN**.
 The [observation contracts](docs/observations.md) validate dated declarations, not production.
+
+[Local qualification](docs/en/qualification.md) · [Qualification française](docs/fr/qualification.md) · [Candidate edition notes](docs/release-0.2.1-proposed.md)
+
+## Licence
+
+Code and configuration are available under the [Apache License 2.0](LICENSE). Documentation, diagrams and evidence are available under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). The project identity visuals are not licensed for reuse. See [rights and licences](NOTICE.md) and the per-file [rights register](rights.json). Participation follows the [code of conduct](CODE_OF_CONDUCT.md).

@@ -1,12 +1,12 @@
 # Hosted diagnostic dossier
 
-Status: **NOT_RUN** for hosted behavior and for replay against the production adapter. This dossier defines the missing evidence and isolated cases; it does not diagnose the current service. No owner-service request, private implementation access or simulated production server is part of this work.
+Status: **NOT_RUN** for a new hosted diagnostic. The [October 20 offline qualification](en/qualification.md) separately passes retained-asset comparisons and a local replay of the real adapter implementation. That replay uses a closed local resolver, with no owner-service request or production-server claim.
 
 ## Available evidence and limits
 
 The [October 12, 14 and 19 summaries](../evidence/README.md) provide dated producer statements, hashes, counts and scopes. They do not publish the response bodies or a complete lifecycle/discovery transcript. The [historical client table](en/instance.md#tested-clients) records one loopback `initialize` request labelled `2025-06-18`, with HTTP 404 and JSON-RPC `-32601`. Its complete headers and body are not published. Keep that result as recorded; do not replace it with the normative outcome of a newly constructed request.
 
-The public package does not contain the hosted adapter implementation. The shapes needed for a faithful lifecycle response comparator are not available as raw local captures. Therefore this dossier does not invent a lifecycle wire schema, create a fake service, or present test fixtures as a reproduction of production behavior. The [observation tests](observations.md) validate summaries only.
+The public package does not contain the hosted adapter implementation. The October 20 qualification reads retained producer health and lifecycle assets and compares their actual shapes. They are not timed captures of the currently hosted responses. Its seven controls distinguish stable local coherence, historical identity, contradictory inventories and indeterminate transitions. The [observation tests](observations.md) still validate historical summaries only.
 
 ## Isolated MCP request cases
 
@@ -58,7 +58,7 @@ For any `initialize` rejection by a modern-only server, also record whether the 
 
 ## Lifecycle comparison cases
 
-All cases below remain **NOT_RUN**. They describe the desired comparison once the exact response schemas and captures exist; they are not claims about the hosted implementation.
+All hosted cases below remain **NOT_RUN**. The pure comparator has now been exercised on retained local assets and controlled variants, including the transition ambiguity. A stable local asset revision is evidence for that local comparison only; it cannot replace a hosted capture window.
 
 | Case | Required captured condition | Bounded expected diagnostic |
 |---|---|---|
@@ -81,6 +81,8 @@ For each isolated case or lifecycle sequence, a future authorized run must retai
 5. Explicit relation between current discovery, `/v0/lifecycle`, current snapshot and each immutable historical resource. Include actual response shapes rather than reconstructing bodies from their hashes.
 6. Intended expected result, actual result, unsupported-version list when applicable, diagnostic and uncertainty for each case. Keep a source declaration distinct from independently verified deployment provenance.
 
-With these inputs, a later mandate can implement a pure comparator against the real local shapes and replay known exchanges. It must distinguish local synthetic controls, local implementation replay and hosted observations. The missing data leaves the two reports unresolved; it neither proves nor disproves the hosted service's conformance, availability or value.
+With these inputs, a later mandate can apply the existing pure comparator to real timed captures and replay known exchanges. It must distinguish local synthetic controls, local implementation replay and hosted observations. The missing hosted data leaves the remote diagnostic unresolved; it neither proves nor disproves the hosted service's conformance, availability or value.
 
 [Observation contracts](observations.md) · [Evidence lineage](../evidence/README.md)
+
+[Français](fr/hosted-diagnostics.md) · [Local qualification](en/qualification.md)

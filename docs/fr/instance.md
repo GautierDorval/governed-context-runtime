@@ -22,9 +22,9 @@ Chaque identifiant désigne une chose différente ; une concordance de numéros
 
 | Identifiant | Ce qu’il désigne |
 |---|---|
-| `0.2.0-proposed` dans ce dépôt | Les contrats, le vérificateur et les exemples de référence. Les éditions datées (2026-10-12, 2026-10-13, 2026-10-14, 2026-10-17, 2026-10-18, 2026-10-19) ajoutent documentation, exemples, tests et outils d’entretien sans modifier les octets existants des contrats, du vérificateur ni des exemples. |
+| Candidate `0.2.1-proposed` | Vérificateur et documentation courants ; citer le commit exécuté. P3 restreint l’acceptation des archives. Les schémas, recettes et octets des exemples historiques restent inchangés ; l’ancienne étiquette est conservée. |
 | `runtimeVersion` `0.3.0-proposed` | Le logiciel du Runtime hébergé. |
-| `schemaVersion` `0.1.0-proposed` | Les contrats proposés de l’instantané, de l’inventaire, des archives et des erreurs. |
+| `schemaVersion` | Propre à chaque objet : les profils historiques de snapshot et d’archive restent `0.1.0-proposed`. `0.2.0` a été lu seulement sur l’actif `GovernedContextRuntimeHealth` conservé, dans la [qualification locale](qualification.md). |
 | Révision MCP `2026-07-28` | Le profil de protocole servi par l’adaptateur MCP. |
 | `corpusVersion` | Une étiquette de famille. Les instantanés successifs d’une même lignée de corpus gardent la même étiquette, qui n’identifie donc pas le contenu. |
 | Racine de corpus `sha-256:…` | Un instantané exact. C’est le seul identifiant du contenu du corpus. |
@@ -68,6 +68,15 @@ Pour apprendre le parcours complet avec un jeu d’essai fictif et toutes ses ar
 npm run demo
 npm test
 ```
+
+
+## Qualification du lecteur courant et appartenance du pack
+
+La [qualification hors ligne du 20 octobre](qualification.md) couvre l’adaptateur conservé avec une liaison de résolution locale : découverte et 12 sélections de packs courants, sans requête hébergée. Les tests JSON/SSE synthétiques restent distincts. Le profil moderne exige `resultType: complete` ; l’absence de ce champ dans un ancien profil ne déclenche aucun repli, et `input_required` ne provoque aucun échange supplémentaire. Les limites de lecture de 1 048 576 octets et 10 000 ms ne prouvent ni taille ni latence du service.
+
+L’extrait ci-dessus établit seulement l’empreinte déclarée dans l’enveloppe. `inspectVerifiedPack` ne reçoit ni ne rattache automatiquement ces octets extraits. Pour les lier, utiliser `bindMcpPack(reply, {snapshotBytes, getArchive, expectedRoot, intentToken, lang, version, expectedIntents, artifactByteProfile: 'canonical-json'})` de `scripts/qualify-offline.mjs`, avec toutes les archives locales et une racine fournie séparément. Ce profil explicite correspond au contrat canonique du producteur conservé. Il compare les octets reçus originaux à la représentation canonique et au `payloadDigest` sélectionné. Le fichier source possède un `payloadFileDigest` distinct ; le rattachement canonique ne prouve pas une égalité avec ces octets de fichier. Le profil par défaut `repository-bytes` convient seulement à un artefact représentant réellement ces octets. Aucun repli de profil n’a lieu.
+
+Confiance de signature, permission, déploiement courant et fidélité du modèle restent distincts. Le dossier de diagnostic nomme les captures hébergées manquantes ; cette qualification locale ne remplace pas les observations historiques des clients.
 
 ## 3. Lire le même pack par MCP
 
@@ -134,7 +143,7 @@ Les événements SSE complets suivent la [grammaire SSE](https://html.spec.whatw
 
 Une erreur JSON-RPC reste `rpc-error`, même sous HTTP 200. Le [résultat d’outil](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) `isError: true` reste `tool-error`. L’extracteur exige `resultType: complete` et un unique bloc texte contenant l’enveloppe Runtime ; les résultats nécessitant une autre étape, les types inconnus et les liens de ressources restent sans artefact utilisable. Aucun lien reçu n’est suivi. Ce lecteur fini n’est pas un SDK MCP universel : négociation de version, ancien `initialize`, sessions, abonnements et échanges supplémentaires sont hors périmètre.
 
-L’enveloppe de transport est lue comme JSON ordinaire, sans imposer le profil numérique des artefacts Runtime. `contentText` conserve le texte reçu et `artifactBytes` conserve les octets décodés de `contentBase64`, y compris BOM, espaces et fins de ligne. La comparaison ci-dessus vérifie seulement leur empreinte déclarée. Transmettre ces mêmes octets au vérificateur, sans nouvelle sérialisation JSON, puis vérifier l’instantané complet sous une racine fournie séparément. Aucune réponse de modèle n’est produite.
+L’enveloppe de transport est lue comme JSON ordinaire, sans imposer le profil numérique des artefacts Runtime. `contentText` conserve le texte reçu et `artifactBytes` conserve les octets décodés de `contentBase64`, y compris BOM, espaces et fins de ligne. La comparaison ci-dessus vérifie seulement leur empreinte déclarée. Conserver ces octets sans nouvelle sérialisation JSON, puis les rattacher à la sélection exacte avec `bindMcpPack` et le profil explicite décrit plus haut. Le contrôle de l’instantané complet exige une racine fournie séparément. Aucune réponse de modèle n’est produite.
 
 Les huit outils historiquement recensés sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Leurs arguments sont fermés : identifiants déclarés, langues FR/EN, versions et empreintes enregistrées. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 KiB ; les appels de navigateur sont limités aux origines autorisées du site et du Runtime.
 
