@@ -145,7 +145,7 @@ Résultats du **14 octobre 2026**, sur des services en boucle locale : le réso
 | Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
 |---|---|---|---|---|
 | Script HTTP | PowerShell 7.6.6 `Invoke-RestMethod`, extrait de la section 1 (guides EN et FR) | REST | Registre, pack français et manifeste | Réussi |
-| Script HTTP | PowerShell 7.6.6, extrait MCP de la section 3 (guides EN et FR) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
+| Script HTTP | PowerShell 7.6.6, extrait MCP historique capturé le 14 octobre (remplacé dans la section 3) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
 | Contrôles HTTP | Node.js 24.17.0 et Python 3.14.6 | REST | 1 781 contrôles chacun : instantané, archives, packs, manifestes, empreintes | Réussi |
 | SDK MCP | `@modelcontextprotocol/client` 2.3.1 sur Node.js 24.17.0 | Streamable HTTP, révision épinglée à `2026-07-28` | Découverte et lecture des ressources, vérification complète de l’instantané, `tools/call`, ressources historiques | Réussi |
 | Client MCP indépendant | Bibliothèque standard de Python 3.14.6 | POST JSON-RPC, `2026-07-28` | Mêmes étapes, écrites séparément | Réussi |

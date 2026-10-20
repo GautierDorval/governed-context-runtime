@@ -17,4 +17,5 @@ export interface InspectedPack {
   verification: Record<string, any> & {corpusRootDigest: string; snapshotChecks: number; signatureTrust: string; usePermission: string};
 }
 export function inspectVerifiedPack(input: PackSelection): Promise<InspectedPack>;
+/** Domain refusals return REFUSED. Malformed invocation types, non-cloneable inputs and callback failures reject the promise; no callback runs for input failures. */
 export function consumeVerifiedPack(input: Omit<PackSelection, 'expectedRoot'> & {policy: any; receipt: unknown; purpose?: string}, consume: (pack: InspectedPack) => unknown | Promise<unknown>): Promise<{status: string; delivered: boolean; stage?: string; reason?: string; decision: any; result?: InspectedPack; consumption?: unknown}>;

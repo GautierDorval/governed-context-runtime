@@ -78,3 +78,12 @@ introduced here. Future work requires separate scope: generic instance profiles,
 published second-language consumer, additional MCP clients, Node 22 qualification,
 stable rule identity separate from dated policy evaluation, production trust lifecycle,
 external time/provenance, multidomain deployment, model evaluation and standards work.
+
+
+Final-review corrections for the prepared edition: nominal reproduction commands
+now select the historical `fictional-1` pack version and are executed from both
+guides by the CLI tests. The pack wrapper captures its receipt before asynchronous
+policy checks. Invocation-error behavior and exact nominal case/language binding
+are explicit. The dated client table labels the replaced October 14 MCP snippet.
+Closing legacy archive members and canonical base64 padding remains a separately
+reviewed compatibility change; it is not part of B01's JSON-byte guarantee.

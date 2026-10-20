@@ -3,13 +3,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
+import {readFile} from 'node:fs/promises';
 const root=fileURLToPath(new URL('../../../',import.meta.url));
 const run=args=>spawnSync(process.execPath,['spec/examples/reproduction/run.mjs',...args],{cwd:root,encoding:'utf8',timeout:30000,maxBuffer:8*1024*1024});
 const policy=['--policy','spec/examples/reproduction/policy.json'];
 test('public CLI help, explicit policy and refused exit are observable',()=>{
  const help=run(['--help']);assert.equal(help.status,0);assert.match(help.stdout,/--policy/);
  const missing=run([]);assert.equal(missing.status,2);assert.equal(JSON.parse(missing.stderr).reason,'explicit_policy_required');
- const wrong=run([...policy,'--lang','de']);assert.equal(wrong.status,2);assert.equal(JSON.parse(wrong.stdout).case.consumerCalls,0);
+ const wrong=run([...policy,'--lang','de']);assert.equal(wrong.status,2);assert.equal(JSON.parse(wrong.stderr).reason,'case_language_mismatch');assert.equal(JSON.parse(wrong.stderr).delivered,false);
+ const conflict=run([...policy,'--case','nominal-en','--lang','fr']);assert.equal(conflict.status,2);assert.equal(JSON.parse(conflict.stderr).reason,'case_language_mismatch');
 });
 test('public CLI suite returns every fixed expectation and zero rejected handoffs',()=>{
  const r=run([...policy,'--suite']);assert.equal(r.error,undefined);assert.equal(r.status,0,r.stderr);
@@ -19,4 +21,14 @@ test('public CLI suite returns every fixed expectation and zero rejected handoff
  const en=report.cases.find(c=>c.id==='nominal-en'),fr=report.cases.find(c=>c.id==='nominal-fr');
  assert.equal(en.content.pack.lang,'en');assert.equal(fr.content.pack.lang,'fr');
  assert.equal(en.content.verification.usePermission,'inspect-context');assert.equal(en.consumerCalls,1);
+});
+
+for(const lang of ['en','fr'])test('documented nominal command succeeds: '+lang,async()=>{
+ const guide=await readFile(new URL('../../../docs/'+lang+'/reproduction.md',import.meta.url),'utf8');
+ const lines=guide.split(/\r?\n/).filter(line=>line.startsWith('node spec/examples/reproduction/run.mjs ')&&line.includes('--lang '));
+ assert.equal(lines.length,1,'one nominal command in the guide');
+ const args=lines[0].split(/\s+/).slice(2),r=run(args);assert.equal(r.status,0,r.stderr+' '+r.stdout);
+ const report=JSON.parse(r.stdout);assert.equal(report.case.status,'ACCEPTED_FOR_LOCAL_USE');assert.equal(report.case.consumerCalls,1);
+ assert.equal(report.case.content.pack.lang,lang);assert.equal(report.case.content.pack.version,args[args.indexOf('--version')+1]);
+ assert.equal(report.case.id,'nominal-'+lang);
 });

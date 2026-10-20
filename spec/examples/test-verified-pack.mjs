@@ -66,3 +66,18 @@ test('policy capture, next-call revocation and decision replay remain separate',
  const replay=await consumeVerifiedPack({...args,policy:b.policy,receipt:prior},()=>{calls++;});
  assert.equal(replay.delivered,false);assert.equal(calls,1);
 });
+
+test('receipt bytes are captured before the first asynchronous policy check',async()=>{
+ const receipt=structuredClone(b.receipt);let calls=0;
+ const pending=consumeVerifiedPack({...input(),policy:b.policy,receipt},()=>{calls++;});
+ receipt.detachedJws='changed-after-call';receipt.payloadBase64='changed-after-call';
+ const result=await pending;assert.equal(result.delivered,true);assert.equal(calls,1);
+ const next=await consumeVerifiedPack({...input(),policy:b.policy,receipt},()=>{calls++;});
+ assert.equal(next.delivered,false);assert.equal(calls,1);
+});
+test('malformed invocation and non-cloneable inputs reject without calling consumer',async()=>{
+ let calls=0;
+ await assert.rejects(()=>consumeVerifiedPack({...input(),policy:()=>{},receipt:b.receipt},()=>{calls++;}),{name:'DataCloneError'});
+ await assert.rejects(()=>consumeVerifiedPack({...input(),snapshotBytes:'not bytes',policy:b.policy,receipt:b.receipt},()=>{calls++;}),/bytes_required/);
+ assert.equal(calls,0);
+});

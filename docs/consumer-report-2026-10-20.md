@@ -13,7 +13,7 @@ intent_commit: 97a13f4
 reference_base: 39778036460b3a24a9897a46ee29ca15513c2fe2
 initial_head: f1d8db4ab4c086e7c512aa7ccb63715a2cd62dfa
 branch: docs/claude-handoff-20261019
-independent_audit: pending-final-candidate
+independent_audit: initial-review-corrected-awaiting-final-review
 external_reproduction: NOT_RUN
 model_experiments: NOT_RUN
 hosted_diagnostics: NOT_RUN
@@ -26,13 +26,14 @@ This candidate implements the public, offline B00-B10 and GCR-C00-C06 mandate.
 It closes two reproduced reference defects, supplies one complete-pack consumer,
 and prepares a reproducible fictional exercise. It makes no new production claim.
 The [intention and reconciliation](consumer-mandate-2026-10-20.md) precede code
-changes. This report describes the locally qualified candidate, before its final
-independent audit. The exact containing commit, remote checks and audit verdict
+changes. This report describes the corrected, locally qualified candidate after the first
+independent audit of `b106562bb0d87187d21a5a0deb220731427a9260`. The exact containing commit, remote checks and audit verdict
 are attached separately to draft PR #6; they cannot be self-embedded here.
 
 Codex prepared and implemented the changes with AI assistance. Automated checks
 and visual inspection by Codex are described below. No human review is claimed.
-Claude is assigned the final independent code audit, not Git authorship.
+Claude performed that independent code audit; the final correction review is
+attached separately to the exact candidate. No Git authorship is attributed to Claude.
 
 ## Scope and procedures
 
@@ -63,13 +64,13 @@ were available; no dependency or lockfile change was needed.
 | B02 | Corrected | Immutable `V0_RECORD_FIELDS`, shared `unitDigestCoverage`, unit and pack inspectors; `test-verified-unit.mjs` | Full snapshot membership and legacy unit digest remain different scopes |
 | B03 | Completed locally | `spec/examples/read-mcp-response.mjs`, `test/mcp-response.test.mjs`, paired instance guides; 20 tests exercise JSON/SSE, fragmentation, identity, errors, limits and actual guide code with injected fetch | No new hosted compatibility observation |
 | B04 | Completed | `docs/{en,fr}/pack-semantics.md`, `spec/examples/semantic-boundaries/`, 11 behavioral and 11 schema tests | Conditions are declarations; factual satisfaction and model adherence are not established |
-| B05 / C02-C03 | Completed | `spec/examples/verified-pack.mjs`, 21 tests; full verification, exact selection, private archive copies and useful result; shared by both examples | Inspection alone has no signature or permission; signed path evaluates both separately |
+| B05 / C02-C03 | Completed | `spec/examples/verified-pack.mjs`, 23 tests; full verification, exact selection, private archive copies and useful result; shared by both examples | Inspection alone has no signature or permission; signed path evaluates both separately |
 | B06 | Completed | `spec/evidence/`, `test/observation-schemas.test.mjs`, 14 cases; `docs/observations.md` | Summary consistency is not reproduction of the recorded exchanges |
 | B07 | Dossier prepared; hosted NOT_RUN | `docs/hosted-diagnostics.md`: isolated headers/version/method cases, five lifecycle cases and missing capture list | No raw adapter implementation or full response captures available; no fake production comparator |
 | B08 | Completed | `docs/verification.md`, `evidence/README.md`, paired guides, `CHANGELOG.md`: roots, policy identity, original/factory/new bundle lineage, commit citation, timestamp/attestation scope | No external timestamp or build attestation acquired |
 | B09 | Protocol prepared; experiment NOT_RUN | `docs/model-comparison.md`, exhaustive comparison map and seven bilingual scenarios; 129 terminal values per language | No tokenizer, model answer, fidelity score or causal result |
 | C01 | Existing protections preserved and missing witnesses added | `test-consumer.mjs`, `test-verified-pack.mjs`: policy capture during controlled wait, fresh revocation decision, decision replay refusal, exact identities, zero callback on refusals | No Gateway vault, OAuth or outbound destination mechanism in this reference |
-| C02-C04 | Completed; external NOT_RUN | `spec/examples/reproduction/`: manifest, explicit policy, CLI, 15 cases plus v0 witness, report template; two CLI integration tests | Producer reproduction is not an outside run or independent cryptographic implementation |
+| C02-C04 | Completed; external NOT_RUN | `spec/examples/reproduction/`: manifest, explicit policy, CLI, 15 cases plus v0 witness, report template; four CLI integration tests | Producer reproduction is not an outside run or independent cryptographic implementation |
 | C05 | Measured locally | `benchmark.mjs` and `evidence/consumer-cost-2026-10-20.json`; same-byte before/after and separate stages | Sequential synthetic timings, no production or model latency claim |
 | B10 / C06 | Locally qualified | Explicit inventory, licences, regenerated registries, full suites, preserved historical files and visual preview | Merge, release, deployment and outside reproduction are not authorized by this result |
 
@@ -111,7 +112,7 @@ npm run regenerate:check
 git diff --check
 ```
 
-`npm test`: 339 tests, 338 passed, 0 failed, 1 Windows symlink test skipped;
+`npm test`: 343 tests, 342 passed, 0 failed, 1 Windows symlink test skipped;
 22/22 existing mutants detected. It runs the original signed demonstration
 (338 snapshot checks), public projection verifier, both semantic language paths
 (330 checks each), whole-pack tests and the 16-case producer reproduction suite.
@@ -158,22 +159,57 @@ paths, browser profile or private logs.
 samples after 5 warmups, rounded to integer microseconds for the package's JSON
 profile. The raw timing record is identified by SHA-256 in that file. Median is
 the upper middle ordered sample and p95 uses index 37 of 40; these conventions
-match the measuring script. The same historical bundle was used on both sides.
+match the measuring script. The same historical bundle was used on both sides. This measurement was rerun
+after the audit correction that captures the receipt before asynchronous work;
+the earlier timing record remains in the private evidence history.
 
 | Stage | Median, ms | p95, ms |
 |---|---:|---:|
-| Old full receipt + snapshot | 4.016 | 5.390 |
-| Current full receipt + snapshot | 5.268 | 6.423 |
-| Current snapshot only | 4.103 | 5.591 |
-| Current local decision only | 0.381 | 0.445 |
-| Current selected pack with decision | 4.679 | 6.006 |
+| Old full receipt + snapshot | 4.042 | 5.233 |
+| Current full receipt + snapshot | 4.916 | 6.109 |
+| Current snapshot only | 4.412 | 5.395 |
+| Current local decision only | 0.449 | 0.674 |
+| Current selected pack with decision | 4.565 | 5.455 |
 
-The comparable full path is about 1.252 ms slower at the median in this local
+The comparable full path is about 0.874 ms slower at the median in this local
 sequence. There was no earlier whole-pack consumer to compare. File loading is
 separate; the tiny fictional callback is below meaningful timing resolution.
 Separate stage measurements are not additive latency guarantees. No permission
 cache was introduced; every operation re-evaluates the original receipt under
 its current supplied policy.
+
+## Consolidated corrections from the first audit
+
+Claude returned `PASS_WITH_RESERVATIONS` on `b106562`, identifying one P2 and five
+P3 observations. The P2 is corrected: both nominal guide commands now use
+`fictional-1`, the historical pack version. Two tests execute the literal commands
+from the guides and check successful FR/EN delivery. The earlier `0.1.0` command
+was refused without content; it was a reproduction defect, not a signature bypass.
+
+The receipt is now cloned at invocation, before asynchronous policy validation;
+a regression mutates both original receipt strings immediately after the call.
+The captured operation succeeds and the next call refuses the modified receipt.
+Malformed invocation types and non-cloneable objects still reject the promise;
+that API boundary is now explicit in the declaration and documentation and tested
+with zero consumer calls. Domain refusals remain structured `REFUSED` results.
+
+Both dated client tables explicitly name the historical October 14 MCP snippet,
+which the current section has replaced. Nominal case IDs now require the matching
+language; contradictions are refused as `case_language_mismatch`. The default
+case follows an explicit FR/EN choice. The fixed negative `wrong-language` case
+still exercises the complete verification path.
+
+The observed legacy latitude for additional archive members and nonzero unused
+base64 padding bits is retained and documented. It is outside B01's canonical
+JSON byte guarantee, needs a new envelope/root admission, and was already present
+before this lot. Closing it changes compatibility; it is deferred explicitly for
+a separately reviewed profile, with no assertion that B01 closes those properties.
+
+The first audit exercised 136 B01/B02 controls successfully and additional
+consumer/MCP/document/kit probes. It reported its own erroneous assertions
+separately from the guide defect. Those raw scripts and outputs are retained.
+The corrected candidate is submitted once for final revision, with original
+baseline files and timing bytes available for direct comparison.
 
 ## Use and next boundaries
 

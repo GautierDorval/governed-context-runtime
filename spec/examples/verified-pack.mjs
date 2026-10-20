@@ -60,7 +60,8 @@ export async function consumeVerifiedPack(input, consume) {
   const policy = structuredClone(input.policy);
   const snapshotBytes = copyBytes(input.snapshotBytes);
   const expectedIntents = input.expectedIntents === undefined ? undefined : structuredClone(input.expectedIntents);
-  const {receipt,getArchive,intentToken,lang,version,purpose='inspect-context'} = input;
+  const receipt = structuredClone(input.receipt);
+  const {getArchive,intentToken,lang,version,purpose='inspect-context'} = input;
   if (typeof consume !== 'function') fail('consumer_required');
   const decision = await decideConsumption(policy,receipt,{purpose});
   if (decision.decision !== 'ACCEPTED_FOR_LOCAL_USE' || decision.mode !== 'current')

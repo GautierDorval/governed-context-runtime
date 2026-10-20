@@ -13,7 +13,7 @@ From the root of the chosen public checkout:
 git rev-parse HEAD
 node --version
 node spec/examples/reproduction/run.mjs --help
-node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --lang en --intent representation-gap --version 0.1.0
+node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --lang en --intent representation-gap --version fictional-1
 node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --suite
 ```
 
@@ -105,3 +105,14 @@ assistant compatibility, organizational independence or semantic benefit follows
 from a successful exercise. [The model comparison](../model-comparison.md) is a
 separate prepared protocol marked NOT_RUN. Development qualification alone needs
 `npm ci --ignore-scripts` followed by `npm run test:dev`; its schemas resolve locally.
+
+
+## Single-case selection and library errors
+
+For a single nominal run, the default case follows `--lang en|fr`. Explicit
+`nominal-en` and `nominal-fr` case IDs require the matching language; contradictory
+flags are refused with `case_language_mismatch`. Use the fixed `wrong-language`
+case to reproduce an undeclared-language refusal through complete verification.
+At library level, malformed invocation types and non-cloneable objects reject the
+promise; domain refusals return `REFUSED`. The CLI catches both and never forwards
+content on failure. See the [input contract](../verification.md).

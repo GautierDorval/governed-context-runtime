@@ -73,3 +73,21 @@ there is no revocation feed or global authorization cache.
 
 [The English reproduction guide](en/reproduction.md) and [French guide](fr/reproduction.md)
 provide the finite offline CLI and the third-party report protocol.
+
+
+### Library input failures and legacy envelope latitude
+
+`consumeVerifiedPack` captures the policy, receipt, snapshot and optional catalogue
+before its first asynchronous check. It returns `REFUSED` for domain decisions and
+snapshot verification refusals. Malformed invocation types or non-cloneable inputs
+reject the promise; callback failures also propagate. Library callers must handle
+both outcomes. Input failures never call the consumer. The lower-level
+`decideConsumption` retains its policy-before-artifact-validation contract.
+
+B01 establishes canonical JSON envelope bytes. It does not additionally close the
+legacy archive member set or require zero unused base64 padding bits. These two
+legacy representations still require their own complete envelope digest, address
+and separately admitted root; neither substitutes bytes under an existing root.
+A stricter archive profile is deferred for compatibility review, not silently
+added to this correction. MCP artifact extraction already requires canonical
+base64 round-tripping, independently of this historical archive profile.

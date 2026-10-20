@@ -16,13 +16,13 @@
   "files": [
     {
       "path": "docs/en/reproduction.md",
-      "bytes": 6839,
-      "sha256": "44bc0a4e14eaa7d3bc0096d5665a4a8b02e455a679eb5fabd3cce90f777a9490"
+      "bytes": 7443,
+      "sha256": "be9fc595c928b980110d68aa4d16d5dc7762693a1450d4b9da25c2be5cb24847"
     },
     {
       "path": "docs/fr/reproduction.md",
-      "bytes": 7181,
-      "sha256": "475bb58e6752e932305405f9c372e28290fa0f8ddc2e7adbe0ef94dafbf2ea2c"
+      "bytes": 7877,
+      "sha256": "29ee1282a4b08569a0616c56b18d431b00cf6c82d55c6180eb925f95694e272f"
     },
     {
       "path": "spec/attestation-recipes.json",
@@ -71,8 +71,8 @@
     },
     {
       "path": "spec/examples/reproduction/run.mjs",
-      "bytes": 7942,
-      "sha256": "045cf9c34ef541037516b25e87f9ac3eff0ed86ee94dbd3ed7fe699e6444a774"
+      "bytes": 8045,
+      "sha256": "b68ba5b04cd060f6cfb916dcc9e9bef91a638ee075ad83a88b4a60dcf8b315e0"
     },
     {
       "path": "spec/examples/synthetic/bundle.json",
@@ -81,8 +81,8 @@
     },
     {
       "path": "spec/examples/verified-pack.mjs",
-      "bytes": 5479,
-      "sha256": "4b431a6f7288a310b033afd02d439ed36e1f635610f08d0286aabf86f47ad211"
+      "bytes": 5521,
+      "sha256": "14c8d68638117cb4290c0ebd6b40276cadc4c1a4462e8031080c2a5814d61ca7"
     },
     {
       "path": "spec/intent-registry.schema.json",

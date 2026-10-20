@@ -21,14 +21,13 @@ export async function verifyKit() {
  }
  return {kitDigest:'sha-256:'+sha(raw),referenceBaseCommit:manifest.referenceBaseCommit};
 }
-export async function runCase(id,policy,{lang='en',intentToken='representation-gap',version}={}) {
+export async function runCase(id,policy,{lang,intentToken='representation-gap',version}={}) {
  const bundle=await loadDemo();let calls=0,held,rewritten=false;
  const args={policy:structuredClone(policy),receipt:structuredClone(bundle.receipt),snapshotBytes:canonical(bundle.snapshot),expectedIntents:bundle.expectedIntents,
-  intentToken,lang,version:version??bundle.snapshot.inventory.packs[0].version,
+  intentToken,lang:lang??(id==='nominal-fr'?'fr':'en'),version:version??bundle.snapshot.inventory.packs[0].version,
   getArchive:uri=>{if(!Object.hasOwn(bundle.archives,uri))fail('missing_archive');return Buffer.from(bundle.archives[uri],'base64');}};
  switch(id){
-  case 'nominal-en':break;
-  case 'nominal-fr':args.lang='fr';break;
+  case 'nominal-en':case 'nominal-fr':if(args.lang!==id.slice(-2))fail('case_language_mismatch');break;
   case 'wrong-root':args.policy.expectedRoot='sha-256:'+'0'.repeat(64);break;
   case 'invalid-signature':{const parts=args.receipt.detachedJws.split('.'),sig=Buffer.from(parts[2],'base64url');sig[0]^=1;parts[2]=sig.toString('base64url');args.receipt.detachedJws=parts.join('.');break;}
   case 'algorithm':{const parts=args.receipt.detachedJws.split('.'),header=JSON.parse(Buffer.from(parts[0],'base64url'));header.alg='none';parts[0]=Buffer.from(JSON.stringify(header)).toString('base64url');args.receipt.detachedJws=parts.join('.');break;}
@@ -81,7 +80,7 @@ export async function main(argv) {
   const witness=await historicalWitness(policy);witness.verdict=witness.isolatedDigestUnchanged&&witness.status==='REFUSED'&&witness.reason==='corpus-root'&&witness.consumerCalls===0?'PASS':'FAIL';results.push(witness);
   const pass=results.every(r=>r.verdict==='PASS');console.log(JSON.stringify({...base,status:pass?'PRODUCER_REPRODUCED':'FAIL',cases:results},null,2));return pass?0:1;
  }
- const result=await runCase(options['--case']??'nominal-en',policy,selection);
+ const result=await runCase(options['--case']??(selection.lang==='fr'?'nominal-fr':'nominal-en'),policy,selection);
  console.log(JSON.stringify({...base,status:result.delivered?'PRODUCER_REPRODUCED':'REFUSED',case:result},null,2));return result.delivered?0:2;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){

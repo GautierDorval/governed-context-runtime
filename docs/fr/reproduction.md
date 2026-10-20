@@ -13,7 +13,7 @@ Depuis la racine du clone public choisi :
 git rev-parse HEAD
 node --version
 node spec/examples/reproduction/run.mjs --help
-node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --lang fr --intent representation-gap --version 0.1.0
+node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --lang fr --intent representation-gap --version fictional-1
 node spec/examples/reproduction/run.mjs --policy spec/examples/reproduction/policy.json --suite
 ```
 
@@ -106,3 +106,15 @@ en temps réel, ni compatibilité d’assistant, ni indépendance organisationne
 ni bénéfice sémantique. Le [protocole comparatif](../model-comparison.md) reste
 `NOT_RUN`. Seule la qualification de développement demande `npm ci --ignore-scripts`
 puis `npm run test:dev` ; les schémas sont résolus localement.
+
+
+## Sélection d’un cas et erreurs d’entrée
+
+Pour un cas nominal unique, le cas par défaut suit `--lang en|fr`. Les identifiants
+explicites `nominal-en` et `nominal-fr` exigent la langue correspondante ;
+des options contradictoires sont refusées avec `case_language_mismatch`. Le cas
+fixe `wrong-language` reproduit le refus d’une langue non déclarée après la
+vérification complète. Dans la bibliothèque, les types d’entrée mal formés et les
+objets non copiables rejettent la promesse ; les refus du domaine retournent
+`REFUSED`. La commande intercepte les deux issues et ne transmet aucun contenu en
+cas d’échec. Voir le [contrat d’entrée](../verification.md).

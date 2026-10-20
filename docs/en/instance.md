@@ -145,7 +145,7 @@ Results of **October 14, 2026**, on loopback services: the resolver and the MCP 
 | Client type | Client and version | Transport and revision | Steps executed | Result |
 |---|---|---|---|---|
 | HTTP script | PowerShell 7.6.6 `Invoke-RestMethod`, snippet of section 1 (EN and FR guides) | REST | Registry, French pack and manifest | Passed |
-| HTTP script | PowerShell 7.6.6, MCP snippet of section 3 (EN and FR guides) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, base64 decoding, digest comparison | Passed |
+| HTTP script | PowerShell 7.6.6, historical MCP snippet captured on October 14 (replaced in section 3) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, base64 decoding, digest comparison | Passed |
 | HTTP checks | Node.js 24.17.0 and Python 3.14.6 | REST | 1,781 checks each: snapshot, archives, packs, manifests, digests | Passed |
 | MCP SDK | `@modelcontextprotocol/client` 2.3.1 on Node.js 24.17.0 | Streamable HTTP, revision pinned to `2026-07-28` | Resource discovery and reading, complete snapshot verification, `tools/call`, historical resources | Passed |
 | Independent MCP client | Python 3.14.6 standard library | POST JSON-RPC, `2026-07-28` | Same steps, written separately | Passed |
