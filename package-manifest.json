@@ -156,8 +156,8 @@
     },
     {
       "path": "docs/handoff-2026-10-19.md",
-      "sha256": "3d63d613a29a004447115f19d125a0de019d842dddaf3fad06af8c4c37efd1a0",
-      "bytes": 15873
+      "sha256": "b3ad2c41bf0e60fe55106b7499127ec6384a9cd98e5759790c0ee48ae0270eaa",
+      "bytes": 17574
     },
     {
       "path": "docs/schemas.md",
@@ -216,7 +216,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "f45c6e3d924eb6fd911dcbf282d5ea9a4d09ab456e032a3229092389721c5c6b",
+      "sha256": "04301e90ab1cac61e9c46d03e12bd8f792ad021f191ce853d1c93d541dd1dd6e",
       "bytes": 18315
     },
     {
