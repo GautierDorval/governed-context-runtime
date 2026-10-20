@@ -136,8 +136,8 @@
     },
     {
       "path": "docs/archive-profile-p3-2026-10-20.md",
-      "sha256": "ff2f43daa37af6687a0a3e7921b45310c827f97605bbd32b5e08d12590404412",
-      "bytes": 6967
+      "sha256": "2b5215068f4cb23b861b5ad804a936a637f6e5ab0ffa8699f4abcbe748fc96c9",
+      "bytes": 8798
     },
     {
       "path": "docs/consumer-mandate-2026-10-20.md",
@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/consumer-report-2026-10-20.md",
-      "sha256": "37cbc01538021bddc2a43732f3475becdcd2494e1ecd136c7b9c261d05896e5a",
-      "bytes": 15472
+      "sha256": "cd9f358b8b1c4bbbdd3205f3185fd94f46eccc36acbac38f7ca028f89cc94ada",
+      "bytes": 15681
     },
     {
       "path": "docs/en/README.md",
@@ -271,7 +271,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "23b8b043fcb00fac0d87a428ae7890c4ba7f362ab810a2dcfee77cb053b57848",
+      "sha256": "0572752f7542c1aa0b97902dfe18b3b08676d0cad763102af94c04d897817de0",
       "bytes": 28929
     },
     {
@@ -301,8 +301,8 @@
     },
     {
       "path": "scripts/test-mutations.mjs",
-      "sha256": "d15ea079e2250f0c811de4e651ab9e574be425e1692e7ede1a22550bd0493b67",
-      "bytes": 6280
+      "sha256": "c2035bad89f59c2f9ceca94171c3e2470f2187d117cd1ce6c37d4093b4e3aba1",
+      "bytes": 7005
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -546,8 +546,8 @@
     },
     {
       "path": "spec/reference/test-archive-profile.mjs",
-      "sha256": "1d720781e398aaf05f9508ddae8b787565fed1b64d90962e389c47eda05ba374",
-      "bytes": 10772
+      "sha256": "e8581602a9c1a0b3397abfcb396f06bebd3f0ff421b71bf05e3f873d71cf1b83",
+      "bytes": 11945
     },
     {
       "path": "spec/reference/test-consumer.mjs",

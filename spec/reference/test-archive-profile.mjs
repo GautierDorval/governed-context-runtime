@@ -152,6 +152,18 @@ for (const key of fields)
     await replaceEnvelope(b, a);
     await assert.rejects(() => verify(b), error('archive_fields'));
   });
+for (const kind of ['extra', 'missing'])
+  test('member set is enforced on the last archive: ' + kind, async () => {
+    const b = clone();
+    const index = b.snapshot.inventory.items.length - 1;
+    assert(index > 0);
+    const a = envelope(b, index);
+    if (kind === 'extra') a.extra = true;
+    else delete a.type;
+    await replaceEnvelope(b, a, index);
+    await assert.rejects(() => verify(b), error('archive_fields'));
+  });
+
 test('same-size member substitution is refused, not just member count', async () => {
   const b = clone(),
     a = envelope(b);
@@ -218,12 +230,31 @@ test('noncanonical envelope bytes precede member-set rejection', async () => {
   await assert.rejects(() => verify(b), error('noncanonical_archive_envelope'));
 });
 
+test('base64 canonicality precedes a bad decoded-source digest', async () => {
+  for (const [encoded, expected] of [
+    ['Zh==', 'noncanonical_base64'],
+    ['Zg==', 'source-bytes:public/fictional-p3-vector.bin'],
+  ]) {
+    const b = await withBytes(Uint8Array.of(102), encoded);
+    const index = b.snapshot.inventory.items.length - 1;
+    const item = b.snapshot.inventory.items[index],
+      a = envelope(b, index);
+    const wrong = await digest(Uint8Array.of(103));
+    item.repositoryDigest = wrong;
+    item.version = wrong;
+    a.digest = wrong;
+    await replaceEnvelope(b, a, index);
+    await assert.rejects(() => verify(b), error(expected));
+  }
+});
+
 async function fault(kind) {
   if (kind === 'padding') return withBytes(Uint8Array.of(102), 'Zh==');
-  const b = clone(),
-    a = envelope(b);
+  const b = clone();
+  const index = b.snapshot.inventory.items.length - 1;
+  const a = envelope(b, index);
   a.extra = true;
-  await replaceEnvelope(b, a);
+  await replaceEnvelope(b, a, index);
   return b;
 }
 for (const kind of ['members', 'padding']) {

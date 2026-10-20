@@ -31,6 +31,18 @@ const MUTANTS = [
     '',
     ARCHIVE,
   ],
+  [
+    'archive: member guard only on the first item',
+    "fail('archive_fields');",
+    "if (item === inventory.items[0]) fail('archive_fields');",
+    ARCHIVE,
+  ],
+  [
+    'archive: decoded source digest before canonical base64',
+    "if (btoa(decoded) !== archive.contentBase64) fail('noncanonical_base64');\n    const data = Uint8Array.from(decoded, c => c.charCodeAt(0));\n    same('source-bytes:' + item.sourcePath, item.repositoryDigest, await digest(data));",
+    "const data = Uint8Array.from(decoded, c => c.charCodeAt(0));\n    same('source-bytes:' + item.sourcePath, item.repositoryDigest, await digest(data));\n    if (btoa(decoded) !== archive.contentBase64) fail('noncanonical_base64');",
+    ARCHIVE,
+  ],
   ['text: JavaScript trim instead of the Python whitespace set', ".replace(ws, '')", '.trim()', TEXT],
   [
     'text: U+0085 dropped from the leading set',

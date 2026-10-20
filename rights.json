@@ -162,7 +162,7 @@
       "path": "docs/archive-profile-p3-2026-10-20.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "ff2f43daa37af6687a0a3e7921b45310c827f97605bbd32b5e08d12590404412"
+      "sha256": "2b5215068f4cb23b861b5ad804a936a637f6e5ab0ffa8699f4abcbe748fc96c9"
     },
     {
       "path": "docs/consumer-mandate-2026-10-20.md",
@@ -174,7 +174,7 @@
       "path": "docs/consumer-report-2026-10-20.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "37cbc01538021bddc2a43732f3475becdcd2494e1ecd136c7b9c261d05896e5a"
+      "sha256": "cd9f358b8b1c4bbbdd3205f3185fd94f46eccc36acbac38f7ca028f89cc94ada"
     },
     {
       "path": "docs/en/README.md",
@@ -354,7 +354,7 @@
       "path": "scripts/test-mutations.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "d15ea079e2250f0c811de4e651ab9e574be425e1692e7ede1a22550bd0493b67"
+      "sha256": "c2035bad89f59c2f9ceca94171c3e2470f2187d117cd1ce6c37d4093b4e3aba1"
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -648,7 +648,7 @@
       "path": "spec/reference/test-archive-profile.mjs",
       "source": "consumer-reproduction-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "1d720781e398aaf05f9508ddae8b787565fed1b64d90962e389c47eda05ba374"
+      "sha256": "e8581602a9c1a0b3397abfcb396f06bebd3f0ff421b71bf05e3f873d71cf1b83"
     },
     {
       "path": "spec/reference/test-consumer.mjs",

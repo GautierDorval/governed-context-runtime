@@ -106,7 +106,7 @@ Ed25519 receipts and deliberately admitted new roots still produce snapshot-stag
 refusals with zero consumer callbacks. The original pin rejects before archive
 access. No production key or authority was used.
 
-Local Node 24.17.0 validation on Windows:
+Initial local Node 24.17.0 validation on Windows, before the review corrections below:
 
 - `npm test`: 412 tests, 411 passed, zero failed, one platform-dependent symbolic
   link test skipped; all 25 controlled mutants detected.
@@ -125,3 +125,31 @@ change during that manifest correction. Private evidence is retained under the
 lot identifier above. The final independent audit, exact remote commit and CI
 result are recorded separately on the associated draft PR; this local record
 alone does not claim those later states or authorize integration.
+
+
+## Consolidated independent-review corrections
+
+Claude reviewed `2ce6644073a15b4dc6faf5bdc1c9a7e2a516b4a2` and returned
+`PASS_WITH_RESERVATIONS`: P3 was closed for verifier behavior, with no P0, P1 or
+P2 finding. Three remaining in-scope observations are corrected together:
+
+- Extra and missing members are now tested on the last archive as well as the
+  first. The signed consumer member-fault control also uses the last archive.
+  A controlled mutant limits the member guard to the first item and is detected.
+- A double fault combines noncanonical padding with a wrong decoded-source
+  digest. It requires `noncanonical_base64`; a canonical spelling control reaches
+  `source-bytes`. A second mutant reverses that documented order and is detected.
+  This is a diagnostic-order guarantee, not an additional accepted-input defect.
+- The earlier consumer report marks its deferred archive latitude as superseded
+  and links the current P3 rules, preserving the history of the earlier review.
+
+The verifier and runtime consumers are byte-identical to the reviewed candidate.
+The 72 focused controls pass. The complete local run now has 415 tests: 414 pass,
+zero failures, one Windows symbolic-link skip; all 27 controlled mutants are
+reported detected. Formatting, type checks and 34 development tests pass again.
+The corrected report paragraph was captured and inspected locally at 390 x 844
+and 1365 x 900. The original protected fixtures, roots and preimages are unchanged.
+These corrections form one final revision for independent review. The exact final
+commit, its subsequent review result and CI belong to the PR evidence, not to this
+self-referential document. The internal protocol-reference remark was outside the
+active corrective scope and did not open a separate change.
