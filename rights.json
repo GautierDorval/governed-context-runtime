@@ -159,6 +159,12 @@
       "sha256": "9ec3fecf02937b174f149413f4322e3cfaf1ced48e10a0af5768d250ece37eff"
     },
     {
+      "path": "docs/archive-profile-p3-2026-10-20.md",
+      "source": "consumer-reproduction-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "eaa84185bb8395e9f6f611e526975c7df058edd3b4e3f23fd45c9c3d171789d5"
+    },
+    {
       "path": "docs/consumer-mandate-2026-10-20.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
@@ -306,7 +312,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "07b33ed93e05e9beb9004f4963138b6006df0082f670a79ceb6957ee11cfc38d"
+      "sha256": "b1c8c853ef9d6a38cb49e86e52b55e2e30df0329cc0c833bc5be442c75cedbeb"
     },
     {
       "path": "package.json",
