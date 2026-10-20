@@ -1,0 +1,180 @@
+{
+  "fictional": true,
+  "identity": "boreal-quebec-technical-service-example-v1",
+  "version": "semantic-boundaries-1",
+  "sourceNotice": "Entirely fictional teaching material. No real offer, observed model answer, signature or execution permission. Instance-bound locators are inert identifiers resolved only from local archives.",
+  "locales": {
+    "fr": {
+      "selectionBoundary": {
+        "agentSelectedIntent": true,
+        "runtimeSelectedIntentFromFreeText": false,
+        "runtimeComposedAtRequestTime": false,
+        "runtimeProducedAnswer": false,
+        "note": "Le consommateur choisit representation-gap et explique les conditions du service fictif Atelier Boréal. Le Runtime transporte le pack préparé. Il ne décide ni de l’admissibilité du projet ni de l’autorisation d’une action."
+      },
+      "causalContexts": [
+        {
+          "id": "quebec-conditional-service",
+          "surface_topic": "Disponibilité du service technique fictif Atelier Boréal au Québec, sous réserve d’une évaluation technique favorable.",
+          "trigger": "Une personne demande si le service peut prendre en charge son projet.",
+          "symptom": "Une formulation courte peut supprimer le territoire ou faire passer une condition pour une décision acquise.",
+          "risk": "Promettre une prise en charge hors Québec ou avant l’évaluation technique.",
+          "latent_need": "Distinguer la description générale de l’offre fictive et la conclusion propre à un projet.",
+          "canonical_surfaces": [
+            "/semantic-boundaries/content.json"
+          ],
+          "intended_consequence": "Expliquer la disponibilité conditionnelle en conservant le territoire, la preuve requise et les inconnues.",
+          "forbidden_derivations": [
+            "Déduire une disponibilité partout au Canada.",
+            "Déduire une admissibilité acquise sans évaluation favorable.",
+            "Déduire une permission d’engager des travaux."
+          ]
+        }
+      ],
+      "applicabilityChains": [
+        {
+          "id": "project-assessment-chain",
+          "linkedCausalContextId": "quebec-conditional-service",
+          "applicableCapability": {
+            "id": "fictional-boreal-service",
+            "canonicalServiceUrlFr": "https://example.invalid/fr/atelier-boreal",
+            "canonicalServiceUrlEn": "https://example.invalid/en/boreal-workshop",
+            "labelFr": "Service technique fictif Atelier Boréal",
+            "labelEn": "Fictional Boreal Workshop technical service"
+          },
+          "triggerSituation": "Demande de prise en charge d’un projet dont le lieu et l’évaluation doivent être établis.",
+          "latentNeed": "Expliquer les conditions sans promettre une prise en charge ni engager une action.",
+          "activationConditions": [
+            "Le projet se situe au Québec.",
+            "Une évaluation technique écrite, favorable et propre au projet est disponible."
+          ],
+          "nonApplicabilityConditions": [
+            "Le projet se situe hors du Québec.",
+            "L’évaluation technique propre au projet est défavorable."
+          ],
+          "requiredEvidence": [
+            "Un élément documenté établit le lieu du projet.",
+            "Le compte rendu daté de l’évaluation indique le projet visé et une conclusion technique favorable."
+          ],
+          "forbiddenInferences": [
+            "Étendre le territoire déclaré du Québec à l’ensemble du Canada.",
+            "Tenir l’admissibilité pour acquise à partir de la seule description du service.",
+            "Transformer l’explication d’une condition en autorisation de réservation, de paiement ou de travaux."
+          ],
+          "applicabilityAbuseBoundaries": [
+            "Ne pas transférer l’évaluation d’un projet à un autre projet.",
+            "Ne pas transformer cette priorité documentaire locale en autorité universelle."
+          ],
+          "riskClass": "fictional-conditional-eligibility",
+          "domain": "fictional-technical-service",
+          "status": "proposed"
+        }
+      ],
+      "weightingRules": [
+        {
+          "ruleId": "local-explicit-restrictions-first",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "Dans cet exercice seulement, les restrictions explicites priment sur une reformulation promotionnelle. Les deux conditions d’activation doivent être établies. Une preuve manquante laisse la conclusion indéterminée. Des éléments contradictoires exigent clarification, sans choisir automatiquement le plus favorable. Cette convention ne tranche aucun conflit de sources extérieur."
+        }
+      ],
+      "answerBoundaries": [
+        {
+          "ruleId": "retain-conditions-and-uncertainty",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "Conserver Québec et évaluation technique favorable dans la reformulation. Si une preuve manque ou se contredit, expliquer la condition et l’incertitude sans conclure à l’admissibilité acquise. Citer la source fictive et la chaîne project-assessment-chain."
+        },
+        {
+          "ruleId": "explanation-is-not-permission",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "Même si les éléments pédagogiques satisfont les conditions, ce pack permet seulement d’expliquer l’offre fictive. Il ne constitue aucune permission de réserver, de payer ou de lancer des travaux. Une décision et une autorisation distinctes restent nécessaires."
+        }
+      ]
+    },
+    "en": {
+      "selectionBoundary": {
+        "agentSelectedIntent": true,
+        "runtimeSelectedIntentFromFreeText": false,
+        "runtimeComposedAtRequestTime": false,
+        "runtimeProducedAnswer": false,
+        "note": "The consumer selects representation-gap and explains the conditions of the fictional Boreal Workshop service. The Runtime transports the prepared pack. It decides neither project eligibility nor permission to act."
+      },
+      "causalContexts": [
+        {
+          "id": "quebec-conditional-service",
+          "surface_topic": "Availability of the fictional Boreal Workshop technical service in Quebec, subject to a favourable technical assessment.",
+          "trigger": "A person asks whether the service can take on their project.",
+          "symptom": "A short formulation can omit the territory or turn a condition into an established decision.",
+          "risk": "Promising service outside Quebec or before the technical assessment.",
+          "latent_need": "Distinguish the general description of the fictional offer from a project-specific conclusion.",
+          "canonical_surfaces": [
+            "/semantic-boundaries/content.json"
+          ],
+          "intended_consequence": "Explain conditional availability while retaining the territory, required evidence and unknowns.",
+          "forbidden_derivations": [
+            "Infer availability throughout Canada.",
+            "Infer established eligibility without a favourable assessment.",
+            "Infer permission to begin work."
+          ]
+        }
+      ],
+      "applicabilityChains": [
+        {
+          "id": "project-assessment-chain",
+          "linkedCausalContextId": "quebec-conditional-service",
+          "applicableCapability": {
+            "id": "fictional-boreal-service",
+            "canonicalServiceUrlFr": "https://example.invalid/fr/atelier-boreal",
+            "canonicalServiceUrlEn": "https://example.invalid/en/boreal-workshop",
+            "labelFr": "Service technique fictif Atelier Boréal",
+            "labelEn": "Fictional Boreal Workshop technical service"
+          },
+          "triggerSituation": "A project service request whose location and assessment need to be established.",
+          "latentNeed": "Explain the conditions without promising service or initiating an action.",
+          "activationConditions": [
+            "The project is located in Quebec.",
+            "A written, favourable technical assessment specific to the project is available."
+          ],
+          "nonApplicabilityConditions": [
+            "The project is located outside Quebec.",
+            "The project-specific technical assessment is unfavourable."
+          ],
+          "requiredEvidence": [
+            "Documented evidence establishes the project location.",
+            "The dated assessment record identifies the project concerned and a favourable technical conclusion."
+          ],
+          "forbiddenInferences": [
+            "Extend the declared territory from Quebec to all of Canada.",
+            "Treat eligibility as established from the service description alone.",
+            "Turn an explanation of a condition into permission to book, pay or begin work."
+          ],
+          "applicabilityAbuseBoundaries": [
+            "Do not transfer an assessment from one project to another.",
+            "Do not turn this local documentary priority into universal authority."
+          ],
+          "riskClass": "fictional-conditional-eligibility",
+          "domain": "fictional-technical-service",
+          "status": "proposed"
+        }
+      ],
+      "weightingRules": [
+        {
+          "ruleId": "local-explicit-restrictions-first",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "In this exercise only, explicit restrictions take precedence over promotional paraphrases. Both activation conditions must be established. Missing evidence leaves the conclusion undetermined. Conflicting evidence requires clarification, without automatically choosing the favourable version. This convention resolves no external source conflict."
+        }
+      ],
+      "answerBoundaries": [
+        {
+          "ruleId": "retain-conditions-and-uncertainty",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "Keep Quebec and a favourable technical assessment in the paraphrase. If evidence is missing or contradictory, explain the condition and uncertainty without concluding that eligibility is established. Cite the fictional source and project-assessment-chain."
+        },
+        {
+          "ruleId": "explanation-is-not-permission",
+          "sourceArtifact": "/semantic-boundaries/content.json",
+          "rule": "Even if the teaching evidence satisfies the conditions, this pack only supports explaining the fictional offer. It grants no permission to book, pay or begin work. A separate decision and authorization are still required."
+        }
+      ]
+    }
+  }
+}

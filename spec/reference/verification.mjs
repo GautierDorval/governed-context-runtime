@@ -125,11 +125,31 @@ export function textBytes(value) {
   const ws = /^[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g;
   return encoder.encode(value.replaceAll('\r\n', '\n').replaceAll('\r', '\n').replace(ws, '').normalize('NFC'));
 }
+// Historical v0 coverage is an algorithm constant, never an archive-controlled claim.
+export const V0_RECORD_FIELDS = Object.freeze(['unitId', 'sourcePath', 'selector', 'claimClass', 'authorityScope', 'canonicalSource', 'canonicalText']);
+export function unitDigestCoverage(unit, recipe) {
+  if (!recipe || typeof recipe !== 'object' || Array.isArray(recipe)) fail('unknown_profile');
+  let fields;
+  if (unit.digestScope === 'canonical_interpretive_unit_envelope') {
+    if (unit.canonicalization !== 'attested-interpretive-unit-envelope-v0') fail('unknown_profile');
+    fields = V0_RECORD_FIELDS;
+  } else if (unit.digestScope === 'selected_unit_only') {
+    if (!['utf8-nfc-lf-trimmed-v0', 'deterministic-json-sort-keys-v0'].includes(unit.canonicalization)) fail('unknown_profile');
+    fields = [];
+  } else fail('unknown_scope');
+  if (Object.hasOwn(recipe, 'requiredFieldsInPreimage')) {
+    const declared = recipe.requiredFieldsInPreimage;
+    if (!Array.isArray(declared) || declared.length !== fields.length
+      || !declared.every(field => typeof field === 'string' && fields.includes(field))
+      || new Set(declared).size !== declared.length) fail('invalid_recipe_coverage');
+  }
+  return [...fields];
+}
 export function unitPreimage(unit, source) {
   if (!['unitId', 'sourcePath', 'selector', 'digest', 'digestScope', 'canonicalization'].every(key => Object.hasOwn(unit, key))) fail('unit_field_missing');
   const selected = select(strictParse(source, { historical: true }), unit.selector);
   if (unit.digestScope === 'canonical_interpretive_unit_envelope') {
-    const fields = ['unitId', 'sourcePath', 'selector', 'claimClass', 'authorityScope', 'canonicalSource', 'canonicalText'];
+    const fields = V0_RECORD_FIELDS;
     if (unit.canonicalization !== 'attested-interpretive-unit-envelope-v0' || !fields.every(key => Object.hasOwn(unit, key))) fail('unit_recipe_mismatch');
     return canonical(Object.fromEntries(fields.map(key => [key, unit[key]])), { historical: true });
   }
@@ -169,10 +189,12 @@ export async function verifySnapshot(snapshot, getArchive, expectedIntents, chec
     if (!/^\/v0\/artifacts\/[a-f0-9]{64}$/.test(item.uri) || sources.has(item.sourcePath) || uris.has(item.uri)) fail('invalid_archive_identity');
     for (const [key,value] of Object.entries({kind:'source-archive',digestScope:'canonical-json',canonicalization:PROFILE,digestAlgorithm:'sha-256',version:item.repositoryDigest})) same('item-profile:' + key, value, item[key]);
     uris.add(item.uri);
-    const encoded = await getArchive(item.uri);
+    const encoded = new Uint8Array(await getArchive(item.uri)).slice();
     same('archive-envelope:' + item.sourcePath, item.digest, await digest(encoded));
     same('archive-address:' + item.sourcePath, item.digest, 'sha-256:' + item.uri.split('/').at(-1));
     const archive = strictParse(encoded);
+    const canonicalEnvelope = canonical(archive);
+    if (encoded.length !== canonicalEnvelope.length || encoded.some((byte, index) => byte !== canonicalEnvelope[index])) fail('noncanonical_archive_envelope');
     for (const [key,value] of Object.entries({type:'RuntimeSourceArchive',schemaVersion:'0.1.0-proposed',encoding:'base64',digestScope:'repository-bytes',digestAlgorithm:'sha-256'})) same('archive-profile:' + key, value, archive[key]);
     same('archive-source:' + item.sourcePath, item.sourcePath, archive.sourcePath);
     if (typeof archive.contentBase64 !== 'string' || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(archive.contentBase64)) fail('invalid_base64');

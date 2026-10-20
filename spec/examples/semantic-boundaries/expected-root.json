@@ -1,0 +1,7 @@
+{
+  "fictional": true,
+  "expectedRoot": "sha-256:0b0bb14fdd5c29a04a7304c9d5b7fe901c8dd62fb145546e638ccc736efd944a",
+  "trustScope": "Pedagogical anchor delivered separately from bundle.json; not independent third-party trust.",
+  "signatureTrust": "not-established",
+  "usePermission": "not-evaluated"
+}

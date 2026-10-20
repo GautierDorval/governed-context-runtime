@@ -1,0 +1,653 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:governed-context-runtime:evidence:runtime-public-deployment-observation:1",
+  "title": "Descriptive contracts for the October 14 and 19 deployment observation shapes",
+  "description": "Exactly one historical shape must match. Supplemental October 14 sequences have their own intervals. October 19 indexed resources are not a request count.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/captureAndReadbacks"
+    },
+    {
+      "$ref": "#/$defs/applicationAndSmoke"
+    }
+  ],
+  "$defs": {
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "texts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "root": {
+      "type": "string",
+      "pattern": "^sha-256:[0-9a-f]{64}$"
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "observation-utc"
+    },
+    "date": {
+      "type": "string",
+      "format": "observation-date"
+    },
+    "https": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "bytes",
+        "corpusRoot",
+        "route"
+      ],
+      "properties": {
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "$ref": "#/$defs/count"
+        },
+        "corpusRoot": {
+          "$ref": "#/$defs/root"
+        },
+        "route": {
+          "type": "string",
+          "pattern": "^/v0/[^\\s]+$"
+        }
+      }
+    },
+    "captureAndReadbacks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "observer",
+        "population",
+        "startedAt",
+        "finishedAt",
+        "runtimeVersion",
+        "corpusRootDigest",
+        "status",
+        "rawResponsesPublished",
+        "modelInvocation",
+        "limitations",
+        "origin",
+        "capture",
+        "rootFiles",
+        "followupReadback",
+        "declarationReadback"
+      ],
+      "properties": {
+        "schema": {
+          "const": "runtime-public-deployment-observation/1"
+        },
+        "observer": {
+          "const": "producer"
+        },
+        "population": {
+          "const": "producer-initiated-technical-checks"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "finishedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "runtimeVersion": {
+          "$ref": "#/$defs/text"
+        },
+        "corpusRootDigest": {
+          "$ref": "#/$defs/root"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "rawResponsesPublished": {
+          "const": false
+        },
+        "modelInvocation": {
+          "const": false
+        },
+        "limitations": {
+          "$ref": "#/$defs/texts"
+        },
+        "origin": {
+          "$ref": "#/$defs/https"
+        },
+        "capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sha256",
+            "requests",
+            "responseBytes",
+            "redirects",
+            "retries",
+            "snapshotEntriesVerified",
+            "distinctSnapshotRoots",
+            "mcpArtifactReads",
+            "independentPythonChecks"
+          ],
+          "properties": {
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "requests": {
+              "$ref": "#/$defs/count"
+            },
+            "responseBytes": {
+              "$ref": "#/$defs/count"
+            },
+            "redirects": {
+              "$ref": "#/$defs/count"
+            },
+            "retries": {
+              "$ref": "#/$defs/count"
+            },
+            "snapshotEntriesVerified": {
+              "$ref": "#/$defs/count"
+            },
+            "distinctSnapshotRoots": {
+              "$ref": "#/$defs/count"
+            },
+            "mcpArtifactReads": {
+              "$ref": "#/$defs/count"
+            },
+            "independentPythonChecks": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        },
+        "rootFiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "targets",
+            "requests",
+            "responseBytes",
+            "comparison",
+            "sha256"
+          ],
+          "properties": {
+            "targets": {
+              "$ref": "#/$defs/count"
+            },
+            "requests": {
+              "$ref": "#/$defs/count"
+            },
+            "responseBytes": {
+              "$ref": "#/$defs/count"
+            },
+            "comparison": {
+              "$ref": "#/$defs/text"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "followupReadback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "startedAt",
+            "lastPowerShellResponseAt",
+            "nodeRequests",
+            "powerShellRequests",
+            "observedPopSuffixes",
+            "sameRootInHeadersAndBodies",
+            "capabilitiesMatchesObservedOpenApiSchema",
+            "declaredOperations",
+            "packVersion011",
+            "mcpToolsListed",
+            "scope",
+            "capture"
+          ],
+          "properties": {
+            "startedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "lastPowerShellResponseAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "nodeRequests": {
+              "$ref": "#/$defs/count"
+            },
+            "powerShellRequests": {
+              "$ref": "#/$defs/count"
+            },
+            "observedPopSuffixes": {
+              "$ref": "#/$defs/texts"
+            },
+            "sameRootInHeadersAndBodies": {
+              "type": "boolean"
+            },
+            "capabilitiesMatchesObservedOpenApiSchema": {
+              "type": "boolean"
+            },
+            "declaredOperations": {
+              "$ref": "#/$defs/count"
+            },
+            "packVersion011": {
+              "$ref": "#/$defs/text"
+            },
+            "mcpToolsListed": {
+              "$ref": "#/$defs/count"
+            },
+            "scope": {
+              "$ref": "#/$defs/text"
+            },
+            "capture": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sha256",
+                "format",
+                "files",
+                "scope",
+                "rawResponsesPublished"
+              ],
+              "properties": {
+                "sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "format": {
+                  "const": "runtime-followup-capture-manifest/1"
+                },
+                "files": {
+                  "$ref": "#/$defs/count"
+                },
+                "scope": {
+                  "$ref": "#/$defs/text"
+                },
+                "rawResponsesPublished": {
+                  "const": false
+                }
+              }
+            }
+          }
+        },
+        "declarationReadback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "startedAt",
+            "finishedAt",
+            "captureSha256",
+            "requests",
+            "corpusRootDigest",
+            "sourcePath",
+            "archiveUri",
+            "repositoryDigest",
+            "byteLength",
+            "archivedOperations",
+            "liveOperations",
+            "mutableCacheControl",
+            "healthCacheControl",
+            "scope",
+            "declarationCacheControl",
+            "declarationCfCacheStatus"
+          ],
+          "properties": {
+            "startedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "finishedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "captureSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "requests": {
+              "$ref": "#/$defs/count"
+            },
+            "corpusRootDigest": {
+              "$ref": "#/$defs/root"
+            },
+            "sourcePath": {
+              "$ref": "#/$defs/text"
+            },
+            "archiveUri": {
+              "type": "string",
+              "pattern": "^/v0/artifacts/[0-9a-f]{64}$"
+            },
+            "repositoryDigest": {
+              "$ref": "#/$defs/root"
+            },
+            "byteLength": {
+              "$ref": "#/$defs/count"
+            },
+            "archivedOperations": {
+              "$ref": "#/$defs/count"
+            },
+            "liveOperations": {
+              "$ref": "#/$defs/count"
+            },
+            "mutableCacheControl": {
+              "$ref": "#/$defs/text"
+            },
+            "healthCacheControl": {
+              "$ref": "#/$defs/text"
+            },
+            "scope": {
+              "$ref": "#/$defs/text"
+            },
+            "declarationCacheControl": {
+              "$ref": "#/$defs/text"
+            },
+            "declarationCfCacheStatus": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      }
+    },
+    "applicationAndSmoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "observer",
+        "population",
+        "startedAt",
+        "finishedAt",
+        "runtimeVersion",
+        "corpusRootDigest",
+        "status",
+        "rawResponsesPublished",
+        "modelInvocation",
+        "limitations",
+        "origin",
+        "rootFiles",
+        "mcp",
+        "applicationProof",
+        "runtimeSmoke",
+        "provenance"
+      ],
+      "properties": {
+        "schema": {
+          "const": "runtime-public-deployment-observation/1"
+        },
+        "observer": {
+          "const": "producer"
+        },
+        "population": {
+          "const": "producer-initiated-technical-checks"
+        },
+        "startedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "finishedAt": {
+          "$ref": "#/$defs/dateTime"
+        },
+        "runtimeVersion": {
+          "$ref": "#/$defs/text"
+        },
+        "corpusRootDigest": {
+          "$ref": "#/$defs/root"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "rawResponsesPublished": {
+          "const": false
+        },
+        "modelInvocation": {
+          "const": false
+        },
+        "limitations": {
+          "$ref": "#/$defs/texts"
+        },
+        "origin": {
+          "$ref": "#/$defs/https"
+        },
+        "rootFiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "routes",
+            "responses",
+            "surfaces",
+            "comparison",
+            "candidateDifferences"
+          ],
+          "properties": {
+            "routes": {
+              "$ref": "#/$defs/count"
+            },
+            "responses": {
+              "$ref": "#/$defs/count"
+            },
+            "surfaces": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "comparison": {
+              "$ref": "#/$defs/text"
+            },
+            "candidateDifferences": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "mcp": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "jsonRpcRequests",
+            "directRuntimeComparisons",
+            "toolsListed",
+            "checks"
+          ],
+          "properties": {
+            "jsonRpcRequests": {
+              "$ref": "#/$defs/count"
+            },
+            "directRuntimeComparisons": {
+              "$ref": "#/$defs/count"
+            },
+            "toolsListed": {
+              "$ref": "#/$defs/count"
+            },
+            "checks": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "discovery",
+                "current-snapshot",
+                "list-intents",
+                "current-pack-fr",
+                "current-pack-en",
+                "historical-pack"
+              ],
+              "properties": {
+                "discovery": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "tools"
+                  ],
+                  "properties": {
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    }
+                  }
+                },
+                "current-snapshot": {
+                  "$ref": "#/$defs/artifact"
+                },
+                "list-intents": {
+                  "$ref": "#/$defs/artifact"
+                },
+                "current-pack-fr": {
+                  "$ref": "#/$defs/artifact"
+                },
+                "current-pack-en": {
+                  "$ref": "#/$defs/artifact"
+                },
+                "historical-pack": {
+                  "$ref": "#/$defs/artifact"
+                }
+              }
+            }
+          }
+        },
+        "applicationProof": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "startedAt",
+            "finishedAt",
+            "runtimeHealthRequests",
+            "totalRequests",
+            "networkEvidence",
+            "proofSha256",
+            "retainedData"
+          ],
+          "properties": {
+            "startedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "finishedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "runtimeHealthRequests": {
+              "$ref": "#/$defs/count"
+            },
+            "totalRequests": {
+              "$ref": "#/$defs/count"
+            },
+            "networkEvidence": {
+              "type": "boolean"
+            },
+            "proofSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "retainedData": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "runtimeSmoke": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "startedAt",
+            "finishedAt",
+            "mode",
+            "indexedResources",
+            "methods",
+            "robots",
+            "ledgerEnabled",
+            "exitCode",
+            "stdoutSha256"
+          ],
+          "properties": {
+            "startedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "finishedAt": {
+              "$ref": "#/$defs/dateTime"
+            },
+            "mode": {
+              "const": "full"
+            },
+            "indexedResources": {
+              "$ref": "#/$defs/count"
+            },
+            "methods": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "GET",
+                  "HEAD"
+                ]
+              }
+            },
+            "robots": {
+              "$ref": "#/$defs/text"
+            },
+            "ledgerEnabled": {
+              "type": "boolean"
+            },
+            "exitCode": {
+              "$ref": "#/$defs/count"
+            },
+            "stdoutSha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceCommitDeclared",
+            "sourceCommitVerified",
+            "productionSource",
+            "referenceEdition",
+            "runtimeVersionEvidence"
+          ],
+          "properties": {
+            "sourceCommitDeclared": {
+              "type": "boolean"
+            },
+            "sourceCommitVerified": {
+              "type": "boolean"
+            },
+            "productionSource": {
+              "$ref": "#/$defs/text"
+            },
+            "referenceEdition": {
+              "$ref": "#/$defs/text"
+            },
+            "runtimeVersionEvidence": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      }
+    }
+  }
+}

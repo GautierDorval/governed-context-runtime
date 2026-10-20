@@ -8,3 +8,5 @@ export function textBytes(value: string): Uint8Array<ArrayBuffer>;
 export function unitPreimage(unit: Record<string, unknown>, source: string | Uint8Array): Uint8Array<ArrayBuffer>;
 export function artifactPreimage(path: string, bytes: Uint8Array, profile?: string): Uint8Array<ArrayBuffer>;
 export function verifySnapshot(snapshot: any, getArchive: (uri: string) => Uint8Array<ArrayBuffer> | Promise<Uint8Array<ArrayBuffer>>, expectedIntents?: unknown, checks?: Record<string, unknown>[]): Promise<Record<string, unknown>[]>;
+export const V0_RECORD_FIELDS: readonly string[];
+export function unitDigestCoverage(unit: Record<string, unknown>, recipe: unknown): string[];

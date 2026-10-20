@@ -72,3 +72,16 @@ test('mixed DSSE and JWS envelope and non-string inputs are rejected',async()=>{
  for(const a of [{...artifact,payloadType:'application/vnd.in-toto+json',signatures:[]},{...artifact,detachedJws:[]},{...artifact,payloadBase64:{}}])
   assert.equal((await decideConsumption(policy,a)).reason,'signature_required');
 });
+
+test('caller policy mutation after invocation cannot change the in-flight snapshot',async()=>{
+ const p=clone(policy),pending=decideConsumption(p,artifact);
+ p.keys[0].status='revoked';p.allowedKids=[];
+ const admitted=await pending;assert.equal(admitted.decision,'ACCEPTED_FOR_LOCAL_USE');
+ assert.equal((await decideConsumption(p,artifact)).reason,'KEY_NOT_ACTIVE');
+ assert.notEqual((await decideConsumption(p,artifact)).policyDigest,admitted.policyDigest);
+});
+test('another purpose does not reuse an earlier inspect-context permission',async()=>{
+ assert.equal((await decideConsumption(policy,artifact)).decision,'ACCEPTED_FOR_LOCAL_USE');
+ const other=await decideConsumption(policy,artifact,{purpose:'execute'});
+ assert.equal(other.reason,'LOCAL_USE_NOT_ALLOWED');assert.equal(other.signatureValid,true);
+});

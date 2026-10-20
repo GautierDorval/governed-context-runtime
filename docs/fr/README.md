@@ -79,7 +79,7 @@ Une page canonique statique suffit pour une définition simple ou une citation �
 
 ## Preuves
 
-Séparer les observations datées du producteur sur l’instance hébergée, la vérification technique locale et les expériences externes sur des modèles. Data, une projection publique, cette documentation et un paragraphe du site peuvent décrire la même archive. Ce ne sont pas quatre confirmations indépendantes. Les effets sur la fidélité des réponses restent à évaluer.
+Séparer les observations datées du producteur sur l’instance hébergée, la vérification technique locale et les expériences externes sur des modèles. Une archive de données, une projection publique, cette documentation et un paragraphe du site peuvent décrire la même archive. Ce ne sont pas quatre confirmations indépendantes. Les effets sur la fidélité des réponses restent à évaluer.
 
 [Observations datées et portée des preuves](../../evidence/README.md)
 
@@ -92,3 +92,7 @@ La publication evidence/publication.json est synthétique. Son empreinte permet 
 Dans la démonstration fictive, une racine et une politique de clé de test épinglées localement précèdent la vérification du reçu. L’instantané complet lie ensuite archives, profils, identités de packs, références d’unités, octets sources et registres de transformations. Les deux étapes doivent réussir avant l’inspection locale. La référence de confiance fournie est pédagogique, sans constituer un service de signature de production.
 
 [Vérification](../verification.md) · [Schémas](../schemas.md) · [Preuves](../../evidence/README.md) · [Sécurité](../../SECURITY.md) · [Droits](../../NOTICE.md)
+
+## Inspection locale du pack complet
+
+[Kit de reproduction](reproduction.md) · [Sémantique des packs](pack-semantics.md) · [Protocole comparatif préparé](../model-comparison.md).

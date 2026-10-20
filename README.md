@@ -73,3 +73,10 @@ Reference edition 0.2.0-proposed. The hosted instance is available separately an
 ## Licence
 
 Code and configuration are available under the [Apache License 2.0](LICENSE). Documentation, diagrams and evidence are available under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). The project identity visuals are not licensed for reuse. See [rights and licences](NOTICE.md) and the per-file [rights register](rights.json). Participation follows the [code of conduct](CODE_OF_CONDUCT.md).
+
+## Offline consumer and interpretation boundaries
+
+Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/reproduction.md),
+[English pack semantics](docs/en/pack-semantics.md) or [French semantics](docs/fr/pack-semantics.md).
+The [prepared comparison protocol](docs/model-comparison.md) has not run a model.
+The [observation contracts](docs/observations.md) validate dated declarations, not production.

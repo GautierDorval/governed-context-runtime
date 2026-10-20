@@ -120,3 +120,21 @@ for (const mode of ['current','historical']) {
   }
  }
 }
+
+// New admitted roots are deliberate; the old root still refuses before retrieval.
+for(const variant of ['indented','reordered','trailing-newline']) test('noncanonical readdressed envelope: '+variant,async()=>{
+ const b=await loadDemo(),original=b.snapshot.corpusRootDigest,item=b.snapshot.inventory.items[0];
+ const envelope=strictParse(Buffer.from(b.archives[item.uri],'base64'));
+ const raw=Buffer.from(variant==='indented'?JSON.stringify(envelope,null,2):variant==='reordered'?JSON.stringify(Object.fromEntries(Object.entries(envelope).reverse())):Buffer.from(canonical(envelope)).toString()+'\n');
+ const rawDigest=await digest(raw);
+ assert.notEqual(rawDigest,await digest(canonical(envelope)));
+ delete b.archives[item.uri];item.digest=rawDigest;item.uri='/v0/artifacts/'+rawDigest.slice(8);b.archives[item.uri]=raw.toString('base64');
+ b.snapshot.corpusRootDigest=await digest(canonical(b.snapshot.inventory));b.snapshot.snapshotId='governed-context-runtime:'+b.snapshot.corpusRootDigest;
+ assert.notEqual(b.snapshot.corpusRootDigest,original);
+ assert.equal(await digest(Buffer.from(b.archives[item.uri],'base64')),item.digest);
+ await assert.rejects(()=>verifySnapshot(b.snapshot,uri=>Buffer.from(b.archives[uri],'base64'),b.expectedIntents),{name:'VerificationError',message:'noncanonical_archive_envelope'});
+ let reads=0;
+ const {inspectVerifiedUnit}=await import('../examples/verified-unit.mjs');
+ await assert.rejects(()=>inspectVerifiedUnit({snapshotBytes:canonical(b.snapshot),unitBytes:canonical(b.snapshot.inventory.units[0]),expectedRoot:original,getArchive:()=>{reads++;throw Error('unreachable');}}),/unexpected_corpus_root/);
+ assert.equal(reads,0);
+});

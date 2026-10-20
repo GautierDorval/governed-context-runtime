@@ -1,0 +1,140 @@
+{
+  "schema": "runtime-reproduction-cases/1",
+  "cases": [
+    {
+      "id": "nominal-en",
+      "expected": {
+        "status": "ACCEPTED_FOR_LOCAL_USE",
+        "stage": "LOCAL_PERMISSION",
+        "reason": "EXACT_LOCAL_RULE",
+        "delivered": true
+      }
+    },
+    {
+      "id": "nominal-fr",
+      "expected": {
+        "status": "ACCEPTED_FOR_LOCAL_USE",
+        "stage": "LOCAL_PERMISSION",
+        "reason": "EXACT_LOCAL_RULE",
+        "delivered": true
+      }
+    },
+    {
+      "id": "captured-archive",
+      "expected": {
+        "status": "ACCEPTED_FOR_LOCAL_USE",
+        "stage": "LOCAL_PERMISSION",
+        "reason": "EXACT_LOCAL_RULE",
+        "delivered": true
+      }
+    },
+    {
+      "id": "wrong-root",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "TECHNICAL_VERIFICATION",
+        "reason": "receipt_root",
+        "delivered": false
+      }
+    },
+    {
+      "id": "invalid-signature",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "TECHNICAL_VERIFICATION",
+        "reason": "invalid_signature",
+        "delivered": false
+      }
+    },
+    {
+      "id": "algorithm",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "TECHNICAL_VERIFICATION",
+        "reason": "protected_header_policy",
+        "delivered": false
+      }
+    },
+    {
+      "id": "missing-archive",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "SNAPSHOT",
+        "reason": "missing_archive",
+        "delivered": false
+      }
+    },
+    {
+      "id": "altered-archive",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "SNAPSHOT",
+        "reason": "archive-envelope:data/runtime/context-pack-composition-policy.json",
+        "delivered": false
+      }
+    },
+    {
+      "id": "unknown-intent",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "SNAPSHOT",
+        "reason": "exact_pack_not_found",
+        "delivered": false
+      }
+    },
+    {
+      "id": "wrong-language",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "SNAPSHOT",
+        "reason": "exact_pack_not_found",
+        "delivered": false
+      }
+    },
+    {
+      "id": "wrong-version",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "SNAPSHOT",
+        "reason": "exact_pack_not_found",
+        "delivered": false
+      }
+    },
+    {
+      "id": "not-permitted",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "LOCAL_PERMISSION",
+        "reason": "LOCAL_USE_NOT_ALLOWED",
+        "delivered": false
+      }
+    },
+    {
+      "id": "wrong-purpose",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "LOCAL_PERMISSION",
+        "reason": "LOCAL_USE_NOT_ALLOWED",
+        "delivered": false
+      }
+    },
+    {
+      "id": "expired",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "TECHNICAL_VERIFICATION",
+        "reason": "freshness_policy",
+        "delivered": false
+      }
+    },
+    {
+      "id": "revoked",
+      "expected": {
+        "status": "REFUSED",
+        "stage": "LOCAL_DISPOSITION",
+        "reason": "KEY_NOT_ACTIVE",
+        "delivered": false
+      }
+    }
+  ]
+}

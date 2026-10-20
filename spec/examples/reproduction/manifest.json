@@ -1,0 +1,113 @@
+{
+  "schema": "runtime-reproduction-kit/1",
+  "referenceBaseCommit": "39778036460b3a24a9897a46ee29ca15513c2fe2",
+  "codeRevision": "Record the final checkout commit separately in the reproduction report; no self-referential commit identity.",
+  "nodeMinimum": "24.17.0",
+  "runtimeDependencies": [],
+  "networkRequired": false,
+  "testOnly": true,
+  "schemaVersions": {
+    "snapshot": "0.1.0-proposed",
+    "consumer": "runtime-local-consumer/0.1.0-proposed",
+    "receipt": "detached-jws-ed25519-test-v1"
+  },
+  "casesFile": "spec/examples/reproduction/cases.json",
+  "additionalWitness": "historical-v0",
+  "files": [
+    {
+      "path": "docs/en/reproduction.md",
+      "bytes": 7443,
+      "sha256": "be9fc595c928b980110d68aa4d16d5dc7762693a1450d4b9da25c2be5cb24847"
+    },
+    {
+      "path": "docs/fr/reproduction.md",
+      "bytes": 7877,
+      "sha256": "29ee1282a4b08569a0616c56b18d431b00cf6c82d55c6180eb925f95694e272f"
+    },
+    {
+      "path": "spec/attestation-recipes.json",
+      "bytes": 3410,
+      "sha256": "f878d67aa77a470cd7bbce0a32ee8c8e8a1d3318fd76dc0a217a1604c4ed94a1"
+    },
+    {
+      "path": "spec/context-pack-manifest.schema.json",
+      "bytes": 2689,
+      "sha256": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289"
+    },
+    {
+      "path": "spec/context-pack.schema.json",
+      "bytes": 11309,
+      "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5"
+    },
+    {
+      "path": "spec/examples/demo.mjs",
+      "bytes": 2991,
+      "sha256": "2905dae63337d63aae1f1ffaf1b5c408490ee15422abe7194f85c34721d62ab4"
+    },
+    {
+      "path": "spec/examples/reproduction/benchmark.mjs",
+      "bytes": 2969,
+      "sha256": "144ae2a9fe47dadbc81a812e9295a7b62025d37fa249b5ddb4d2facbad417a18"
+    },
+    {
+      "path": "spec/examples/reproduction/build-manifest.mjs",
+      "bytes": 1920,
+      "sha256": "ba2dd0eb3b7a75149175172215689194025c63f1452cbdce21c3e79cf971caa7"
+    },
+    {
+      "path": "spec/examples/reproduction/cases.json",
+      "bytes": 3167,
+      "sha256": "99353d9918894d890501ac31173db20f10c221100bb51664a7f2256f27623175"
+    },
+    {
+      "path": "spec/examples/reproduction/policy.json",
+      "bytes": 827,
+      "sha256": "08dcce9aefa2f299c15cd26fb2d098b0e2c3741e0ffa16ce86a09035d64dc7b8"
+    },
+    {
+      "path": "spec/examples/reproduction/report-template.json",
+      "bytes": 674,
+      "sha256": "da93090ce4961c08b02b601fa87e91a54fb5251595795ba1a4640b416d11cfd3"
+    },
+    {
+      "path": "spec/examples/reproduction/run.mjs",
+      "bytes": 8045,
+      "sha256": "b68ba5b04cd060f6cfb916dcc9e9bef91a638ee075ad83a88b4a60dcf8b315e0"
+    },
+    {
+      "path": "spec/examples/synthetic/bundle.json",
+      "bytes": 46818,
+      "sha256": "0097fe492042f61542d30d48c2dff2918e7f0ba836089dea1a3d6b9645510b74"
+    },
+    {
+      "path": "spec/examples/verified-pack.mjs",
+      "bytes": 5521,
+      "sha256": "14c8d68638117cb4290c0ebd6b40276cadc4c1a4462e8031080c2a5814d61ca7"
+    },
+    {
+      "path": "spec/intent-registry.schema.json",
+      "bytes": 5090,
+      "sha256": "bd91e71cbdcd6f73955db25ea907a2e4574809169ef3932a939c7a0bff254eb6"
+    },
+    {
+      "path": "spec/reference/consumer.mjs",
+      "bytes": 4671,
+      "sha256": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904"
+    },
+    {
+      "path": "spec/reference/signatures.mjs",
+      "bytes": 5646,
+      "sha256": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68"
+    },
+    {
+      "path": "spec/reference/verification.mjs",
+      "bytes": 19579,
+      "sha256": "7353e1ae7ef56f6977fcc113e70ed883467ae27eb0d05094daf312b3e32a7c62"
+    },
+    {
+      "path": "spec/runtime-snapshot.schema.json",
+      "bytes": 3234,
+      "sha256": "2ada744dd64df36fac0ec4cdcf26784331d21e926a119917bb37be4a316f14e0"
+    }
+  ]
+}

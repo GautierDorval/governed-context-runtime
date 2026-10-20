@@ -4,13 +4,27 @@ This directory separates three kinds of material: the fictional offline verifica
 
 Run `npm test` for reference checks, the complete fictional context exercise, and the existing synthetic public-evidence projection. Run `npm run demo` for the shortest path from receipt to verified snapshot.
 
-Both examples are synthetic. They measure no production activity, adoption or effect on model answers. Expected rejection cases are successful controls, not service incidents. The context fixture and evidence publication are distinct artifacts; their identifiers and roots must not be conflated.
+The fictional examples and metric projection are synthetic. They measure no production activity, adoption or effect on model answers. Expected rejection cases are successful controls, not service incidents. The context fixture and evidence publication are distinct artifacts; their identifiers and roots must not be conflated.
 
 The synthetic projection in `evidence/publication.json` preserves measured, measured-zero, partial, unavailable and non-applicable states. Missing values are not zero. Its digest supports integrity checks; it does not authenticate the source or prove completeness of a private source. Real-data export is not supported by this edition. Publication thresholds alone do not prevent inference across reports or overlapping periods.
 
 The reference checks are producer validation. Documentation, a repository and a site rendering of the same evidence are one lineage, not independent confirmations. External model experiments: `NOT_RUN`. Production transport and current deployment are not established by these offline tests.
 
 [Verification limits](../docs/verification.md) · [Synthetic publication](publication.json)
+
+## Artifact provenance and scope
+
+| Artifact | Role and identity | Evidence boundary |
+|---|---|---|
+| [evidence/publication.json](publication.json) | Preserved synthetic metric projection, publication ID `sha-256:e03c7c3249b4e7eba0b9115af3f7c68d71d7abab7b28e7256f24bfc25d8927bd`. | Its `01aef227…` root is documentary context. Reusing that identifier does not authenticate a link to measured activity or make the projection production telemetry. |
+| [spec/public-evidence/fixture.mjs](../spec/public-evidence/fixture.mjs) | Factory for separate synthetic projection tests, including its own placeholder root and observations. | It is not the generator or a second independent confirmation of the preserved publication above. |
+| [spec/examples/synthetic/bundle.json](../spec/examples/synthetic/bundle.json) | Original complete fictional snapshot/receipt exercise. | Its root, receipt and synthetic provenance remain distinct from the metric projection and hosted service. |
+| [spec/examples/semantic-boundaries/bundle.json](../spec/examples/semantic-boundaries/bundle.json) | Separate fictional semantic example with its own context and receipt. | It illustrates conditions, limits and source relationships; it is neither a production corpus nor an external-model experiment. |
+| [October 12](instance-2026-10-12.json), [October 14](instance-2026-10-14.json) and [October 19](instance-2026-10-19.json) | Dated producer observations with their original bytes, dates, counts and historical roots. | No raw response bodies are published, no current hosted check is performed by the offline suite, and no independent organization is authenticated by the summaries. |
+
+These artifacts do not form several independent confirmations of one event. A byte digest establishes correspondence to committed bytes; a canonical digest does so under its declared representation profile. Matching bytes alone cannot distinguish reading a stored file from deterministic reconstruction of the same content by a server. A verified snapshot binds related artifacts under the admitted root; a test signature checks its cryptographic test profile; a local decision applies the supplied policy. None of those facts substitutes for a model evaluation, which remains `NOT_RUN` here.
+
+The [observation contracts](../docs/observations.md) validate each historical shape and its bounded date/count relationships with a separate local schema catalogue. They preserve the producer's declared result and report recalculated internal consistency separately. The [hosted diagnostic dossier](../docs/hosted-diagnostics.md) records the unresolved lifecycle/`initialize` cases, their missing captures and `NOT_RUN` status without replacing historical results.
 
 ## Historical hosted instance observation, October 12, 2026
 

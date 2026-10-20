@@ -71,7 +71,9 @@ npm test
 
 ## 3. Read the same pack through MCP
 
-The adapter accepts `POST https://context.gautierdorval.com/mcp`. Its served profile uses revision **`2026-07-28`**, `server/discover` discovery and the per-request metadata below. A client requiring the older `initialize` exchange is unsuitable for this profile. Compatibility with a particular application needs verification; an MCP URL alone does not establish it. The clients actually tested are listed under [Tested clients](#tested-clients).
+The adapter is described at `POST https://context.gautierdorval.com/mcp`, with revision **`2026-07-28`**, `server/discover` and the per-request metadata below. The [official transport](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) requires both JSON and SSE in `Accept`. The [shared reader](../../spec/examples/read-mcp-response.mjs) then selects decoding from the received `Content-Type`. Its function accepts an injected response and performs no network request.
+
+Run the following from the repository root with PowerShell 7 and Node.js 24.17.0 or newer. **Its explicit `fetch` calls the hosted service**; repository tests do not execute those calls. Redirects are refused. For a fully offline exercise, run `node --test test/mcp-response.test.mjs`. Correcting this guide is not a new production observation. The October 14 MCP row describes the earlier snippet checked by the producer; it does not qualify this new JSON/SSE reader. Earlier observations remain under [Tested clients](#tested-clients).
 
 ```powershell
 $mcpUri = 'https://context.gautierdorval.com/mcp'
@@ -84,19 +86,14 @@ $mcpMeta = @{
     'io.modelcontextprotocol/clientCapabilities' = @{}
 }
 $mcpHeaders = @{
-    'Accept' = 'application/json'
+    'Accept' = 'application/json, text/event-stream'
+    'Content-Type' = 'application/json'
     'MCP-Protocol-Version' = $mcpVersion
-    'Mcp-Method' = 'server/discover'
 }
 $discoveryBody = @{
     jsonrpc = '2.0'; id = 1; method = 'server/discover'
     params = @{ _meta = $mcpMeta }
-} | ConvertTo-Json -Depth 10
-Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
-    -Headers $mcpHeaders -Body $discoveryBody
-
-$mcpHeaders['Mcp-Method'] = 'tools/call'
-$mcpHeaders['Mcp-Name'] = 'get_context_pack'
+} | ConvertTo-Json -Depth 10 -Compress
 $packBody = @{
     jsonrpc = '2.0'; id = 2; method = 'tools/call'
     params = @{
@@ -106,21 +103,40 @@ $packBody = @{
             intentToken = 'representation-gap'; lang = 'fr'; version = '0.1.0'
         }
     }
-} | ConvertTo-Json -Depth 10
-$reply = Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
-    -Headers $mcpHeaders -Body $packBody
-if ($reply.error -or $reply.result.isError) { throw 'MCP read rejected' }
-$envelope = $reply.result.content[0].text | ConvertFrom-Json
-$bytes = [Convert]::FromBase64String($envelope.contentBase64)
-$observedDigest = 'sha-256:' + [Convert]::ToHexString(
-    [Security.Cryptography.SHA256]::HashData($bytes)
-).ToLowerInvariant()
-if ($observedDigest -ne $envelope.artifactDigest) { throw 'Digest mismatch' }
+} | ConvertTo-Json -Depth 10 -Compress
+$readerScript = @'
+import {createHash} from 'node:crypto';
+import {readMcpResponse, extractMcpArtifact} from './spec/examples/read-mcp-response.mjs';
+const [uri, headerJson, ...bodies] = process.argv.slice(2);
+for (const body of bodies) {
+  const request = JSON.parse(body);
+  const headers = {...JSON.parse(headerJson), 'Mcp-Method': request.method};
+  if (request.method === 'tools/call') headers['Mcp-Name'] = request.params.name;
+  const response = await fetch(uri, {
+    method: 'POST', headers, body, redirect: 'error', signal: AbortSignal.timeout(10_000),
+  });
+  const reply = await readMcpResponse(response, {requestId: request.id});
+  if (reply.kind === 'rpc-error') throw new Error('jsonrpc_error: ' + JSON.stringify(reply.message.error));
+  if (request.method !== 'tools/call') continue;
+  const extracted = extractMcpArtifact(reply);
+  if (extracted.status !== 'artifact') throw new Error('mcp_result: ' + extracted.status);
+  const observedDigest = 'sha-256:' + createHash('sha256').update(extracted.artifactBytes).digest('hex');
+  if (observedDigest !== extracted.envelope.artifactDigest) throw new Error('artifact_digest_mismatch');
+  console.log({observedDigest, byteLength: extracted.artifactBytes.length, snapshotVerified: false});
+}
+'@
+$readerScript | node --input-type=module - $mcpUri ($mcpHeaders | ConvertTo-Json -Compress) $discoveryBody $packBody
 ```
 
-PowerShell 7 is required for this example. The final comparison checks only the transported bytes against their declared digest. It does not replace snapshot verification under a pinned root. No model answer is generated.
+The reader limits each body to **1,048,576 bytes** (`maxBytes`) and its reading to **10,000 ms** (`timeoutMs`). These configurable values accommodate the suite's small fictional responses; they do not qualify the size of every hosted archive. The response ceiling is separate from the 16 KiB request limit. The example's `fetch` also limits connection, headers and body together to ten seconds.
 
-The eight tools are `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` and `verify_pack_digest`. Arguments are closed: declared identifiers, FR/EN languages, registered versions and digests. No prompt or arbitrary URL is expected. Requests are limited to 16 KiB; browser calls are limited to the authorized site and Runtime origins.
+Complete SSE events follow the [SSE grammar](https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream): comments are ignored, CR/LF/CRLF line endings work, `data:` lines are joined and UTF-8 decoding spans chunk boundaries. This example refuses invalid UTF-8 and named events other than `message`. It stops at the terminal response, cancels reading and never reconnects. EOF without a complete response, a different identifier (including its type), an unknown media type or an exceeded limit produces a diagnostic.
+
+A JSON-RPC error remains `rpc-error`, including under HTTP 200. A [tool result](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) with `isError: true` remains `tool-error`. Extraction requires `resultType: complete` and a single text block containing the Runtime envelope; results needing another step, unknown types and resource links yield no usable artifact. No returned link is followed. This finite reader is not a universal MCP SDK: version negotiation, older `initialize`, sessions, subscriptions and additional exchanges are out of scope.
+
+The transport envelope is ordinary JSON, without the Runtime artifacts' numeric profile. `contentText` retains the received text and `artifactBytes` retains the decoded `contentBase64` bytes, including BOM, spaces and line endings. The comparison above checks only their declared digest. Pass those same bytes to the verifier without reserializing JSON, then verify the complete snapshot under a separately supplied root. No model answer is generated.
+
+The eight historically recorded tools are `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` and `verify_pack_digest`. Their arguments are closed: declared identifiers, FR/EN languages, registered versions and digests. No prompt or arbitrary URL is expected. Requests are limited to 16 KiB; browser calls are limited to the authorized site and Runtime origins.
 
 ## Tested clients
 
@@ -129,7 +145,7 @@ Results of **October 14, 2026**, on loopback services: the resolver and the MCP 
 | Client type | Client and version | Transport and revision | Steps executed | Result |
 |---|---|---|---|---|
 | HTTP script | PowerShell 7.6.6 `Invoke-RestMethod`, snippet of section 1 (EN and FR guides) | REST | Registry, French pack and manifest | Passed |
-| HTTP script | PowerShell 7.6.6, MCP snippet of section 3 (EN and FR guides) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, base64 decoding, digest comparison | Passed |
+| HTTP script | PowerShell 7.6.6, historical MCP snippet captured on October 14 (replaced in section 3) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, base64 decoding, digest comparison | Passed |
 | HTTP checks | Node.js 24.17.0 and Python 3.14.6 | REST | 1,781 checks each: snapshot, archives, packs, manifests, digests | Passed |
 | MCP SDK | `@modelcontextprotocol/client` 2.3.1 on Node.js 24.17.0 | Streamable HTTP, revision pinned to `2026-07-28` | Resource discovery and reading, complete snapshot verification, `tools/call`, historical resources | Passed |
 | Independent MCP client | Python 3.14.6 standard library | POST JSON-RPC, `2026-07-28` | Same steps, written separately | Passed |
@@ -154,7 +170,7 @@ The [synthetic projection](../../evidence/publication.json) remains an exercise 
 
 The raw v0 unit response is not a self-contained verified context. `X-Corpus-Root-Digest` accompanies its HTTP response and is exposed to browser JavaScript; a tool that forwards only the JSON body loses that header. MCP carries the root in its transport envelope. Neither location proves membership by itself.
 
-The [consumer example](../../spec/examples/verified-unit.mjs) accepts a unit body, a complete snapshot, its archives and a root supplied separately by local policy. It verifies the snapshot, compares the **entire unit record** with the verified inventory, and returns the selected source value together with the verification scope. Its coverage fields come from the recipe archived inside that snapshot. The historical envelope digest covers only `requiredFieldsInPreimage`; all other record fields are listed as outside that digest. In particular, the selected value and its type and transformation arrays require the complete snapshot verification.
+The [consumer example](../../spec/examples/verified-unit.mjs) accepts a unit body, a complete snapshot, its archives and a root supplied separately by local policy. It verifies the snapshot, compares the **entire unit record** with the verified inventory, and returns the selected source value together with the verification scope. Coverage comes from the immutable field definition used by the executed v0 preimage algorithm. If archived `requiredFieldsInPreimage` metadata is present, it must describe exactly those seven fields; absence of that optional metadata does not remove their coverage. Contradictory declarations are refused. Selected-value profiles cover no record field directly. In particular, the selected value and its type and transformation arrays require the complete snapshot verification.
 
 ```javascript
 import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
@@ -175,5 +191,7 @@ The explicit retrieval path is `/v0/snapshots/` followed by the 64 hexadecimal c
 Start at the Runtime index, follow `entrypoints.health`, then `externalAdapters.mcp.endpoint` in the health response. `server/discover` and `tools/list` establish the supported protocol and tools; retrieving an artifact is a separate availability check. The REST OpenAPI describes the resolver, not the separate MCP transport.
 
 `/v0/lifecycle` currently lists available snapshot roots with current/archive status and an empty event list. That inventory is not a chronology of production deployments. Its digest ordering supplies no historical publication dates, automatic update policy or persistent rollback protection. `signatureTrust: test-only` remains an explicit limit; the hosted instance is not presented as authenticated end to end by a production signing key.
+
+[Offline complete-pack kit](reproduction.md) · [Pack semantics](pack-semantics.md)
 
 [Doctrine and context on gautierdorval.com](https://gautierdorval.com/en/doctrine/governed-context-runtime/) · [Reference guide](README.md) · [Français](../fr/instance.md)

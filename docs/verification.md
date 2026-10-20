@@ -44,3 +44,50 @@ node --test spec/reference/test-public-finish.mjs
 ```
 
 Tests cover declared profiles, archive metadata, unit references, v0 scope, bounded numbers, JWS header bytes and historical/current separation. The test count belongs to the tested revision, not to a permanent security claim.
+
+## Canonical envelopes and effective coverage
+
+Every archive is checked against its raw-byte digest and address, parsed strictly,
+then compared byte for byte with its portable canonical envelope. Whitespace,
+property reordering or a trailing newline is refused as `noncanonical_archive_envelope`
+even if an operator recalculated and admitted a new root. This is a representation
+check, not a claim that the original root was bypassed. Source bytes inside
+`contentBase64` retain their historical profiles; they are never trimmed to make
+an envelope pass.
+
+`unitDigestCoverage` uses the same immutable seven-field definition as the v0
+preimage calculation. Optional `requiredFieldsInPreimage` metadata must describe
+exactly that set with unique strings; a permutation is accepted with stable report
+order. If the metadata is absent, those seven fields are still hashed. This corrects
+the former report that returned an empty coverage list without changing the preimage.
+A recognized selected-value profile reports no directly covered record fields;
+a present nonempty field declaration is refused. A missing recipe or unknown profile
+is still an error. Returned coverage lists cannot change future verification.
+
+`policyDigest` identifies the full local evaluation, including `now`, not only stable
+rules. `artifactDigest` binds the receipt envelope. Neither replaces verification of
+the snapshot and its archives. `consumeVerifiedPack` reruns that decision and performs
+one full snapshot verification before its callback receives a selected pack. Old
+decisions cannot substitute for a receipt. The caller supplies any updated policy;
+there is no revocation feed or global authorization cache.
+
+[The English reproduction guide](en/reproduction.md) and [French guide](fr/reproduction.md)
+provide the finite offline CLI and the third-party report protocol.
+
+
+### Library input failures and legacy envelope latitude
+
+`consumeVerifiedPack` captures the policy, receipt, snapshot and optional catalogue
+before its first asynchronous check. It returns `REFUSED` for domain decisions and
+snapshot verification refusals. Malformed invocation types or non-cloneable inputs
+reject the promise; callback failures also propagate. Library callers must handle
+both outcomes. Input failures never call the consumer. The lower-level
+`decideConsumption` retains its policy-before-artifact-validation contract.
+
+B01 establishes canonical JSON envelope bytes. It does not additionally close the
+legacy archive member set or require zero unused base64 padding bits. These two
+legacy representations still require their own complete envelope digest, address
+and separately admitted root; neither substitutes bytes under an existing root.
+A stricter archive profile is deferred for compatibility review, not silently
+added to this correction. MCP artifact extraction already requires canonical
+base64 round-tripping, independently of this historical archive profile.

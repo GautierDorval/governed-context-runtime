@@ -79,7 +79,7 @@ Use a static canonical page for a simple definition or an ordinary editorial cit
 
 ## Evidence
 
-Keep dated producer observations of the hosted instance, local technical verification and external model experiments separate. Data, a public projection, this documentation and a site paragraph can describe the same archive; they are not four independent confirmations. Model-fidelity effects remain to be evaluated.
+Keep dated producer observations of the hosted instance, local technical verification and external model experiments separate. A data archive, a public projection, this documentation and a site paragraph can describe the same archive; they are not four independent confirmations. Model-fidelity effects remain to be evaluated.
 
 [Dated observations and evidence scope](../../evidence/README.md)
 
@@ -92,3 +92,7 @@ The publication in evidence/publication.json is synthetic. Its digest supports i
 In the fictional demonstration, a locally pinned root and test key policy precede receipt verification. The complete snapshot then binds archives, profiles, pack identities, unit references, source bytes and transformation registries. Both stages must succeed before local inspection. The bundled trust reference is educational, not a production signing service.
 
 [Verification](../verification.md) · [Schemas](../schemas.md) · [Evidence](../../evidence/README.md) · [Security](../../SECURITY.md) · [Rights](../../NOTICE.md)
+
+## Complete local pack inspection
+
+[Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](../model-comparison.md).

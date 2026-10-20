@@ -47,3 +47,43 @@ Complete fictional receipt-to-snapshot demonstration; stricter metadata and unit
 ## 0.1.0
 
 Initial documentation and offline reference publication.
+
+## Prepared next edition, 2026-10-20
+
+- Reject noncanonical source archive envelopes even under a newly admitted root.
+- Derive v0 record coverage from the actual immutable preimage definition and reject
+  contradictory recipe declarations. Missing optional metadata no longer underreports
+  the seven hashed fields; historical preimages and artifacts are unchanged.
+- Add finite offline JSON/SSE reading, exact whole-pack consumption, a separate bilingual
+  fictional semantic example and a self-identifying consumer reproduction kit.
+- Describe historical observation variants with a separate local catalogue, preserve
+  their bytes and prepare hosted diagnostics without probing the service.
+- Prepare equal-information comparison and external reproduction protocols. Model
+  experiments and exterior reproduction remain NOT_RUN.
+
+No release, tag move, production deployment or new production signing profile is part
+of this candidate. `v0.2.0-proposed` remains attached to its historical state. Cite a
+precise repository commit URL (`/tree/<full-commit>`) and the kit digest for a run;
+the final commit is recorded in the delivery receipt, outside its own source. No DOI
+or new publication date is asserted. The reference edition, pinned schema edition,
+hosted interface version, cryptographic corpus root and pack version are different
+identities. A file at a website root is not a cryptographic corpus root.
+
+Digest agreement cannot distinguish precompiled bytes from identical deterministic
+reconstruction on request. That architecture claim and the measured byte property
+remain distinct. A replayable capture, an [RFC 3161 time commitment](https://www.rfc-editor.org/rfc/rfc3161.html) and [workflow artifact
+provenance](https://docs.github.com/en/actions/concepts/security/artifact-attestations) answer different questions; none makes a producer-controlled execution
+organizationally independent. No timestamp service or attestation infrastructure is
+introduced here. Future work requires separate scope: generic instance profiles,
+published second-language consumer, additional MCP clients, Node 22 qualification,
+stable rule identity separate from dated policy evaluation, production trust lifecycle,
+external time/provenance, multidomain deployment, model evaluation and standards work.
+
+
+Final-review corrections for the prepared edition: nominal reproduction commands
+now select the historical `fictional-1` pack version and are executed from both
+guides by the CLI tests. The pack wrapper captures its receipt before asynchronous
+policy checks. Invocation-error behavior and exact nominal case/language binding
+are explicit. The dated client table labels the replaced October 14 MCP snippet.
+Closing legacy archive members and canonical base64 padding remains a separately
+reviewed compatibility change; it is not part of B01's JSON-byte guarantee.

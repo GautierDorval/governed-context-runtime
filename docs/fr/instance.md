@@ -71,7 +71,9 @@ npm test
 
 ## 3. Lire le même pack par MCP
 
-L’adaptateur répond à `POST https://context.gautierdorval.com/mcp`. Le profil servi utilise la révision **`2026-07-28`**, la découverte `server/discover` et les métadonnées par requête ci-dessous. Un client qui impose l’ancien échange `initialize` ne convient pas à ce profil. La compatibilité avec une application particulière doit être vérifiée ; la présence d’une URL MCP ne suffit pas. Les clients effectivement testés sont recensés sous [Clients testés](#clients-testés).
+L’adaptateur est décrit à `POST https://context.gautierdorval.com/mcp`, avec la révision **`2026-07-28`**, `server/discover` et les métadonnées par requête ci-dessous. Le [transport officiel](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) demande JSON et SSE dans `Accept`. Le [lecteur commun](../../spec/examples/read-mcp-response.mjs) choisit ensuite le décodage selon le `Content-Type` reçu. Sa fonction reçoit une réponse injectée et ne fait aucun accès réseau.
+
+Le parcours suivant se lance depuis la racine du dépôt avec PowerShell 7 et Node.js 24.17.0 ou plus récent. **Son `fetch` explicite appelle le service hébergé** ; il n’est pas exécuté par les tests locaux de ce dépôt. Il refuse les redirections. Pour un essai entièrement hors ligne, lancer `node --test test/mcp-response.test.mjs`. La correction de ce guide ne constitue pas une nouvelle observation de production. La ligne MCP du 14 octobre décrit l’ancien extrait vérifié par le producteur ; elle ne qualifie pas ce nouveau lecteur JSON/SSE. Les anciennes observations restent sous [Clients testés](#clients-testés).
 
 ```powershell
 $mcpUri = 'https://context.gautierdorval.com/mcp'
@@ -84,19 +86,14 @@ $mcpMeta = @{
     'io.modelcontextprotocol/clientCapabilities' = @{}
 }
 $mcpHeaders = @{
-    'Accept' = 'application/json'
+    'Accept' = 'application/json, text/event-stream'
+    'Content-Type' = 'application/json'
     'MCP-Protocol-Version' = $mcpVersion
-    'Mcp-Method' = 'server/discover'
 }
 $discoveryBody = @{
     jsonrpc = '2.0'; id = 1; method = 'server/discover'
     params = @{ _meta = $mcpMeta }
-} | ConvertTo-Json -Depth 10
-Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
-    -Headers $mcpHeaders -Body $discoveryBody
-
-$mcpHeaders['Mcp-Method'] = 'tools/call'
-$mcpHeaders['Mcp-Name'] = 'get_context_pack'
+} | ConvertTo-Json -Depth 10 -Compress
 $packBody = @{
     jsonrpc = '2.0'; id = 2; method = 'tools/call'
     params = @{
@@ -106,21 +103,40 @@ $packBody = @{
             intentToken = 'representation-gap'; lang = 'fr'; version = '0.1.0'
         }
     }
-} | ConvertTo-Json -Depth 10
-$reply = Invoke-RestMethod -Uri $mcpUri -Method Post -ContentType 'application/json' `
-    -Headers $mcpHeaders -Body $packBody
-if ($reply.error -or $reply.result.isError) { throw 'Lecture MCP refusée' }
-$envelope = $reply.result.content[0].text | ConvertFrom-Json
-$bytes = [Convert]::FromBase64String($envelope.contentBase64)
-$observedDigest = 'sha-256:' + [Convert]::ToHexString(
-    [Security.Cryptography.SHA256]::HashData($bytes)
-).ToLowerInvariant()
-if ($observedDigest -ne $envelope.artifactDigest) { throw 'Empreinte incohérente' }
+} | ConvertTo-Json -Depth 10 -Compress
+$readerScript = @'
+import {createHash} from 'node:crypto';
+import {readMcpResponse, extractMcpArtifact} from './spec/examples/read-mcp-response.mjs';
+const [uri, headerJson, ...bodies] = process.argv.slice(2);
+for (const body of bodies) {
+  const request = JSON.parse(body);
+  const headers = {...JSON.parse(headerJson), 'Mcp-Method': request.method};
+  if (request.method === 'tools/call') headers['Mcp-Name'] = request.params.name;
+  const response = await fetch(uri, {
+    method: 'POST', headers, body, redirect: 'error', signal: AbortSignal.timeout(10_000),
+  });
+  const reply = await readMcpResponse(response, {requestId: request.id});
+  if (reply.kind === 'rpc-error') throw new Error('jsonrpc_error: ' + JSON.stringify(reply.message.error));
+  if (request.method !== 'tools/call') continue;
+  const extracted = extractMcpArtifact(reply);
+  if (extracted.status !== 'artifact') throw new Error('mcp_result: ' + extracted.status);
+  const observedDigest = 'sha-256:' + createHash('sha256').update(extracted.artifactBytes).digest('hex');
+  if (observedDigest !== extracted.envelope.artifactDigest) throw new Error('artifact_digest_mismatch');
+  console.log({observedDigest, byteLength: extracted.artifactBytes.length, snapshotVerified: false});
+}
+'@
+$readerScript | node --input-type=module - $mcpUri ($mcpHeaders | ConvertTo-Json -Compress) $discoveryBody $packBody
 ```
 
-PowerShell 7 est requis pour cet exemple. La dernière comparaison contrôle uniquement les octets transportés et leur empreinte déclarée. Elle ne remplace pas la vérification de l’instantané sous une racine épinglée. Aucune réponse de modèle n’est produite.
+Le lecteur borne chaque corps à **1 048 576 octets** (`maxBytes`) et sa lecture à **10 000 ms** (`timeoutMs`). Ces valeurs configurables couvrent les petites réponses fictives de la suite ; elles ne qualifient pas la taille de toutes les archives hébergées. La limite de réponse est distincte des 16 KiB de requête. Le `fetch` de l’exemple borne également la connexion, les en-têtes et le corps à dix secondes.
 
-Les huit outils sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Les arguments sont fermés : identifiants déclarés, langues FR/EN, versions enregistrées et empreintes. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 Kio ; les appels provenant d’un navigateur sont limités aux origines autorisées du site et du Runtime.
+Les événements SSE complets suivent la [grammaire SSE](https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream) : commentaires ignorés, fins de ligne CR/LF/CRLF, lignes `data:` jointes et UTF-8 décodé entre les coupures. L’exemple refuse l’UTF-8 invalide et les événements nommés autres que `message`. Il s’arrête à la réponse terminale, annule la lecture et ne se reconnecte pas. Une fin de flux sans réponse complète, un identifiant différent (y compris son type), un type de média inconnu ou une borne dépassée produit un diagnostic.
+
+Une erreur JSON-RPC reste `rpc-error`, même sous HTTP 200. Le [résultat d’outil](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) `isError: true` reste `tool-error`. L’extracteur exige `resultType: complete` et un unique bloc texte contenant l’enveloppe Runtime ; les résultats nécessitant une autre étape, les types inconnus et les liens de ressources restent sans artefact utilisable. Aucun lien reçu n’est suivi. Ce lecteur fini n’est pas un SDK MCP universel : négociation de version, ancien `initialize`, sessions, abonnements et échanges supplémentaires sont hors périmètre.
+
+L’enveloppe de transport est lue comme JSON ordinaire, sans imposer le profil numérique des artefacts Runtime. `contentText` conserve le texte reçu et `artifactBytes` conserve les octets décodés de `contentBase64`, y compris BOM, espaces et fins de ligne. La comparaison ci-dessus vérifie seulement leur empreinte déclarée. Transmettre ces mêmes octets au vérificateur, sans nouvelle sérialisation JSON, puis vérifier l’instantané complet sous une racine fournie séparément. Aucune réponse de modèle n’est produite.
+
+Les huit outils historiquement recensés sont `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` et `verify_pack_digest`. Leurs arguments sont fermés : identifiants déclarés, langues FR/EN, versions et empreintes enregistrées. Aucun prompt ni URL arbitraire n’est attendu. Les requêtes sont limitées à 16 KiB ; les appels de navigateur sont limités aux origines autorisées du site et du Runtime.
 
 ## Clients testés
 
@@ -129,7 +145,7 @@ Résultats du **14 octobre 2026**, sur des services en boucle locale : le réso
 | Type de client | Client et version | Transport et révision | Étapes exécutées | Résultat |
 |---|---|---|---|---|
 | Script HTTP | PowerShell 7.6.6 `Invoke-RestMethod`, extrait de la section 1 (guides EN et FR) | REST | Registre, pack français et manifeste | Réussi |
-| Script HTTP | PowerShell 7.6.6, extrait MCP de la section 3 (guides EN et FR) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
+| Script HTTP | PowerShell 7.6.6, extrait MCP historique capturé le 14 octobre (remplacé dans la section 3) | POST JSON-RPC, `2026-07-28` | `server/discover`, `tools/call get_context_pack`, décodage base64, comparaison d’empreinte | Réussi |
 | Contrôles HTTP | Node.js 24.17.0 et Python 3.14.6 | REST | 1 781 contrôles chacun : instantané, archives, packs, manifestes, empreintes | Réussi |
 | SDK MCP | `@modelcontextprotocol/client` 2.3.1 sur Node.js 24.17.0 | Streamable HTTP, révision épinglée à `2026-07-28` | Découverte et lecture des ressources, vérification complète de l’instantané, `tools/call`, ressources historiques | Réussi |
 | Client MCP indépendant | Bibliothèque standard de Python 3.14.6 | POST JSON-RPC, `2026-07-28` | Mêmes étapes, écrites séparément | Réussi |
@@ -154,7 +170,7 @@ La [projection synthétique](../../evidence/publication.json) demeure un exercic
 
 La réponse brute d’une unité v0 ne constitue pas un contexte vérifié autonome. L’en-tête HTTP `X-Corpus-Root-Digest` l’accompagne et reste accessible au JavaScript du navigateur. Un outil qui ne transmet que le corps JSON perd cet en-tête. MCP transporte la racine dans son enveloppe. Aucune de ces déclarations ne prouve à elle seule l’appartenance à l’instantané.
 
-L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. Les champs de couverture proviennent de la recette archivée dans cet instantané. L’empreinte historique d’enveloppe ne couvre que `requiredFieldsInPreimage` ; les autres champs sont explicitement recensés hors de cette empreinte. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
+L’[exemple consommateur](../../spec/examples/verified-unit.mjs) reçoit le corps de l’unité, l’instantané complet, ses archives et une racine choisie séparément par la politique locale. Il vérifie l’instantané, compare **tout l’enregistrement de l’unité** à l’inventaire vérifié, puis restitue la valeur sélectionnée avec la portée de vérification. La couverture provient de la définition immuable utilisée par le calcul v0 effectivement exécuté. Si le métachamp archivé `requiredFieldsInPreimage` est présent, il doit décrire exactement ces sept champs ; son absence ne retire pas leur couverture. Les déclarations contradictoires sont refusées. Un profil de valeur sélectionnée ne couvre directement aucun champ d’enregistrement. La valeur sélectionnée, son type et les tableaux de transformations exigent la vérification de l’instantané complet.
 
 ```javascript
 import {inspectVerifiedUnit} from './spec/examples/verified-unit.mjs';
@@ -177,3 +193,5 @@ Partir de l’index Runtime, suivre `entrypoints.health`, puis `externalAdapters
 `/v0/lifecycle` énumère actuellement les racines disponibles avec leur statut courant ou archivé et une liste d’événements vide. Cet inventaire ne constitue pas une chronologie des déploiements en production. Son ordre par empreinte ne fournit ni dates historiques de publication, ni mises à jour automatiques, ni protection persistante contre le retour en arrière. `signatureTrust: test-only` demeure une limite explicite ; l’instance hébergée n’est pas présentée comme authentifiée de bout en bout par une clé de signature de production.
 
 [Doctrine et contexte sur gautierdorval.com](https://gautierdorval.com/doctrine/runtime-contexte-gouverne/) · [Guide de référence](README.md) · [English](../en/instance.md)
+
+[Kit hors ligne de pack complet](reproduction.md) · [Sémantique des packs](pack-semantics.md)
