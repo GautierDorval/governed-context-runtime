@@ -372,7 +372,7 @@
       "path": "records/qualification-edition-2026-10-20.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "b14577e042217c9566d67afadf56057ab59feab24a6070121dac6e8523cf71be"
+      "sha256": "6611e413e9a8b673dee242894542c32025eecea56e57f5284c1409f771a14786"
     },
     {
       "path": "scripts/check-package.mjs",

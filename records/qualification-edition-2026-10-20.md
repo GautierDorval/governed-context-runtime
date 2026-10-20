@@ -61,7 +61,7 @@ npm run demo:semantics -- en
 npm run reproduce -- --policy spec/examples/reproduction/policy.json --suite
 ```
 
-All final commands exit 0. The main suite has **433 tests: 432 pass, 0 fail, 1 Windows symlink skip**, plus **27 detected mutants** and the fictional demonstration/projection checks. Development has **34 pass, 0 fail, 0 skip**. The two semantic demonstrations return `VERIFIED_FICTIONAL_SEMANTIC_CONTEXT`. The reproduction suite returns `PASS`; its refusals never deliver content. The Windows skip is retained as a platform limit, not a pass; a Linux CI result must identify its own commit and counts.
+All final commands exit 0. The main suite has **433 tests: 432 pass, 0 fail, 1 Windows symlink skip**, plus **27 detected mutants** and the fictional demonstration/projection checks. Development has **34 pass, 0 fail, 0 skip**. The two semantic demonstrations return `VERIFIED_FICTIONAL_SEMANTIC_CONTEXT`. The reproduction suite returns `PRODUCER_REPRODUCED` with 16 case verdicts `PASS`; its refusals never deliver content. The Windows skip is retained as a platform limit, not a pass; a Linux CI result must identify its own commit and counts.
 
 The new pilot tests check exact input identities and all coverage pointers, 129 classified pack leaves per language, 560 unique trial identities, 35 appearances per condition at each global position, honest unknowns and condition-specific judging applicability. They cannot prove semantic equivalence of prose; Codex separately read both prose versions against the fictional source. `prose-coverage.json` records the independent review as pending at preparation time; the final review receipt belongs to the immutable containing commit, not to a fabricated experiment result.
 

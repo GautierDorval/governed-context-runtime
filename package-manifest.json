@@ -311,12 +311,12 @@
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
-      "sha256": "b14577e042217c9566d67afadf56057ab59feab24a6070121dac6e8523cf71be",
-      "bytes": 10020
+      "sha256": "6611e413e9a8b673dee242894542c32025eecea56e57f5284c1409f771a14786",
+      "bytes": 10064
     },
     {
       "path": "rights.json",
-      "sha256": "26e0ba5f6c1b36f0c5083d5ea462dcd11179363b0a5f2689d68bdb91133fb5e9",
+      "sha256": "d8cae38bc531e40c9245b6a94af75737d10164f8d387bb2c9b78041cb48b78ff",
       "bytes": 32882
     },
     {
