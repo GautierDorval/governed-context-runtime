@@ -16,13 +16,13 @@
   "files": [
     {
       "path": "docs/en/reproduction.md",
-      "bytes": 7901,
-      "sha256": "e5e6d8fead2292c0ac02d4ca362dbab93abd1ae1915714789edc07fc0eb7d7e3"
+      "bytes": 7941,
+      "sha256": "5acda11ff88aca744f4efe72311cd717561a7004ec54450ffe31dcc06bbe454d"
     },
     {
       "path": "docs/fr/reproduction.md",
-      "bytes": 8361,
-      "sha256": "88d0f65b8036ae9d68638238522602de3929209ebb9fcee6a19e726890c32f42"
+      "bytes": 8428,
+      "sha256": "f342c837d6fcb08a52a7ba2695a46739a9fe03d3e4a5d1ae377758ee6c2baceb"
     },
     {
       "path": "spec/attestation-recipes.json",

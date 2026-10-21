@@ -155,7 +155,7 @@
       "completed empty response",
       "output truncated by the 512-token ceiling"
     ],
-    "policy": "Keep the initial trace and parent opaque trial ID; retry appended after the planned pass with identical inputs. A completed response, including an empty response, semantic refusal or token-limit truncation, is never retried or replaced. Primary response is first completed response; retain partial transport traces separately. Permanently missing responses receive no favourable score.",
+    "policy": "Keep the initial trace and parent opaque trial ID; retry appended after the planned pass with identical inputs. A completed response, including an empty response, semantic refusal or token-limit truncation, is never retried or replaced. Primary response is first completed response; retain partial transport traces separately. Without a completed response, assign neither a dimension label nor a utility judgment; exclude these traces from paired-judgment agreement denominators. Attempt metadata is the parent trial ID plus attemptNumber 1 (initial) or 2 (sole retry), never a new planned trial ID.",
     "extraAttemptCeiling": 560,
     "totalAttemptCeilingPerConfiguration": 1120,
     "judgeCalls": "Separate budget, method and authorization required before execution; not part of 560 responses."

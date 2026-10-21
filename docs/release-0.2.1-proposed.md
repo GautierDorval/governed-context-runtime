@@ -25,6 +25,8 @@ This patch edition includes strict archive acceptance: extra or missing fields a
 
 The prior Claude PASS concerns `f3d68f5edb81d6c2eea79d83f3fedf29dd6a340e`, merged as `962a97576c477b5233271d30256718c60f374430`. The new final review, CI, commit and archive identities belong in the release receipt outside these source bytes; historical results are not relabelled as this release's audit.
 
+The consolidated review also aligned remaining reader status and no-response wording, added mixed-key/trailing-space date counterexamples, clarified retry attempt identity and the boundary between an uninterpretable fragment and PASS, and extended protocol and assembler regression guards. Editorial semantic equivalence still requires review; hashes and tests do not prove it.
+
 ## Citation, rights and independent review
 
 CFF carries the reviewed date `2026-10-21` and deliberately omits a global `license` field. [NOTICE](../NOTICE.md) and [rights.json](../rights.json) retain file-specific rights; no licence text or reserved visual changes. Date consistency is a metadata check, not proof of publication.
@@ -38,6 +40,8 @@ Cette préversion de référence `0.2.1-proposed` est préparée pour publicatio
 La qualification locale couvre 11 snapshots, 132 sélections et 13 échanges locaux avec l’adaptateur réel. Sept contrôles de cycle de vie réussissent. Le corpus privé n’a pas été inspecté indépendamment par le relecteur du code public. Les diagnostics hébergés, le rapprochement du trafic et la reproduction externe restent `NOT_RUN`.
 
 Les quatre observations sont traitées ensemble : formulation FR/EN directement rattachée à la source, contrôles des identifiants et de la comptabilité, règle commune de jugement des réponses vides ou tronquées, procédure de date cohérente. Le [pilote](model-comparison.md), version `four-condition-pilot-3`, reste préparé, sans expérience ni résultat de modèle. Une réponse terminée vide reçoit `UNSCORABLE` sur les dimensions applicables et une utilité `UNDETERMINED`. Pour une réponse tronquée non vide, les violations visibles et omissions exigées échouent ; un fragment ininterprétable n’efface pas ces échecs.
+
+La revue consolidée a aussi harmonisé les statuts de lecture et la règle sans réponse, ajouté des contre-exemples de date, précisé l’identité des reprises et la frontière entre fragment ininterprétable et PASS, puis renforcé les contrôles de protocole et d’assemblage. L’équivalence sémantique éditoriale demande toujours une relecture ; les empreintes et tests ne la prouvent pas.
 
 Avant le commit et l’étiquette de release, fixer la date effective UTC, adapter et revoir sa garde, actualiser le condensat CFF, régénérer puis valider et auditer. Si la publication est reportée, réexaminer la date avant toute étiquette. Les anciennes étiquettes, sources, schémas, racines, observations, licences et visuels réservés sont préservés. La release du paquet ne constitue ni un déploiement ni une preuve sur le service hébergé.
 

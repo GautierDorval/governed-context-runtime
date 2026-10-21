@@ -493,7 +493,7 @@
       "requiredContentOmitted": "FAIL",
       "uninterpretableFragment": "UNSCORABLE",
       "criterionSatisfied": "PASS",
-      "rule": "Judge only received text, without inventing a continuation. A visible violation takes precedence over an uninterpretable fragment. Omission of content explicitly required by an applicable criterion is FAIL, not UNSCORABLE. Use UNSCORABLE only when a fragment cannot be interpreted sufficiently to assess the criterion and no visible failure is established.",
+      "rule": "Judge only received text, without inventing a continuation. A visible violation takes precedence over an uninterpretable fragment. Omission of content explicitly required by an applicable criterion is FAIL, not UNSCORABLE. Use UNSCORABLE only when a fragment cannot be interpreted sufficiently to assess the criterion and no visible failure is established. PASS requires enough interpretable text to establish the criterion; absence of a visible violation in an uninterpretable fragment is insufficient. For claim justification, \"The project is\" is uninterpretable, whereas \"The location is undetermined\" is assessable when no location is supplied. A lone U+200B is nonempty after trim but uninterpretable, not an automatic PASS. Response trimming is distinct from verifier whitespace rules.",
       "utility": "Use the same RESOLVED/PARTIAL/UNDETERMINED criteria on visible information; RESOLVED requires every decisive item and qualification. Truncation alone does not determine utility.",
       "emptyPrecedence": "An empty truncated response follows completedEmpty first."
     },

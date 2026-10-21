@@ -81,7 +81,7 @@ Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/re
 The [English pilot](docs/en/model-comparison.md) and [French pilot](docs/model-comparison.md) prepare four conditions and 560 responses per future configuration: **NOT_RUN**.
 The [observation contracts](docs/observations.md) validate dated declarations, not production.
 
-[Local qualification](docs/en/qualification.md) · [Qualification française](docs/fr/qualification.md) · [Candidate edition notes](docs/release-0.2.1-proposed.md)
+[Local qualification](docs/en/qualification.md) · [Qualification française](docs/fr/qualification.md) · [Reference prerelease notes](docs/release-0.2.1-proposed.md)
 
 ## Licence
 

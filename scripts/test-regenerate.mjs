@@ -372,7 +372,17 @@ for (const variant of ['docs', 'cff', 'lock-root', 'package-and-lock']) {
   );
 }
 
-for (const variant of ['missing', 'different', 'impossible', 'duplicate', 'quoted-key', 'indented']) {
+for (const variant of [
+  'missing',
+  'different',
+  'impossible',
+  'duplicate',
+  'quoted-key',
+  'indented',
+  'trailing-space',
+  'valid-plus-indented',
+  'valid-plus-quoted',
+]) {
   test('release citation refuses changed date metadata after refreshed digests: ' + variant, async t =>
     withCopy(t, async dir => {
       await edit(dir, 'CITATION.cff', text => {
@@ -384,6 +394,9 @@ for (const variant of ['missing', 'different', 'impossible', 'duplicate', 'quote
           duplicate: date + '\n' + date,
           'quoted-key': '"date-released": 2026-10-21',
           indented: '  ' + date,
+          'trailing-space': date + ' ',
+          'valid-plus-indented': date + '\n  date-released: 2026-10-22',
+          'valid-plus-quoted': date + '\n"date-released": 2026-10-22',
         }[variant];
         assert(replacement !== undefined, 'recognized date mutation');
         return text.replace(date, replacement);

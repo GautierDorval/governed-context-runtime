@@ -127,6 +127,9 @@ test('the prepared plan contains no observed outcomes, hidden answer inputs or f
     'classification',
     'judging-rubric.json',
     'prose-coverage.json',
+    'comparison-map.json',
+    'content.json',
+    'id',
   ])
     assert(plan.caseInput.excludedFields.includes(excluded));
   for (const key of ['conditionLabelsSent', 'tools', 'retrieval', 'priorTrialMemory'])
@@ -163,6 +166,7 @@ test('judging distinguishes applicable evidence retention, unsupported claims an
     assert.equal(typeof row.utilityTask, 'string');
     assert.equal(typeof row.noDocumentationExpectation, 'string');
   }
+  assert.deepEqual(plan.review.agreement.justificationCategories, rubric.labels);
   assert.deepEqual(plan.review.agreement.utilityCategories, rubric.outputs.documentaryUtility.categories);
   assert.equal(plan.review.agreement.rawAgreement, 'po = agreements / paired applicable judgments');
   assert.equal(
@@ -335,4 +339,59 @@ test('covered source identifiers point to the prose section that actually contai
       assert(sections[row.section].includes(value), row.sourcePointer + ' -> ' + row.section);
     }
   }
+});
+
+test('normative response and retry prose remains the reviewed protocol', () => {
+  assert.equal(
+    plan.technicalRetries.policy,
+    'Keep the initial trace and parent opaque trial ID; retry appended after the planned pass with identical inputs. A completed response, including an empty response, semantic refusal or token-limit truncation, is never retried or replaced. Primary response is first completed response; retain partial transport traces separately. Without a completed response, assign neither a dimension label nor a utility judgment; exclude these traces from paired-judgment agreement denominators. Attempt metadata is the parent trial ID plus attemptNumber 1 (initial) or 2 (sole retry), never a new planned trial ID.',
+  );
+  assert.equal(
+    plan.review.agreement.missingJudgment,
+    'Exclude unpaired records from agreement, report missing counts; never impute agreement.',
+  );
+  assert.equal(
+    rubric.responseHandling.noCompletedResponse.rule,
+    'No primary completed response means no judgment; retain the technical attempt and partial bytes separately.',
+  );
+  assert.equal(
+    rubric.responseHandling.notApplicable.rule,
+    'Apply the prespecified case/condition map before inspecting empty or truncated content.',
+  );
+  assert.equal(rubric.responseHandling.completedEmpty.utility, 'UNDETERMINED');
+  assert.equal(
+    rubric.responseHandling.completedEmpty.rule,
+    'No applicable dimension receives PASS or FAIL from an empty answer; do not count absence as successful retention or agreement on an inferred claim.',
+  );
+  assert.equal(
+    rubric.responseHandling.truncated.rule,
+    'Judge only received text, without inventing a continuation. A visible violation takes precedence over an uninterpretable fragment. Omission of content explicitly required by an applicable criterion is FAIL, not UNSCORABLE. Use UNSCORABLE only when a fragment cannot be interpreted sufficiently to assess the criterion and no visible failure is established. PASS requires enough interpretable text to establish the criterion; absence of a visible violation in an uninterpretable fragment is insufficient. For claim justification, "The project is" is uninterpretable, whereas "The location is undetermined" is assessable when no location is supplied. A lone U+200B is nonempty after trim but uninterpretable, not an automatic PASS. Response trimming is distinct from verifier whitespace rules.',
+  );
+  assert.equal(
+    rubric.responseHandling.truncated.utility,
+    'Use the same RESOLVED/PARTIAL/UNDETERMINED criteria on visible information; RESOLVED requires every decisive item and qualification. Truncation alone does not determine utility.',
+  );
+  assert.equal(
+    rubric.responseHandling.reviewerAgreement,
+    'Both reviewers apply this same precedence before annotation. Retain empty/truncated counts, initial labels and disagreements; no post-hoc change to rescue scores.',
+  );
+});
+
+test('prompt assembly preserves BOM and rejects missing evidence and unsupported language', () => {
+  const input = {
+    instruction: 'Read',
+    documentationBytes: new Uint8Array([0xef, 0xbb, 0xbf, 0x41]),
+    scenario: {evidence: {}, fr: {question: '?'}},
+    language: /** @type {const} */ ('fr'),
+  };
+  const actual = assemblePilotPrompt(input);
+  assert.deepEqual(
+    Buffer.from(actual),
+    Buffer.from('Read\n<documentation>\n\ufeffA\n</documentation>\n<case>{"evidence":{},"question":"?"}</case>'),
+  );
+  assert.throws(
+    () => assemblePilotPrompt({...input, scenario: /** @type {any} */ ({fr: {question: '?'}})}),
+    /prompt_case/,
+  );
+  assert.throws(() => assemblePilotPrompt({...input, language: /** @type {any} */ ('de')}), /prompt_language/);
 });
