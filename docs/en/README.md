@@ -36,7 +36,7 @@ The gautierdorval.com instance is accessible over HTTP and through a separate MC
 
 ## Reference version
 
-Reference edition 0.2.1-proposed is prepared as a candidate, not yet a tagged release. Contracts remain proposed; the hosted service follows a separate publication lifecycle. Cite the exact executed commit until this edition is published. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
+Reference edition 0.2.1-proposed is a prerelease of proposed contracts. Cite v0.2.1-proposed and the exact executed commit; the GitHub release records its publication. The hosted service follows a separate publication lifecycle. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
 
 ## Choose context
 
@@ -101,4 +101,4 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 [Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](model-comparison.md).
 
-[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Edition candidate](../release-0.2.1-proposed.md). The four-condition pilot is **NOT_RUN**.
+[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.2.1-proposed.md). The four-condition pilot is **NOT_RUN**.

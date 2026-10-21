@@ -250,8 +250,68 @@ test('completed empty and truncated answers are never eligible for technical res
   ]);
   for (const kind of ['completed empty response', 'output truncated by the 512-token ceiling'])
     assert(plan.technicalRetries.ineligible.includes(kind));
-  for (const key of ['completedEmpty', 'tokenLimit', 'transportPartial'])
-    assert.equal(typeof plan.responseAccounting[key], 'string');
+  assert.deepEqual(plan.responseAccounting, {
+    completedEmpty: {
+      received: true,
+      completed: true,
+      retryAllowed: false,
+      preserveRaw: true,
+      judgmentPolicy: 'judging-rubric.json#/responseHandling/completedEmpty',
+    },
+    tokenLimit: {
+      received: true,
+      completed: true,
+      retryAllowed: false,
+      preserveRaw: true,
+      preserveFinishReason: true,
+      judgmentPolicy: 'judging-rubric.json#/responseHandling/truncated',
+    },
+    transportPartial: {
+      received: false,
+      completed: false,
+      preserveRaw: true,
+      preserveError: true,
+      technicalRetryOnly: true,
+      judgment: null,
+    },
+  });
+});
+
+test('trial identity and metadata remain external to the model input', () => {
+  assert.equal(plan.protocolVersion, 'four-condition-pilot-3');
+  assert.equal(
+    plan.trialIdentity,
+    'configurationId/trialNumber(0001..0560), opaque metadata not included in model input',
+  );
+  assert.deepEqual(plan.trialMetadata, ['caseId', 'language', 'repetition', 'condition', 'blockIndex', 'position']);
+  assert(!plan.assembly.payloadFields.some((/** @type {string} */ field) => plan.trialMetadata.includes(field)));
+});
+
+test('both reviewers share empty and truncated judgment precedence without favourable imputation', () => {
+  const handling = rubric.responseHandling;
+  assert.deepEqual(handling.precedence, [
+    'no-completed-response',
+    'not-applicable',
+    'completed-empty',
+    'visible-failure',
+    'required-content-omitted',
+    'uninterpretable-fragment',
+    'criterion-satisfied',
+  ]);
+  assert.equal(handling.noCompletedResponse.label, null);
+  assert.equal(handling.noCompletedResponse.utility, null);
+  assert.equal(handling.notApplicable.label, 'NOT_APPLICABLE');
+  assert.equal(handling.completedEmpty.applicableLabel, 'UNSCORABLE');
+  assert.equal(handling.completedEmpty.utility, 'UNDETERMINED');
+  assert.equal(
+    handling.completedEmpty.definition,
+    'The received text is empty after JavaScript String.prototype.trim; preserve its original bytes.',
+  );
+  assert.equal(handling.truncated.visibleViolation, 'FAIL');
+  assert.equal(handling.truncated.requiredContentOmitted, 'FAIL');
+  assert.equal(handling.truncated.uninterpretableFragment, 'UNSCORABLE');
+  assert.equal(handling.truncated.criterionSatisfied, 'PASS');
+  assert.equal(handling.truncated.emptyPrecedence, 'An empty truncated response follows completedEmpty first.');
 });
 
 test('covered source identifiers point to the prose section that actually contains them', async () => {

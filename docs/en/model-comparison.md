@@ -2,7 +2,7 @@
 
 Language: English · [Français](../model-comparison.md)
 
-**Status: `NOT_RUN`.** No model call, remote judge, observed response or score is produced. Protocol `four-condition-pilot-2` prepares an experiment on seven cases of one fictional service. It retains the equal-information control of the [previous protocol](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md), which planned 280 responses without execution. This plan specifies 560 per configuration.
+**Status: `NOT_RUN`.** No model call, remote judge, observed response or score is produced. Protocol `four-condition-pilot-3` prepares an experiment on seven cases of one fictional service. It retains the equal-information control of the [previous protocol](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md), which planned 280 responses without execution. This plan specifies 560 per configuration.
 
 The [versioned plan](../../spec/examples/semantic-boundaries/experiment-plan.json), [rubric](../../spec/examples/semantic-boundaries/judging-rubric.json) and [prose map](../../spec/examples/semantic-boundaries/prose-coverage.json) fix inputs, expectations, counts and limits. None is given to the model.
 
@@ -27,8 +27,8 @@ Historical pack/text measures remain in `comparison-map.json`: FR 10,328/17,538 
 
 | Language | UTF-8 bytes | Unicode scalars | Tokens |
 |---|---:|---:|---|
-| FR | 3825 | 3682 | NOT_RUN |
-| EN | 3427 | 3422 | NOT_RUN |
+| FR | 3837 | 3695 | NOT_RUN |
+| EN | 3426 | 3421 | NOT_RUN |
 
 No padding equalizes lengths. Tokens must be measured with the chosen tokenizer before calls. A configuration unable to receive complete inputs stops; adaptation requires a new plan version, never silent truncation.
 
@@ -46,7 +46,7 @@ The corresponding French instruction is fixed in the same plan. The output ceili
 
 `7 cases × 2 languages × 4 conditions × 10 repetitions = 560 responses` per configuration. There are 140 four-condition blocks. For zero-based case `c`, language `l` and repetition `r`, rotate the declared order left by `(c + 2*l + r) mod 4`; blocks still follow the declared case/language/repetition order. The fixed case/language/repetition iteration yields 35 appearances of each condition at each global position, but only two or three per position in each ten-repeat subgroup. Each condition appears 17 or 18 times at each position within a language. Case index changes the rotation, but repetition still follows a fixed modulo-four pattern; this is not randomized assignment. No random seed is claimed.
 
-Opaque trial IDs use configuration and sequence number. Case, language, repetition, condition and position are retained as separate metadata, never in model input. At most one additional technical attempt is allowed after the planned pass for transport failure or an explicit transient provider error before any completed response: at most 560 retries and 1,120 total attempts per configuration. Preserve the first trace and parent ID. A semantic refusal or poor answer is never replaced to obtain a better score. The first completed response is retained, including an empty response or one truncated at 512 tokens. Neither is retried. Mark empty/truncated responses, preserve finish reasons, judge only visible content under the same rubric and do not assume an unseen continuation. Empty responses have UNDETERMINED utility, with UNSCORABLE dimensions where necessary; missing content never earns retention credit. Judge calls and retries require their own budget before execution.
+Opaque trial IDs use configuration and sequence number. Case, language, repetition, condition and position are retained as separate metadata, never in model input. At most one additional technical attempt is allowed after the planned pass for transport failure or an explicit transient provider error before any completed response: at most 560 retries and 1,120 total attempts per configuration. Preserve the first trace and parent ID. A semantic refusal or poor answer is never replaced to obtain a better score. The first completed response is retained, including an empty response or one truncated at 512 tokens. Neither is retried. Mark empty/truncated responses, preserve finish reasons, judge only visible content under the same rubric and do not assume an unseen continuation. The rubric’s responseHandling rules are canonical: apply the case/condition applicability map first. A completed empty or whitespace-only answer receives UNSCORABLE for every applicable dimension and UNDETERMINED utility. For nonempty truncated text, a visible violation or omitted content required by an applicable criterion is FAIL. An uninterpretable fragment is UNSCORABLE only if no visible failure is established; a satisfied criterion is PASS. Utility uses the same criteria on visible content. Empty truncated answers follow the empty rule. No missing content earns retention credit. Judge calls and retries require their own budget before execution.
 
 ## Judge against available information
 

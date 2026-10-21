@@ -1,6 +1,6 @@
 {
   "schema": "runtime-pilot-plan/1",
-  "protocolVersion": "four-condition-pilot-2",
+  "protocolVersion": "four-condition-pilot-3",
   "status": "NOT_RUN",
   "cases": [
     "preserve-conditions",
@@ -42,9 +42,9 @@
       },
       "canonical_prose": {
         "path": "fr.canonical-prose.md",
-        "bytes": 3825,
-        "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9",
-        "unicodeScalars": 3682,
+        "bytes": 3837,
+        "sha256": "54e298fe207bf4d74f8ad0d1f551049b5a267947c22930f958f6444296996130",
+        "unicodeScalars": 3695,
         "tokens": null
       },
       "no_documentation": null
@@ -66,9 +66,9 @@
       },
       "canonical_prose": {
         "path": "en.canonical-prose.md",
-        "bytes": 3427,
-        "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c",
-        "unicodeScalars": 3422,
+        "bytes": 3426,
+        "sha256": "914974165a4c1f85403f15a5a1541ab2193615e092f94dab37364f182e180bfb",
+        "unicodeScalars": 3421,
         "tokens": null
       },
       "no_documentation": null
@@ -234,8 +234,28 @@
     "position"
   ],
   "responseAccounting": {
-    "completedEmpty": "Count as received with empty=true; no retry. Judge against the same rubric, with UNSCORABLE where content cannot be assessed, and UNDETERMINED utility. Do not treat absence as successful retention.",
-    "tokenLimit": "Count as received with truncated=true and preserve raw content and finish reason; no retry. Judge only visible content under the same applicability map, using UNSCORABLE where assessment is impossible. Do not infer an unseen continuation or grant success for missing decisive information.",
-    "transportPartial": "Preserve received partial bytes and error, but no completed primary response; only the declared technical retry may follow."
+    "completedEmpty": {
+      "received": true,
+      "completed": true,
+      "retryAllowed": false,
+      "preserveRaw": true,
+      "judgmentPolicy": "judging-rubric.json#/responseHandling/completedEmpty"
+    },
+    "tokenLimit": {
+      "received": true,
+      "completed": true,
+      "retryAllowed": false,
+      "preserveRaw": true,
+      "preserveFinishReason": true,
+      "judgmentPolicy": "judging-rubric.json#/responseHandling/truncated"
+    },
+    "transportPartial": {
+      "received": false,
+      "completed": false,
+      "preserveRaw": true,
+      "preserveError": true,
+      "technicalRetryOnly": true,
+      "judgment": null
+    }
   }
 }

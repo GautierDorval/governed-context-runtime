@@ -2,7 +2,7 @@
 
 Langue : français · [English](en/model-comparison.md)
 
-**Statut : `NOT_RUN`.** Aucun appel de modèle, juge distant, réponse observée ou score n’est produit. Le protocole `four-condition-pilot-2` prépare une expérience sur sept cas d’un service fictif. Il conserve le témoin à information égale du [protocole antérieur](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md) ; celui-ci prévoyait 280 réponses, sans exécution. Le présent plan en prévoit 560 par configuration.
+**Statut : `NOT_RUN`.** Aucun appel de modèle, juge distant, réponse observée ou score n’est produit. Le protocole `four-condition-pilot-3` prépare une expérience sur sept cas d’un service fictif. Il conserve le témoin à information égale du [protocole antérieur](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md) ; celui-ci prévoyait 280 réponses, sans exécution. Le présent plan en prévoit 560 par configuration.
 
 Le [plan versionné](../spec/examples/semantic-boundaries/experiment-plan.json), la [grille](../spec/examples/semantic-boundaries/judging-rubric.json) et la [carte de prose](../spec/examples/semantic-boundaries/prose-coverage.json) fixent les entrées, attentes, effectifs et limites. Ces documents ne sont pas transmis au modèle.
 
@@ -27,8 +27,8 @@ Les mesures historiques pack/texte restent dans `comparison-map.json` : FR 10�
 
 | Langue | Octets UTF-8 | Scalaires Unicode | Jetons |
 |---|---:|---:|---|
-| FR | 3825 | 3682 | NOT_RUN |
-| EN | 3427 | 3422 | NOT_RUN |
+| FR | 3837 | 3695 | NOT_RUN |
+| EN | 3426 | 3421 | NOT_RUN |
 
 Aucun remplissage n’égalise les longueurs. Les jetons seront mesurés avec le jetoniseur effectivement choisi, avant les appels. Une configuration incapable de recevoir les entrées complètes s’arrête ; toute adaptation exige une nouvelle version du plan, sans troncature silencieuse.
 
@@ -48,7 +48,7 @@ La consigne EN correspondante est figée dans le même plan. Le plafond est 512 
 
 `7 cas × 2 langues × 4 conditions × 10 répétitions = 560 réponses` attendues par configuration. Il y a 140 blocs de quatre conditions. Pour les indices de cas `c`, de langue `l` et de répétition `r` partant de zéro, faire une rotation gauche de `(c + 2*l + r) mod 4`. L’ordre des blocs cas/langue/répétition reste fixé. Chaque condition occupe chaque position 17 ou 18 fois par langue, 35 fois globalement et deux ou trois fois par sous-groupe de dix répétitions. Le cas modifie la rotation ; la répétition reste liée à un motif fixe modulo quatre. Ce n’est pas une affectation aléatoire et aucune graine n’est revendiquée.
 
-Les identifiants d’essai opaques contiennent la configuration et un numéro séquentiel. Cas, langue, répétition, condition et position restent des métadonnées distinctes, hors de l’entrée du modèle. Une seule tentative technique supplémentaire est permise, après le passage prévu, pour un échec de transport ou une erreur transitoire explicite du fournisseur avant toute réponse terminée. Le plafond est donc 560 reprises, 1 120 tentatives au maximum par configuration. Garder la trace initiale et l’identifiant parent. Une réponse sémantique refusée ou insatisfaisante n’est jamais remplacée pour obtenir un meilleur résultat. La première réponse terminée est conservée, y compris une réponse vide ou tronquée à 512 jetons, sans reprise. Conserver les marqueurs et motifs de fin. Le jugement porte sur le contenu visible ; `UNSCORABLE` s’applique si une dimension ne peut pas être évaluée. Une réponse vide a une utilité `UNDETERMINED` et ne reçoit aucun crédit de conservation pour du contenu absent. Aucune continuation n’est supposée. Les appels de juges et leurs reprises demandent un budget distinct avant exécution.
+Les identifiants d’essai opaques contiennent la configuration et un numéro séquentiel. Cas, langue, répétition, condition et position restent des métadonnées distinctes, hors de l’entrée du modèle. Une seule tentative technique supplémentaire est permise, après le passage prévu, pour un échec de transport ou une erreur transitoire explicite du fournisseur avant toute réponse terminée. Le plafond est donc 560 reprises, 1 120 tentatives au maximum par configuration. Garder la trace initiale et l’identifiant parent. Une réponse sémantique refusée ou insatisfaisante n’est jamais remplacée pour obtenir un meilleur résultat. La première réponse terminée est conservée, y compris une réponse vide ou tronquée à 512 jetons, sans reprise. Conserver les marqueurs et motifs de fin. Les règles `responseHandling` de la grille sont canoniques : appliquer d’abord la carte d’applicabilité du cas et de la condition. Une réponse terminée vide, ou composée uniquement d’espaces après `String.prototype.trim`, reçoit `UNSCORABLE` pour chaque dimension applicable et une utilité `UNDETERMINED`. Pour un texte tronqué non vide, une violation visible ou l’omission d’un élément exigé par un critère applicable reçoit `FAIL`. Un fragment ininterprétable reçoit `UNSCORABLE` seulement si aucun échec visible n’est établi ; un critère satisfait reçoit `PASS`. L’utilité suit les mêmes critères sur le contenu visible. Une réponse tronquée vide suit la règle du vide. Aucune continuation ni aucun crédit pour un contenu absent n’est supposé. Les appels de juges et leurs reprises demandent un budget distinct avant exécution.
 
 ## Juger selon l’information disponible
 

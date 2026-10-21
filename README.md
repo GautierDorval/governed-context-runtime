@@ -72,7 +72,7 @@ Use a static canonical page for a simple definition or an ordinary editorial cit
 
 The [October 19, 2026 producer observation](evidence/instance-2026-10-19.json) records the deployed service checks: 564 root-file responses, six MCP exchanges with five direct comparisons, and a separate Runtime smoke over 156 indexed resources. The [October 14](evidence/instance-2026-10-14.json) and [October 12](evidence/instance-2026-10-12.json) observations remain historical. These service observations are separate from the [synthetic publication](evidence/publication.json) and fictional demo. They do not establish continuous availability, spontaneous adoption or model-fidelity effects. The [tested-client matrix](docs/en/instance.md#tested-clients) states the clients and versions actually examined.
 
-Reference edition 0.2.1-proposed is prepared as a candidate, not yet a tagged release. Contracts remain proposed; the hosted service follows a separate publication lifecycle. Cite the exact executed commit until this edition is published. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
+Reference edition 0.2.1-proposed is a prerelease of proposed contracts. Cite v0.2.1-proposed and the exact executed commit; the GitHub release records its publication. The hosted service follows a separate publication lifecycle. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
 
 ## Offline consumer and interpretation boundaries
 

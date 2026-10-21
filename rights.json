@@ -60,13 +60,13 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "d5eb9827accdeb7bacacd84c6094128ef5ff496e728bd3639c411914797c6ad9"
+      "sha256": "a6a9a16ece45090c7121ffd730f9ffd8b7c83c29f6a1095f4520972791c484c0"
     },
     {
       "path": "CITATION.cff",
       "source": "citation",
       "license": "CC-BY-4.0",
-      "sha256": "548558e0ef464fb96efc15d29d9ea479baea288adece397f7bd266a4ac08cf5e"
+      "sha256": "fd057ffbcd42a8e38b2ab3372ffadd7e214be40a6c1caf37456d16248a6a19f9"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
@@ -96,7 +96,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "32f66d65a40211ea66e2e575dd01144042d4fc99308d4d518331e2f308a26c61"
+      "sha256": "48f97b5e68c4b3b34ea4c41ed663ff1f820959f510775630d5ac32ac3f2e6dba"
     },
     {
       "path": "NOTICE.md",
@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "314956d1b33f99e6b75ca112fbd69c50a1c45193c58cc849cf9c84f2206269f5"
+      "sha256": "5869fd6746678c5ae334491a79b751900e6c399dd9447ab2e3ff4f1ea7b1942b"
     },
     {
       "path": "SECURITY.md",
@@ -162,7 +162,7 @@
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "94fbc4842eecfccc53acaaa23edacf52788c10467526cae58ab28362a5d9427e"
+      "sha256": "1ba91479e6f9061337a7c3ac28784888b2f24acc0f108cc3b9c731e672cd96d6"
     },
     {
       "path": "docs/en/instance.md",
@@ -174,7 +174,7 @@
       "path": "docs/en/model-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "4a115bf6fc37d31996939ea61334f193adf70107c18581472b3a85a4cd994550"
+      "sha256": "32e95516b0a4364f663c02eebf9a9aa1157504153b7eab6a04e278fc1d2aa66d"
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -198,7 +198,7 @@
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "5e11da135ce60f68dc7840540395a0e382260dc8009e9d86e6b35a2a60e36398"
+      "sha256": "f69c4b1823889756509eae3e12c5761b1e4d6a6dbc9df9b29bc2530c0f06cff7"
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -246,7 +246,7 @@
       "path": "docs/model-comparison.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "9657d249d4c2072ee787a0d7adc003d531960beaa0490072487338c17fc8e830"
+      "sha256": "2f000b01c3e40435b86c092eaa9c02864697e4e3f67245984ca2d2faefaa6bd0"
     },
     {
       "path": "docs/observations.md",
@@ -258,7 +258,7 @@
       "path": "docs/release-0.2.1-proposed.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "e1b71dd9e94fdb5deefc2bd75e4173a1a16cd8ae792545ece5bc1dd617ee2456"
+      "sha256": "44775d672fc7e8c9ae86febb7be0d25f6b19e0f6670ff453d8ed79beadd4a228"
     },
     {
       "path": "docs/schemas.md",
@@ -270,7 +270,7 @@
       "path": "docs/source.json",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "2b25d7671e62cd44df41aba9e36ccfb71c25adbb56e30328814b122810cbfd3f"
+      "sha256": "0c4da8280818ffb28e51eb305847de1eb49af4df6390147382019a25449a607e"
     },
     {
       "path": "docs/verification.md",
@@ -330,7 +330,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "cdebba5b1e00df9affaccb667b0fa4d6c635f33e61b56bb337fe922dd94d3ed7"
+      "sha256": "a17ed5e19f8741294b0fcd17e7ff67139eb21c43e18b3e93cdfd8ef854912206"
     },
     {
       "path": "package.json",
@@ -378,7 +378,7 @@
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "512c8aa287fbf02fdfe689ad78abd66a415153d29a7f3d24378342bb3f557440"
+      "sha256": "9ef29fdfde202874546f394c2039a13c5ef428618652a653a5777dd2d7003e27"
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -420,7 +420,7 @@
       "path": "scripts/test-regenerate.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "1822ccf16ca25a309a2be99f4f4bbb94933a28edfa11e495893d3f68bb67c476"
+      "sha256": "cfe82cad29b64d6ff95016c6f74874ee89d56675e277ac81382bcc49f6064218"
     },
     {
       "path": "spec/LICENSE",
@@ -564,7 +564,7 @@
       "path": "spec/examples/semantic-boundaries/en.canonical-prose.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c"
+      "sha256": "914974165a4c1f85403f15a5a1541ab2193615e092f94dab37364f182e180bfb"
     },
     {
       "path": "spec/examples/semantic-boundaries/en.canonical-text.md",
@@ -594,13 +594,13 @@
       "path": "spec/examples/semantic-boundaries/experiment-plan.json",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "43ae193f6c3da69e938d7cd8797c57349d2689e110623c8fed4ac6e3545d2431"
+      "sha256": "e6035af6f816ddc0f7d35946de003718fb58b426702cba41af0dfa11bad7136f"
     },
     {
       "path": "spec/examples/semantic-boundaries/fr.canonical-prose.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9"
+      "sha256": "54e298fe207bf4d74f8ad0d1f551049b5a267947c22930f958f6444296996130"
     },
     {
       "path": "spec/examples/semantic-boundaries/fr.canonical-text.md",
@@ -630,13 +630,13 @@
       "path": "spec/examples/semantic-boundaries/judging-rubric.json",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7211679b7c8acc36c87906478ec02f1cfa33e824b1f7b54b473c4fede90e8526"
+      "sha256": "778a0ae52c62f42d4c6654375bc67258ae72d9062f0a134a3dd3c5568404c2bc"
     },
     {
       "path": "spec/examples/semantic-boundaries/prose-coverage.json",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "f10771ed9d71c8f8137c4c5152115a5fe5feec25c2e2412eadf9a13a193bc2d1"
+      "sha256": "c49b5bfd0ec7b52cf6703f6d69084c9925f0e7b24507ed37badceb6d8cdb608d"
     },
     {
       "path": "spec/examples/semantic-boundaries/scenarios.json",
@@ -822,7 +822,7 @@
       "path": "test/pilot-plan.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "f57c0bf95e0b2082577a1be181c52b4906fd826f6f2465733e512429453fcefb"
+      "sha256": "540d16d219c6a1835b53d20e5c6e57284397343794ce01b56d30a4614b8d40c2"
     },
     {
       "path": "test/qualification.test.mjs",

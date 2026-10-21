@@ -6,16 +6,16 @@
   "editorialReview": {
     "producer": "Codex",
     "scope": "Bilingual source-to-prose reading; automated references do not prove paraphrase meaning",
-    "independentReview": "Initial df2816d review identified case-specific elaborations; corrected candidate requires a separate exact-commit final receipt.",
+    "independentReview": "Historical final review of f3d68f5 passed with O1-O4 observations. This release closes them; a separate exact-commit receipt must identify its new consolidated review. Historical review is not asserted for changed prose.",
     "policy": "Normative source is content.json only. No scenario-specific illustration or teaching-answer phrase is added unless already stated in that source. Semantic review is required for edits; hashes and pointers alone do not establish paraphrase meaning.",
     "caseSpecificAdditions": []
   },
   "locales": {
     "fr": {
       "file": "fr.canonical-prose.md",
-      "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9",
-      "bytes": 3825,
-      "unicodeScalars": 3682,
+      "sha256": "54e298fe207bf4d74f8ad0d1f551049b5a267947c22930f958f6444296996130",
+      "bytes": 3837,
+      "unicodeScalars": 3695,
       "tokenCount": null,
       "sourceUnits": [
         {
@@ -1113,9 +1113,9 @@
     },
     "en": {
       "file": "en.canonical-prose.md",
-      "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c",
-      "bytes": 3427,
-      "unicodeScalars": 3422,
+      "sha256": "914974165a4c1f85403f15a5a1541ab2193615e092f94dab37364f182e180bfb",
+      "bytes": 3426,
+      "unicodeScalars": 3421,
       "tokenCount": null,
       "sourceUnits": [
         {

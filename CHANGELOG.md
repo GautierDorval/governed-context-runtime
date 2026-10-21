@@ -1,8 +1,8 @@
 # Changes
 
-## Unreleased: 0.2.1-proposed candidate
+## 0.2.1-proposed, 2026-10-21
 
-Prepared edition metadata and citation, real retained-corpus qualification, local MCP binding, bilingual reader guides and historical record relocation. The four-condition semantic pilot remains NOT_RUN, with canonical prose, an empty-document control and separate justification/utility judgments. See [candidate notes](docs/release-0.2.1-proposed.md). No tag, release, merge or new hosted observation is claimed here.
+Reference prerelease with real retained-corpus qualification, local MCP binding, bilingual guides and historical record relocation. The four-condition semantic pilot remains NOT_RUN. Protocol `four-condition-pilot-3` closes the four final review observations: prose follows the source wording, trial metadata and response accounting are pinned, empty/truncated judgments have common precedence, and citation/release-date instructions agree. See [release notes](docs/release-0.2.1-proposed.md). This reference release does not deploy the hosted service or execute a model experiment. Earlier entries below retain their historical preparation status.
 
 ## P3 strict archive acceptance, 2026-10-20
 
