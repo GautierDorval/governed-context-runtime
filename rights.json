@@ -750,7 +750,7 @@
       "path": "spec/reference/test-consumer.mjs",
       "source": "spec/reference/test-consumer.mjs",
       "license": "Apache-2.0",
-      "sha256": "dc5fa4eb6a54fd9cd74d4f79d2f04df87754b6474323eb18acb65b9926589e30"
+      "sha256": "48980a7d8c062de30347c6698e76f7cef70afc1be9ca1325017bdc2a131db366"
     },
     {
       "path": "spec/reference/test-public-finish.mjs",

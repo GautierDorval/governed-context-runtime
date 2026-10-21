@@ -97,6 +97,7 @@ test('another purpose does not reuse an earlier inspect-context permission',asyn
  assert.equal((await decideConsumption(policy,artifact)).decision,'ACCEPTED_FOR_LOCAL_USE');
  const other=await decideConsumption(policy,artifact,{purpose:'execute'});
  assert.equal(other.reason,'LOCAL_USE_NOT_ALLOWED');assert.equal(other.signatureValid,true);
+ assert.equal(other.purpose,'execute');
 });
 
 test('evaluation clock changes policy identity without changing stable rules',async()=>{
