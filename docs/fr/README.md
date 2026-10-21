@@ -36,7 +36,7 @@ L’instance de gautierdorval.com est accessible par HTTP et un adaptateur MCP d
 
 ## Version de référence
 
-L’édition de référence 0.2.1-proposed est préparée comme candidate, sans publication étiquetée à ce stade. Les contrats restent proposés et le service hébergé suit un cycle de publication distinct. Citer le commit exact exécuté tant que cette édition n’est pas publiée. Ce dépôt contient le code de référence hors ligne et des exemples fictifs, sans regrouper le service hébergé, son corpus de production ou un déploiement clé en main pour d’autres domaines.
+L’édition de référence 0.2.1-proposed est une préversion dont les contrats restent proposés. Citer v0.2.1-proposed et le commit exact exécuté ; la release GitHub atteste sa publication. Le service hébergé suit un cycle de publication distinct. Ce dépôt contient le code de référence hors ligne et des exemples fictifs, sans regrouper le service hébergé, son corpus de production ou un déploiement clé en main pour d’autres domaines.
 
 ## Choisir le contexte
 
@@ -101,4 +101,4 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 
 [Kit de reproduction](reproduction.md) · [Sémantique des packs](pack-semantics.md) · [Protocole comparatif préparé](../model-comparison.md).
 
-[Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Édition candidate](../release-0.2.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.
+[Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Préversion de référence](../release-0.2.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.

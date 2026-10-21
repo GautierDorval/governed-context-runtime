@@ -13,7 +13,7 @@ A person wants to know whether the service can take on their project. A short de
 <a id="conditions"></a>
 ## Two conditions that must both be established
 
-The project must be located in Quebec and have a written, favourable technical assessment specific to that project. Both conditions apply together. Describing the service does not establish a project's eligibility; a favourable assessment does not extend the territory to all of Canada.
+The project must be located in Quebec and have a written, favourable technical assessment specific to that project. Both conditions apply together. Do not extend the declared territory from Quebec to all of Canada or treat eligibility as established from the service description alone.
 
 <a id="evidence"></a>
 ## Evidence and its limits

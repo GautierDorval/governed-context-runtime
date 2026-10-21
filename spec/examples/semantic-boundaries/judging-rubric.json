@@ -1,6 +1,6 @@
 {
   "schema": "runtime-pilot-judging/1",
-  "protocolVersion": "four-condition-pilot-2",
+  "protocolVersion": "four-condition-pilot-3",
   "status": "PREPARED",
   "labels": [
     "PASS",
@@ -462,5 +462,41 @@
         }
       }
     }
-  ]
+  ],
+  "responseHandling": {
+    "precedence": [
+      "no-completed-response",
+      "not-applicable",
+      "completed-empty",
+      "visible-failure",
+      "required-content-omitted",
+      "uninterpretable-fragment",
+      "criterion-satisfied"
+    ],
+    "noCompletedResponse": {
+      "label": null,
+      "utility": null,
+      "rule": "No primary completed response means no judgment; retain the technical attempt and partial bytes separately."
+    },
+    "notApplicable": {
+      "label": "NOT_APPLICABLE",
+      "rule": "Apply the prespecified case/condition map before inspecting empty or truncated content."
+    },
+    "completedEmpty": {
+      "definition": "The received text is empty after JavaScript String.prototype.trim; preserve its original bytes.",
+      "applicableLabel": "UNSCORABLE",
+      "utility": "UNDETERMINED",
+      "rule": "No applicable dimension receives PASS or FAIL from an empty answer; do not count absence as successful retention or agreement on an inferred claim."
+    },
+    "truncated": {
+      "visibleViolation": "FAIL",
+      "requiredContentOmitted": "FAIL",
+      "uninterpretableFragment": "UNSCORABLE",
+      "criterionSatisfied": "PASS",
+      "rule": "Judge only received text, without inventing a continuation. A visible violation takes precedence over an uninterpretable fragment. Omission of content explicitly required by an applicable criterion is FAIL, not UNSCORABLE. Use UNSCORABLE only when a fragment cannot be interpreted sufficiently to assess the criterion and no visible failure is established. PASS requires enough interpretable text to establish the criterion; absence of a visible violation in an uninterpretable fragment is insufficient. For claim justification, \"The project is\" is uninterpretable, whereas \"The location is undetermined\" is assessable when no location is supplied. A lone U+200B is nonempty after trim but uninterpretable, not an automatic PASS. Response trimming is distinct from verifier whitespace rules.",
+      "utility": "Use the same RESOLVED/PARTIAL/UNDETERMINED criteria on visible information; RESOLVED requires every decisive item and qualification. Truncation alone does not determine utility.",
+      "emptyPrecedence": "An empty truncated response follows completedEmpty first."
+    },
+    "reviewerAgreement": "Both reviewers apply this same precedence before annotation. Retain empty/truncated counts, initial labels and disagreements; no post-hoc change to rescue scores."
+  }
 }

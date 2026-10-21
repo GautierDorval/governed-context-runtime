@@ -230,10 +230,15 @@ assert(
   !/^\s*["']?license["']?\s*:/m.test(file('CITATION.cff').toString()),
   'CFF lists alternative licences; the split is declared in NOTICE.md',
 );
-assert(
-  !/^\s*["']?date-released["']?\s*:/m.test(file('CITATION.cff').toString()),
-  'candidate CFF must omit date-released',
-);
+// The owner-authorized release fixes this date before the immutable tag is created.
+// This is an edition-specific CFF profile, not a general YAML/date validator.
+const citationDates = [
+  ...file('CITATION.cff')
+    .toString()
+    .matchAll(/^[^\S\r\n]*["']?date-released["']?[^\S\r\n]*:[^\r\n]*/gm),
+];
+assert.equal(citationDates.length, 1, 'edition: exactly one release date');
+assert.equal(citationDates[0][0], 'date-released: 2026-10-21', 'edition: reviewed release date');
 {
   const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);

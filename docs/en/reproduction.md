@@ -118,6 +118,6 @@ promise; domain refusals return `REFUSED`. The CLI catches both and never forwar
 content on failure. See the [input contract](../verification.md).
 
 
-## Candidate edition and qualification
+## Reference prerelease and qualification
 
-Edition `0.2.1-proposed` is prepared, not tagged or released. Record the exact executed commit; `v0.2.0-proposed` still identifies its historical bytes. [Offline retained-byte qualification](qualification.md), [four-condition pilot, NOT_RUN](model-comparison.md) and [candidate notes](../release-0.2.1-proposed.md) describe separate scopes. The signed fictional kit remains distinct from the unsigned semantic example.
+Reference prerelease `0.2.1-proposed` is identified by its remote tag and GitHub release. Cite that tag and the exact executed commit; `v0.2.0-proposed` still identifies its historical bytes. [Offline retained-byte qualification](qualification.md), [four-condition pilot, NOT_RUN](model-comparison.md) and [release notes](../release-0.2.1-proposed.md) describe separate scopes. The signed fictional kit remains distinct from the unsigned semantic example.

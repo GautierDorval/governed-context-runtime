@@ -1,38 +1,48 @@
-# Edition candidate 0.2.1-proposed
+# Reference prerelease 0.2.1-proposed
 
-This is a prepared reference edition, not a published release. It starts from public commit `441598c279832b5521c952de920966a486d79026`. Cite the exact reviewed commit until an actual release exists. No candidate release date or tag is asserted.
+This is the reference package for `v0.2.1-proposed`, with publication scheduled for **2026-10-21 UTC** by the owner's explicit decision. The remote tag and GitHub prerelease establish actual publication; this source file does not. Cite that tag and the exact executed commit. Contracts remain proposed and the hosted service has a separate lifecycle.
 
 ## Edition and compatibility
 
-Package, lockfile (both version locations), package manifest, documentation source and `CITATION.cff` identify `0.2.1-proposed`. The manifest format and historical public specification remain `0.2.0-proposed`; `SCHEMA_EDITION`, four historical schemas, recipes, vectors, synthetic bundles and roots are unchanged. MCP protocol versions and the real health object's `schemaVersion: 0.2.0` name different contracts.
+Package, both lockfile version fields, package manifest, documentation source and `CITATION.cff` identify `0.2.1-proposed`. Historical format identifiers remain `0.2.0-proposed`; schemas, recipes, vectors, synthetic bundles and roots are unchanged. MCP versions and the real health object's historical `schemaVersion: 0.2.0` name different contracts.
 
-This patch edition carries the already merged strict archive acceptance correction and completes its qualification and documentation. It narrows acceptance to the declared archive format; malformed or previously tolerated representations are rejected. It does not claim every prior input remains accepted. See the [P3 record](../records/archive-profile-p3-2026-10-20.md) and [SemVer rules](https://semver.org/).
-
-The historical `v0.2.0-proposed` tag remains attached to commit `ed69a02a83bd0eae53e0755f01d5ea77c4529a65`. It must never be moved. A future tag/release requires a separate owner decision and an immediate check that its identity is unused.
+This patch edition includes strict archive acceptance: extra or missing fields and noncanonical base64 are refused. It narrows accepted input representations and makes no universal backward-compatibility claim. See the [P3 record](../records/archive-profile-p3-2026-10-20.md). The old `v0.2.0-proposed` tag remains at `ed69a02a83bd0eae53e0755f01d5ea77c4529a65`; no existing tag may move.
 
 ## Changes and evidence
 
-Since the old tag, the reference also gained the complete-pack consumer, bounded MCP JSON/SSE reader, observation contracts and offline reproduction kit, with refusal and tampering controls. These earlier merged changes are described in the [consumer delivery record](../records/consumer-report-2026-10-20.md); their dates and audit attributions remain historical.
+- Complete-pack consumer, bounded MCP JSON/SSE reader, observation contracts and offline reproduction kit, preserving their [historical attribution](../records/consumer-report-2026-10-20.md).
+- [Local qualification](en/qualification.md) of 11 retained real snapshots and 132 exact selections, plus one discovery and 12 pack exchanges through the retained real adapter without network calls. Canonical transport bytes and original file bytes remain distinct. Private corpus evidence was not independently inspected by the public-code reviewer.
+- Seven local lifecycle controls. New hosted diagnostics, reconciliation of the six declared audit requests and independent external reproduction remain `NOT_RUN`.
+- Bilingual reader guides and dated records with distinct scopes.
+- [Four-condition pilot](en/model-comparison.md), protocol `four-condition-pilot-3`: 560 planned responses per future configuration, two reviewers, no observed model responses or scores.
 
-- [Offline qualification](en/qualification.md): 11 retained real snapshots, 132 exact pack selections, one local discovery exchange and 12 pack exchanges against the real adapter. Canonical transport bytes and repository file bytes are explicitly distinct.
-- A pure local lifecycle comparison has seven passing controls. New hosted diagnostics and reconciliation of six declared audit requests remain `NOT_RUN`.
-- Consumer guides remain separate from the dated [delivery records](../records/README.md). French observation and diagnostic guides now accompany their English versions.
-- The [four-condition pilot](en/model-comparison.md) adds canonical prose and a documentation-free control. It prepares 560 responses per future configuration, two reviewers and bounded analysis; models, judgments and external reproduction remain `NOT_RUN`.
+## Closure of the four review observations
 
-No historical observation, production state, public signing service, model-fidelity result or independent external reproduction is newly asserted. Private assets and code remain private; published hashes identify retained evidence without making it independently reproducible.
+1. **O1, source wording:** FR/EN prose now states the source's territory and eligibility restrictions directly, without the scenario-specific favourable-assessment formulation. Source, packs and exhaustive texts remain unchanged; prose identities and coverage are refreshed.
+2. **O2, protocol guards:** tests pin opaque trial identity, all external metadata fields and structured accounting of completed empty, token-limited and transport-partial responses. The pure prompt assembler still excludes that metadata; no execution engine is added.
+3. **O3, shared judgment:** the rubric is canonical for empty/truncated responses. Applicability comes first. Empty completed answers yield `UNSCORABLE` on applicable dimensions and `UNDETERMINED` utility. Visible violations and required omissions in nonempty truncated answers fail; uninterpretable fragments are unscorable only without a visible failure. No continuation is inferred and no completed answer is retried.
+4. **O4, release date:** these notes and [MAINTAINING](../MAINTAINING.md#preparing-a-reference-edition) now agree: before the release commit/tag, set the effective UTC date, review the edition-specific checker, refresh the CFF declaration digest, regenerate, validate and audit. Recheck the date if publication is postponed. Never fill in metadata by moving a published tag.
 
-## Citation and rights
+The prior Claude PASS concerns `f3d68f5edb81d6c2eea79d83f3fedf29dd6a340e`, merged as `962a97576c477b5233271d30256718c60f374430`. The new final review, CI, commit and archive identities belong in the release receipt outside these source bytes; historical results are not relabelled as this release's audit.
 
-`CITATION.cff` carries the candidate edition without `date-released` or a single global `license` field. File-level rights remain governed by [NOTICE](../NOTICE.md) and [rights.json](../rights.json). No licence text or reserved visual changes. Add a release date only after actual publication, and review its declaration digest explicitly; regeneration does not approve a declaration.
+The consolidated review also aligned remaining reader status and no-response wording, added mixed-key/trailing-space date counterexamples, clarified retry attempt identity and the boundary between an uninterpretable fragment and PASS, and extended protocol and assembler regression guards. Editorial semantic equivalence still requires review; hashes and tests do not prove it.
+
+## Citation, rights and independent review
+
+CFF carries the reviewed date `2026-10-21` and deliberately omits a global `license` field. [NOTICE](../NOTICE.md) and [rights.json](../rights.json) retain file-specific rights; no licence text or reserved visual changes. Date consistency is a metadata check, not proof of publication.
+
+For an independent review, inspect the exact released commit/archive, this note, `MAINTAINING.md`, the verifier/consumer paths, `scripts/qualify-offline.mjs`, the four-condition assets and their tests. With Node 24.17.0, run `npm test`; for format/type/schema checks, install locked development dependencies using `npm ci --ignore-scripts` and run `npm run test:dev`. Keep installations distinct from offline test execution. Report reproducible defects with path, condition and expected/observed behavior; distinguish `VERIFIED`, `REFUTED` and `NOT_VERIFIABLE`. Do not contact the hosted Runtime, owner sites or research surfaces, invoke experimental models/judges, or request private assets to fill evidence gaps.
 
 ## Version française
 
-Cette édition `0.2.1-proposed` reste **candidate**. La base est le commit public indiqué ci-dessus ; citer le commit effectivement examiné jusqu’à une publication réelle. Aucune date de release ni nouvelle étiquette n’est déclarée. L’ancienne étiquette garde sa cible.
+Cette préversion de référence `0.2.1-proposed` est préparée pour publication le **21 octobre 2026 UTC**, suivant la décision explicite du propriétaire. L’étiquette distante et la release GitHub attestent la publication effective. Citer l’étiquette et le commit exact exécuté. Les contrats restent proposés ; le service hébergé suit un cycle distinct.
 
-Les métadonnées d’édition sont synchronisées. Les versions de format, schémas historiques, recettes, vecteurs, bundles, racines et observations demeurent inchangés. La correction P3 resserre l’acceptation des archives sur leur format déclaré : certaines représentations auparavant tolérées sont refusées. Cela ne signifie pas une compatibilité universelle de toutes les anciennes entrées.
+La qualification locale couvre 11 snapshots, 132 sélections et 13 échanges locaux avec l’adaptateur réel. Sept contrôles de cycle de vie réussissent. Le corpus privé n’a pas été inspecté indépendamment par le relecteur du code public. Les diagnostics hébergés, le rapprochement du trafic et la reproduction externe restent `NOT_RUN`.
 
-La [qualification locale](fr/qualification.md) couvre 11 snapshots et 132 sélections, ainsi que 13 échanges locaux avec l’adaptateur réel. Sept contrôles lifecycle réussissent. Le diagnostic hébergé et le rapprochement des six requêtes déclarées restent `NOT_RUN`. Les guides sont séparés des [journaux datés](../records/README.md).
+Les quatre observations sont traitées ensemble : formulation FR/EN directement rattachée à la source, contrôles des identifiants et de la comptabilité, règle commune de jugement des réponses vides ou tronquées, procédure de date cohérente. Le [pilote](model-comparison.md), version `four-condition-pilot-3`, reste préparé, sans expérience ni résultat de modèle. Une réponse terminée vide reçoit `UNSCORABLE` sur les dimensions applicables et une utilité `UNDETERMINED`. Pour une réponse tronquée non vide, les violations visibles et omissions exigées échouent ; un fragment ininterprétable n’efface pas ces échecs.
 
-Le [pilote à quatre conditions](model-comparison.md) prépare 560 réponses par configuration, deux évaluateurs, l’accord brut et le kappa de Cohen. Il ne contient aucune réponse observée, aucun score ni appel de modèle. La reproduction externe reste `NOT_RUN`.
+La revue consolidée a aussi harmonisé les statuts de lecture et la règle sans réponse, ajouté des contre-exemples de date, précisé l’identité des reprises et la frontière entre fragment ininterprétable et PASS, puis renforcé les contrôles de protocole et d’assemblage. L’équivalence sémantique éditoriale demande toujours une relecture ; les empreintes et tests ne la prouvent pas.
 
-La citation conserve la répartition des droits par fichier, sans date de publication anticipée. Aucun actif privé, texte de licence ou visuel réservé n’est modifié. Une fusion, une étiquette ou une release relève d’une décision ultérieure distincte.
+Avant le commit et l’étiquette de release, fixer la date effective UTC, adapter et revoir sa garde, actualiser le condensat CFF, régénérer puis valider et auditer. Si la publication est reportée, réexaminer la date avant toute étiquette. Les anciennes étiquettes, sources, schémas, racines, observations, licences et visuels réservés sont préservés. La release du paquet ne constitue ni un déploiement ni une preuve sur le service hébergé.
+
+Pour l’audit indépendant, utiliser les commandes et fichiers ci-dessus sur l’identité exacte publiée. Séparer `VERIFIED`, `REFUTED` et `NOT_VERIFIABLE`, sans contacter les services, sites ou surfaces de recherche de Gautier. Les preuves privées indisponibles restent une limite explicite. Aucun résultat antérieur n’est réattribué à cette nouvelle révision.

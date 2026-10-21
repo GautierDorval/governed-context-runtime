@@ -127,6 +127,9 @@ test('the prepared plan contains no observed outcomes, hidden answer inputs or f
     'classification',
     'judging-rubric.json',
     'prose-coverage.json',
+    'comparison-map.json',
+    'content.json',
+    'id',
   ])
     assert(plan.caseInput.excludedFields.includes(excluded));
   for (const key of ['conditionLabelsSent', 'tools', 'retrieval', 'priorTrialMemory'])
@@ -163,6 +166,7 @@ test('judging distinguishes applicable evidence retention, unsupported claims an
     assert.equal(typeof row.utilityTask, 'string');
     assert.equal(typeof row.noDocumentationExpectation, 'string');
   }
+  assert.deepEqual(plan.review.agreement.justificationCategories, rubric.labels);
   assert.deepEqual(plan.review.agreement.utilityCategories, rubric.outputs.documentaryUtility.categories);
   assert.equal(plan.review.agreement.rawAgreement, 'po = agreements / paired applicable judgments');
   assert.equal(
@@ -250,8 +254,68 @@ test('completed empty and truncated answers are never eligible for technical res
   ]);
   for (const kind of ['completed empty response', 'output truncated by the 512-token ceiling'])
     assert(plan.technicalRetries.ineligible.includes(kind));
-  for (const key of ['completedEmpty', 'tokenLimit', 'transportPartial'])
-    assert.equal(typeof plan.responseAccounting[key], 'string');
+  assert.deepEqual(plan.responseAccounting, {
+    completedEmpty: {
+      received: true,
+      completed: true,
+      retryAllowed: false,
+      preserveRaw: true,
+      judgmentPolicy: 'judging-rubric.json#/responseHandling/completedEmpty',
+    },
+    tokenLimit: {
+      received: true,
+      completed: true,
+      retryAllowed: false,
+      preserveRaw: true,
+      preserveFinishReason: true,
+      judgmentPolicy: 'judging-rubric.json#/responseHandling/truncated',
+    },
+    transportPartial: {
+      received: false,
+      completed: false,
+      preserveRaw: true,
+      preserveError: true,
+      technicalRetryOnly: true,
+      judgment: null,
+    },
+  });
+});
+
+test('trial identity and metadata remain external to the model input', () => {
+  assert.equal(plan.protocolVersion, 'four-condition-pilot-3');
+  assert.equal(
+    plan.trialIdentity,
+    'configurationId/trialNumber(0001..0560), opaque metadata not included in model input',
+  );
+  assert.deepEqual(plan.trialMetadata, ['caseId', 'language', 'repetition', 'condition', 'blockIndex', 'position']);
+  assert(!plan.assembly.payloadFields.some((/** @type {string} */ field) => plan.trialMetadata.includes(field)));
+});
+
+test('both reviewers share empty and truncated judgment precedence without favourable imputation', () => {
+  const handling = rubric.responseHandling;
+  assert.deepEqual(handling.precedence, [
+    'no-completed-response',
+    'not-applicable',
+    'completed-empty',
+    'visible-failure',
+    'required-content-omitted',
+    'uninterpretable-fragment',
+    'criterion-satisfied',
+  ]);
+  assert.equal(handling.noCompletedResponse.label, null);
+  assert.equal(handling.noCompletedResponse.utility, null);
+  assert.equal(handling.notApplicable.label, 'NOT_APPLICABLE');
+  assert.equal(handling.completedEmpty.applicableLabel, 'UNSCORABLE');
+  assert.equal(handling.completedEmpty.utility, 'UNDETERMINED');
+  assert.equal(
+    handling.completedEmpty.definition,
+    'The received text is empty after JavaScript String.prototype.trim; preserve its original bytes.',
+  );
+  assert.equal(handling.truncated.visibleViolation, 'FAIL');
+  assert.equal(handling.truncated.requiredContentOmitted, 'FAIL');
+  assert.equal(handling.truncated.uninterpretableFragment, 'UNSCORABLE');
+  assert.equal(handling.truncated.criterionSatisfied, 'PASS');
+  assert.equal(handling.truncated.emptyPrecedence, 'An empty truncated response follows completedEmpty first.');
 });
 
 test('covered source identifiers point to the prose section that actually contains them', async () => {
@@ -275,4 +339,59 @@ test('covered source identifiers point to the prose section that actually contai
       assert(sections[row.section].includes(value), row.sourcePointer + ' -> ' + row.section);
     }
   }
+});
+
+test('normative response and retry prose remains the reviewed protocol', () => {
+  assert.equal(
+    plan.technicalRetries.policy,
+    'Keep the initial trace and parent opaque trial ID; retry appended after the planned pass with identical inputs. A completed response, including an empty response, semantic refusal or token-limit truncation, is never retried or replaced. Primary response is first completed response; retain partial transport traces separately. Without a completed response, assign neither a dimension label nor a utility judgment; exclude these traces from paired-judgment agreement denominators. Attempt metadata is the parent trial ID plus attemptNumber 1 (initial) or 2 (sole retry), never a new planned trial ID.',
+  );
+  assert.equal(
+    plan.review.agreement.missingJudgment,
+    'Exclude unpaired records from agreement, report missing counts; never impute agreement.',
+  );
+  assert.equal(
+    rubric.responseHandling.noCompletedResponse.rule,
+    'No primary completed response means no judgment; retain the technical attempt and partial bytes separately.',
+  );
+  assert.equal(
+    rubric.responseHandling.notApplicable.rule,
+    'Apply the prespecified case/condition map before inspecting empty or truncated content.',
+  );
+  assert.equal(rubric.responseHandling.completedEmpty.utility, 'UNDETERMINED');
+  assert.equal(
+    rubric.responseHandling.completedEmpty.rule,
+    'No applicable dimension receives PASS or FAIL from an empty answer; do not count absence as successful retention or agreement on an inferred claim.',
+  );
+  assert.equal(
+    rubric.responseHandling.truncated.rule,
+    'Judge only received text, without inventing a continuation. A visible violation takes precedence over an uninterpretable fragment. Omission of content explicitly required by an applicable criterion is FAIL, not UNSCORABLE. Use UNSCORABLE only when a fragment cannot be interpreted sufficiently to assess the criterion and no visible failure is established. PASS requires enough interpretable text to establish the criterion; absence of a visible violation in an uninterpretable fragment is insufficient. For claim justification, "The project is" is uninterpretable, whereas "The location is undetermined" is assessable when no location is supplied. A lone U+200B is nonempty after trim but uninterpretable, not an automatic PASS. Response trimming is distinct from verifier whitespace rules.',
+  );
+  assert.equal(
+    rubric.responseHandling.truncated.utility,
+    'Use the same RESOLVED/PARTIAL/UNDETERMINED criteria on visible information; RESOLVED requires every decisive item and qualification. Truncation alone does not determine utility.',
+  );
+  assert.equal(
+    rubric.responseHandling.reviewerAgreement,
+    'Both reviewers apply this same precedence before annotation. Retain empty/truncated counts, initial labels and disagreements; no post-hoc change to rescue scores.',
+  );
+});
+
+test('prompt assembly preserves BOM and rejects missing evidence and unsupported language', () => {
+  const input = {
+    instruction: 'Read',
+    documentationBytes: new Uint8Array([0xef, 0xbb, 0xbf, 0x41]),
+    scenario: {evidence: {}, fr: {question: '?'}},
+    language: /** @type {const} */ ('fr'),
+  };
+  const actual = assemblePilotPrompt(input);
+  assert.deepEqual(
+    Buffer.from(actual),
+    Buffer.from('Read\n<documentation>\n\ufeffA\n</documentation>\n<case>{"evidence":{},"question":"?"}</case>'),
+  );
+  assert.throws(
+    () => assemblePilotPrompt({...input, scenario: /** @type {any} */ ({fr: {question: '?'}})}),
+    /prompt_case/,
+  );
+  assert.throws(() => assemblePilotPrompt({...input, language: /** @type {any} */ ('de')}), /prompt_language/);
 });

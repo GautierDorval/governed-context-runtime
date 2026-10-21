@@ -13,7 +13,7 @@ Une personne souhaite savoir si le service peut prendre en charge son projet. Un
 <a id="conditions"></a>
 ## Deux conditions à établir ensemble
 
-Le projet doit être situé au Québec et disposer d’une évaluation technique écrite, favorable et propre au projet. Ces deux conditions sont conjointes. Décrire le service ne suffit pas à établir l’admissibilité d’un projet ; une évaluation favorable ne permet pas d’étendre le territoire à tout le Canada.
+Le projet doit être situé au Québec et disposer d’une évaluation technique écrite, favorable et propre au projet. Ces deux conditions sont conjointes. Il est interdit d’étendre le territoire déclaré du Québec à l’ensemble du Canada ou de tenir l’admissibilité pour acquise à partir de la seule description du service.
 
 <a id="evidence"></a>
 ## Les preuves et leurs limites

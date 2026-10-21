@@ -22,7 +22,7 @@ Chaque identifiant désigne une chose différente ; une concordance de numéros
 
 | Identifiant | Ce qu’il désigne |
 |---|---|
-| Candidate `0.2.1-proposed` | Vérificateur et documentation courants ; citer le commit exécuté. P3 restreint l’acceptation des archives. Les schémas, recettes et octets des exemples historiques restent inchangés ; l’ancienne étiquette est conservée. |
+| Préversion de référence `0.2.1-proposed` | Vérificateur et documentation courants ; citer l’étiquette et le commit exact exécuté. P3 restreint l’acceptation des archives. Les schémas, recettes et octets des exemples historiques restent inchangés ; l’ancienne étiquette est conservée. |
 | `runtimeVersion` `0.3.0-proposed` | Le logiciel du Runtime hébergé. |
 | `schemaVersion` | Propre à chaque objet : les profils historiques de snapshot et d’archive restent `0.1.0-proposed`. `0.2.0` a été lu seulement sur l’actif `GovernedContextRuntimeHealth` conservé, dans la [qualification locale](qualification.md). |
 | Révision MCP `2026-07-28` | Le profil de protocole servi par l’adaptateur MCP. |

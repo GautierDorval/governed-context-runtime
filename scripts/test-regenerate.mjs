@@ -372,10 +372,35 @@ for (const variant of ['docs', 'cff', 'lock-root', 'package-and-lock']) {
   );
 }
 
-for (const field of ['date-released', '"date-released"']) {
-  test('candidate citation refuses an anticipated release date after refreshed digests: ' + field, async t =>
+for (const variant of [
+  'missing',
+  'different',
+  'impossible',
+  'duplicate',
+  'quoted-key',
+  'indented',
+  'trailing-space',
+  'valid-plus-indented',
+  'valid-plus-quoted',
+]) {
+  test('release citation refuses changed date metadata after refreshed digests: ' + variant, async t =>
     withCopy(t, async dir => {
-      await edit(dir, 'CITATION.cff', text => text + field + ': 2026-10-20\n');
+      await edit(dir, 'CITATION.cff', text => {
+        const date = 'date-released: 2026-10-21';
+        const replacement = {
+          missing: '',
+          different: 'date-released: 2026-10-22',
+          impossible: 'date-released: 2026-02-30',
+          duplicate: date + '\n' + date,
+          'quoted-key': '"date-released": 2026-10-21',
+          indented: '  ' + date,
+          'trailing-space': date + ' ',
+          'valid-plus-indented': date + '\n  date-released: 2026-10-22',
+          'valid-plus-quoted': date + '\n"date-released": 2026-10-22',
+        }[variant];
+        assert(replacement !== undefined, 'recognized date mutation');
+        return text.replace(date, replacement);
+      });
       const raw = await readFile(join(dir, 'CITATION.cff'));
       await edit(dir, 'package-policy.json', text => {
         const value = JSON.parse(text);
@@ -384,7 +409,7 @@ for (const field of ['date-released', '"date-released"']) {
       });
       await write(dir);
       assert.deepEqual(await check(dir), []);
-      assert.match(checker(dir), /^FAIL .*candidate CFF must omit date-released/);
+      assert.match(checker(dir), /^FAIL .*edition: (exactly one release date|reviewed release date)/);
     }),
   );
 }
