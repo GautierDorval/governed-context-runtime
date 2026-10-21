@@ -654,7 +654,7 @@
       "path": "spec/examples/test-verified-pack.mjs",
       "source": "consumer-reproduction-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "1a0550ae432b51ca9731e346aab10e668d2f3ababde2e3434a554efaedc98ff4"
+      "sha256": "ab5a0fa2d507ec94e61bf009730ac17f90f4fd648e7efd054351e477cd8aaa2e"
     },
     {
       "path": "spec/examples/test-verified-unit.mjs",
@@ -750,7 +750,7 @@
       "path": "spec/reference/test-consumer.mjs",
       "source": "spec/reference/test-consumer.mjs",
       "license": "Apache-2.0",
-      "sha256": "d4292d20e4c165412cdb7ebe71662d6c05c331d565863206192155eb44b54c95"
+      "sha256": "dc5fa4eb6a54fd9cd74d4f79d2f04df87754b6474323eb18acb65b9926589e30"
     },
     {
       "path": "spec/reference/test-public-finish.mjs",

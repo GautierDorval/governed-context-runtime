@@ -316,7 +316,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "a10221353bed28228eca35e3ca7373e0f3de299821395040848757833d470e13",
+      "sha256": "8d3222f02343db97ddace1b24f835f6720363b3a12749981fce91312bb4bf9a4",
       "bytes": 33132
     },
     {
@@ -551,8 +551,8 @@
     },
     {
       "path": "spec/examples/test-verified-pack.mjs",
-      "sha256": "1a0550ae432b51ca9731e346aab10e668d2f3ababde2e3434a554efaedc98ff4",
-      "bytes": 6528
+      "sha256": "ab5a0fa2d507ec94e61bf009730ac17f90f4fd648e7efd054351e477cd8aaa2e",
+      "bytes": 9345
     },
     {
       "path": "spec/examples/test-verified-unit.mjs",
@@ -631,8 +631,8 @@
     },
     {
       "path": "spec/reference/test-consumer.mjs",
-      "sha256": "d4292d20e4c165412cdb7ebe71662d6c05c331d565863206192155eb44b54c95",
-      "bytes": 8300
+      "sha256": "dc5fa4eb6a54fd9cd74d4f79d2f04df87754b6474323eb18acb65b9926589e30",
+      "bytes": 9124
     },
     {
       "path": "spec/reference/test-public-finish.mjs",

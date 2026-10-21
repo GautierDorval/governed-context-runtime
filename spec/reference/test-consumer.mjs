@@ -54,7 +54,20 @@ test('double fault: unknown key precedes invalid signature',async()=>{const a=cl
 test('different signed root rejected before local permission',async()=>{const a=signTestReceipt({...receipt,corpusRootDigest:'sha-256:'+'b'.repeat(64)},privateKey,jwk.kid,{testOnly:true});assert.equal((await decideConsumption(policy,a)).reason,'receipt_root')});
 test('DSSE cannot enter the JWS path',async()=>{assert.equal((await decideConsumption(policy,{payload:'e30=',signatures:[]})).reason,'signature_required')});
 test('disallowed algorithm cannot be accepted',async()=>{const a=clone(artifact);const parts=a.detachedJws.split('.');const h=JSON.parse(Buffer.from(parts[0],'base64url'));h.alg='none';parts[0]=Buffer.from(canonical(h)).toString('base64url');a.detachedJws=parts.join('.');assert.equal((await decideConsumption(policy,a)).reason,'protected_header_policy')});
-test('policy key order cannot alter a result',async()=>{const second=generateKeyPairSync('ed25519').publicKey.export({format:'jwk'});Object.assign(second,{kid:'second',alg:'Ed25519',use:'sig'});const p=clone(policy);p.keys.push({jwk:second,jwkDigest:await digest(canonical(second)),status:'retired',notBefore:0,notAfter:200});assert.deepEqual(await decideConsumption(p,artifact),await decideConsumption({...p,keys:p.keys.toReversed()},artifact))});
+test('equivalent key and allowlist order cannot alter a result or policy identity',async()=>{
+ const second=generateKeyPairSync('ed25519').publicKey.export({format:'jwk'});
+ Object.assign(second,{kid:'second',alg:'Ed25519',use:'sig'});
+ const p=clone(policy);
+ p.keys.push({jwk:second,jwkDigest:await digest(canonical(second)),status:'retired',notBefore:0,notAfter:200});
+ p.allowedKids.push(second.kid);
+ const reference=await decideConsumption(p,artifact);
+ assert.equal(reference.decision,'ACCEPTED_FOR_LOCAL_USE');
+ for(const reordered of [
+  {...p,keys:p.keys.toReversed()},
+  {...p,allowedKids:p.allowedKids.toReversed()},
+  {...p,keys:p.keys.toReversed(),allowedKids:p.allowedKids.toReversed()}
+ ]) assert.deepEqual(await decideConsumption(reordered,artifact),reference);
+});
 
 
 test('one artifact snapshot binds signer, payload and local decision despite accessors',async()=>{
@@ -84,4 +97,15 @@ test('another purpose does not reuse an earlier inspect-context permission',asyn
  assert.equal((await decideConsumption(policy,artifact)).decision,'ACCEPTED_FOR_LOCAL_USE');
  const other=await decideConsumption(policy,artifact,{purpose:'execute'});
  assert.equal(other.reason,'LOCAL_USE_NOT_ALLOWED');assert.equal(other.signatureValid,true);
+});
+
+test('evaluation clock changes policy identity without changing stable rules',async()=>{
+ const first=await decideConsumption(policy,artifact);
+ const later=await decideConsumption({...policy,now:policy.now+1},artifact);
+ for(const result of [first,later]) {
+  assert.equal(result.decision,'ACCEPTED_FOR_LOCAL_USE');
+  assert.equal(result.purpose,'inspect-context');
+ }
+ assert.notEqual(first.policyDigest,later.policyDigest);
+ assert.equal(first.artifactDigest,later.artifactDigest);
 });

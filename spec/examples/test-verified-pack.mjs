@@ -49,8 +49,12 @@ const consumed=async(edit=()=>{})=>{
  const result=await consumeVerifiedPack(args,pack=>{calls++;return {packId:pack.pack.packId};});
  return {result,calls};
 };
-test('only admitted complete pack crosses fictional consumption boundary',async()=>{
- const {result,calls}=await consumed();assert.equal(calls,1);assert.equal(result.delivered,true);assert.equal(result.result.verification.usePermission,'inspect-context');
+for(const lang of ['fr','en'])test('only admitted complete pack crosses fictional consumption boundary '+lang,async()=>{
+ const {result,calls}=await consumed(a=>{a.lang=lang;});
+ assert.equal(calls,1);assert.equal(result.delivered,true);
+ assert.equal(result.result.verification.usePermission,'inspect-context');
+ assert.equal(result.result.pack.lang,lang);
+ assert.equal(result.consumption.packId,result.result.pack.packId);
 });
 for(const [name,edit] of Object.entries({archive:a=>{a.getArchive=()=>Buffer.from('{}');},root:a=>{a.policy.expectedRoot='sha-256:'+'0'.repeat(64);},key:a=>{a.policy.allowedKids=[];},expired:a=>{a.policy.now+=7200;},purpose:a=>{a.purpose='execute';},selection:a=>{a.lang='de';},revoked:a=>{a.policy.keys[0].status='revoked';}}))test('refusal never reaches consumer: '+name,async()=>{
  const {result,calls}=await consumed(edit);assert.equal(calls,0);assert.equal(result.delivered,false);assert.equal(result.status,'REFUSED');
@@ -80,4 +84,48 @@ test('malformed invocation and non-cloneable inputs reject without calling consu
  await assert.rejects(()=>consumeVerifiedPack({...input(),policy:()=>{},receipt:b.receipt},()=>{calls++;}),{name:'DataCloneError'});
  await assert.rejects(()=>consumeVerifiedPack({...input(),snapshotBytes:'not bytes',policy:b.policy,receipt:b.receipt},()=>{calls++;}),/bytes_required/);
  assert.equal(calls,0);
+});
+
+test('invalid local policy is not an evaluated artifact refusal or a delivery',async()=>{
+ const {result,calls}=await consumed(a=>{a.policy.purposes=['execute'];});
+ assert.equal(result.status,'REFUSED');assert.equal(result.stage,'POLICY');
+ assert.equal(result.reason,'INVALID_LOCAL_POLICY');
+ assert.equal(result.decision.artifactEvaluated,false);assert.equal(result.decision.decision,null);
+ assert.equal(result.delivered,false);assert.equal(calls,0);
+});
+
+test('reduced maximum age refuses a still-unexpired pack at a fixed clock',async()=>{
+ const receipt=JSON.parse(Buffer.from(b.receipt.payloadBase64,'base64'));
+ const now=receipt.issuedAt+10;
+ assert(now<receipt.expiresAt);
+ const admitted=await consumed(a=>{a.policy.now=now;a.policy.maxAgeSeconds=10;});
+ const refused=await consumed(a=>{a.policy.now=now;a.policy.maxAgeSeconds=9;});
+ assert.equal(admitted.result.status,'ACCEPTED_FOR_LOCAL_USE');
+ assert.equal(admitted.result.delivered,true);assert.equal(admitted.calls,1);
+ assert.equal(refused.result.status,'REFUSED');
+ assert.equal(refused.result.stage,'TECHNICAL_VERIFICATION');
+ assert.equal(refused.result.reason,'freshness_policy');
+ assert.equal(refused.result.delivered,false);assert.equal(refused.calls,0);
+ assert.equal(admitted.result.decision.artifactDigest,refused.result.decision.artifactDigest);
+ assert.notEqual(admitted.result.decision.policyDigest,refused.result.decision.policyDigest);
+});
+
+for(const fault of ['signature','archive'])test('widening local permission preserves '+fault+' refusal without delivery',async()=>{
+ const alter=a=>{
+  if(fault==='archive') a.getArchive=()=>Buffer.from('{}');
+  else {
+   const parts=a.receipt.detachedJws.split('.'),signature=Buffer.from(parts[2],'base64url');
+   signature[0]^=1;parts[2]=signature.toString('base64url');a.receipt.detachedJws=parts.join('.');
+  }
+ };
+ const denied=await consumed(a=>{alter(a);a.policy.allowedKids=[];});
+ const widened=await consumed(alter);
+ for(const {result,calls} of [denied,widened]) {
+  assert.equal(result.status,'REFUSED');assert.equal(result.delivered,false);assert.equal(calls,0);
+ }
+ assert.equal(denied.result.stage,fault==='signature'?'TECHNICAL_VERIFICATION':'LOCAL_PERMISSION');
+ assert.equal(denied.result.reason,fault==='signature'?'invalid_signature':'LOCAL_USE_NOT_ALLOWED');
+ assert.equal(widened.result.stage,fault==='signature'?'TECHNICAL_VERIFICATION':'SNAPSHOT');
+ assert.equal(widened.result.reason,fault==='signature'?'invalid_signature':'archive-envelope:'+b.snapshot.inventory.items[0].sourcePath);
+ assert.equal(widened.result.decision.decision,fault==='signature'?'REFUSED':'ACCEPTED_FOR_LOCAL_USE');
 });
