@@ -118,3 +118,8 @@ vérification complète. Dans la bibliothèque, les types d’entrée mal formé
 objets non copiables rejettent la promesse ; les refus du domaine retournent
 `REFUSED`. La commande intercepte les deux issues et ne transmet aucun contenu en
 cas d’échec. Voir le [contrat d’entrée](../verification.md).
+
+
+## Édition candidate et qualification
+
+L’édition `0.2.1-proposed` est préparée, sans étiquette ni release. Consigner le commit exécuté ; `v0.2.0-proposed` conserve ses octets historiques. La [qualification hors ligne](qualification.md), le [pilote à quatre conditions, NOT_RUN](../model-comparison.md) et les [notes de candidate](../release-0.2.1-proposed.md) ont des portées distinctes. La trousse fictive signée reste distincte de l’exemple sémantique non signé.

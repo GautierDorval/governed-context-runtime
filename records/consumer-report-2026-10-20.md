@@ -205,7 +205,7 @@ B01's canonical JSON byte guarantee and already present before that lot. Its
 closure was deferred because it changes compatibility; B01 alone did not close
 those properties. That deferral is superseded by the later authorized
 [P3 archive acceptance work](archive-profile-p3-2026-10-20.md), which rejects both
-representations by default. See the [current compatibility rules](verification.md#strict-archive-acceptance-after-the-p3-compatibility-review).
+representations by default. See the [current compatibility rules](../docs/verification.md#strict-archive-acceptance-after-the-p3-compatibility-review).
 
 The first audit exercised 136 B01/B02 controls successfully and additional
 consumer/MCP/document/kit probes. It reported its own erroneous assertions
@@ -227,10 +227,10 @@ npm test
 
 Development schema checks require the existing locked dependencies; in a fresh
 checkout use `npm ci --ignore-scripts`, then `npm run test:dev`. The paired
-[French](fr/reproduction.md) and [English](en/reproduction.md) guides explain the
-output and exact selection flags. Glossary: [FR](fr/pack-semantics.md),
-[EN](en/pack-semantics.md). Prepared model protocol: [comparison](model-comparison.md).
-Dated records: [observations](observations.md) and [evidence lineage](../evidence/README.md).
+[French](../docs/fr/reproduction.md) and [English](../docs/en/reproduction.md) guides explain the
+output and exact selection flags. Glossary: [FR](../docs/fr/pack-semantics.md),
+[EN](../docs/en/pack-semantics.md). Prepared model protocol: [comparison](../docs/model-comparison.md).
+Dated records: [observations](../docs/observations.md) and [evidence lineage](../evidence/README.md).
 
 The final audit concerns a stable public candidate. It cannot establish current
 hosted behavior, client compatibility in Claude Code/Codex/Cursor, factual truth,

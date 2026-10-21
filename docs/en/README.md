@@ -13,6 +13,10 @@ Governed Context Runtime delivers precompiled, versioned context packs with sour
 | Retrieve a declared context | [Hosted instance guide](instance.md) | The gautierdorval.com corpus; client compatibility is documented separately. |
 | Inspect and verify context artifacts | [Verification guide](../verification.md) | Complete snapshot verification under a separately selected trust reference. |
 | Learn the verification path offline | [Local demonstration](#try-it-locally) | Fictional data and test keys; no model invocation. |
+| Inspect a complete pack | [Consumer kit](reproduction.md) | Admission, inspection and permission remain distinct. |
+| Understand semantic boundaries | [Example and glossary](pack-semantics.md) | Fictional exercise, no observed model answer. |
+| Examine local evidence | [Qualification](qualification.md) | Retained assets and local adapter, no current hosted diagnosis. |
+| Prepare a comparison | [Four-condition pilot](model-comparison.md) | 560 planned responses per configuration, **NOT_RUN**. |
 
 ## When context loses meaning
 
@@ -32,7 +36,7 @@ The gautierdorval.com instance is accessible over HTTP and through a separate MC
 
 ## Reference version
 
-Reference edition 0.2.0-proposed. The hosted instance is available separately and has its own publication lifecycle. This repository contains proposed contracts, offline reference code and fictional examples; it does not bundle the hosted service, its production corpus or a turnkey deployment for other domains.
+Reference edition 0.2.1-proposed is prepared as a candidate, not yet a tagged release. Contracts remain proposed; the hosted service follows a separate publication lifecycle. Cite the exact executed commit until this edition is published. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
 
 ## Choose context
 
@@ -95,4 +99,6 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 ## Complete local pack inspection
 
-[Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](../model-comparison.md).
+[Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](model-comparison.md).
+
+[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Edition candidate](../release-0.2.1-proposed.md). The four-condition pilot is **NOT_RUN**.

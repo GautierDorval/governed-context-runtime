@@ -1,0 +1,174 @@
+{
+  "schema": "runtime-offline-qualification/1",
+  "date": "2026-10-20",
+  "referenceBaseCommit": "441598c279832b5521c952de920966a486d79026",
+  "referenceEdition": "0.2.1-proposed",
+  "verifierSha256": "0b9a97a468942d1160a7408d10ff11d17da8df44be53781429a53be81b05159e",
+  "producer": "Codex",
+  "evidenceLineage": "Producer-controlled retained assets and local adapter execution; not external organizational reproduction.",
+  "status": "PASS",
+  "scope": "Local retained bytes and local adapter only",
+  "corpora": [
+    {
+      "root": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1768,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:0b0d2f7dbb8c38e19ba56ca6893746785fc05b33b04256de3f36fce558e0ad11",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1780,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:0b509da9c22f4b51a513b2c20bb0cc95ca017d8215b3aa1b6de418c1cc8e5f56",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1772,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:2f21783cb93f3b017eb4953f45d4d698890f8a74389ab9e99a2d2fa467bf4834",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1768,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:367be59f84d9c3f73311fe65b2cfb178fa097f31e2f6280dc4c6697b230fb21c",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1776,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:390877e028d0a3d0089f2eb230a46e54439daecc91d9b73562183aa03e920232",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1772,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:5fbba12e503813ec7f2ccc8d06878b6edc8ccacfa263375f539ed0ebe6dba2fb",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1780,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:acf7bc3923f71a51eee1e7bddd3e04a0f9f4f85d73c0ca19c7783937d812a7b4",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1780,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:ad6ce4927a2a92deba9140da511c0edf51d4fd45ce833457463a24bb7ed28399",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1768,
+      "catalog": false
+    },
+    {
+      "root": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1781,
+      "catalog": true
+    },
+    {
+      "root": "sha-256:d5d52ed75360d38cd1fa0e434c302d57a80ec94e9be9daaf3e8d7866fd2305e0",
+      "status": "PASS",
+      "reason": null,
+      "archives": 59,
+      "selections": 12,
+      "checks": 1780,
+      "catalog": false
+    }
+  ],
+  "rootAdmission": "Three roots separately recorded in public producer observations dated October 12/14/19; other roots pinned from retained digest-addressed filenames. No external trust authority.",
+  "catalogue": "Separate current producer registry for the current root only; no independent catalogue supplied for ten historical roots.",
+  "adapter": {
+    "status": "PASS",
+    "exchanges": 13,
+    "localResolverBindings": 12,
+    "networkCalls": 0,
+    "protocol": "2026-07-28",
+    "scope": "Actual adapter implementation with locally injected resolver asset map; not hosted or full Worker execution",
+    "binding": "Canonical served bytes match selected payloadDigest; original source-file payloadFileDigest is a separate representation, fileBytesBound=false.",
+    "rawHostedReplay": "NOT_RUN",
+    "hostedLatency": "NOT_RUN"
+  },
+  "lifecycle": {
+    "retainedAssetConsistency": "PASS",
+    "controlCases": 7,
+    "retainedRoots": 11,
+    "healthType": "GovernedContextRuntimeHealth",
+    "healthSchemaVersion": "0.2.0",
+    "scope": "Exact local retained health asset only; not the snapshot/archive schema",
+    "hostedDiagnosis": "NOT_RUN"
+  },
+  "auditTraffic": {
+    "source": "Unverified auditor declaration relayed in the received brief",
+    "declaredOperations": 6,
+    "approximateUtcWindow": "2026-10-19 15:37 to 15:50",
+    "reconciliation": "NOT_RUN",
+    "rawLedgerChanged": false,
+    "metricCorrectionApplied": false
+  },
+  "privateEvidence": [
+    {
+      "id": "corpus-summary",
+      "sha256": "2096a475917099fde03736a0bb0c6469b0b9560b0eb678d23d829f60386e1023",
+      "publication": "Retained by owner; not distributed. Hash alone is not reproducibility access."
+    },
+    {
+      "id": "local-adapter-report",
+      "sha256": "d47a0ce37740cf6aa7c39bcd299eff2756464cc902ed8517663d8f6f5c89650e",
+      "publication": "Retained by owner; not distributed. Hash alone is not reproducibility access."
+    },
+    {
+      "id": "lifecycle-report",
+      "sha256": "7c114f3be2805b84c87f7bfbc66a3b02348c5d3570d62c3f1658942b4e72432b",
+      "publication": "Retained by owner; not distributed. Hash alone is not reproducibility access."
+    },
+    {
+      "id": "audit-traffic-declaration",
+      "sha256": "19a6664181590683be2cb2b0958983dedc51b3686854f7c51338b34de1f15a36",
+      "publication": "Retained by owner; not distributed. Hash alone is not reproducibility access."
+    }
+  ],
+  "signatureTrust": "not-established",
+  "usePermission": "not-evaluated",
+  "modelExperiment": "NOT_RUN",
+  "externalReproduction": "NOT_RUN",
+  "hostedObservationRepeated": false,
+  "qualificationHarness": {
+    "path": "scripts/qualify-offline.mjs",
+    "sha256": "3921babcb30bdedd72cd908b29cb231401a1e920e89e07cccf382b56d8c44a80",
+    "scope": "Final formatted harness replayed against the retained original inputs; types and malformed-root guard included."
+  }
+}

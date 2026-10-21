@@ -74,6 +74,7 @@ export interface PackageLock {
 }
 
 export interface DocumentationSource {
+  documentVersion: string;
   schema: string;
   publicSpecRepositoryPath: string;
   en: Record<string, string>;

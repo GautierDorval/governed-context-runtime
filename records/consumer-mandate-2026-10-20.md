@@ -15,7 +15,7 @@ verified_origin_main: 39778036460b3a24a9897a46ee29ca15513c2fe2
 supersedes: []
 related_documents:
   - handoff-2026-10-19.md
-  - verification.md
+  - ../docs/verification.md
 lifecycle_protocol: pagup-internal-docs/workflows/brief-handoff-lifecycle-protocol.md
 eac_protocol_version: "2.2"
 model_experiments: NOT_RUN

@@ -1,5 +1,68 @@
 # Changes
 
+## Unreleased: 0.2.1-proposed candidate
+
+Prepared edition metadata and citation, real retained-corpus qualification, local MCP binding, bilingual reader guides and historical record relocation. The four-condition semantic pilot remains NOT_RUN, with canonical prose, an empty-document control and separate justification/utility judgments. See [candidate notes](docs/release-0.2.1-proposed.md). No tag, release, merge or new hosted observation is claimed here.
+
+## P3 strict archive acceptance, 2026-10-20
+
+The shared verifier now requires exactly the eight established source-archive
+members and canonical standard base64, including zero unused padding bits. It
+refuses extra or missing members with `archive_fields`, and a decodable spelling
+that does not round-trip with `noncanonical_base64`. Existing raw digest/address
+and canonical JSON checks still run first. Unit and pack consumers inherit these
+checks; there is no legacy fallback or silent byte normalization.
+
+This intentionally narrows accepted inputs. Envelopes previously accepted with
+custom fields or noncanonical base64 require a conforming rebuild and separately
+admitted identity; no such migration is performed here. Existing fixtures, schema
+identifiers, roots, signatures and historical v0 preimages are preserved. The
+reference remains an unreleased proposed edition, without a new tag or production
+claim. See [verification and compatibility](docs/verification.md#strict-archive-acceptance-after-the-p3-compatibility-review)
+and the [P3 mandate](records/archive-profile-p3-2026-10-20.md).
+
+## Prepared next edition, 2026-10-20
+
+- Reject noncanonical source archive envelopes even under a newly admitted root.
+- Derive v0 record coverage from the actual immutable preimage definition and reject
+  contradictory recipe declarations. Missing optional metadata no longer underreports
+  the seven hashed fields; historical preimages and artifacts are unchanged.
+- Add finite offline JSON/SSE reading, exact whole-pack consumption, a separate bilingual
+  fictional semantic example and a self-identifying consumer reproduction kit.
+- Describe historical observation variants with a separate local catalogue, preserve
+  their bytes and prepare hosted diagnostics without probing the service.
+- Prepare equal-information comparison and external reproduction protocols. Model
+  experiments and exterior reproduction remain NOT_RUN.
+
+No release, tag move, production deployment or new production signing profile is part
+of this candidate. `v0.2.0-proposed` remains attached to its historical state. Cite a
+precise repository commit URL (`/tree/<full-commit>`) and the kit digest for a run;
+the final commit is recorded in the delivery receipt, outside its own source. No DOI
+or new publication date is asserted. The reference edition, pinned schema edition,
+hosted interface version, cryptographic corpus root and pack version are different
+identities. A file at a website root is not a cryptographic corpus root.
+
+Digest agreement cannot distinguish precompiled bytes from identical deterministic
+reconstruction on request. That architecture claim and the measured byte property
+remain distinct. A replayable capture, an [RFC 3161 time commitment](https://www.rfc-editor.org/rfc/rfc3161.html) and [workflow artifact
+provenance](https://docs.github.com/en/actions/concepts/security/artifact-attestations) answer different questions; none makes a producer-controlled execution
+organizationally independent. No timestamp service or attestation infrastructure is
+introduced here. Future work requires separate scope: generic instance profiles,
+published second-language consumer, additional MCP clients, Node 22 qualification,
+stable rule identity separate from dated policy evaluation, production trust lifecycle,
+external time/provenance, multidomain deployment, model evaluation and standards work.
+
+
+Final-review corrections for the prepared edition: nominal reproduction commands
+now select the historical `fictional-1` pack version and are executed from both
+guides by the CLI tests. The pack wrapper captures its receipt before asynchronous
+policy checks. Invocation-error behavior and exact nominal case/language binding
+are explicit. The dated client table labels the replaced October 14 MCP snippet.
+At that review, closing legacy archive members and canonical base64 padding was
+deferred as a separate compatibility change. The P3 entry below records the later
+authorized tightening; B01's JSON-byte guarantee alone does not establish it.
+
+
 ## Production observation, 2026-10-19
 
 Added the dated producer record after the coordinated Runtime, MCP and root-file deployment: 564 root responses, six MCP exchanges with five direct comparisons, and a separate GET/HEAD smoke over 156 indexed Runtime resources. Updated the entry links and paired instance guides to the observed corpus root, preserving the October 12 and 14 records and the distinct historical pack root. The reference edition remains 0.2.0-proposed; no contract, verifier, fictional fixture, production signing claim or model result changes.
@@ -47,62 +110,3 @@ Complete fictional receipt-to-snapshot demonstration; stricter metadata and unit
 ## 0.1.0
 
 Initial documentation and offline reference publication.
-
-## Prepared next edition, 2026-10-20
-
-- Reject noncanonical source archive envelopes even under a newly admitted root.
-- Derive v0 record coverage from the actual immutable preimage definition and reject
-  contradictory recipe declarations. Missing optional metadata no longer underreports
-  the seven hashed fields; historical preimages and artifacts are unchanged.
-- Add finite offline JSON/SSE reading, exact whole-pack consumption, a separate bilingual
-  fictional semantic example and a self-identifying consumer reproduction kit.
-- Describe historical observation variants with a separate local catalogue, preserve
-  their bytes and prepare hosted diagnostics without probing the service.
-- Prepare equal-information comparison and external reproduction protocols. Model
-  experiments and exterior reproduction remain NOT_RUN.
-
-No release, tag move, production deployment or new production signing profile is part
-of this candidate. `v0.2.0-proposed` remains attached to its historical state. Cite a
-precise repository commit URL (`/tree/<full-commit>`) and the kit digest for a run;
-the final commit is recorded in the delivery receipt, outside its own source. No DOI
-or new publication date is asserted. The reference edition, pinned schema edition,
-hosted interface version, cryptographic corpus root and pack version are different
-identities. A file at a website root is not a cryptographic corpus root.
-
-Digest agreement cannot distinguish precompiled bytes from identical deterministic
-reconstruction on request. That architecture claim and the measured byte property
-remain distinct. A replayable capture, an [RFC 3161 time commitment](https://www.rfc-editor.org/rfc/rfc3161.html) and [workflow artifact
-provenance](https://docs.github.com/en/actions/concepts/security/artifact-attestations) answer different questions; none makes a producer-controlled execution
-organizationally independent. No timestamp service or attestation infrastructure is
-introduced here. Future work requires separate scope: generic instance profiles,
-published second-language consumer, additional MCP clients, Node 22 qualification,
-stable rule identity separate from dated policy evaluation, production trust lifecycle,
-external time/provenance, multidomain deployment, model evaluation and standards work.
-
-
-Final-review corrections for the prepared edition: nominal reproduction commands
-now select the historical `fictional-1` pack version and are executed from both
-guides by the CLI tests. The pack wrapper captures its receipt before asynchronous
-policy checks. Invocation-error behavior and exact nominal case/language binding
-are explicit. The dated client table labels the replaced October 14 MCP snippet.
-At that review, closing legacy archive members and canonical base64 padding was
-deferred as a separate compatibility change. The P3 entry below records the later
-authorized tightening; B01's JSON-byte guarantee alone does not establish it.
-
-
-## P3 strict archive acceptance, 2026-10-20
-
-The shared verifier now requires exactly the eight established source-archive
-members and canonical standard base64, including zero unused padding bits. It
-refuses extra or missing members with `archive_fields`, and a decodable spelling
-that does not round-trip with `noncanonical_base64`. Existing raw digest/address
-and canonical JSON checks still run first. Unit and pack consumers inherit these
-checks; there is no legacy fallback or silent byte normalization.
-
-This intentionally narrows accepted inputs. Envelopes previously accepted with
-custom fields or noncanonical base64 require a conforming rebuild and separately
-admitted identity; no such migration is performed here. Existing fixtures, schema
-identifiers, roots, signatures and historical v0 preimages are preserved. The
-reference remains an unreleased proposed edition, without a new tag or production
-claim. See [verification and compatibility](docs/verification.md#strict-archive-acceptance-after-the-p3-compatibility-review)
-and the [P3 mandate](docs/archive-profile-p3-2026-10-20.md).

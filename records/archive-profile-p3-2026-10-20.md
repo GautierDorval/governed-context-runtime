@@ -14,7 +14,7 @@ verified_head: f20d155b204c9ceae2e0981d632da1f8db21847f
 verified_origin_main: f20d155b204c9ceae2e0981d632da1f8db21847f
 supersedes: []
 related_documents:
-  - verification.md
+  - ../docs/verification.md
   - consumer-report-2026-10-20.md
 lifecycle_protocol: pagup-internal-docs/workflows/brief-handoff-lifecycle-protocol.md
 eac_protocol_version: "2.2"

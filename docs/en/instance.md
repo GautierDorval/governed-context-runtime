@@ -22,9 +22,9 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 | Identifier | What it names |
 |---|---|
-| `0.2.0-proposed` in this repository | The reference contracts, verifier and examples. Dated editions (2026-10-12, 2026-10-13, 2026-10-14, 2026-10-17, 2026-10-18, 2026-10-19) add documentation, examples, tests and maintenance tools without changing the existing contract, verifier or example bytes. |
+| `0.2.1-proposed` candidate | Current reference verifier and documentation; cite the exact executed commit. P3 narrows archive acceptance. Historical schemas, recipes and example bytes remain unchanged; the old tag is preserved. |
 | `runtimeVersion` `0.3.0-proposed` | The software of the hosted Runtime. |
-| `schemaVersion` `0.1.0-proposed` | The proposed snapshot, inventory, archive and error contracts. |
+| `schemaVersion` | Object-specific: historical snapshot/archive profiles remain `0.1.0-proposed`; `0.2.0` was read only on the retained `GovernedContextRuntimeHealth` asset in the [local qualification](qualification.md). |
 | MCP revision `2026-07-28` | The protocol profile served by the MCP adapter. |
 | `corpusVersion` | A family label. Successive snapshots of the same corpus line keep the same label, so it does not identify content. |
 | Corpus root `sha-256:…` | One exact snapshot. It is the only identifier of corpus content. |
@@ -68,6 +68,15 @@ To learn the complete flow with a fictional fixture and all its archives:
 npm run demo
 npm test
 ```
+
+
+## Current reader qualification and pack membership
+
+The [October 20 offline qualification](qualification.md) covers the retained adapter with a local resolver binding: discovery and 12 current pack selections, no hosted request. JSON/SSE synthetic tests remain distinct. The modern profile requires `resultType: complete`; older results without that field are not silently accepted, and `input_required` triggers no further exchange. The 1,048,576-byte and 10,000-ms reading limits do not establish hosted size or latency.
+
+The snippet above establishes only the artifact digest declared in its envelope. `inspectVerifiedPack` does not automatically receive or bind those extracted bytes. To bind them, use `bindMcpPack(reply, {snapshotBytes, getArchive, expectedRoot, intentToken, lang, version, expectedIntents, artifactByteProfile: 'canonical-json'})` from `scripts/qualify-offline.mjs` with the complete local archives and a separately supplied root. That explicit profile matches the retained producer's canonical serving contract. It compares the original received bytes to the canonical representation and the selected `payloadDigest`. The original repository file has a separate `payloadFileDigest`; do not describe canonical-content binding as equality with that file. Use the default `repository-bytes` profile only for an actual repository-byte artifact. No profile fallback occurs.
+
+Signature trust, permission, current deployment and model fidelity remain separate. The diagnostic dossier tracks the outstanding hosted captures; this local qualification does not replace historical client observations.
 
 ## 3. Read the same pack through MCP
 
@@ -134,7 +143,7 @@ Complete SSE events follow the [SSE grammar](https://html.spec.whatwg.org/multip
 
 A JSON-RPC error remains `rpc-error`, including under HTTP 200. A [tool result](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) with `isError: true` remains `tool-error`. Extraction requires `resultType: complete` and a single text block containing the Runtime envelope; results needing another step, unknown types and resource links yield no usable artifact. No returned link is followed. This finite reader is not a universal MCP SDK: version negotiation, older `initialize`, sessions, subscriptions and additional exchanges are out of scope.
 
-The transport envelope is ordinary JSON, without the Runtime artifacts' numeric profile. `contentText` retains the received text and `artifactBytes` retains the decoded `contentBase64` bytes, including BOM, spaces and line endings. The comparison above checks only their declared digest. Pass those same bytes to the verifier without reserializing JSON, then verify the complete snapshot under a separately supplied root. No model answer is generated.
+The transport envelope is ordinary JSON, without the Runtime artifacts' numeric profile. `contentText` retains the received text and `artifactBytes` retains the decoded `contentBase64` bytes, including BOM, spaces and line endings. The comparison above checks only their declared digest. Keep those bytes unchanged and bind them to the selected entry using the explicit profile above, after complete snapshot verification under a separately supplied root. No model answer is generated.
 
 The eight historically recorded tools are `list_intents`, `get_intent`, `list_context_packs`, `get_context_pack`, `get_pack_manifest`, `get_attested_unit`, `verify_unit_digest` and `verify_pack_digest`. Their arguments are closed: declared identifiers, FR/EN languages, registered versions and digests. No prompt or arbitrary URL is expected. Requests are limited to 16 KiB; browser calls are limited to the authorized site and Runtime origins.
 

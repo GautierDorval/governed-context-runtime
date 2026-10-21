@@ -1,95 +1,83 @@
-# Comparaison à information égale
+# Pilote sémantique à quatre conditions
 
-**Statut : `NOT_RUN`.** Aucun modèle n’a été appelé. Les réponses illustratives sont des formulations pédagogiques écrites à l’avance. Aucun score de fidélité, effet causal ou gain de performance n’est observé par ce protocole.
+Langue : français · [English](en/model-comparison.md)
 
-L’objet est de comparer deux présentations du même contenu fictif : le pack JSON complet et sa représentation textuelle exhaustive. Le [guide sémantique français](fr/pack-semantics.md), le [guide anglais](en/pack-semantics.md) et le [jeu d’exemple](../spec/examples/semantic-boundaries/README.md) précisent les limites d’interprétation.
+**Statut : `NOT_RUN`.** Aucun appel de modèle, juge distant, réponse observée ou score n’est produit. Le protocole `four-condition-pilot-2` prépare une expérience sur sept cas d’un service fictif. Il conserve le témoin à information égale du [protocole antérieur](https://github.com/GautierDorval/governed-context-runtime/blob/441598c279832b5521c952de920966a486d79026/docs/model-comparison.md) ; celui-ci prévoyait 280 réponses, sans exécution. Le présent plan en prévoit 560 par configuration.
 
-## Source commune et correspondance
+Le [plan versionné](../spec/examples/semantic-boundaries/experiment-plan.json), la [grille](../spec/examples/semantic-boundaries/judging-rubric.json) et la [carte de prose](../spec/examples/semantic-boundaries/prose-coverage.json) fixent les entrées, attentes, effectifs et limites. Ces documents ne sont pas transmis au modèle.
 
-[content.json](../spec/examples/semantic-boundaries/content.json) contient une seule rédaction de chaque fait, condition, exclusion, règle et relation par langue. Les tableaux racine des packs sont des projections de leur chaîne d’applicabilité, pas une seconde rédaction. Le générateur propre à cet exercice produit les deux packs et les deux textes à partir des mêmes valeurs. Il n’invente aucune réponse.
+## Conditions et contrastes
 
-Les conditions expérimentales utilisent exactement ces fichiers :
-
-- Texte FR : [fr.canonical-text.md](../spec/examples/semantic-boundaries/fr.canonical-text.md) ; pack FR : [fr.pack.json](../spec/examples/semantic-boundaries/fr.pack.json).
-- Texte EN : [en.canonical-text.md](../spec/examples/semantic-boundaries/en.canonical-text.md) ; pack EN : [en.pack.json](../spec/examples/semantic-boundaries/en.pack.json).
-
-Le texte est volontairement exhaustif et étiqueté par champ. Il exprime chaque valeur terminale dans une phrase, en conservant son chemin JSON Pointer, son type JSON et sa position. Il comprend les identifiants, sources, relations, négations et métadonnées. Ce témoin n’est pas présenté comme une prose naturelle optimisée. L’effet futur porterait sur ces deux présentations précises, pas sur « le texte » et « la structure » en général.
-
-[comparison-map.json](../spec/examples/semantic-boundaries/comparison-map.json) constitue la table exhaustive : 129 valeurs par langue, chacune liée à `packPointer`, `textLine`, `id` et `value`. Quelques repères, identiques dans les deux langues :
-
-| Information | Emplacement dans le pack | Repère dans le texte |
+| Condition | Entrée documentaire | Question permise |
 |---|---|---|
-| Rôle du consommateur | `/selectionBoundary/note` | `value-014`, ligne 27 |
-| Service fictif et disponibilité conditionnelle | `/causalContexts/0/surface_topic` | `value-016`, ligne 31 |
-| Lien de la chaîne vers le contexte causal | `/applicabilityChains/0/linkedCausalContextId` | `value-027`, ligne 53 |
-| Priorité locale et traitement de l’inconnu | `/weightingRules/0/rule` | `value-051`, ligne 101 |
-| Conservation des conditions et références | `/answerBoundaries/0/rule` | `value-054`, ligne 107 |
-| Explication distincte d’une permission | `/answerBoundaries/1/rule` | `value-057`, ligne 113 |
-| Restriction au Québec | `/activationConditions/0` | `value-058`, ligne 115 |
-| Évaluation technique favorable | `/activationConditions/1` | `value-059`, ligne 117 |
-| Exclusion géographique | `/nonApplicabilityConditions/0` | `value-060`, ligne 119 |
-| Preuve propre au projet | `/requiredEvidence/1` | `value-063`, ligne 125 |
-| Extension interdite au Canada | `/forbiddenInferences/0` | `value-064`, ligne 127 |
-| Interdiction de transférer une évaluation | `/applicabilityAbuseBoundaries/0` | `value-067`, ligne 133 |
-| Empreinte d’une unité | `/includedUnits/0/digest` | `value-074`, ligne 147 |
-| Référence de la source commune | `/includedArtifacts/0/sourcePath` | `value-126`, ligne 251 |
+| `pack` | Pack JSON complet FR ou EN existant | Présentation structurée du contexte |
+| `exhaustive_text` | Texte existant contenant les 129 valeurs terminales | Effet de ces deux représentations précises à valeurs égales |
+| `canonical_prose` | Fiche naturelle FR ou EN ajoutée | Comparaison pratique avec cette alternative documentaire |
+| `no_documentation` | Bloc documentaire vide, mêmes faits de cas et question | Effet de la disponibilité des informations documentaires |
 
-Les tests vérifient une couverture exacte des valeurs terminales, sans valeur ajoutée ou omise, et les empreintes des représentations. Cette égalité d’information explicite ne démontre pas une interprétation sémantique égale par un modèle. La concordance de sens FR/EN reste une obligation de revue ; l’expérience comparera les présentations au sein de chaque langue.
+Comparer pack/texte exhaustif, pack/prose, puis chaque condition documentée à l’absence de documentation. La prose combine des différences de formulation, longueur, redondance, vocabulaire et métadonnées. Le bras sans document conserve les questions et codes de preuve anglais communs, y compris des indices de vocabulaire sur l’évaluation et le lieu documenté. Ces codes restent identiques en français. Le contraste mesure donc l’apport du document au-delà de ces indices communs, sans prétendre supprimer toute information sur le service. Aucun contraste ne prouve un effet propre à toute l’architecture Runtime ; soustraire plusieurs écarts ne fournit pas une décomposition causale exacte.
 
-## Longueurs et différences contrôlées
+## Sources, couverture et longueurs
 
-Mesures locales des fichiers de cet exemple, sans jetoniseur de modèle :
+[content.json](../spec/examples/semantic-boundaries/content.json) demeure la source fictive. Les packs, textes exhaustifs et [comparison-map.json](../spec/examples/semantic-boundaries/comparison-map.json) sont inchangés. Le contrôle conserve les 129 valeurs, types, positions, références et métadonnées par langue. Cette égalité explicite n’implique pas une interprétation identique par un modèle.
 
-| Langue | Pack, octets UTF-8 | Texte, octets UTF-8 | Pack, scalaires Unicode | Texte, scalaires Unicode |
-|---|---:|---:|---:|---:|
-| FR | 10 328 | 17 538 | 10 170 | 16 993 |
-| EN | 9 956 | 16 392 | 9 955 | 16 391 |
+Les [fiches FR](../spec/examples/semantic-boundaries/fr.canonical-prose.md) et [EN](../spec/examples/semantic-boundaries/en.canonical-prose.md) présentent naturellement les faits, conditions conjointes, exclusions, preuves, contradictions, limites d’action, priorité locale et références. Elles sont extérieures au bundle historique. Leur carte énumère chaque unité source, les regroupements et les omissions techniques : digests, profils d’unités, versions et doublons de projection ne sont pas tous transmis. La prose ne revendique donc pas l’égalité des 129 valeurs. Les tests vérifient les références et la couverture déclarée ; une lecture éditoriale reste nécessaire pour la fidélité du sens.
 
-Le texte occupe environ 1.6981 fois les octets du pack en français et 1.6464 fois en anglais. Ces rapports sont des propriétés des fichiers, pas des résultats de modèle. Les comptes exacts, empreintes et correspondances sont régénérés ensemble. Les nombres de jetons restent `NOT_RUN` ; ils doivent être mesurés avec le jetoniseur et le modèle effectivement retenus avant une expérience.
+Les mesures historiques pack/texte restent dans `comparison-map.json` : FR 10 328/17 538 octets et 10 170/16 993 scalaires Unicode ; EN 9 956/16 392 octets et 9 955/16 391 scalaires. Mesures séparées de la prose :
 
-Les métadonnées sont présentes dans les deux conditions, y compris les intitulés d’autorité et les digests. Aucune condition ne reçoit une signature, une preuve externe ou une consigne supplémentaire. Les mots de liaison de la prose, les chemins de champs, la ponctuation JSON et les différences de longueur peuvent néanmoins modifier le traitement. Le plan ne permet donc pas d’attribuer sans réserve un écart à la seule « structure ». Aucun texte de remplissage ne sera ajouté pour égaliser artificiellement la longueur ; les longueurs seront rapportées.
+| Langue | Octets UTF-8 | Scalaires Unicode | Jetons |
+|---|---:|---:|---|
+| FR | 3825 | 3682 | NOT_RUN |
+| EN | 3427 | 3422 | NOT_RUN |
 
-## Tâche et configuration à figer avant exécution
+Aucun remplissage n’égalise les longueurs. Les jetons seront mesurés avec le jetoniseur effectivement choisi, avant les appels. Une configuration incapable de recevoir les entrées complètes s’arrête ; toute adaptation exige une nouvelle version du plan, sans troncature silencieuse.
 
-Une future exécution requiert une autorisation distincte. Avant tout appel, enregistrer un protocole immuable comprenant le commit et les SHA-256 des fichiers, le modèle et sa révision exacte, le fournisseur, la version du client, la date, le jetoniseur, les paramètres d’échantillonnage, les graines si elles existent et les limites de contexte. Aucun de ces identifiants n’est inventé ici.
+La prose normative provient seulement de `content.json` ; les illustrations propres aux cas, dont Ontario, sont retirées. La décision et l’autorisation distinctes restent présentes parce que la source énonce elle-même cette règle. Les contrôles de couverture valident chemins et ancres des identifiants, pas le sens d’une réécriture après mise à jour des empreintes ; une revue éditoriale reste nécessaire.
 
-Dans chaque paire, conserver la même langue, la même question, les mêmes éléments du cas et la même consigne. Utiliser une conversation neuve, sans mémoire d’une réponse précédente, outil, navigation ou récupération supplémentaire. Présenter le fichier de contexte dans le même emplacement du message, sans étiquette suggérant qu’une présentation est plus fiable. Les délimiteurs de contexte sont identiques.
+## Entrées identiques hors document
 
-Consigne commune proposée, à figer telle quelle pour les deux conditions d’une langue :
+Le modèle reçoit uniquement la consigne commune de sa langue, le document choisi entre les mêmes délimiteurs `<documentation>`, puis la question et les éléments du cas. Le bloc est vide dans `no_documentation`. Aucun identifiant de cas, classification, label de qualité, réponse illustrative, grille, carte de correspondance ou source cachée ne s’ajoute. L’[assembleur pur](../spec/examples/semantic-boundaries/assemble-prompt.mjs) ne transmet que les preuves du cas et sa question localisée, avec le document sélectionné. Ses tests vérifient les octets émis et l’absence de champs pédagogiques sentinelles. Chaque essai ouvre une conversation neuve, sans outils, navigation, récupération ni mémoire d’un essai précédent.
 
-- FR : « Réponds à la question en utilisant uniquement le contexte fictif et les éléments du cas. Conserve les conditions, exclusions et limites applicables. Cite les références utiles disponibles. Signale ce qui ne peut pas être conclu. N’exécute aucune action. »
-- EN : “Answer the question using only the fictional context and case evidence. Preserve applicable conditions, exclusions and limits. Cite the useful references provided. State what cannot be concluded. Do not execute any action.”
+Consigne FR, figée dans le plan :
 
-Budget proposé : 512 jetons de réponse par essai, identique dans chaque paire. Aucun extrait de réponse illustrative ni critère de jugement n’est envoyé au modèle. Le contexte reste complet ; si la limite du modèle ne le permet pas, arrêter la configuration avant les appels et versionner une nouvelle proposition, sans tronquer silencieusement.
+> Réponds à la question à partir des éléments du cas et de la documentation fournie, lorsqu’elle est présente. N’invente aucune règle propre au service. Conserve les conditions, exclusions et limites établies par les informations disponibles. Cite les références utiles lorsqu’elles sont fournies. Signale ce qui ne peut pas être conclu et les informations nécessaires pour le déterminer. N’exécute aucune action.
 
-Plan proposé : les sept cas de [scenarios.json](../spec/examples/semantic-boundaries/scenarios.json), deux présentations, deux langues et dix répétitions par combinaison, soit 280 réponses attendues si le plan est exécuté intégralement. Un témoin sans contexte serait un bras supplémentaire explicitement versionné, sans remplacer les deux conditions principales. Répartir l’ordre texte/pack de façon équilibrée, avec un ordre consigné avant l’expérience. La politique de graines dépendra des capacités réelles du fournisseur ; ne pas supposer qu’une graine assure une reproductibilité parfaite.
+La consigne EN correspondante est figée dans le même plan. Le plafond est 512 jetons de réponse. Fournisseur, modèle, révision, client, jetoniseur, paramètres d’échantillonnage, graines, capacité de contexte et tarifs restent null. Une graine éventuelle ne garantit pas la répétabilité exacte.
 
-## Cas et jugement préspécifiés
+## Budget, ordre et erreurs
 
-Chaque cas donne la question, les éléments disponibles, une réponse illustrative admissible et des erreurs identifiables dans les deux langues. L’exemple de réponse n’est pas une chaîne attendue à reproduire. D’autres formulations satisfaisant les mêmes critères sont admissibles.
+`7 cas × 2 langues × 4 conditions × 10 répétitions = 560 réponses` attendues par configuration. Il y a 140 blocs de quatre conditions. Pour les indices de cas `c`, de langue `l` et de répétition `r` partant de zéro, faire une rotation gauche de `(c + 2*l + r) mod 4`. L’ordre des blocs cas/langue/répétition reste fixé. Chaque condition occupe chaque position 17 ou 18 fois par langue, 35 fois globalement et deux ou trois fois par sous-groupe de dix répétitions. Le cas modifie la rotation ; la répétition reste liée à un motif fixe modulo quatre. Ce n’est pas une affectation aléatoire et aucune graine n’est revendiquée.
 
-| Cas | Critère principal |
-|---|---|
-| `preserve-conditions` | Reformuler Québec et l’évaluation favorable, citer la source, ne pas refuser inutilement une explication générale. |
-| `canada-extension` | Refuser l’extension de portée au Canada malgré une évaluation favorable. |
-| `eligibility-without-assessment` | Garder l’admissibilité indéterminée lorsque l’évaluation manque ; ne pas convertir l’absence en évaluation défavorable. |
-| `missing-location` | Identifier la preuve géographique manquante, sans inventer un lieu ni conclure à un refus définitif. |
-| `explanation-versus-action` | Expliquer les conditions satisfaites dans l’exercice, tout en séparant réservation, paiement et travaux d’une permission d’action. |
-| `conflicting-evidence` | Conserver la contradiction et demander une clarification, sans choisir automatiquement le renseignement favorable. |
-| `unfavourable-assessment` | Reconnaître l’exclusion déclarée même si le lieu au Québec est établi. |
+Les identifiants d’essai opaques contiennent la configuration et un numéro séquentiel. Cas, langue, répétition, condition et position restent des métadonnées distinctes, hors de l’entrée du modèle. Une seule tentative technique supplémentaire est permise, après le passage prévu, pour un échec de transport ou une erreur transitoire explicite du fournisseur avant toute réponse terminée. Le plafond est donc 560 reprises, 1 120 tentatives au maximum par configuration. Garder la trace initiale et l’identifiant parent. Une réponse sémantique refusée ou insatisfaisante n’est jamais remplacée pour obtenir un meilleur résultat. La première réponse terminée est conservée, y compris une réponse vide ou tronquée à 512 jetons, sans reprise. Conserver les marqueurs et motifs de fin. Le jugement porte sur le contenu visible ; `UNSCORABLE` s’applique si une dimension ne peut pas être évaluée. Une réponse vide a une utilité `UNDETERMINED` et ne reçoit aucun crédit de conservation pour du contenu absent. Aucune continuation n’est supposée. Les appels de juges et leurs reprises demandent un budget distinct avant exécution.
 
-Unité d’analyse : une réponse à un cas, dans une langue, une présentation, une répétition et une configuration identifiées. La paire correspond aux deux présentations du même cas, de la même langue et du même indice de répétition. Les répétitions d’un même cas ne constituent pas de nouveaux domaines indépendants.
+## Juger selon l’information disponible
 
-Deux évaluateurs jugeront indépendamment les réponses anonymisées, sans voir la condition expérimentale. Ils recevront la même source commune et les mêmes critères. L’aveugle ne sera pas présenté comme parfait : la réponse peut révéler la forme de son contexte. Une troisième personne arbitrera les désaccords après conservation des deux jugements initiaux et de leur motif.
+La grille fixe l’applicabilité par cas et condition avant observation. Elle conserve conditions, exclusions, extension de portée, explication/permission, refus injustifié, références, information manquante et contradiction. La justification des affirmations et la fabrication de références sont évaluées dans tous les bras. La conservation d’une règle ou référence absente est `NOT_APPLICABLE`, sans réussite facile ajoutée au dénominateur. Une référence inventée reste un défaut observable.
 
-Pour chaque dimension applicable, enregistrer `PASS`, `FAIL` ou `UNSCORABLE`, avec un extrait de la réponse et une justification. Enregistrer `NOT_APPLICABLE` lorsqu’un cas ne sollicite pas la dimension. Les dimensions sont : conservation des conditions, conservation des exclusions, extension injustifiée de portée, confusion explication/permission, refus injustifié, conservation des références, traitement d’une information manquante et traitement d’une contradiction.
+Pour les sept cas sans documentation : ne pas inventer les critères du service ; ne pas déduire une disponibilité canadienne d’un projet ontarien favorable ; laisser l’admissibilité inconnue sans confondre preuve absente et défavorable ; ne pas inventer le lieu ; respecter l’interdiction d’action sans déclarer des règles inconnues satisfaites ; conserver la contradiction Québec/Ontario ; reconnaître le résultat technique défavorable sans fabriquer une exclusion contractuelle. Les attentes détaillées et réponses pédagogiques documentées figurent dans la grille, hors entrée du modèle.
 
-Une réponse tronquée, vide ou techniquement échouée n’est pas retirée silencieusement. Rapporter le nombre de réponses attendues, reçues, évaluables et non évaluables, les erreurs techniques et les répétitions tentées. Conserver les états avant et après arbitrage. Ne pas agréger des refus justifiés et injustifiés dans un même score de conformité.
+Deux sorties restent distinctes. **Justification** : chaque dimension applicable reçoit `PASS`, `FAIL` ou `UNSCORABLE`, avec motif et extrait disponible. Une affirmation exacte par hasard échoue si aucun élément reçu ne la justifie. **Utilité documentaire** : `RESOLVED`, `PARTIAL` ou `UNDETERMINED`, selon la même demande informationnelle propre au cas dans tous les bras. Une abstention peut être justifiée et peu utile. Une non-réponse technique ne reçoit pas un jugement favorable ; elle reste dans la comptabilité.
 
-L’analyse primaire présentera les effectifs par dimension, cas, langue et condition, ainsi que les désaccords et les différences par paires. Ne pas produire un score global non préspécifié. Toute inférence statistique ou modification du plan exige sa méthode déclarée avant consultation des résultats ; ce petit ensemble fictif ne justifie aucune généralisation aux services réels.
+## Évaluateurs, aveugle et accord
 
-## Matériel à conserver et limites
+Deux évaluateurs produiront des jugements initiaux conservés avant arbitrage. Leurs identités et rôles humains ou automatisés ne sont pas encore choisis. Ils connaissent le profil minimal documentation présente/absente, mais pas le label JSON/texte/prose. L’aveugle est partiel et une réponse peut révéler sa condition.
 
-Un futur dossier de résultats devra contenir le protocole figé, les fichiers de contexte exacts, leurs empreintes, les requêtes complètes sans secrets, les réponses brutes, les versions et paramètres, les comptes de jetons effectivement observés, l’ordre des essais, les erreurs, les jugements et les arbitrages. Sa politique de conservation et de publication devra être déterminée avant les appels. Les relevés du service et les protocoles expérimentaux antérieurs restent distincts.
+Calculer l’accord brut et le kappa nominal de Cohen sur les annotations initiales appariées : séparément pour `PASS`/`FAIL`/`UNSCORABLE` et pour les trois catégories d’utilité. Publier effectifs, tables croisées, marges, non-applicables et jugements manquants. Exclure les `NOT_APPLICABLE` suivant la grille ; exclure une paire incomplète du calcul sans effacer son manque.
 
-Les contrôles réalisés aujourd’hui vérifient les octets, les associations, la complétude structurelle et l’égalité des valeurs des deux présentations. Ils ne sont ni un simulateur de modèle, ni un juge fondé sur quelques formulations écrites à l’avance, ni une expérience scientifique exécutée. Le statut demeure `NOT_RUN`.
+```text
+po = accords / jugements appariés applicables
+pe = somme des produits des proportions marginales par catégorie
+kappa = (po - pe) / (1 - pe)
+```
+
+Sans paire ou si `pe = 1`, kappa vaut null avec motif ; conserver l’accord brut lorsqu’il est calculable. Regrouper les dimensions par dimension/langue/condition, et l’utilité par cas/langue/condition, avec leurs effectifs. Aucun regroupement opportuniste après observation, seuil universel ou preuve de validité générale n’est déduit du coefficient. [Rétrospective de Cohen](https://garfield.library.upenn.edu/classics1986/A1986AXF2600001.pdf).
+
+## Analyse, conservation et limites
+
+L’analyse primaire est descriptive par cas, langue, condition et dimension : réponses attendues, tentées, reçues, évaluables, non évaluables, erreurs, désaccords et non-applicables. Conserver les écarts appariés par cas/langue/répétition/configuration. Comparer seulement des critères et dénominateurs compatibles ; présenter les mesures communes séparément de la conservation propre aux bras documentés. Aucun score global ou test inférentiel ajouté après lecture des résultats.
+
+Dix répétitions ne créent pas 70 scénarios indépendants. Les deux langues ne créent pas deux domaines indépendants : il reste sept cas d’un service fictif. Un résultat nul ne prouve ni équivalence générale ni inutilité du Runtime. Le cas d’action mesure des formulations de permission, sans outil ni blocage réel de réservation, paiement ou travaux. À octets transmis identiques, le vérificateur en amont n’est pas un traitement visible du modèle ; admission, sélection, refus et traçabilité restent reliés aux tests techniques et à la trousse. Une future expérience complète conserverait aussi les refus et erreurs avant le modèle.
+
+Avant l’expérience, figer révision, empreintes, configuration, ordre, budgets de juges et politique de conservation. Conserver requêtes sans secrets, réponses brutes, paramètres, jetons réellement observés, erreurs, jugements et arbitrages. Le plan garde les destinations de résultats null, `observedResponses: []` et `scores: null`. Aucun expéditeur d’API n’est ajouté. Les [tests de préparation](../test/pilot-plan.test.mjs) contrôlent les actifs, sans simuler des réponses de modèle.
+
+Le chemin français historique `docs/model-comparison.md` est conservé pour les liens existants, avec sa langue et son équivalent anglais explicitement indiqués.

@@ -13,6 +13,10 @@ Le Runtime de contexte gouverné distribue des packs de contexte précompilés e
 | Obtenir un contexte déclaré | [Guide de l’instance hébergée](instance.md) | Corpus de gautierdorval.com, avec compatibilité des clients documentée séparément. |
 | Examiner et vérifier les artefacts | [Guide de vérification](../verification.md) | Vérification complète de l’instantané sous une référence de confiance choisie séparément. |
 | Apprendre le parcours hors ligne | [Démonstration locale](#essayer-localement) | Données fictives et clés de test, sans appel à un modèle. |
+| Inspecter un pack complet | [Kit consommateur](reproduction.md) | Admission, inspection et permission restent distinctes. |
+| Comprendre les limites sémantiques | [Exemple et glossaire](pack-semantics.md) | Exercice fictif, sans réponse de modèle observée. |
+| Examiner les preuves locales | [Qualification](qualification.md) | Actifs conservés et adaptateur local, sans diagnostic hébergé courant. |
+| Préparer une comparaison | [Pilote à quatre conditions](../model-comparison.md) | 560 réponses prévues par configuration, **NOT_RUN**. |
 
 ## Quand le contexte perd son sens
 
@@ -32,7 +36,7 @@ L’instance de gautierdorval.com est accessible par HTTP et un adaptateur MCP d
 
 ## Version de référence
 
-Édition de référence 0.2.0-proposed. L’instance hébergée existe séparément et suit son propre cycle de publication. Ce dépôt contient les contrats proposés, le code de référence hors ligne et les exemples fictifs ; il ne regroupe ni le service hébergé, ni son corpus de production, ni un déploiement clé en main pour d’autres domaines.
+L’édition de référence 0.2.1-proposed est préparée comme candidate, sans publication étiquetée à ce stade. Les contrats restent proposés et le service hébergé suit un cycle de publication distinct. Citer le commit exact exécuté tant que cette édition n’est pas publiée. Ce dépôt contient le code de référence hors ligne et des exemples fictifs, sans regrouper le service hébergé, son corpus de production ou un déploiement clé en main pour d’autres domaines.
 
 ## Choisir le contexte
 
@@ -96,3 +100,5 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 ## Inspection locale du pack complet
 
 [Kit de reproduction](reproduction.md) · [Sémantique des packs](pack-semantics.md) · [Protocole comparatif préparé](../model-comparison.md).
+
+[Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Édition candidate](../release-0.2.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.

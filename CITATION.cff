@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-message: "Cite the exact revision and proposed contract status."
+message: "Candidate reference edition; cite the exact executed commit and proposed contract status until a tagged release is published."
 title: "Governed Context Runtime"
 type: software
-version: 0.2.0-proposed
+version: 0.2.1-proposed
 authors:
   - family-names: Dorval
     given-names: Gautier

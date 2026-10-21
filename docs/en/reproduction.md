@@ -102,7 +102,7 @@ latency targets, hosted performance or agent latency.
 
 No production observation, source-build provenance, current revocation service,
 assistant compatibility, organizational independence or semantic benefit follows
-from a successful exercise. [The model comparison](../model-comparison.md) is a
+from a successful exercise. [The model comparison](model-comparison.md) is a
 separate prepared protocol marked NOT_RUN. Development qualification alone needs
 `npm ci --ignore-scripts` followed by `npm run test:dev`; its schemas resolve locally.
 
@@ -116,3 +116,8 @@ case to reproduce an undeclared-language refusal through complete verification.
 At library level, malformed invocation types and non-cloneable objects reject the
 promise; domain refusals return `REFUSED`. The CLI catches both and never forwards
 content on failure. See the [input contract](../verification.md).
+
+
+## Candidate edition and qualification
+
+Edition `0.2.1-proposed` is prepared, not tagged or released. Record the exact executed commit; `v0.2.0-proposed` still identifies its historical bytes. [Offline retained-byte qualification](qualification.md), [four-condition pilot, NOT_RUN](model-comparison.md) and [candidate notes](../release-0.2.1-proposed.md) describe separate scopes. The signed fictional kit remains distinct from the unsigned semantic example.

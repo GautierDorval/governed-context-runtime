@@ -1,0 +1,241 @@
+{
+  "schema": "runtime-pilot-plan/1",
+  "protocolVersion": "four-condition-pilot-2",
+  "status": "NOT_RUN",
+  "cases": [
+    "preserve-conditions",
+    "canada-extension",
+    "eligibility-without-assessment",
+    "missing-location",
+    "explanation-versus-action",
+    "conflicting-evidence",
+    "unfavourable-assessment"
+  ],
+  "languages": [
+    "fr",
+    "en"
+  ],
+  "conditions": [
+    "pack",
+    "exhaustive_text",
+    "canonical_prose",
+    "no_documentation"
+  ],
+  "repetitions": 10,
+  "expectedResponsesPerConfiguration": 560,
+  "outputTokenLimit": 512,
+  "inputs": {
+    "fr": {
+      "pack": {
+        "path": "fr.pack.json",
+        "bytes": 10328,
+        "sha256": "5332c7ba1a4df913496cb7ec45ce3ee3793234d07ca8377dec89736396153235",
+        "unicodeScalars": 10170,
+        "tokens": null
+      },
+      "exhaustive_text": {
+        "path": "fr.canonical-text.md",
+        "bytes": 17538,
+        "sha256": "704cd853c77aa2c8726441f38f7a25f3569bce7dbb40e4eabc449e7e96d82c4b",
+        "unicodeScalars": 16993,
+        "tokens": null
+      },
+      "canonical_prose": {
+        "path": "fr.canonical-prose.md",
+        "bytes": 3825,
+        "sha256": "a690c97743276027824156a519bf990cadb8e7648847fa6dbe486a94b1dd28f9",
+        "unicodeScalars": 3682,
+        "tokens": null
+      },
+      "no_documentation": null
+    },
+    "en": {
+      "pack": {
+        "path": "en.pack.json",
+        "bytes": 9956,
+        "sha256": "f23da03ec5c0e9a798539bca87ad33a55becd0a15b2b26118efd0f54d1bc7e59",
+        "unicodeScalars": 9955,
+        "tokens": null
+      },
+      "exhaustive_text": {
+        "path": "en.canonical-text.md",
+        "bytes": 16392,
+        "sha256": "b34758d03733500048415dfb0ed9d1116a62058d8fb29d5f3e0a9ddc9d0206f9",
+        "unicodeScalars": 16391,
+        "tokens": null
+      },
+      "canonical_prose": {
+        "path": "en.canonical-prose.md",
+        "bytes": 3427,
+        "sha256": "a244c46907e1f1245bd571bd25e4cdcd2552154ba067b3faea1c4ef1c065d07c",
+        "unicodeScalars": 3422,
+        "tokens": null
+      },
+      "no_documentation": null
+    }
+  },
+  "caseInput": {
+    "path": "scenarios.json",
+    "sha256": "5123dc129af2d9b6ffc59df68f4a7df8e519ce2921ca748b4e23b22239cddb50",
+    "fields": [
+      "cases[].evidence",
+      "cases[].<language>.question"
+    ],
+    "excludedFields": [
+      "illustrativeAnswer",
+      "unacceptableClaims",
+      "dimensions",
+      "classification",
+      "judging-rubric.json",
+      "prose-coverage.json",
+      "comparison-map.json",
+      "content.json",
+      "id"
+    ],
+    "metadataFields": [
+      "cases[].id"
+    ]
+  },
+  "instructions": {
+    "fr": "Réponds à la question à partir des éléments du cas et de la documentation fournie, lorsqu’elle est présente. N’invente aucune règle propre au service. Conserve les conditions, exclusions et limites établies par les informations disponibles. Cite les références utiles lorsqu’elles sont fournies. Signale ce qui ne peut pas être conclu et les informations nécessaires pour le déterminer. N’exécute aucune action.",
+    "en": "Answer the question using the case evidence and any documentation provided. Do not invent service-specific rules. Preserve the conditions, exclusions and limits established by the available information. Cite useful references when they are provided. State what cannot be concluded and what information is needed to determine it. Do not execute any action."
+  },
+  "assembly": {
+    "layout": "instruction + newline + <documentation> + newline + exact file bytes decoded as UTF-8 (empty for no_documentation) + newline + </documentation> + newline + <case> + JSON.stringify({evidence,question}) + </case>",
+    "conditionLabelsSent": false,
+    "freshConversation": true,
+    "tools": false,
+    "retrieval": false,
+    "priorTrialMemory": false,
+    "noTruncation": true,
+    "implementation": "assemble-prompt.mjs",
+    "payloadFields": [
+      "evidence",
+      "question"
+    ]
+  },
+  "order": {
+    "method": "For case index c, language index l and repetition r (zero-based), block b=(c*2+l)*10+r. Rotate [pack,exhaustive_text,canonical_prose,no_documentation] left by (c+2*l+r) mod 4. Iterate blocks ascending.",
+    "seed": null,
+    "reproducibility": "Fixed arrays and arithmetic; version the plan before any order change.",
+    "globalPositionsPerCondition": [
+      35,
+      35,
+      35,
+      35
+    ],
+    "subgroupBalance": "Each position occurs 2 or 3 times per 10-repeat case/language subgroup; no perfect subgroup balance claim.",
+    "trialsPerCondition": 140,
+    "languageBalance": "Each condition appears 17 or 18 times per position in each 70-block language subset; the two language offsets complement to 35 globally. Case index changes the rotation; repetition still follows a fixed modulo-four pattern, not randomized assignment."
+  },
+  "trialIdentity": "configurationId/trialNumber(0001..0560), opaque metadata not included in model input",
+  "configuration": {
+    "configurationId": null,
+    "provider": null,
+    "model": null,
+    "modelRevision": null,
+    "clientVersion": null,
+    "tokenizer": null,
+    "samplingParameters": null,
+    "providerSeed": null,
+    "contextLimit": null,
+    "inputTokenMeasurements": null,
+    "pricing": null
+  },
+  "technicalRetries": {
+    "maxAdditionalAttemptsPerTrial": 1,
+    "eligible": [
+      "transport failure before a completed response",
+      "explicit provider transient error with no completed response"
+    ],
+    "ineligible": [
+      "semantic refusal",
+      "poor answer",
+      "undesired score",
+      "completed empty response",
+      "output truncated by the 512-token ceiling"
+    ],
+    "policy": "Keep the initial trace and parent opaque trial ID; retry appended after the planned pass with identical inputs. A completed response, including an empty response, semantic refusal or token-limit truncation, is never retried or replaced. Primary response is first completed response; retain partial transport traces separately. Permanently missing responses receive no favourable score.",
+    "extraAttemptCeiling": 560,
+    "totalAttemptCeilingPerConfiguration": 1120,
+    "judgeCalls": "Separate budget, method and authorization required before execution; not part of 560 responses."
+  },
+  "review": {
+    "reviewers": 2,
+    "identitiesAndHumanOrAutomatedRoles": null,
+    "blind": "Partial: documentation present/absent known; JSON/exhaustive/prose labels hidden. Answers may disclose their condition.",
+    "arbitration": "Retain both initial annotations before any arbitration.",
+    "agreement": {
+      "groupBy": [
+        "dimension",
+        "language",
+        "condition"
+      ],
+      "utilityGroupBy": [
+        "case",
+        "language",
+        "condition"
+      ],
+      "justificationCategories": [
+        "PASS",
+        "FAIL",
+        "UNSCORABLE"
+      ],
+      "utilityCategories": [
+        "RESOLVED",
+        "PARTIAL",
+        "UNDETERMINED"
+      ],
+      "notApplicable": "Exclude according to prespecified case/condition map; publish counts.",
+      "missingJudgment": "Exclude unpaired records from agreement, report missing counts; never impute agreement.",
+      "rawAgreement": "po = agreements / paired applicable judgments",
+      "expectedAgreement": "pe = sum over categories of reviewer1 marginal proportion * reviewer2 marginal proportion",
+      "kappa": "(po - pe) / (1 - pe)",
+      "undefined": "null with reason when no paired data or pe = 1; retain computable raw agreement.",
+      "tables": "Publish counts, contingency tables and margins before arbitration, separately for justification and documentary utility.",
+      "postHocPooling": false,
+      "universalThreshold": null
+    }
+  },
+  "analysis": {
+    "primary": "Descriptive counts by case, language, condition and dimension; preserve paired differences using case/language/repetition within a configuration.",
+    "counts": [
+      "expected",
+      "attempted",
+      "received",
+      "evaluable",
+      "notEvaluable",
+      "technicalErrors",
+      "notApplicable",
+      "disagreements"
+    ],
+    "commonComparison": "Utility and claim justification on the common applicable dimensions; conservation measures reported separately with compatible denominators.",
+    "noGlobalScore": true,
+    "inferentialTests": null,
+    "scope": "Seven cases in one fictional service; repetitions and languages are not independent domains. No exact causal decomposition or general architecture claim.",
+    "actionScope": "No tools; only statements about permission, not operational blocking.",
+    "verifierScope": "Identical model input cannot identify an upstream verifier effect. Admission and traceability remain separate technical tests."
+  },
+  "results": {
+    "directory": null,
+    "rawResponses": null,
+    "judgments": null,
+    "arbitrations": null,
+    "retentionPolicy": null
+  },
+  "observedResponses": [],
+  "scores": null,
+  "trialMetadata": [
+    "caseId",
+    "language",
+    "repetition",
+    "condition",
+    "blockIndex",
+    "position"
+  ],
+  "responseAccounting": {
+    "completedEmpty": "Count as received with empty=true; no retry. Judge against the same rubric, with UNSCORABLE where content cannot be assessed, and UNDETERMINED utility. Do not treat absence as successful retention.",
+    "tokenLimit": "Count as received with truncated=true and preserve raw content and finish reason; no retry. Judge only visible content under the same applicability map, using UNSCORABLE where assessment is impossible. Do not infer an unseen continuation or grant success for missing decisive information.",
+    "transportPartial": "Preserve received partial bytes and error, but no completed primary response; only the declared technical retry may follow."
+  }
+}
