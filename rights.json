@@ -96,7 +96,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "4217f7b373553d724348a3e6813115533d45750ff28a4b0604756e383197941c"
+      "sha256": "7d55a98aa2be644f7fc228ce086447bcf649c1dce809facb1653314846e6021b"
     },
     {
       "path": "NOTICE.md",
@@ -174,7 +174,7 @@
       "path": "docs/en/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "4d2dd73fe98b824a409f761c20eea590d3ed4a67720eb01e2345ebbdc3f0d54e"
+      "sha256": "9eb35da65c652392a491102547da685bb65c593acdb6b1868fc64552319a2dbb"
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -222,7 +222,7 @@
       "path": "docs/fr/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "40212d796f442be8f74c5dc48bc4acf9c7c0828a73e113ec38031862b6a992d2"
+      "sha256": "e0c7f7f00450af417bb083abc7fd51c45dfed2dfdc3c81d93d369ec35b977e68"
     },
     {
       "path": "docs/fr/observations.md",
@@ -354,7 +354,7 @@
       "path": "records/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "168aa9f9f731a241b10e87cd871731c9e313b11ad6dee573757eca16f2bd0330"
+      "sha256": "522cd2544968fc1d9bd44bda3c9f47ec4e3a4bf77d7b01b980afadd792d87c52"
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -384,7 +384,7 @@
       "path": "records/mcp-apps-2026-10-26.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "8ce265b11f278c66ae93bc7f67cc431c4de9f171252be645d2ab841638b4efc4"
+      "sha256": "6613949404b18cee1aced823fb3cff38cff8bf115ec7912c377c44dc53ac0b7b"
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -498,7 +498,7 @@
       "path": "spec/examples/mcp-apps/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "e205096ce9718048f6d674eee1874eb603f03d1edf5a198aeada75c49d11b74e"
+      "sha256": "4c2a32e5d932ff2bd0dc916df19b88aab718d8e019dfc4e46530ca051e9bf41e"
     },
     {
       "path": "spec/examples/mcp-apps/build.mjs",

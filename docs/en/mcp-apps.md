@@ -4,6 +4,10 @@
 
 This optional example lets a person select and inspect a **whole fictional pack**, then explicitly supply its complete text projection to a conversational host. The available intent is `representation-gap`, version `semantic-boundaries-1`, in French or English. It is a local prototype, not a deployed product or a compatibility claim for every MCP client. The hosted Runtime adapter is separate.
 
+Two attempts at the expected workflow failed after capability declaration, submission, acknowledgement and sending the following message. The model said it had only the catalogue and did not reproduce the pack conditions. The failure stage and cause remain unknown. These statements are not telemetry of its input.
+
+**Real diagnostic, October 26, 2026: A/B not executed.** In Windows Claude Desktop 3.6556.2, two fresh conversations render the component but its host connection remains pending; inspection and submission are disabled. No nonce was submitted. C and D are not triggered. The cause is unknown and real observation remains open. Local diagnostic tests do not replace a real-client trial.
+
 ## Architecture and trust
 
 The source lives in [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Its preparer materializes six unmodified reference files from Git commit `57a09f1830ed20864ec66a6d153fc230b0331865`, verifies their SHA-256 digests and keeps the installed application **outside the reference checkout**. It does not copy or fork the verifier's implementation into maintained companion code. The root package, dependency policy, historical kit and contracts are unchanged.
@@ -70,3 +74,35 @@ If no component renders, the catalog is not proof that the UI worked. The text f
 GCR structures and verifies context; MCP transports calls and resources; MCP Apps adds a host-rendered UI; WebMCP exposes tools from browser pages. None of these alone establishes source truth, permission or faithful answers. The existing four-condition comparative pilot remains **NOT_RUN**. This client exercise is not that pilot, a business validation or a visibility experiment.
 
 Sources checked on 2026-10-26: [MCP Apps overview](https://modelcontextprotocol.io/extensions/apps/overview), [App API](https://apps.extensions.modelcontextprotocol.io/api/classes/app.App.html#updatemodelcontext), [Claude local setup](https://claude.com/docs/connectors/building/mcp-apps/getting-started), [Claude troubleshooting](https://claude.com/docs/connectors/building/mcp-apps/troubleshooting), [ext-apps 2.0.3 licence](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/LICENSE). The local server negotiates the protocol supported by its pinned SDK; it does not silently translate the hosted adapter's 2026-07-28 profile.
+
+## Optional nonce diagnostic
+
+Diagnostics are off by default. Open **Optional diagnostic** and enable it explicitly. **Short** supplies only a 140-byte UTF-8 envelope, with no pack. **Full** requires inspection of the current selection and appends the entire unchanged projection. Both modes place the envelope first, ending with two newline characters. It is not verified GCR data. The existing local limit is 200,000 UTF-8 bytes including the envelope, with no truncation; this is not an established host limit.
+
+Each explicit submission draws 16 cryptographic browser bytes encoded as 32 hexadecimal characters for `gcrDiagnosticNonce`, with an independent trial identifier. Missing `crypto.getRandomValues` or Web Crypto SHA-256 refuses the trial; there is no `Math.random` fallback. The SDK remains pinned at 2.0.3.
+
+| Channel | Diagnostic data |
+| --- | --- |
+| `updateModelContext` | Only text channel supplying the nonce to the model before its answer. Exactly one call per explicit submission. |
+| Catalogue, inspection, `_meta`, `structuredContent`, `read_gcr_pack` fallback | No nonce; inspection precedes generation. `_meta` is not secret. |
+| `ui/message` and user message | Request for the named field, never its expected value. A prepared draft may require manual sending. |
+| Observer trace | Exact payload, digest, UTF-8 size, expected value and chronology in memory and, when available, component `sessionStorage`. Never automatically displayed or sent. |
+
+Session storage retains at most four trials and is not a security boundary against the host. A storage refusal is displayed; reload may then lose the evidence. An observer must retain it separately or mark the result indeterminate. Never give the tested model access to this trace. Revealing it requires explicit confirmation that evaluation and any reload variant are complete. Premature disclosure contaminates the trial. Keep the nonce out of screenshots, clipboard, messages and files accessible to that model. The component cannot read the answer or claim verified reproduction. Reconnection and reload never submit context or restore an old acknowledgement as usable state.
+
+### Bounded real-client procedure
+
+1. Identify the source commit, client/version/OS, capabilities, `app.html` SHA-256 and actual served `ui://gcr/pack-selector-<digest>.html` URI. Wait for each preceding turn to finish.
+2. **A, once**: fresh conversation, short mode, explicit submission and acknowledgement, then request the nonce. Confirm the draft was actually sent. Record the answer without another tool call.
+3. **B, once**: another fresh conversation, full mode, inspected French pack, fresh nonce and the same sequence.
+4. **C, at most once after A or B fails**: prefer B if both fail. Retain traces, then reload that same conversation. Do not submit anything. Request the previous field in an ordinary message without its value. If no-new-update cannot be established, mark possible reinjection as a confound. Lost expected values prevent exact comparison.
+5. **D, conditional on general failure**: another fresh conversation, different nonce supplied directly in an ordinary user message. This copying control is outside MCP Apps.
+6. Finish or exclude C before revealing observer evidence. Retain the actual payload, not just a hash, and never reuse historical nonces. Do not repeat an interpretable negative result; a retry requires a specific documented invalidation.
+
+English prompt: “Copy the value of the gcrDiagnosticNonce field supplied by the component. If this value is not available in your context, answer NON_DISPONIBLE. Do not call any tool to find it. Answer with the value alone, without explanation.” The French UI provides the equivalent instruction used for the bounded campaign.
+
+Record exact value reproduction separately from formatting, tool calls and timestamped events. A correct value with extra prose establishes availability but fails the requested format. A missing or incorrect value does not prove non-injection. Isolated success establishes neither the entire projection’s presence, faithful use nor general compatibility. A positive A and negative B do not isolate size from content. See the [dated record, initial-publication closure and new diagnostic](../../records/mcp-apps-2026-10-26.md).
+
+The [pinned API source](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/src/app.ts) describes availability to subsequent turns and replacement of the previous contribution. Resolution is an acknowledgement, not telemetry of the input used. Tool-result limits in Claude troubleshooting do not establish limits for this method.
+
+Dependency advisory check, 2026-10-26: `npm audit` reports two packages with high advisories in the existing MCP client/server 2.0.0 lockfile (HTTP/OAuth scenarios). This companion uses only stdio, local fictional data and no OAuth. No upgrade or HTTP extension is included; reassess these advisories before changing transport or scope.
