@@ -321,8 +321,8 @@
     },
     {
       "path": "records/mcp-apps-2026-10-26.md",
-      "sha256": "9e66d93653d7b75f426d6a8541a0de411101794a6d24db6bca133520de09aa19",
-      "bytes": 6232
+      "sha256": "8ce265b11f278c66ae93bc7f67cc431c4de9f171252be645d2ab841638b4efc4",
+      "bytes": 6394
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -331,7 +331,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "6aae10f169612a76395c37f2378fd39192263a03af991d0267f5186757bb7f0d",
+      "sha256": "8c5cef07ef720636c4dec46528e9a2058fe9733be3acc84fcdc91eec2fe3dbc8",
       "bytes": 37277
     },
     {
@@ -471,17 +471,17 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
-      "sha256": "48df01aae164f494863bcac5ac8ada9702f1f305c7af46e65cfc41289a947d48",
-      "bytes": 5696
+      "sha256": "a34970ff1ba14a6016331afd7cd6644c375313d85a7a9df16326f9dd7f15d9b9",
+      "bytes": 7494
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
-      "sha256": "26958462ebf5065c5e1d9b1addee67bbeaf0ad18b3d933982cba62b82520407c",
-      "bytes": 3023
+      "sha256": "b3e9d60d08e9ae9b6495422918b4ba3676f04c6e73d235b488156aa9392392a3",
+      "bytes": 3237
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
-      "sha256": "0b85e82de7eacf9b33b94d6410fef49b89bf2b0c7475734983a61040967dde79",
+      "sha256": "0fbf4a8f95ab10123c0d721bfa033cad7725762573f44142673b707404ce25df",
       "bytes": 3679
     },
     {

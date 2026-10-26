@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {Client} from '@modelcontextprotocol/client';
 import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
 import {fileURLToPath} from 'node:url';
-import {selection} from '../data.mjs';
+import {selection,inspect} from '../data.mjs';
 test('real stdio MCP entrypoint, UI resource and usable text fallback',{timeout:30000},async t=>{
  const client=new Client({name:'gcr-local-qualification',version:'0.1.0'},{capabilities:{}});
  const transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('../server.mjs',import.meta.url))],stderr:'pipe'});
@@ -24,7 +24,9 @@ test('real stdio MCP entrypoint, UI resource and usable text fallback',{timeout:
  const fallback=await client.callTool({name:'read_gcr_pack',arguments:{...selection,lang:'en'}});
  assert.equal(fallback.isError,undefined);assert.ok(fallback.content[0].text.includes('nonApplicabilityConditions'));
  const projection=JSON.parse(fallback.content[0].text.split('\n').slice(1).join('\n'));
- assert.equal(projection.pack.lang,'en');assert.ok(projection.archivedSources.length>0);
+ assert.equal(projection.pack.lang,'en');
+ const expected=await inspect({...selection,lang:'en'});
+ assert.deepEqual(projection.archivedSources,expected.sources.map(s=>({sourcePath:s.sourcePath,repositoryDigest:s.repositoryDigest,text:Buffer.from(s.contentBase64,'base64').toString('utf8')})));
  const refusal=await client.callTool({name:'read_gcr_pack',arguments:{...selection,lang:'en',expectedRoot:'sha-256:'+'0'.repeat(64)}});
  assert.equal(refusal.isError,true);assert.equal(refusal._meta?.gcr,undefined);
  const resource=await client.readResource({uri:list.tools.find(t=>t.name==='open_gcr_selector')._meta.ui.resourceUri});

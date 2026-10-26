@@ -16,6 +16,10 @@ for(const lang of ['fr','en'])test('whole pack and archived restrictions '+lang,
  }
  const projection=JSON.parse(text.slice(text.indexOf('\n')+1));
  assert.deepEqual(projection.pack,JSON.parse(JSON.stringify(view.pack)));assert.deepEqual(projection.manifest,JSON.parse(JSON.stringify(view.manifest)));assert.deepEqual(projection.units,JSON.parse(JSON.stringify(view.units)));
+ assert.deepEqual(projection.archivedSources.map(s=>[s.sourcePath,s.repositoryDigest]),view.sources.map(s=>[s.sourcePath,s.repositoryDigest]),'every verified dependency must remain in the submitted projection');
+ const fixture=JSON.parse(await readFile(new URL('../reference/spec/examples/semantic-boundaries/bundle.json',import.meta.url),'utf8'));
+ const dependencies=fixture.snapshot.inventory.packs.find(p=>p.packId===view.pack.packId).dependencies;
+ for(const dependency of dependencies)assert.ok(projection.archivedSources.some(s=>s.sourcePath===dependency),'missing indexed dependency: '+dependency);
  for(const source of projection.archivedSources)assert.equal(source.text,Buffer.from(view.sources.find(s=>s.sourcePath===source.sourcePath).contentBase64,'base64').toString('utf8'));
  assert.deepEqual(JSON.parse(Buffer.from(view.originalBytes.packBase64,'base64')),JSON.parse(JSON.stringify(view.pack)));
 });
@@ -67,4 +71,21 @@ test('failed verification and disconnect remove stale usable context',async()=>{
  s.select(wanted('fr'));await s.inspect();await s.submit();assert.equal(s.state.phase,'accepted');
  fail=true;await s.inspect();assert.equal(s.state.phase,'failed');assert.equal(s.state.view,null);
  fail=false;await s.inspect();s.disconnect();assert.equal(s.state.phase,'disconnected');await assert.rejects(s.submit());
+});
+
+for(const outcome of ['reply','error'])test('disconnect invalidates a pending preview '+outcome,async()=>{
+ let resolveLoad,rejectLoad;
+ const s=new PackSession({load:()=>new Promise((resolve,reject)=>{resolveLoad=resolve;rejectLoad=reject;}),send:()=>{throw Error('must_not_send');}});
+ s.select(wanted('fr'));const pending=s.inspect();s.disconnect();
+ const disconnected={...s.state};
+ if(outcome==='reply')resolveLoad(await reply('fr'));else rejectLoad(Error('late_failure'));
+ await pending;assert.deepEqual(s.state,disconnected);await assert.rejects(s.submit(),/verified_preview_required/);
+});
+for(const outcome of ['reply','error'])test('disconnect invalidates a pending acknowledgement '+outcome,async()=>{
+ let resolveSend,rejectSend;
+ const s=new PackSession({load:()=>reply('fr'),send:()=>new Promise((resolve,reject)=>{resolveSend=resolve;rejectSend=reject;})});
+ s.select(wanted('fr'));await s.inspect();const pending=s.submit();s.disconnect();
+ const disconnected={...s.state};
+ if(outcome==='reply')resolveSend({});else rejectSend(Error('late_failure'));
+ await pending;assert.deepEqual(s.state,disconnected);await assert.rejects(s.submit(),/verified_preview_required/);
 });
