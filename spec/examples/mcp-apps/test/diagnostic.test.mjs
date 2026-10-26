@@ -20,7 +20,12 @@ test('fresh 128-bit cryptographic nonce per explicit submit, no implicit call or
  assert.equal(d.state.phase,'acknowledged');assert.equal('responseObserved' in d.state,false);
 });
 for(const crypto of [null,{}, {getRandomValues:()=>{throw Error('do not fall back');},subtle:webcrypto.subtle}])test('unavailable or failed browser crypto refuses without send',async()=>{
- const d=new DiagnosticSession({crypto,send:()=>{throw Error('unexpected send');}});await d.submit(base);assert.equal(d.state.phase,'failed');assert.equal(evidence(d).length,0);
+ const d=new DiagnosticSession({crypto,send:()=>{throw Error('unexpected send');}});await d.submit(base);assert.equal(d.state.phase,'failed');assert.equal(evidence(d).length,0);if(!crypto?.getRandomValues)assert.equal(d.state.error,'browser_crypto_unavailable');
+});
+test('failure of the nonce draw after a successful trial identifier never falls back',async()=>{
+ let draws=0,calls=0;const crypto={getRandomValues:b=>{if(++draws===2)throw Error('nonce generator unavailable');return webcrypto.getRandomValues(b);},subtle:webcrypto.subtle};
+ const d=new DiagnosticSession({crypto,send:async()=>{calls++;return {};}});await d.submit(base);
+ assert.equal(draws,2);assert.equal(calls,0);assert.equal(d.state.phase,'failed');assert.equal(d.state.error,'diagnostic_preparation_failed');assert.equal(evidence(d).length,0);
 });
 test('short has no pack; full has exact unmodified projection after identical envelope position',async()=>{
  const p=await pack();const d=new DiagnosticSession({send:async()=>({})});await d.submit(base);await d.submit({...base,mode:'full',packSession:p});
@@ -28,6 +33,7 @@ test('short has no pack; full has exact unmodified projection after identical en
  assert.equal(b.text.slice(b.text.indexOf('\n\n')+2),p.state.text);assert.equal(b.packId,p.state.view.pack.packId);
  const invalid=new DiagnosticSession({send:()=>{throw Error('must not send');}});
  await assert.rejects(invalid.submit({...base,mode:'full'}),/verified_preview_required/);
+ await assert.rejects(invalid.submit({...base,mode:'full',lang:'en',packSession:p}),/verified_preview_required/);
  for(const change of [{connected:false},{textCapability:false},{lang:'de'},{mode:'fragments'}])await assert.rejects(invalid.submit({...base,...change}));
 });
 test('actual UTF-8 limit includes envelope; no truncated or oversized send',async()=>{
@@ -55,10 +61,13 @@ test('selection races and disconnect invalidation cannot be acknowledged',async(
 test('echoed host errors never leak nonce through public status',async()=>{
  const d=new DiagnosticSession({send:async text=>{throw Error(text);}});await d.submit(base);assert.equal(d.state.error,'transmission_unconfirmed');assert.equal(JSON.stringify(d.state).includes(evidence(d)[0].expected),false);
 });
-test('reload restores observer evidence only, no acceptance or update; storage denial is explicit',async()=>{
+test('reload restores observer evidence only, no acceptance or update; storage denial is explicit',async context=>{
  const values=new Map();const storage={getItem:k=>values.get(k),setItem:(k,v)=>values.set(k,v)};let calls=0;
  const d=new DiagnosticSession({storage,send:async()=>{calls++;return {};}});await d.submit(base);assert.equal(d.state.observerStorage,true);
- const reloaded=new DiagnosticSession({storage,send:()=>{calls++;return {};}});assert.equal(calls,1);assert.equal(reloaded.state.phase,'idle');assert.deepEqual(evidence(reloaded),evidence(d));
- reloaded.invalidate();assert.equal(calls,1);
+ // Drain both microtasks and scheduled callbacks: a synchronous assertion misses replay.
+ context.mock.timers.enable({apis:['setTimeout','setInterval','setImmediate']});
+ const reloaded=new DiagnosticSession({storage,send:()=>{calls++;return {};}});
+ await Promise.resolve();context.mock.timers.runAll();await Promise.resolve();assert.equal(calls,1);assert.equal(reloaded.state.phase,'idle');assert.deepEqual(evidence(reloaded),evidence(d));
+ reloaded.invalidate();await Promise.resolve();context.mock.timers.runAll();await Promise.resolve();assert.equal(calls,1);context.mock.timers.reset();
  const denied=new DiagnosticSession({storage:{getItem:()=>{throw Error();},setItem:()=>{throw Error();}},send:async()=>({})});await denied.submit(base);assert.equal(denied.state.observerStorage,false);
 });

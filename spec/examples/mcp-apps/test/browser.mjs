@@ -102,7 +102,9 @@ try{
   await frame.click('#d-heading');await frame.click('#d-enable');await frame.select('#d-mode',mode);
   if(mode==='full'){await frame.click('#inspect');await frame.waitForFunction(()=>!document.querySelector('#d-submit').disabled);}
   assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+  assert.equal(await frame.$eval('#submit',e=>e.disabled),true);assert.equal(await frame.$eval('#ask',e=>e.disabled),true);
   await frame.click('#d-submit');await frame.waitForFunction(()=>!document.querySelector('#d-ask').disabled);
+  assert.equal(await frame.$eval('#submit',e=>e.disabled),true);assert.equal(await frame.$eval('#ask',e=>e.disabled),true);
   const contexts=await page.evaluate(()=>window.qualification.contexts);assert.equal(contexts.length,1);
   const text=contexts[0].content[0].text;const nonce=JSON.parse(text.split('\n')[1]).gcrDiagnosticNonce;assert.match(nonce,/^[a-f0-9]{32}$/);
   assert.equal((await frame.$eval('body',e=>e.innerText)).includes(nonce),false);
@@ -115,6 +117,8 @@ try{
   assert.ok(metrics.scrollWidth<=width);assert.deepEqual(metrics.clipped,[]);
   await frame.$eval('#diagnostic',e=>e.scrollIntoView({block:'start'}));await page.screenshot({path:resolve(output,'diagnostic-'+lang+'-'+mode+'-'+width+'.png')});
   await page.reload();await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  // Keep the observation window open for deferred replay; unit tests also drain all mocked timers.
+  await new Promise(r=>setTimeout(r,600));
   frame=page.frames().find(f=>f.url().endsWith('/app'));assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
   assert.equal(await frame.$eval('#d-enable',e=>e.checked),false);assert.equal(await frame.$eval('#d-ask',e=>e.disabled),true);
   // Simulation complete. Only now reveal observer evidence, without sending a message.

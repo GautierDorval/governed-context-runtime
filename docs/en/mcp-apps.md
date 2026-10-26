@@ -6,7 +6,7 @@ This optional example lets a person select and inspect a **whole fictional pack*
 
 Two attempts at the expected workflow failed after capability declaration, submission, acknowledgement and sending the following message. The model said it had only the catalogue and did not reproduce the pack conditions. The failure stage and cause remain unknown. These statements are not telemetry of its input.
 
-**Real diagnostic, October 26, 2026: A/B not executed.** In Windows Claude Desktop 3.6556.2, two fresh conversations render the component but its host connection remains pending; inspection and submission are disabled. No nonce was submitted. C and D are not triggered. The cause is unknown and real observation remains open. Local diagnostic tests do not replace a real-client trial.
+**Real diagnostic, October 26, 2026: A/B not executed.** In Windows Claude Desktop 3.6556.2, two fresh conversations render the component but the displayed status remains “Connexion à l’hôte…”; inspection and submission are disabled. No nonce was submitted. C and D are not triggered. This label does not distinguish an unresolved connection from an established connection awaiting a usable catalogue. The capability panel was not captured. The cause is unknown and real observation remains open. Local diagnostic tests do not replace a real-client trial.
 
 ## Architecture and trust
 
@@ -83,16 +83,17 @@ Each explicit submission draws 16 cryptographic browser bytes encoded as 32 hexa
 
 | Channel | Diagnostic data |
 | --- | --- |
-| `updateModelContext` | Only text channel supplying the nonce to the model before its answer. Exactly one call per explicit submission. |
+| `updateModelContext` | Intended model input; attribution requires isolating all observer channels, including the SDK console. Exactly one call per explicit submission. |
 | Catalogue, inspection, `_meta`, `structuredContent`, `read_gcr_pack` fallback | No nonce; inspection precedes generation. `_meta` is not secret. |
 | `ui/message` and user message | Request for the named field, never its expected value. A prepared draft may require manual sending. |
 | Observer trace | Exact payload, digest, UTF-8 size, expected value and chronology in memory and, when available, component `sessionStorage`. Never automatically displayed or sent. |
+| Component console and host debug logs | The ext-apps 2.0.3 transport logs the complete outgoing message with `console.debug`, including the nonce. Keep this observer-only channel outside the tools, files, screenshots and logs available to the tested model. |
 
 Session storage retains at most four trials and is not a security boundary against the host. A storage refusal is displayed; reload may then lose the evidence. An observer must retain it separately or mark the result indeterminate. Never give the tested model access to this trace. Revealing it requires explicit confirmation that evaluation and any reload variant are complete. Premature disclosure contaminates the trial. Keep the nonce out of screenshots, clipboard, messages and files accessible to that model. The component cannot read the answer or claim verified reproduction. Reconnection and reload never submit context or restore an old acknowledgement as usable state.
 
 ### Bounded real-client procedure
 
-1. Identify the source commit, client/version/OS, capabilities, `app.html` SHA-256 and actual served `ui://gcr/pack-selector-<digest>.html` URI. Wait for each preceding turn to finish.
+1. Explicitly exclude tested-model access to the component console, Desktop logs and observer trace. If this separation cannot be established, do not claim an isolated channel; record the limitation and any contamination. Identify the source commit, client/version/OS, capabilities, `app.html` SHA-256 and actual served `ui://gcr/pack-selector-<digest>.html` URI. Wait for each preceding turn to finish.
 2. **A, once**: fresh conversation, short mode, explicit submission and acknowledgement, then request the nonce. Confirm the draft was actually sent. Record the answer without another tool call.
 3. **B, once**: another fresh conversation, full mode, inspected French pack, fresh nonce and the same sequence.
 4. **C, at most once after A or B fails**: prefer B if both fail. Retain traces, then reload that same conversation. Do not submit anything. Request the previous field in an ordinary message without its value. If no-new-update cannot be established, mark possible reinjection as a confound. Lost expected values prevent exact comparison.

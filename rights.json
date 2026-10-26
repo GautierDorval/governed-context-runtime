@@ -174,7 +174,7 @@
       "path": "docs/en/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "9eb35da65c652392a491102547da685bb65c593acdb6b1868fc64552319a2dbb"
+      "sha256": "c86d75ef54096c7a12f0902fee1c403f8814627411eb1088c36473570f367c57"
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -222,7 +222,7 @@
       "path": "docs/fr/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "2b925ea3d795bfb977e2f39a7aa05b1658e3e106c770da1c72b214f17db75e26"
+      "sha256": "309bf247d68d60c4345b4daf35f7408656195736bed33be6b30e8552780b34cf"
     },
     {
       "path": "docs/fr/observations.md",
@@ -384,7 +384,7 @@
       "path": "records/mcp-apps-2026-10-26.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "40d8906aacf275697b35ac4ca47912e4f5eb6e2d26f3253b7da078bc48ec359b"
+      "sha256": "5aca94c31c17ec2ee9ede0dca80527e0b3cf76b4dd90d4df11fc0e74ec102ca1"
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -564,7 +564,7 @@
       "path": "spec/examples/mcp-apps/test/browser.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "a119c6de9e47331c1adceff115ab521601ce78b4180655f54043358c6e53d779"
+      "sha256": "673ee3a856fecac445d2674cc5507688ce41bfa687a691c4d0be82b4953221ca"
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
@@ -576,7 +576,7 @@
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "a2396d695175a1829e635f994d54dedcf5370ac88006f0653e5246dc151c1405"
+      "sha256": "dfae4bfad94146cbaa675ddf31f5212f84bc78afb4a252193390f89d44da432e"
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",

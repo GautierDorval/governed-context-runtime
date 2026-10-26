@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "9eb35da65c652392a491102547da685bb65c593acdb6b1868fc64552319a2dbb",
-      "bytes": 12687
+      "sha256": "c86d75ef54096c7a12f0902fee1c403f8814627411eb1088c36473570f367c57",
+      "bytes": 13381
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "2b925ea3d795bfb977e2f39a7aa05b1658e3e106c770da1c72b214f17db75e26",
-      "bytes": 14065
+      "sha256": "309bf247d68d60c4345b4daf35f7408656195736bed33be6b30e8552780b34cf",
+      "bytes": 14843
     },
     {
       "path": "docs/fr/observations.md",
@@ -321,8 +321,8 @@
     },
     {
       "path": "records/mcp-apps-2026-10-26.md",
-      "sha256": "40d8906aacf275697b35ac4ca47912e4f5eb6e2d26f3253b7da078bc48ec359b",
-      "bytes": 14070
+      "sha256": "5aca94c31c17ec2ee9ede0dca80527e0b3cf76b4dd90d4df11fc0e74ec102ca1",
+      "bytes": 16001
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -331,7 +331,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "cfd26910134b692153fd7d773a4fd62fa1d23a0b38c85ebae1c918ec7277ef0d",
+      "sha256": "c0232b93387681e498e8d019a8fdda8222dd44fe5e7cd5b622e2823dcdf6f991",
       "bytes": 37992
     },
     {
@@ -476,8 +476,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
-      "sha256": "a119c6de9e47331c1adceff115ab521601ce78b4180655f54043358c6e53d779",
-      "bytes": 12319
+      "sha256": "673ee3a856fecac445d2674cc5507688ce41bfa687a691c4d0be82b4953221ca",
+      "bytes": 12710
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
@@ -486,8 +486,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
-      "sha256": "a2396d695175a1829e635f994d54dedcf5370ac88006f0653e5246dc151c1405",
-      "bytes": 6460
+      "sha256": "dfae4bfad94146cbaa675ddf31f5212f84bc78afb4a252193390f89d44da432e",
+      "bytes": 7574
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
