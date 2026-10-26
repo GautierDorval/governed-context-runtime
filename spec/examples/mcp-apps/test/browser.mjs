@@ -18,11 +18,11 @@ await client.connect(new StdioClientTransport({command:process.execPath,args:[re
 const hostCode=`
 import {AppBridge,PostMessageTransport} from '@modelcontextprotocol/ext-apps/app-bridge';
 const frame=document.querySelector('iframe');
-window.qualification={contexts:[],messages:[],calls:[]};
+window.qualification={contexts:[],messages:[],calls:[],toolResults:[]};
 const modes=new URL(location.href).searchParams;
 const caps={serverTools:{},message:{text:{}},...(modes.has('unsupported')?{}:{updateModelContext:{text:{}}})};
 const bridge=new AppBridge(null,{name:'SIMULATED LOCAL HOST - NO MODEL',version:'0.1.0'},caps);
-bridge.oncalltool=async params=>{window.qualification.calls.push(params);return (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();};
+bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();window.qualification.toolResults.push(result);return result;};
 bridge.onupdatemodelcontext=async params=>{
  if(modes.has('refuse'))throw Error('Simulated host refusal');
  window.qualification.contexts.push(params);return {};
@@ -78,7 +78,7 @@ try{
    await page.screenshot({path:resolve(output,lang+'-'+width+'-accepted.png'),fullPage:false});
    await frame.select('#language',lang==='fr'?'en':'fr');assert.equal(await frame.$eval('#submit',e=>e.disabled),true);
    assert.equal(await frame.$eval('#ask',e=>e.disabled),true);
-   assert.deepEqual(errors,[]);cases.push({width,lang,metrics,contextBytes:context[0].content[0].text.length,status:'PASS',host:'simulated',modelCalled:false});await page.close();
+   assert.deepEqual(errors,[]);cases.push({width,lang,metrics,contextUtf8Bytes:Buffer.byteLength(context[0].content[0].text,'utf8'),status:'PASS',host:'simulated',modelCalled:false});await page.close();
   }
  }
  for(const mode of ['refuse','unsupported']){
@@ -91,6 +91,37 @@ try{
   else assert.equal(await frame.$eval('#submit',e=>e.disabled),true);
   assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
   cases.push({mode,status:'PASS',host:'simulated'});await page.screenshot({path:resolve(output,mode+'-390.png')});await page.close();
+ }
+ for(const width of [390,780])for(const lang of ['fr','en'])for(const mode of ['short','full']){
+  const page=await browser.newPage();await page.setViewport({width,height:844,deviceScaleFactor:1});
+  await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  let frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);
+  assert.equal(await frame.$eval('#d-enable',e=>e.checked),false);
+  await frame.click('#d-heading');await frame.click('#d-enable');await frame.select('#d-mode',mode);
+  if(mode==='full'){await frame.click('#inspect');await frame.waitForFunction(()=>!document.querySelector('#d-submit').disabled);}
+  assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+  await frame.click('#d-submit');await frame.waitForFunction(()=>!document.querySelector('#d-ask').disabled);
+  const contexts=await page.evaluate(()=>window.qualification.contexts);assert.equal(contexts.length,1);
+  const text=contexts[0].content[0].text;const nonce=JSON.parse(text.split('\n')[1]).gcrDiagnosticNonce;assert.match(nonce,/^[a-f0-9]{32}$/);
+  assert.equal((await frame.$eval('body',e=>e.innerText)).includes(nonce),false);
+  assert.equal(JSON.stringify(await page.evaluate(()=>window.qualification.toolResults)).includes(nonce),false);
+  if(mode==='short')assert.equal(text.split('\n\n').slice(1).join('\n\n'),'');
+  else assert.equal(JSON.parse(text.slice(text.indexOf('\n\n')+2).split('\n').slice(1).join('\n')).pack.lang,lang);
+  await frame.click('#d-ask');await frame.waitForFunction(()=>document.querySelector('#d-response').innerText.length>0);
+  const messages=await page.evaluate(()=>window.qualification.messages);assert.equal(messages.length,1);assert.equal(JSON.stringify(messages).includes(nonce),false);
+  const metrics=await frame.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,clipped:[...document.querySelectorAll('button,select,summary,label')].filter(e=>e.getBoundingClientRect().width&&e.scrollWidth>e.clientWidth+2).map(e=>e.id||e.tagName)}));
+  assert.ok(metrics.scrollWidth<=width);assert.deepEqual(metrics.clipped,[]);
+  await frame.$eval('#diagnostic',e=>e.scrollIntoView({block:'start'}));await page.screenshot({path:resolve(output,'diagnostic-'+lang+'-'+mode+'-'+width+'.png')});
+  await page.reload();await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  frame=page.frames().find(f=>f.url().endsWith('/app'));assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+  assert.equal(await frame.$eval('#d-enable',e=>e.checked),false);assert.equal(await frame.$eval('#d-ask',e=>e.disabled),true);
+  // Simulation complete. Only now reveal observer evidence, without sending a message.
+  await frame.click('#d-heading');await frame.click('#d-observer-note');await frame.click('#d-observer');await frame.click('#d-reveal');
+  const evidence=JSON.parse(await frame.$eval('#d-evidence',e=>e.textContent));assert.equal(evidence.trials.at(-1).expected,nonce);assert.equal(evidence.trials.at(-1).text,text);
+  assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+  cases.push({width,lang,mode,status:'PASS',host:'simulated',modelCalled:false,metrics,textUtf8Bytes:Buffer.byteLength(text,'utf8'),reloadNewSubmissions:0});await page.close();
  }
  await writeFile(resolve(output,'results.json'),JSON.stringify({host:'simulated AppBridge; real stdio companion; no model',cases},null,2));
  console.log('PASS browser cases: '+cases.length);

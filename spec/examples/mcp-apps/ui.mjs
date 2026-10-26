@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import {App} from '@modelcontextprotocol/ext-apps';
 import {PackSession} from './session.mjs';
+import {bindDiagnostic} from './diagnostic-ui.mjs';
+let diagnosticUI;
 const app=new App({name:'GCR whole-pack selector',version:'0.1.0-dev'},{});
 const el=id=>document.getElementById(id);
 let catalog=[],caps={},connected=false,hostVersion=null;
@@ -37,21 +39,22 @@ const messages={
 const lang=()=>el('language').value;
 const t=()=>messages[lang()];
 function localize(){
- document.documentElement.lang=lang();
+ document.documentElement.lang=lang();diagnosticUI?.localize();
  for(const [id,value] of Object.entries(t())){const node=el(id);if(node)node.textContent=value;}
  el('intent').options[0].textContent=lang()==='fr'?'Limites du service Atelier Boréal':'Boreal Workshop service limits';
 }
 function render(state){
  el('status').textContent=t()[state.phase]??state.phase;
  if(state.error)el('status').textContent+=' ('+state.error+')';
- el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted';
- el('language').disabled=state.phase==='submitted';el('intent').disabled=state.phase==='submitted';
- el('submit').disabled=state.phase!=='displayed'||!caps.updateModelContext?.text;
- el('ask').disabled=state.phase!=='accepted'||!caps.message?.text;
+ el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted'||!!diagnosticUI?.busy();
+ el('language').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();el('intent').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();
+ el('submit').disabled=state.phase!=='displayed'||!caps.updateModelContext?.text||!!diagnosticUI?.enabled();
+ el('ask').disabled=state.phase!=='accepted'||!caps.message?.text||!!diagnosticUI?.enabled();
  el('content').hidden=!state.view;
  el('identity').textContent=state.view?state.view.pack.packId+' · '+state.view.pack.lang+' · '+state.view.pack.version:state.selection?state.selection.intentToken+' · '+state.selection.lang+' · '+state.selection.version:'';
  if(state.phase!=='accepted')el('response').textContent='';
  if(state.phase==='displayed'&&!caps.updateModelContext?.text)el('status').textContent+=' '+t().unsupported;
+ diagnosticUI?.render();
  if(!state.view)return;
  const view=state.view;
  el('declared').textContent=JSON.stringify(view.pack,null,2);
@@ -71,12 +74,13 @@ const session=new PackSession({
  send:text=>app.updateModelContext({content:[{type:'text',text}]},{timeout:15000}),
  changed:render
 });
-function select(){localize();const entry=catalog.find(c=>c.lang===lang());if(!entry)return;const {label,...selection}=entry;session.select(selection);}
+diagnosticUI=bindDiagnostic({app,session,lang,environment:()=>({connected,caps,hostVersion}),render,select});
+function select(){diagnosticUI?.invalidate();localize();const entry=catalog.find(c=>c.lang===lang());if(!entry)return;const {label,...selection}=entry;session.select(selection);}
 app.ontoolresult=result=>{if(result?._meta?.gcr?.catalog){catalog=result._meta.gcr.catalog;select();}};
-app.onclose=()=>{connected=false;session.disconnect();};
-app.onerror=()=>{connected=false;session.disconnect();};
+app.onclose=()=>{connected=false;diagnosticUI?.invalidate();session.disconnect();};
+app.onerror=()=>{connected=false;diagnosticUI?.invalidate();session.disconnect();};
 el('language').addEventListener('change',select);
-el('inspect').addEventListener('click',()=>session.inspect());
+el('inspect').addEventListener('click',()=>{diagnosticUI.invalidate();return session.inspect();});
 el('submit').addEventListener('click',()=>session.submit());
 el('ask').addEventListener('click',async()=>{
  const epoch=session.epoch;el('ask').disabled=true;
@@ -87,4 +91,4 @@ el('ask').addEventListener('click',async()=>{
 localize();render(session.state);
 try{await app.connect();caps=app.getHostCapabilities()??{};hostVersion=app.getHostVersion();connected=true;
  el('host').textContent=JSON.stringify({host:hostVersion,capabilities:caps,preview:'UI metadata: readable by host; not secret',submission:'ui/update-model-context',followUp:'ui/message',responseObserved:false},null,2);render(session.state);
-}catch(error){connected=false;session.disconnect();}
+}catch(error){connected=false;diagnosticUI?.invalidate();session.disconnect();}
