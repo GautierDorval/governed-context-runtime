@@ -86,3 +86,7 @@ The [observation contracts](docs/observations.md) validate dated declarations, n
 ## Licence
 
 Code and configuration are available under the [Apache License 2.0](LICENSE). Documentation, diagrams and evidence are available under [CC BY 4.0](LICENSES/CC-BY-4.0.txt). The project identity visuals are not licensed for reuse. See [rights and licences](NOTICE.md) and the per-file [rights register](rights.json). Participation follows the [code of conduct](CODE_OF_CONDUCT.md).
+
+## Optional local MCP Apps companion
+
+[English setup](docs/en/mcp-apps.md) · [Instructions françaises](docs/fr/mcp-apps.md) · [Dated qualification](records/mcp-apps-2026-10-26.md). Whole fictional pack selection and inspection, explicit context submission and text fallback. The actual Desktop trial establishes rendering and host acknowledgement, not end-to-end model use of the UI-submitted context. No public MCP Apps deployment; comparative pilot **NOT_RUN**.

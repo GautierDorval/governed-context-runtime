@@ -112,3 +112,7 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 [Kit de reproduction](reproduction.md) · [Sémantique des packs](pack-semantics.md) · [Protocole comparatif préparé](../model-comparison.md).
 
 [Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Préversion de référence](../release-0.2.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.
+
+## Compagnon MCP Apps local
+
+[Choisir et inspecter un pack fictif entier](mcp-apps.md), puis demander explicitement une mise à jour de contexte. Les tests locaux et l’[observation datée dans Claude Desktop](../../records/mcp-apps-2026-10-26.md) restent distincts : affichage et accusé de réception observés, mais usage de bout en bout du contexte soumis par l’interface non établi. Le pilote comparatif demeure **NOT_RUN**.
