@@ -34,6 +34,16 @@ Le consommateur choisit l’intention et la langue. Le runtime distribue le pack
 
 L’instance de gautierdorval.com est accessible par HTTP et un adaptateur MCP distinct. Ce dépôt public fournit les contrats proposés, les vérificateurs, les guides d’intégration et des exemples exécutables hors ligne pour cette instance, avec son vocabulaire fermé d’intentions et ses identifiants historiques. Le site demeure la source canonique de sa doctrine. Cette référence ne crée aucune nouvelle racine d’autorité.
 
+## Articulation avec MCP et WebMCP
+
+[MCP](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) permet aux clients de découvrir et d’appeler des outils ; des ressources peuvent aussi transporter du contexte. Le [guide de l’instance](instance.md) décrit l’adaptateur MCP distinct et ses contrôles datés par client. Un transport réussi ne suffit pas à rattacher un pack reçu à un instantané vérifié.
+
+[WebMCP](https://webmachinelearning.github.io/webmcp/) expose des outils depuis une page dans un navigateur compatible. Ces outils peuvent rechercher, lire ou retourner du contexte, ainsi qu’exécuter des actions. Le brouillon examiné le 25 octobre 2026, daté du 20 octobre 2026, utilise `document.modelContext` ; c’est un brouillon de groupe communautaire, ni un standard W3C ni un document de sa Standards Track. Les descriptions, schémas de paramètres et annotations des outils ne certifient ni leur comportement réel ni la fidélité des réponses. La validation des entrées, les règles métier et l’autorisation relèvent des implémentations concernées.
+
+Le Runtime fournit un contexte précompilé pour une intention choisie par le consommateur et un parcours défini de vérification des artefacts. Le consommateur choisit toujours sa référence de confiance, vérifie l’instantané complet et décide de l’admission et de l’usage permis. L’intégrité n’établit ni la vérité ni le respect des limites d’interprétation du pack. La publication et la découverte, notamment par `llms.txt`, n’établissent ni l’utilisation ni un bénéfice mesuré.
+
+WebMCP pourrait fournir une autre interface vers ce parcours, mais cette référence ne contient aucune passerelle WebMCP. Une telle intégration reste une proposition : la réussite du vérificateur n’établit ni l’interopérabilité WebMCP, ni la compatibilité avec un client agent particulier, ni un effet sur ses réponses. Le pilote existant à quatre conditions demeure **NOT_RUN**.
+
 ## Version de référence
 
 L’édition de référence 0.2.1-proposed est une préversion dont les contrats restent proposés. Citer v0.2.1-proposed et le commit exact exécuté ; la release GitHub atteste sa publication. Le service hébergé suit un cycle de publication distinct. Ce dépôt contient le code de référence hors ligne et des exemples fictifs, sans regrouper le service hébergé, son corpus de production ou un déploiement clé en main pour d’autres domaines.

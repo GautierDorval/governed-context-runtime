@@ -34,6 +34,16 @@ The consumer selects an intent and language. The runtime delivers the precompile
 
 The gautierdorval.com instance is accessible over HTTP and through a separate MCP adapter. This public repository provides proposed contracts, verifiers, integration guides and runnable offline examples for that instance, including its closed intent vocabulary and historical identifiers. The site remains the canonical source of its doctrine; this reference creates no new authority root.
 
+## Relationship with MCP and WebMCP
+
+[MCP](https://modelcontextprotocol.io/specification/2026-07-28/server/tools) lets clients discover and invoke tools; resources can also carry context. The [instance guide](instance.md) describes the separate MCP adapter and its dated client checks. Transport success alone does not bind a returned pack to a verified snapshot.
+
+[WebMCP](https://webmachinelearning.github.io/webmcp/) exposes tools from a page in a compatible browser. Such tools can search, read or return context as well as perform actions. The draft reviewed on 25 October 2026, dated 20 October 2026, uses `document.modelContext`; it is a Community Group draft, not a W3C standard or a Standards Track document. Tool descriptions, parameter schemas and annotations do not certify actual behavior or answer fidelity. Input validation, business rules and authorization remain responsibilities of the relevant implementations.
+
+The Runtime supplies precompiled context for a consumer-selected intent and a defined artifact-verification path. The consumer still selects its trust reference, verifies the complete snapshot and decides admission and permitted use. Integrity does not establish truth or compliance with the pack's interpretation boundaries. Publication and discovery, including through `llms.txt`, do not establish use or measured benefit.
+
+WebMCP could provide another interface to this path, but this reference contains no WebMCP bridge. Such an integration remains a proposal: verifier success establishes neither WebMCP interoperability, compatibility with a particular agent client nor an effect on its answers. The existing four-condition pilot remains **NOT_RUN**.
+
 ## Reference version
 
 Reference edition 0.2.1-proposed is a prerelease of proposed contracts. Cite v0.2.1-proposed and the exact executed commit; the GitHub release records its publication. The hosted service follows a separate publication lifecycle. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.

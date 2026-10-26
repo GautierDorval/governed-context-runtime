@@ -136,8 +136,8 @@
     },
     {
       "path": "docs/en/README.md",
-      "sha256": "1ba91479e6f9061337a7c3ac28784888b2f24acc0f108cc3b9c731e672cd96d6",
-      "bytes": 9562
+      "sha256": "dc299f03382c76ceada563e6bdbdadbdd67e5e05c968c55d1cd56e22c38c2c7d",
+      "bytes": 11251
     },
     {
       "path": "docs/en/instance.md",
@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/fr/README.md",
-      "sha256": "f69c4b1823889756509eae3e12c5761b1e4d6a6dbc9df9b29bc2530c0f06cff7",
-      "bytes": 11232
+      "sha256": "3df1f83e3420d163fcdb391e241a802d8d7b17d8e2e9cb4cae6b15597a985d0c",
+      "bytes": 13253
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -316,7 +316,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "9d1198cd5d0f62c950a030432ce8ee4e527bb17a0c2d164d6611b71dd54b229f",
+      "sha256": "f537a18d5fdb341109b6754263a4610fe4c5001bb914d8595b5894bc20c281d8",
       "bytes": 33132
     },
     {
