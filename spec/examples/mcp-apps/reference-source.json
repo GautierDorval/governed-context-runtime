@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/GautierDorval/governed-context-runtime",
+  "commit": "57a09f1830ed20864ec66a6d153fc230b0331865",
+  "files": {
+    "spec/examples/verified-pack.mjs": "14c8d68638117cb4290c0ebd6b40276cadc4c1a4462e8031080c2a5814d61ca7",
+    "spec/reference/verification.mjs": "0b9a97a468942d1160a7408d10ff11d17da8df44be53781429a53be81b05159e",
+    "spec/reference/consumer.mjs": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904",
+    "spec/reference/signatures.mjs": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68",
+    "spec/examples/semantic-boundaries/bundle.json": "a4740cd7627d39b7f360bd44d500485a4fbff5f780bc80d9413202c67b9f23cd",
+    "spec/examples/semantic-boundaries/expected-root.json": "a48058212859faab4cb7928247face1da7fc1eba8acd646ecf905c8456531c93"
+  }
+}

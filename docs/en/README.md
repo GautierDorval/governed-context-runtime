@@ -112,3 +112,7 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 [Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](model-comparison.md).
 
 [Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.2.1-proposed.md). The four-condition pilot is **NOT_RUN**.
+
+## Local MCP Apps companion
+
+[Choose and inspect a whole fictional pack](mcp-apps.md), then explicitly request a context update. Local tests and the [dated Claude Desktop observation](../../records/mcp-apps-2026-10-26.md) are separate: rendering and host acknowledgement were observed, but end-to-end use of that UI-submitted context is not established. The comparative pilot remains **NOT_RUN**.

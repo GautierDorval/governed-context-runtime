@@ -18,3 +18,33 @@ jobs:
       - run: npm run test:dev
       - name: Tests leave the worktree unchanged
         run: git status --porcelain --untracked-files=all && test -z "$(git status --porcelain --untracked-files=all)"
+
+  mcp-apps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.17.0
+      - name: Materialize the companion outside the reference checkout
+        shell: pwsh
+        run: node spec/examples/mcp-apps/prepare.mjs (Join-Path $env:RUNNER_TEMP 'gcr-mcp-apps')
+      - name: Install isolated locked dependencies without lifecycle scripts
+        working-directory: ${{ runner.temp }}/gcr-mcp-apps
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build and test the real stdio companion
+        working-directory: ${{ runner.temp }}/gcr-mcp-apps
+        shell: pwsh
+        run: |
+          npm run build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          exit $LASTEXITCODE
+      - name: Companion preparation leaves the reference checkout unchanged
+        shell: pwsh
+        run: |
+          $state = git status --porcelain --untracked-files=all
+          if ($LASTEXITCODE -ne 0 -or $state) { throw 'Reference checkout changed' }

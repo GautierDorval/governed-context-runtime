@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: Apache-2.0
+import test from 'node:test';
+import {execFileSync} from 'node:child_process';
+import assert from 'node:assert/strict';
+import {Client} from '@modelcontextprotocol/client';
+import {StdioClientTransport} from '@modelcontextprotocol/client/stdio';
+import {fileURLToPath} from 'node:url';
+import {selection} from '../data.mjs';
+test('real stdio MCP entrypoint, UI resource and usable text fallback',{timeout:30000},async t=>{
+ const client=new Client({name:'gcr-local-qualification',version:'0.1.0'},{capabilities:{}});
+ const transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('../server.mjs',import.meta.url))],stderr:'pipe'});
+ let errors='';transport.stderr?.on('data',b=>errors+=b);
+ t.after(async()=>{await client.close();assert.equal(errors,'');});
+ await client.connect(transport);
+ const list=await client.listTools();
+ assert.deepEqual(list.tools.map(t=>t.name).sort(),['inspect_gcr_pack','open_gcr_selector','read_gcr_pack']);
+ assert.deepEqual(list.tools.find(t=>t.name==='inspect_gcr_pack')._meta.ui.visibility,['app']);
+ const opening=await client.callTool({name:'open_gcr_selector',arguments:{}});
+ assert.equal(opening.isError,undefined);assert.ok(!JSON.stringify(opening.content).includes('activationConditions'));
+ assert.equal(opening._meta.gcr.catalog.length,2);
+ const preview=await client.callTool({name:'inspect_gcr_pack',arguments:{...selection,lang:'fr'}});
+ assert.ok(preview._meta.gcr.view.verification.snapshotChecks>0);assert.equal(preview.structuredContent,undefined);
+ assert.ok(!JSON.stringify(preview.content).includes('activationConditions'));
+ const fallback=await client.callTool({name:'read_gcr_pack',arguments:{...selection,lang:'en'}});
+ assert.equal(fallback.isError,undefined);assert.ok(fallback.content[0].text.includes('nonApplicabilityConditions'));
+ const projection=JSON.parse(fallback.content[0].text.split('\n').slice(1).join('\n'));
+ assert.equal(projection.pack.lang,'en');assert.ok(projection.archivedSources.length>0);
+ const refusal=await client.callTool({name:'read_gcr_pack',arguments:{...selection,lang:'en',expectedRoot:'sha-256:'+'0'.repeat(64)}});
+ assert.equal(refusal.isError,true);assert.equal(refusal._meta?.gcr,undefined);
+ const resource=await client.readResource({uri:list.tools.find(t=>t.name==='open_gcr_selector')._meta.ui.resourceUri});
+ assert.equal(resource.contents[0].mimeType,'text/html;profile=mcp-app');
+ assert.deepEqual(resource.contents[0]._meta.ui.csp,{connectDomains:[],resourceDomains:[]});
+ assert.ok(resource.contents[0].text.includes('Fournir ce contexte'));
+ const script=resource.contents[0].text.match(/<script type="module">([\s\S]*)<\/script>/)?.[1];
+ assert.ok(script);execFileSync(process.execPath,['--input-type=module','--check'],{input:script,stdio:['pipe','pipe','pipe']});
+ t.diagnostic(JSON.stringify({server:client.getServerVersion(),capabilities:client.getServerCapabilities(),transport:'stdio',host:'SDK client, not a conversational host'}));
+});
