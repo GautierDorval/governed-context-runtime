@@ -162,7 +162,7 @@
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "1ba91479e6f9061337a7c3ac28784888b2f24acc0f108cc3b9c731e672cd96d6"
+      "sha256": "9e4148e47f930b75578199c26f55de8bca20b4849edaab7502fd98fc7295ce9c"
     },
     {
       "path": "docs/en/instance.md",
@@ -198,7 +198,7 @@
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "f69c4b1823889756509eae3e12c5761b1e4d6a6dbc9df9b29bc2530c0f06cff7"
+      "sha256": "6a2c9512d2d122db14b92b96f3677b016d59bfd2a8daad3789d179257abbb0c8"
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
