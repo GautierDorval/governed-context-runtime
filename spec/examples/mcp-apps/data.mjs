@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {assertContextSize} from './diagnostic.mjs';
 const pin = JSON.parse(await readFile(new URL('./reference-source.json',import.meta.url),'utf8'));
 // Validate the immutable materialized reference BEFORE importing its code.
 for (const [path, expected] of Object.entries(pin.files)) {
@@ -45,6 +46,6 @@ export function contextText(view) {
     pack:view.pack,manifest:view.manifest,units:view.units,
     archivedSources:view.archivedSources.map(({sourcePath,repositoryDigest,text})=>({sourcePath,repositoryDigest,text}))
   },null,2);
-  if (Buffer.byteLength(text,'utf8') > 200000) throw Error('complete_context_exceeds_limit_no_truncation');
+  assertContextSize(text);
   return text;
 }

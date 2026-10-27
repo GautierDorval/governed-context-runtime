@@ -6,7 +6,7 @@ Ces journaux conservent les résultats et attributions d’origine. Une fusion o
 
 | Date | Record / Journal |
 |---|---|
-| 2026-10-26 | [MCP Apps companion and coordinated explanations](mcp-apps-2026-10-26.md) |
+| 2026-10-26 | [MCP Apps: initial publication, historical failures and nonce diagnostic](mcp-apps-2026-10-26.md) |
 | 2026-10-20 | [Qualification and edition delivery](qualification-edition-2026-10-20.md) |
 | 2026-10-20 | [P3 archive compatibility review](archive-profile-p3-2026-10-20.md) |
 | 2026-10-20 | [Consumer delivery report](consumer-report-2026-10-20.md) |
