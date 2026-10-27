@@ -71,3 +71,12 @@ test('reload restores observer evidence only, no acceptance or update; storage d
  reloaded.invalidate();await Promise.resolve();context.mock.timers.runAll();await Promise.resolve();assert.equal(calls,1);context.mock.timers.reset();
  const denied=new DiagnosticSession({storage:{getItem:()=>{throw Error();},setItem:()=>{throw Error();}},send:async()=>({})});await denied.submit(base);assert.equal(denied.state.observerStorage,false);
 });
+
+for(const mode of ['short','full'])test('diagnostic logic refuses an in-flight text read before drawing a nonce '+mode,async()=>{
+ const p=await pack();p.readPending=true;let draws=0,calls=0;
+ const crypto={getRandomValues:b=>{draws++;return webcrypto.getRandomValues(b);},subtle:webcrypto.subtle};
+ const d=new DiagnosticSession({crypto,send:async()=>{calls++;return {};}});
+ await assert.rejects(d.submit({...base,mode,packSession:p}),/pack_read_in_progress/);
+ assert.equal(draws,0);assert.equal(calls,0);assert.equal(d.state.phase,'idle');assert.deepEqual(evidence(d),[]);
+ p.readPending=false;await d.submit({...base,mode,packSession:p});assert.equal(calls,1);assert.equal(d.state.phase,'acknowledged');
+});

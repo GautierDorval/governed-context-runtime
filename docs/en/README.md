@@ -115,4 +115,4 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 ## Local MCP Apps companion
 
-[Choose and inspect a whole fictional pack](mcp-apps.md), then explicitly request a context update. Local tests and the [dated Claude Desktop observation](../../records/mcp-apps-2026-10-26.md) are separate: rendering and host acknowledgement were observed, but end-to-end use of that UI-submitted context is not established. The comparative pilot remains **NOT_RUN**.
+[Choose and inspect a whole fictional pack](mcp-apps.md), then explicitly request its text-tool reading. The [T3 observation](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. The comparative pilot remains **NOT_RUN**.

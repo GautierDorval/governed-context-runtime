@@ -21,9 +21,9 @@ export function bindDiagnostic({app,session,lang,environment,render,select}) {
  function clear(){diagnostic.invalidate();el('d-response').textContent='';el('d-evidence').textContent='';el('d-evidence').hidden=true;el('d-observer').checked=false;}
  function paint(){
   const env=environment();const state=diagnostic.state;
-  el('d-controls').hidden=!enabled();el('d-enable').disabled=busy()||session.state.phase==='submitted';
+  el('d-controls').hidden=!enabled();el('d-enable').disabled=busy()||session.state.phase==='submitted'||session.readPending;
   el('d-mode').disabled=busy();
-  el('d-submit').disabled=!enabled()||busy()||!env.connected||!env.caps.updateModelContext?.text||(el('d-mode').value==='full'&&session.state.phase!=='displayed');
+  el('d-submit').disabled=!enabled()||busy()||session.readPending||!env.connected||!env.caps.updateModelContext?.text||(el('d-mode').value==='full'&&session.state.phase!=='displayed');
   el('d-ask').disabled=!enabled()||state.phase!=='acknowledged'||!env.connected||!env.caps.message?.text;
   el('d-reveal').disabled=busy()||!el('d-observer').checked;
   el('d-status').textContent=t()[state.phase]+(state.error?' ('+state.error+')':'')+(state.trialId?' '+state.trialId+' · '+state.textUtf8Bytes+' UTF-8 bytes':'');

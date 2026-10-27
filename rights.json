@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "9542b41ad83710dab91c0f4314cf0d5f9664e79b8dbc3c78027d4df7b6afbd94"
+      "sha256": "4fc55e0282f97c007e8b6db3804c2d7e4f0875dd29770a575abfc62b4bf26542"
     },
     {
       "path": "SECURITY.md",
@@ -162,7 +162,7 @@
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "55f355e0dc46ce5814b60bcb231f64d4de8b838fe5af53dca870d45b2dab5756"
+      "sha256": "e3fdfdf401e86ed0099f29f25681f06432e64cbd99b022b2a5cd4a50f92d7352"
     },
     {
       "path": "docs/en/instance.md",
@@ -174,7 +174,7 @@
       "path": "docs/en/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "c86d75ef54096c7a12f0902fee1c403f8814627411eb1088c36473570f367c57"
+      "sha256": "675970ec1dc024eb6c1526b93a3ae747e0ad7747d563ff450b886a9c35f34e40"
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -204,7 +204,7 @@
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "dbe1975576fdebe6a789db290af32e303a9bc8b3c6e8c8afb733d77d61ec28fb"
+      "sha256": "317cfb7211f5ee25b4a3a1d9b7cbfcb85183a52e2cfab0d5581c049bc05ae58e"
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -222,7 +222,7 @@
       "path": "docs/fr/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "309bf247d68d60c4345b4daf35f7408656195736bed33be6b30e8552780b34cf"
+      "sha256": "4649df00435027df716ad5fce2da236e48f63b98affad3c72fc983d796061fef"
     },
     {
       "path": "docs/fr/observations.md",
@@ -354,7 +354,7 @@
       "path": "records/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "522cd2544968fc1d9bd44bda3c9f47ec4e3a4bf77d7b01b980afadd792d87c52"
+      "sha256": "9c5f658972f725620e4962db03dbd3841933665eac7d8c7180e3bd453d82756b"
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -384,7 +384,7 @@
       "path": "records/mcp-apps-2026-10-26.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "5aca94c31c17ec2ee9ede0dca80527e0b3cf76b4dd90d4df11fc0e74ec102ca1"
+      "sha256": "c89a5dad4ea25a5419aa4862b3fb2bd1169107af6d7b44a6c2f2113df093d1d5"
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -498,7 +498,7 @@
       "path": "spec/examples/mcp-apps/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "4c2a32e5d932ff2bd0dc916df19b88aab718d8e019dfc4e46530ca051e9bf41e"
+      "sha256": "3170677071343e0183582d3aaf428a4a249de0752ab670f9a09b775ea4385d92"
     },
     {
       "path": "spec/examples/mcp-apps/build.mjs",
@@ -516,13 +516,13 @@
       "path": "spec/examples/mcp-apps/diagnostic-ui.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "05912d33acd7725b67828e3faccf09341e8a19ccff9121fd38c3fefe3cc82b07"
+      "sha256": "723bbe9b2ef267462ea3ec1d23b730bd928a3f27a1d86e3ba36c1cb8e76c3014"
     },
     {
       "path": "spec/examples/mcp-apps/diagnostic.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7f38c5c34f7857b5cf930aa50a38d82e5b1a8f3d4184d5bebd1011574dc9fa99"
+      "sha256": "132e93c837e6a55e28dc63a87985f1f76e713933fb67befb78f0e3ab1a37c914"
     },
     {
       "path": "spec/examples/mcp-apps/package-lock.json",
@@ -558,43 +558,43 @@
       "path": "spec/examples/mcp-apps/session.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "eb49eeddc96c27ed31f1a7fcf18193952fb13be7f7d16fc968dec5c42cb293ba"
+      "sha256": "10f963b622709368589a0ac448b5a1739094d28255da971ac4be6e6653fcfc34"
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "673ee3a856fecac445d2674cc5507688ce41bfa687a691c4d0be82b4953221ca"
+      "sha256": "916518cc6ac5b9c90550ced1d95b012b64c8085c28bbf400ebf317676cf69158"
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "a34970ff1ba14a6016331afd7cd6644c375313d85a7a9df16326f9dd7f15d9b9"
+      "sha256": "eacc2fe025aeb43bab1de74cf9f3a71b2535008b4195f655d6a3e7e92165057e"
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "dfae4bfad94146cbaa675ddf31f5212f84bc78afb4a252193390f89d44da432e"
+      "sha256": "7bb274e8f37b695ea3510fec74fc04cc645ac9b85d854cf2feadd625f6e148f1"
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "b3e9d60d08e9ae9b6495422918b4ba3676f04c6e73d235b488156aa9392392a3"
+      "sha256": "23fd7e9dd9720e14e641886644f9a2171e000069e3b6dfdffaaf3b315fa52edf"
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "f80d4fc8f5b11837a239610390dc699f1a2befb835e36f88653b3ea9fb8c0e54"
+      "sha256": "10355c9a8ec12d1bd8950c3eb3b27f365fb7e14deee4bd50bdb6e45fc60a8f01"
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "476373ef0957eff7f10c1cfaf26f66c8d6ba08116f20b04da39884ff69d952fa"
+      "sha256": "ccd3a07f909eba0d5a347462d58b3570c674a9878a43737334570e29e9a1545b"
     },
     {
       "path": "spec/examples/read-mcp-response.mjs",

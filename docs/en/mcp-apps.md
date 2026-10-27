@@ -4,9 +4,13 @@
 
 This optional example lets a person select and inspect a **whole fictional pack**, then explicitly supply its complete text projection to a conversational host. The available intent is `representation-gap`, version `semantic-boundaries-1`, in French or English. It is a local prototype, not a deployed product or a compatibility claim for every MCP client. The hosted Runtime adapter is separate.
 
-Two attempts at the expected workflow failed after capability declaration, submission, acknowledgement and sending the following message. The model said it had only the catalogue and did not reproduce the pack conditions. The failure stage and cause remain unknown. These statements are not telemetry of its input.
+**Complete T3 journey, October 27, 2026: successful local French qualification.** In Windows Claude Desktop 3.6556.2.0, displayed model Opus 5.5 Max, **Have the assistant read this pack** prepared the exact request after inspection. Sending it led to one `read_gcr_pack` call, the complete 57,236-byte UTF-8 projection and an answer exactly reproducing all 11 entries across the five requested lists. Pack identity, handling of missing or conflicting evidence, and the absence of permission for booking, payment or work were preserved. The [T3 record](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) identifies the candidate, build and evidence.
 
-**Real diagnostic, October 26, 2026: A/B not executed.** In Windows Claude Desktop 3.6556.2, two fresh conversations render the component but the displayed status remains “Connexion à l’hôte…”; inspection and submission are disabled. No nonce was submitted. C and D are not triggered. This label does not distinguish an unresolved connection from an established connection awaiting a usable catalogue. The capability panel was not captured. The cause is unknown and real observation remains open. Local diagnostic tests do not replace a real-client trial.
+T3 retried within the same private conversation after the T2 cancellation, whose cause remains unknown. T2 produced no effective text-tool call; a new inspection, one click and one send led to the only observed read across T2/T3. This result covers this fictional French pack and configuration. It does not measure consistent first-attempt success. The interface and pack also exist in English, but no real English trial ran in this session. The separate successful [direct text trial T1](../../records/mcp-apps-2026-10-26.md#text-tool-qualification-t1-2026-10-27) used a directly entered question.
+
+The button uses text-message capability independently of context-update capability. An acknowledgement only means the host accepted the request; it does not establish tool execution or an answer. The component does not read the conversation: `toolReadObserved: false` remains its correct state. The observer established the T3 call and answer.
+
+**Experimental native channel: still unqualified.** Earlier trials, the October 26 blockage before submission and the October 27 A/B and H1 diagnostics remain separate observations. A/B answered `NON_DISPONIBLE` under an instruction forbidding tools. H1 explicitly allowed the internal widget reader and received the same answer; its effective invocation was not observed. The internal cause remains unknown. T3 exercised neither `updateModelContext` nor the nonce diagnostic. The [dated history](../../records/mcp-apps-2026-10-26.md) retains these results without treating them as general proof of context non-delivery.
 
 ## Architecture and trust
 
@@ -23,10 +27,13 @@ The component displays conditions, exclusions, required evidence, forbidden infe
 | Open selector | Catalog only. No complete pack is automatically added to model context. |
 | Select language | Invalidates previous preview and acceptance for the current selection. Prior conversation history cannot be withdrawn. |
 | Inspect | Full verification; detailed preview and complete projected text in result `_meta`, readable by the host and component. Identity and root also appear in the tool text. Metadata is not secret. |
-| Supply context | Explicit `ui/update-model-context` request. The complete projection includes conditions, exclusions and archived source text. |
+| Submit through the experimental native channel | Explicit `ui/update-model-context` request. The complete projection includes conditions, exclusions and archived source text. |
 | Host acknowledgement | UI reports acceptance for subsequent turns. This is not proof of actual model use. |
 | Ask for explanation | A separate explicit `ui/message` request. The person observes the answer in the conversation; the component cannot inspect that answer. |
-| Text fallback | `read_gcr_pack` sends the complete selected projection directly in model-visible text. It requires a user's request to supply that context. |
+| Have the assistant read this pack | Prepares a `ui/message` request containing only the four inspected selection fields. The assistant, not the component, must invoke the text tool. The host may require manual sending of the draft. |
+| Read through the text tool | `read_gcr_pack` sends the complete selected projection directly in model-visible text. It requires a user's request to supply that context. |
+
+Read requests are blocked before inspection, while diagnostics are enabled, and after a request until reinspection. Selection changes and disconnection invalidate their state; a late acknowledgement cannot certify the current selection. Check the conversation before retrying an unconfirmed request: the host may have received it. The in-flight request lock survives programmatic selection invalidation. It blocks another request, native submission and diagnostics until the request settles. Reload never replays a request. Without text-message capability, a direct manually entered tool request remains a separate path.
 
 No complete pack is placed in `structuredContent`. Errors invalidate usable context. Late previews and acknowledgements cannot validate a different selection. A missing acknowledgement, timeout or refusal remains **unconfirmed**, because the host might have received the request. The server refuses an oversized projection instead of truncating it. The component makes no network fetch, navigates no source URL and grants no permission for business action.
 
@@ -65,7 +72,7 @@ Merge one entry into `mcpServers` in the configuration file exposed by Settings 
 }}} | ConvertTo-Json -Depth 5
 ```
 
-Restart Desktop or reload its MCP configuration. Ask it to call only `open_gcr_selector`, without other tools. Inspect a language, use **Supply this context**, then **Ask for an explanation**. Read the state after every step and compare the answer with the visible exclusions. This fictional example has no need for filesystem access, a remote tunnel, credentials, OAuth or `ui.domain`. Remove the test server entry when finished and reload the configuration.
+Restart Desktop or reload its MCP configuration. Ask it to call only `open_gcr_selector`, without other tools. Inspect a language, use **Have the assistant read this pack**, then confirm sending in the conversation if the host prepares a draft. The experimental native channel separately retains **Submit through the native channel** and **Ask for an explanation**. Read the state after every step and compare the answer with the visible exclusions. This fictional example has no need for filesystem access, a remote tunnel, credentials, OAuth or `ui.domain`. Remove the test server entry when finished and reload the configuration.
 
 If no component renders, the catalog is not proof that the UI worked. The text fallback is a different path: explicitly request `read_gcr_pack` using the four selection fields from the catalog, without its display label. See the dated qualification for the actual client and observed result.
 

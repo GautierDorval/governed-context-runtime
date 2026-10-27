@@ -32,7 +32,8 @@ test('real stdio MCP entrypoint, UI resource and usable text fallback',{timeout:
  const resource=await client.readResource({uri:list.tools.find(t=>t.name==='open_gcr_selector')._meta.ui.resourceUri});
  assert.equal(resource.contents[0].mimeType,'text/html;profile=mcp-app');
  assert.deepEqual(resource.contents[0]._meta.ui.csp,{connectDomains:[],resourceDomains:[]});
- assert.ok(resource.contents[0].text.includes('Fournir ce contexte'));
+ assert.ok(resource.contents[0].text.includes('id="read-pack"'));
+ assert.ok(resource.contents[0].text.includes('id="native"'));
  const script=resource.contents[0].text.match(/<script type="module">([\s\S]*)<\/script>/)?.[1];
  assert.ok(script);execFileSync(process.execPath,['--input-type=module','--check'],{input:script,stdio:['pipe','pipe','pipe']});
  t.diagnostic(JSON.stringify({server:client.getServerVersion(),capabilities:client.getServerCapabilities(),transport:'stdio',host:'SDK client, not a conversational host'}));

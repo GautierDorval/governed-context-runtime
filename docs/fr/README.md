@@ -115,4 +115,4 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 
 ## Compagnon MCP Apps local
 
-[Choisir et inspecter un pack fictif entier](mcp-apps.md), puis demander explicitement une mise à jour de contexte. Les tests locaux et l’[observation datée dans Claude Desktop](../../records/mcp-apps-2026-10-26.md) restent distincts : affichage et accusé de réception observés, mais usage de bout en bout du contexte soumis par l’interface non établi. Le pilote comparatif demeure **NOT_RUN**.
+[Choisir et inspecter un pack fictif entier](mcp-apps.md), puis demander explicitement sa lecture par l’outil texte. L’[observation T3](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) couvre le parcours du bouton à la réponse pour un pack français dans Claude Desktop 3.6556.2.0, après une annulation préalable ; les 11 éléments demandés sont identiques. Aucun essai réel anglais ni conclusion de fidélité générale. Le canal natif de mise à jour du contexte reste expérimental et non qualifié. Le pilote comparatif demeure **NOT_RUN**.
