@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "58524f61f75de9844ad271dacd6c3df1d093246b3a3b3afd145f29f894d6f74f",
-      "bytes": 15283
+      "sha256": "2c409a0dc6c150e29950653a5a1de834b58d08d8d8415965c14b5808f0fa74ba",
+      "bytes": 15444
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "4962bd07a186edd7a73da6081e694b46d919705f85381eb4745e05d3a015f557",
-      "bytes": 16929
+      "sha256": "a75e2b3214b622f762a4dd409e1ae2e7645b7fd1b4c80a47469b20d8292a12c1",
+      "bytes": 17134
     },
     {
       "path": "docs/fr/observations.md",
@@ -331,7 +331,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "ef9379090b98ac25c2e50982d577857988da40d81bd2a04182bd9477d5383a7a",
+      "sha256": "08cb9f798dadcce3253c768270af0ce9f657f7c4f5e1b430a5311fe7baf8b74a",
       "bytes": 37992
     },
     {
@@ -436,8 +436,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/diagnostic-ui.mjs",
-      "sha256": "26a1e168366e8b113c52821013ce8f0d7b4a89d17fea2381084e2018461974e9",
-      "bytes": 6621
+      "sha256": "723bbe9b2ef267462ea3ec1d23b730bd928a3f27a1d86e3ba36c1cb8e76c3014",
+      "bytes": 6624
     },
     {
       "path": "spec/examples/mcp-apps/diagnostic.mjs",
@@ -471,18 +471,18 @@
     },
     {
       "path": "spec/examples/mcp-apps/session.mjs",
-      "sha256": "873daaa2bd9084bf57e1230442eddb448c5685aae75cd4236a24e886d63f9d1d",
-      "bytes": 5380
+      "sha256": "10f963b622709368589a0ac448b5a1739094d28255da971ac4be6e6653fcfc34",
+      "bytes": 5587
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
-      "sha256": "b3d6fb44cc986e9f23444719d67565cb73ed77ef3e8f21180322bb6bfe0bef8f",
-      "bytes": 17259
+      "sha256": "916518cc6ac5b9c90550ced1d95b012b64c8085c28bbf400ebf317676cf69158",
+      "bytes": 18764
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
-      "sha256": "39361795fd195804a6dd191131869335a0f5009af1e19b236b258e9ba1c961a9",
-      "bytes": 10067
+      "sha256": "f459034aefbfe3a42e868596a5b5f077364adff305f4847cb695dd94f412f45f",
+      "bytes": 10917
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
@@ -501,8 +501,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",
-      "sha256": "beec570e6fd31ce771956ea6566b6c072ee7f7984a49b62496318223615afd7e",
-      "bytes": 12187
+      "sha256": "ccd3a07f909eba0d5a347462d58b3570c674a9878a43737334570e29e9a1545b",
+      "bytes": 12297
     },
     {
       "path": "spec/examples/read-mcp-response.mjs",

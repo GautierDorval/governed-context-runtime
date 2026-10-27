@@ -27,7 +27,7 @@ bridge.onupdatemodelcontext=async params=>{
  if(modes.has('refuse'))throw Error('Simulated host refusal');
  window.qualification.contexts.push(params);return {};
 };
-bridge.onmessage=async params=>{window.qualification.messages.push(params);if(modes.has('message-refuse'))throw Error('Simulated message refusal');if(modes.has('message-delay'))await new Promise(r=>window.releaseMessage=r);return {};};
+bridge.onmessage=async params=>{window.qualification.messages.push(params);await fetch('/message',{method:'POST',body:JSON.stringify(params)});if(modes.has('message-refuse'))throw Error('Simulated message refusal');if(modes.has('message-delay'))await new Promise(r=>window.releaseMessage=r);return {};};
 bridge.onsizechange=({height})=>frame.style.height=Math.min(height,12000)+'px';
 bridge.oninitialized=async()=>{await bridge.sendToolInput({arguments:{}});await bridge.sendToolResult(await (await fetch('/tool',{method:'POST',body:JSON.stringify({name:'open_gcr_selector',arguments:{}})})).json());};
 const transport=new PostMessageTransport(frame.contentWindow,frame.contentWindow);
@@ -36,9 +36,14 @@ frame.src='/app';
 `;
 const compiled=await build({stdin:{contents:hostCode,resolveDir:root,sourcefile:'test-host.mjs'},bundle:true,write:false,format:'esm',platform:'browser',absWorkingDir:root,tsconfigRaw:{}});
 const html='<!doctype html><html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GCR local qualification</title><style>body{margin:0;font:14px system-ui}p{padding:8px;background:#fff1ce;margin:0}iframe{border:0;width:100%;min-height:800px;display:block}</style><p>SIMULATION LOCALE DE L’HÔTE · AUCUN MODÈLE</p><iframe title="GCR local selector" sandbox="allow-scripts allow-same-origin"></iframe><script type="module">'+compiled.outputFiles[0].text.replaceAll('</script','<\\/script')+'</script></html>';
+// This counter belongs to the observer server and survives host-page reload.
+let observedMessages=0;
 const server=httpServer(async(req,res)=>{
  try{
   if(req.method==='GET'&&req.url.startsWith('/host')){res.setHeader('Content-Type','text/html');res.end(html);}
+  else if(req.method==='GET'&&req.url==='/favicon.ico'){res.statusCode=204;res.end();}
+  else if(req.method==='GET'&&req.url==='/messages'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({count:observedMessages}));}
+  else if(req.method==='POST'&&req.url==='/message'){let text='';for await(const b of req){text+=b;if(text.length>10000)throw Error('too_large');}JSON.parse(text);observedMessages++;res.setHeader('Content-Type','application/json');res.end('{}');}
   else if(req.method==='GET'&&req.url==='/app'){res.setHeader('Content-Type','text/html');res.end(await readFile(resolve(root,'app.html')));}
   else if(req.method==='POST'&&req.url==='/tool'){
    let text='';for await(const b of req){text+=b;if(text.length>10000)throw Error('too_large');}
@@ -153,9 +158,13 @@ try{
    assert.deepEqual(args,{intentToken:'representation-gap',lang,version:'semantic-boundaries-1',expectedRoot:'sha-256:0b0bb14fdd5c29a04a7304c9d5b7fe901c8dd62fb145546e638ccc736efd944a'});
    assert.ok(!prompt.includes('gcrDiagnosticNonce'));assert.ok(!prompt.includes('archivedSources'));
    if(mode==='message-delay'){
-    assert.equal(await frame.$eval('#d-enable',e=>e.disabled),true);
-    await frame.select('#language',lang==='fr'?'en':'fr');await page.evaluate(()=>window.releaseMessage());
-    await new Promise(r=>setTimeout(r,100));assert.equal(await frame.$eval('#read-request',e=>e.textContent),'');
+    for(const id of ['#language','#intent','#inspect','#submit','#d-enable'])assert.equal(await frame.$eval(id,e=>e.disabled),true);
+    await frame.$eval('#read-pack',e=>e.scrollIntoView({block:'center'}));await page.screenshot({path:resolve(output,'text-'+lang+'-pending-390.png')});
+    // Programmatic catalogue/selection invalidation can still happen while controls are locked.
+    await frame.select('#language',lang==='fr'?'en':'fr');
+    for(const id of ['#language','#intent','#inspect','#submit','#read-pack','#d-enable'])assert.equal(await frame.$eval(id,e=>e.disabled),true);
+    await page.evaluate(()=>window.releaseMessage());
+    await frame.waitForFunction(()=>!document.querySelector('#language').disabled);assert.equal(await frame.$eval('#read-request',e=>e.textContent),'');
     assert.equal(await frame.$eval('#read-pack',e=>e.disabled),true);
    }else{
     await frame.waitForFunction(()=>/préparée par|prepared by|non confirmée|unconfirmed/.test(document.querySelector('#read-request').textContent));
@@ -168,7 +177,10 @@ try{
   const metrics=await frame.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,primary:document.querySelector('#read-pack').getBoundingClientRect().toJSON(),clipped:[...document.querySelectorAll('button,select,summary,h1,h2')].filter(e=>e.getBoundingClientRect().width&&e.scrollWidth>e.clientWidth+2).map(e=>e.id||e.tagName)}));
   assert.equal(metrics.width,390);assert.ok(metrics.scrollWidth<=390);assert.deepEqual(metrics.clipped,[]);assert.ok(metrics.primary.height>=44);
   await page.screenshot({path:resolve(output,'text-'+lang+'-'+mode+'-390.png')});assert.deepEqual(errors,[]);
+  const beforeReload=await page.evaluate(async()=>await (await fetch('/messages')).json());
   await page.reload();await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  await new Promise(r=>setTimeout(r,600));
+  const afterReload=await page.evaluate(async()=>await (await fetch('/messages')).json());assert.deepEqual(afterReload,beforeReload,'no new message at the observer after reload and delayed delivery window');
   assert.equal((await page.evaluate(()=>window.qualification.messages)).length,0);assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
   cases.push({route:'text',width:390,lang,mode,metrics,status:'PASS',host:'simulated',modelCalled:false});await page.close();
  }

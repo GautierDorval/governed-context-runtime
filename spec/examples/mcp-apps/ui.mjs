@@ -50,11 +50,11 @@ function localize(){
 function render(state){
  el('status').textContent=t()[state.phase]??state.phase;
  if(state.error)el('status').textContent+=' ('+state.error+')';
- el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted'||state.readRequest==='pending'||!!diagnosticUI?.busy();
- el('language').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();el('intent').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();
- el('submit').disabled=state.phase!=='displayed'||state.readRequest!=='idle'||!caps.updateModelContext?.text||!!diagnosticUI?.enabled();
- el('read-pack').disabled=!connected||state.phase!=='displayed'||state.readRequest!=='idle'||!caps.message?.text||!!diagnosticUI?.enabled();
- el('read-request').textContent=({pending:t().readPending,prepared:t().readPrepared,unconfirmed:t().readUnconfirmed})[state.readRequest]??(state.phase==='displayed'&&!caps.message?.text?t().readUnavailable:'');
+ el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted'||session.readPending||!!diagnosticUI?.busy();
+ el('language').disabled=state.phase==='submitted'||session.readPending||!!diagnosticUI?.busy();el('intent').disabled=state.phase==='submitted'||session.readPending||!!diagnosticUI?.busy();
+ el('submit').disabled=state.phase!=='displayed'||session.readPending||state.readRequest!=='idle'||!caps.updateModelContext?.text||!!diagnosticUI?.enabled();
+ el('read-pack').disabled=!connected||state.phase!=='displayed'||session.readPending||state.readRequest!=='idle'||!caps.message?.text||!!diagnosticUI?.enabled();
+ el('read-request').textContent=session.readPending?t().readPending:({pending:t().readPending,prepared:t().readPrepared,unconfirmed:t().readUnconfirmed})[state.readRequest]??(state.phase==='displayed'&&!caps.message?.text?t().readUnavailable:'');
  el('ask').disabled=state.phase!=='accepted'||!caps.message?.text||!!diagnosticUI?.enabled();
  el('content').hidden=!state.view;
  el('identity').textContent=state.view?state.view.pack.packId+' · '+state.view.pack.lang+' · '+state.view.pack.version:state.selection?state.selection.intentToken+' · '+state.selection.lang+' · '+state.selection.version:'';

@@ -8,7 +8,7 @@ export function readPackPrompt(selection){
  throw Error('unsupported_request_language');
 }
 export class PackSession {
-  constructor({load,send,request,changed=()=>{}}){this.load=load;this.send=send;this.request=request;this.changed=changed;this.epoch=0;this.state={phase:'empty',selection:null,view:null,text:null,error:null,readRequest:'idle',readError:null};}
+  constructor({load,send,request,changed=()=>{}}){this.load=load;this.send=send;this.request=request;this.changed=changed;this.epoch=0;this.readPending=false;this.state={phase:'empty',selection:null,view:null,text:null,error:null,readRequest:'idle',readError:null};}
   select(selection){this.epoch++;this.state={phase:'selected',selection:{...selection},view:null,text:null,error:null,readRequest:'idle',readError:null};this.changed(this.state);}
   disconnect(){this.epoch++;this.state={...this.state,phase:'disconnected',view:null,text:null,error:'connection_closed',readRequest:'idle',readError:null};this.changed(this.state);}
   async inspect(){
@@ -28,7 +28,7 @@ export class PackSession {
     this.changed(this.state);
   }
   async submit(){
-    if(this.state.phase!=='displayed'||this.state.readRequest!=='idle')throw Error('verified_preview_required');
+    if(this.readPending||this.state.phase!=='displayed'||this.state.readRequest!=='idle')throw Error('verified_preview_required');
     const epoch=this.epoch;const text=this.state.text;
     this.state={...this.state,phase:'submitted',error:null};this.changed(this.state);
     try {
@@ -40,8 +40,9 @@ export class PackSession {
     this.changed(this.state);
   }
   async requestRead(){
-    if(this.state.phase!=='displayed'||this.state.readRequest!=='idle')throw Error('verified_preview_required');
+    if(this.readPending||this.state.phase!=='displayed'||this.state.readRequest!=='idle')throw Error('verified_preview_required');
     const epoch=this.epoch;const prompt=readPackPrompt(this.state.selection);
+    this.readPending=true;
     this.state={...this.state,readRequest:'pending',readError:null};this.changed(this.state);
     try{
       const result=await this.request(prompt);
@@ -50,6 +51,9 @@ export class PackSession {
       // A ui/message acknowledgement proves neither a tool call nor a model response.
       this.state={...this.state,readRequest:'prepared'};
     }catch(error){if(epoch!==this.epoch)return;this.state={...this.state,readRequest:'unconfirmed',readError:error.message};}
-    this.changed(this.state);
+    finally{
+      // Invalidating a selection cannot cancel a message already in flight.
+      this.readPending=false;this.changed(this.state);
+    }
   }
 }
