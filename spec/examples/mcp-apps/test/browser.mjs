@@ -20,14 +20,14 @@ import {AppBridge,PostMessageTransport} from '@modelcontextprotocol/ext-apps/app
 const frame=document.querySelector('iframe');
 window.qualification={contexts:[],messages:[],calls:[],toolResults:[]};
 const modes=new URL(location.href).searchParams;
-const caps={serverTools:{},message:{text:{}},...(modes.has('unsupported')?{}:{updateModelContext:{text:{}}})};
+const caps={serverTools:{},...(modes.has('no-message')?{}:{message:{text:{}}}),...(modes.has('unsupported')?{}:{updateModelContext:{text:{}}})};
 const bridge=new AppBridge(null,{name:'SIMULATED LOCAL HOST - NO MODEL',version:'0.1.0'},caps);
 bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();window.qualification.toolResults.push(result);return result;};
 bridge.onupdatemodelcontext=async params=>{
  if(modes.has('refuse'))throw Error('Simulated host refusal');
  window.qualification.contexts.push(params);return {};
 };
-bridge.onmessage=async params=>{window.qualification.messages.push(params);return {};};
+bridge.onmessage=async params=>{window.qualification.messages.push(params);if(modes.has('message-refuse'))throw Error('Simulated message refusal');if(modes.has('message-delay'))await new Promise(r=>window.releaseMessage=r);return {};};
 bridge.onsizechange=({height})=>frame.style.height=Math.min(height,12000)+'px';
 bridge.oninitialized=async()=>{await bridge.sendToolInput({arguments:{}});await bridge.sendToolResult(await (await fetch('/tool',{method:'POST',body:JSON.stringify({name:'open_gcr_selector',arguments:{}})})).json());};
 const transport=new PostMessageTransport(frame.contentWindow,frame.contentWindow);
@@ -55,7 +55,7 @@ try{
  for(const width of [390,780]){
   for(const lang of ['fr','en']){
    const page=await browser.newPage();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR',e.message);});page.on('console',m=>{if(m.type()==='error')console.error('CONSOLE',m.text());});
-   await page.setViewport({width,height:844,deviceScaleFactor:1});
+   await page.setViewport({width,height:844,deviceScaleFactor:1,isMobile:width===390,hasTouch:width===390});
    await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
    await page.goto('http://127.0.0.1:'+port+'/host');
    await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
@@ -63,6 +63,7 @@ try{
    await frame.select('#language',lang);await frame.click('#inspect');
    await frame.waitForFunction(()=>!document.querySelector('#submit').disabled);
    assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+   await frame.click('#native');
    const metrics=await frame.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,heading:document.querySelector('h1').innerText,
     conditions:document.querySelector('#conditions').innerText,submit:document.querySelector('#submit').getBoundingClientRect().toJSON(),
     clipped:[...document.querySelectorAll('button,select,summary,h1,h2')].filter(e=>e.getBoundingClientRect().width&&e.scrollWidth>e.clientWidth+2).map(e=>e.id||e.tagName)}));
@@ -87,13 +88,13 @@ try{
   await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
   const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.click('#inspect');
   await frame.waitForFunction(()=>!document.querySelector('#content').hidden);
-  if(mode==='refuse'){await frame.click('#submit');await frame.waitForFunction(()=>document.querySelector('#status').innerText.includes('non confirmée'));assert.equal(await frame.$eval('#ask',e=>e.disabled),true);}
+  if(mode==='refuse'){await frame.click('#native');await frame.click('#submit');await frame.waitForFunction(()=>document.querySelector('#status').innerText.includes('non confirmée'));assert.equal(await frame.$eval('#ask',e=>e.disabled),true);}
   else assert.equal(await frame.$eval('#submit',e=>e.disabled),true);
   assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
   cases.push({mode,status:'PASS',host:'simulated'});await page.screenshot({path:resolve(output,mode+'-390.png')});await page.close();
  }
  for(const width of [390,780])for(const lang of ['fr','en'])for(const mode of ['short','full']){
-  const page=await browser.newPage();await page.setViewport({width,height:844,deviceScaleFactor:1});
+  const page=await browser.newPage();await page.setViewport({width,height:844,deviceScaleFactor:1,isMobile:width===390,hasTouch:width===390});
   await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
   await page.goto('http://127.0.0.1:'+port+'/host');
   await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
@@ -102,7 +103,7 @@ try{
   await frame.click('#d-heading');await frame.click('#d-enable');await frame.select('#d-mode',mode);
   if(mode==='full'){await frame.click('#inspect');await frame.waitForFunction(()=>!document.querySelector('#d-submit').disabled);}
   assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
-  assert.equal(await frame.$eval('#submit',e=>e.disabled),true);assert.equal(await frame.$eval('#ask',e=>e.disabled),true);
+  assert.equal(await frame.$eval('#submit',e=>e.disabled),true);assert.equal(await frame.$eval('#ask',e=>e.disabled),true);assert.equal(await frame.$eval('#read-pack',e=>e.disabled),true);
   await frame.click('#d-submit');await frame.waitForFunction(()=>!document.querySelector('#d-ask').disabled);
   assert.equal(await frame.$eval('#submit',e=>e.disabled),true);assert.equal(await frame.$eval('#ask',e=>e.disabled),true);
   const contexts=await page.evaluate(()=>window.qualification.contexts);assert.equal(contexts.length,1);
@@ -126,6 +127,50 @@ try{
   const evidence=JSON.parse(await frame.$eval('#d-evidence',e=>e.textContent));assert.equal(evidence.trials.at(-1).expected,nonce);assert.equal(evidence.trials.at(-1).text,text);
   assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
   cases.push({width,lang,mode,status:'PASS',host:'simulated',modelCalled:false,metrics,textUtf8Bytes:Buffer.byteLength(text,'utf8'),reloadNewSubmissions:0});await page.close();
+ }
+
+ for(const lang of ['fr','en'])for(const mode of ['unsupported','no-message','message-refuse','message-delay']){
+  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewport({width:390,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true});
+  await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host?'+mode);
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);
+  assert.equal(await frame.$eval('#read-pack',e=>e.disabled),true);
+  await frame.click('#inspect');await frame.waitForFunction(()=>!document.querySelector('#content').hidden);
+  if(mode==='no-message'){
+   assert.equal(await frame.$eval('#read-pack',e=>e.disabled),true);assert.equal((await page.evaluate(()=>window.qualification.messages)).length,0);
+   assert.match(await frame.$eval('#read-request',e=>e.textContent),/manuellement|manually/);
+  }else{
+   assert.equal(await frame.$eval('#read-pack',e=>e.disabled),false);
+   await frame.click('#read-pack');await frame.waitForFunction(()=>document.querySelector('#read-pack').disabled);
+   await frame.click('#read-pack'); // A second user click must not create a second request.
+   await page.waitForFunction(()=>window.qualification.messages.length===1);
+   const q=await page.evaluate(()=>window.qualification);assert.equal(q.contexts.length,0);
+   assert.deepEqual(q.calls.map(c=>c.name),['inspect_gcr_pack'],'the UI never invokes the model-only text tool');
+   const prompt=q.messages[0].content[0].text;
+   const args=JSON.parse(prompt.slice(prompt.indexOf('{'),prompt.indexOf('}')+1));
+   assert.deepEqual(args,{intentToken:'representation-gap',lang,version:'semantic-boundaries-1',expectedRoot:'sha-256:0b0bb14fdd5c29a04a7304c9d5b7fe901c8dd62fb145546e638ccc736efd944a'});
+   assert.ok(!prompt.includes('gcrDiagnosticNonce'));assert.ok(!prompt.includes('archivedSources'));
+   if(mode==='message-delay'){
+    assert.equal(await frame.$eval('#d-enable',e=>e.disabled),true);
+    await frame.select('#language',lang==='fr'?'en':'fr');await page.evaluate(()=>window.releaseMessage());
+    await new Promise(r=>setTimeout(r,100));assert.equal(await frame.$eval('#read-request',e=>e.textContent),'');
+    assert.equal(await frame.$eval('#read-pack',e=>e.disabled),true);
+   }else{
+    await frame.waitForFunction(()=>/préparée par|prepared by|non confirmée|unconfirmed/.test(document.querySelector('#read-request').textContent));
+    if(mode==='message-refuse')assert.match(await frame.$eval('#read-request',e=>e.textContent),/non confirmée|unconfirmed/);
+    else assert.match(await frame.$eval('#read-request',e=>e.textContent),/non observées|not observed/);
+    assert.equal(await frame.$eval('#submit',e=>e.disabled),true);
+   }
+  }
+  await frame.$eval('#read-pack',e=>e.scrollIntoView({block:'center'}));
+  const metrics=await frame.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,primary:document.querySelector('#read-pack').getBoundingClientRect().toJSON(),clipped:[...document.querySelectorAll('button,select,summary,h1,h2')].filter(e=>e.getBoundingClientRect().width&&e.scrollWidth>e.clientWidth+2).map(e=>e.id||e.tagName)}));
+  assert.equal(metrics.width,390);assert.ok(metrics.scrollWidth<=390);assert.deepEqual(metrics.clipped,[]);assert.ok(metrics.primary.height>=44);
+  await page.screenshot({path:resolve(output,'text-'+lang+'-'+mode+'-390.png')});assert.deepEqual(errors,[]);
+  await page.reload();await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  assert.equal((await page.evaluate(()=>window.qualification.messages)).length,0);assert.equal((await page.evaluate(()=>window.qualification.contexts)).length,0);
+  cases.push({route:'text',width:390,lang,mode,metrics,status:'PASS',host:'simulated',modelCalled:false});await page.close();
  }
  await writeFile(resolve(output,'results.json'),JSON.stringify({host:'simulated AppBridge; real stdio companion; no model',cases},null,2));
  console.log('PASS browser cases: '+cases.length);

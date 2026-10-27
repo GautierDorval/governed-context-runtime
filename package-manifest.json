@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "c86d75ef54096c7a12f0902fee1c403f8814627411eb1088c36473570f367c57",
-      "bytes": 13381
+      "sha256": "58524f61f75de9844ad271dacd6c3df1d093246b3a3b3afd145f29f894d6f74f",
+      "bytes": 15283
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "309bf247d68d60c4345b4daf35f7408656195736bed33be6b30e8552780b34cf",
-      "bytes": 14843
+      "sha256": "4962bd07a186edd7a73da6081e694b46d919705f85381eb4745e05d3a015f557",
+      "bytes": 16929
     },
     {
       "path": "docs/fr/observations.md",
@@ -321,8 +321,8 @@
     },
     {
       "path": "records/mcp-apps-2026-10-26.md",
-      "sha256": "5aca94c31c17ec2ee9ede0dca80527e0b3cf76b4dd90d4df11fc0e74ec102ca1",
-      "bytes": 16001
+      "sha256": "a3db5e0a1f57ed6bce371e25bd3636591aac01928ab74acb89a28bd437488c2a",
+      "bytes": 20274
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -331,7 +331,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "c0232b93387681e498e8d019a8fdda8222dd44fe5e7cd5b622e2823dcdf6f991",
+      "sha256": "ef9379090b98ac25c2e50982d577857988da40d81bd2a04182bd9477d5383a7a",
       "bytes": 37992
     },
     {
@@ -421,8 +421,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/README.md",
-      "sha256": "4c2a32e5d932ff2bd0dc916df19b88aab718d8e019dfc4e46530ca051e9bf41e",
-      "bytes": 906
+      "sha256": "c7d567b152d595376a72fa495857670451ee919e37318329779ab83271e76787",
+      "bytes": 1338
     },
     {
       "path": "spec/examples/mcp-apps/build.mjs",
@@ -436,8 +436,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/diagnostic-ui.mjs",
-      "sha256": "05912d33acd7725b67828e3faccf09341e8a19ccff9121fd38c3fefe3cc82b07",
-      "bytes": 6582
+      "sha256": "26a1e168366e8b113c52821013ce8f0d7b4a89d17fea2381084e2018461974e9",
+      "bytes": 6621
     },
     {
       "path": "spec/examples/mcp-apps/diagnostic.mjs",
@@ -471,18 +471,18 @@
     },
     {
       "path": "spec/examples/mcp-apps/session.mjs",
-      "sha256": "eb49eeddc96c27ed31f1a7fcf18193952fb13be7f7d16fc968dec5c42cb293ba",
-      "bytes": 2501
+      "sha256": "873daaa2bd9084bf57e1230442eddb448c5685aae75cd4236a24e886d63f9d1d",
+      "bytes": 5380
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
-      "sha256": "673ee3a856fecac445d2674cc5507688ce41bfa687a691c4d0be82b4953221ca",
-      "bytes": 12710
+      "sha256": "b3d6fb44cc986e9f23444719d67565cb73ed77ef3e8f21180322bb6bfe0bef8f",
+      "bytes": 17259
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
-      "sha256": "a34970ff1ba14a6016331afd7cd6644c375313d85a7a9df16326f9dd7f15d9b9",
-      "bytes": 7494
+      "sha256": "39361795fd195804a6dd191131869335a0f5009af1e19b236b258e9ba1c961a9",
+      "bytes": 10067
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
@@ -491,18 +491,18 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
-      "sha256": "b3e9d60d08e9ae9b6495422918b4ba3676f04c6e73d235b488156aa9392392a3",
-      "bytes": 3237
+      "sha256": "23fd7e9dd9720e14e641886644f9a2171e000069e3b6dfdffaaf3b315fa52edf",
+      "bytes": 3295
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
-      "sha256": "f80d4fc8f5b11837a239610390dc699f1a2befb835e36f88653b3ea9fb8c0e54",
-      "bytes": 4655
+      "sha256": "7d9e8d61ae94134ce1b2aadf6859cee6d551e2319aa6816673f57cbc4f76a7a4",
+      "bytes": 4965
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",
-      "sha256": "476373ef0957eff7f10c1cfaf26f66c8d6ba08116f20b04da39884ff69d952fa",
-      "bytes": 9971
+      "sha256": "beec570e6fd31ce771956ea6566b6c072ee7f7984a49b62496318223615afd7e",
+      "bytes": 12187
     },
     {
       "path": "spec/examples/read-mcp-response.mjs",

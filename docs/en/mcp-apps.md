@@ -8,6 +8,10 @@ Two attempts at the expected workflow failed after capability declaration, submi
 
 **Real diagnostic, October 26, 2026: A/B not executed.** In Windows Claude Desktop 3.6556.2, two fresh conversations render the component but the displayed status remains “Connexion à l’hôte…”; inspection and submission are disabled. No nonce was submitted. C and D are not triggered. This label does not distinguish an unresolved connection from an established connection awaiting a usable catalogue. The capability panel was not captured. The cause is unknown and real observation remains open. Local diagnostic tests do not replace a real-client trial.
 
+**Text route, October 27, 2026: bounded positive result.** One explicit `read_gcr_pack` call in Claude Desktop 3.6556.2.0, with the displayed model Opus 5.5 Max, returned the complete French projection of 57,236 bytes. The answer exactly reproduced the 11 entries across the five requested lists, the pack identity, handling of missing or conflicting evidence, and the absence of permission for booking, payment or work. This is one fictional trial, separate from the native channel and comparative pilot. The [dated record](../../records/mcp-apps-2026-10-26.md#text-tool-qualification-t1-2026-10-27) states the evidence and limits.
+
+After inspection, the selector now prepares this request through **Have the assistant read this pack**. This button uses text messaging independently of context-update capability. An acknowledgement means only that the host prepared the request. The new button-to-answer path in Claude Desktop remains unqualified; T1 used a directly entered question.
+
 ## Architecture and trust
 
 The source lives in [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Its preparer materializes six unmodified reference files from Git commit `57a09f1830ed20864ec66a6d153fc230b0331865`, verifies their SHA-256 digests and keeps the installed application **outside the reference checkout**. It does not copy or fork the verifier's implementation into maintained companion code. The root package, dependency policy, historical kit and contracts are unchanged.
@@ -23,10 +27,13 @@ The component displays conditions, exclusions, required evidence, forbidden infe
 | Open selector | Catalog only. No complete pack is automatically added to model context. |
 | Select language | Invalidates previous preview and acceptance for the current selection. Prior conversation history cannot be withdrawn. |
 | Inspect | Full verification; detailed preview and complete projected text in result `_meta`, readable by the host and component. Identity and root also appear in the tool text. Metadata is not secret. |
-| Supply context | Explicit `ui/update-model-context` request. The complete projection includes conditions, exclusions and archived source text. |
+| Submit through the experimental native channel | Explicit `ui/update-model-context` request. The complete projection includes conditions, exclusions and archived source text. |
 | Host acknowledgement | UI reports acceptance for subsequent turns. This is not proof of actual model use. |
 | Ask for explanation | A separate explicit `ui/message` request. The person observes the answer in the conversation; the component cannot inspect that answer. |
-| Text fallback | `read_gcr_pack` sends the complete selected projection directly in model-visible text. It requires a user's request to supply that context. |
+| Have the assistant read this pack | Prepares a `ui/message` request containing only the four inspected selection fields. The assistant, not the component, must invoke the text tool. The host may require manual sending of the draft. |
+| Read through the text tool | `read_gcr_pack` sends the complete selected projection directly in model-visible text. It requires a user's request to supply that context. |
+
+Read requests are blocked before inspection, while diagnostics are enabled, and after a request until reinspection. Selection changes and disconnection invalidate their state; a late acknowledgement cannot certify the current selection. Check the conversation before retrying an unconfirmed request: the host may have received it. Reload never replays a request. Without text-message capability, a direct manually entered tool request remains a separate path.
 
 No complete pack is placed in `structuredContent`. Errors invalidate usable context. Late previews and acknowledgements cannot validate a different selection. A missing acknowledgement, timeout or refusal remains **unconfirmed**, because the host might have received the request. The server refuses an oversized projection instead of truncating it. The component makes no network fetch, navigates no source URL and grants no permission for business action.
 
@@ -65,7 +72,7 @@ Merge one entry into `mcpServers` in the configuration file exposed by Settings 
 }}} | ConvertTo-Json -Depth 5
 ```
 
-Restart Desktop or reload its MCP configuration. Ask it to call only `open_gcr_selector`, without other tools. Inspect a language, use **Supply this context**, then **Ask for an explanation**. Read the state after every step and compare the answer with the visible exclusions. This fictional example has no need for filesystem access, a remote tunnel, credentials, OAuth or `ui.domain`. Remove the test server entry when finished and reload the configuration.
+Restart Desktop or reload its MCP configuration. Ask it to call only `open_gcr_selector`, without other tools. Inspect a language, use **Have the assistant read this pack**, then confirm sending in the conversation if the host prepares a draft. The experimental native channel separately retains **Submit through the native channel** and **Ask for an explanation**. Read the state after every step and compare the answer with the visible exclusions. This fictional example has no need for filesystem access, a remote tunnel, credentials, OAuth or `ui.domain`. Remove the test server entry when finished and reload the configuration.
 
 If no component renders, the catalog is not proof that the UI worked. The text fallback is a different path: explicitly request `read_gcr_pack` using the four selection fields from the catalog, without its display label. See the dated qualification for the actual client and observed result.
 

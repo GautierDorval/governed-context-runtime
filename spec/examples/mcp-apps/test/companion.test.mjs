@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {inspect,selection,contextText} from '../data.mjs';
-import {PackSession} from '../session.mjs';
+import {PackSession,readPackPrompt} from '../session.mjs';
 const wanted=lang=>({...selection,lang});
 const reply=async lang=>{const view=await inspect(wanted(lang));return {_meta:{gcr:{view,contextText:contextText(view)}}};};
 for(const lang of ['fr','en'])test('whole pack and archived restrictions '+lang,async()=>{
@@ -88,4 +88,31 @@ for(const outcome of ['reply','error'])test('disconnect invalidates a pending ac
  const disconnected={...s.state};
  if(outcome==='reply')resolveSend({});else rejectSend(Error('late_failure'));
  await pending;assert.deepEqual(s.state,disconnected);await assert.rejects(s.submit(),/verified_preview_required/);
+});
+
+for(const lang of ['fr','en'])test('text read request pins the inspected selection without supplying the pack '+lang,async()=>{
+ const sent=[];const s=new PackSession({load:()=>reply(lang),send:()=>{throw Error('native_channel_not_expected');},request:async text=>{sent.push(text);return {};}});
+ s.select(wanted(lang));await assert.rejects(s.requestRead(),/verified_preview_required/);
+ await s.inspect();await s.requestRead();assert.equal(s.state.phase,'displayed');assert.equal(s.state.readRequest,'prepared');
+ assert.equal(sent.length,1);const args=JSON.parse(sent[0].match(/\{[^}]+\}/)[0]);assert.deepEqual(args,wanted(lang));
+ assert.ok(!sent[0].includes(s.state.text));assert.ok(!sent[0].includes('gcrDiagnosticNonce'));
+ await assert.rejects(s.requestRead(),/verified_preview_required/);await assert.rejects(s.submit(),/verified_preview_required/);
+});
+for(const outcome of ['refusal','timeout','missing-ack'])test('text request does not infer delivery on '+outcome,async()=>{
+ const s=new PackSession({load:()=>reply('fr'),request:async()=>{if(outcome==='timeout')throw Error('timeout');return outcome==='refusal'?{isError:true}:undefined;}});
+ s.select(wanted('fr'));await s.inspect();await s.requestRead();assert.equal(s.state.readRequest,'unconfirmed');
+ await assert.rejects(s.requestRead(),/verified_preview_required/);await s.inspect();assert.equal(s.state.readRequest,'idle');
+});
+for(const change of ['selection','disconnect','reinspect'])for(const outcome of ['reply','error'])test('late text request '+outcome+' cannot certify '+change,async()=>{
+ let finish,fail;let calls=0;
+ const s=new PackSession({load:()=>reply('fr'),request:()=>{calls++;return new Promise((r,j)=>{finish=r;fail=j;});}});
+ s.select(wanted('fr'));await s.inspect();const pending=s.requestRead();assert.equal(s.state.readRequest,'pending');
+ await assert.rejects(s.requestRead(),/verified_preview_required/);assert.equal(calls,1);
+ if(change==='selection')s.select(wanted('en'));else if(change==='disconnect')s.disconnect();else await s.inspect();
+ const before={...s.state};if(outcome==='reply')finish({});else fail(Error('late_failure'));await pending;assert.deepEqual(s.state,before);
+});
+test('wrong preview cannot prepare a text request',async()=>{
+ let calls=0;const s=new PackSession({load:()=>reply('en'),request:()=>{calls++;return {};}});
+ s.select(wanted('fr'));await s.inspect();await assert.rejects(s.requestRead(),/verified_preview_required/);assert.equal(calls,0);
+ assert.throws(()=>readPackPrompt(wanted('de')),/unsupported_request_language/);
 });

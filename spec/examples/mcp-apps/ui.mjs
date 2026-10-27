@@ -8,12 +8,14 @@ const el=id=>document.getElementById(id);
 let catalog=[],caps={},connected=false,hostVersion=null;
 const messages={
  fr:{eyebrow:'Exemple fictif · prototype local',heading:'Choisir un contexte pour l’assistant',intro:'Inspectez un pack entier, ses conditions et ses sources avant de le fournir à la conversation.',
- 'intent-label':'Besoin','language-label':'Langue du contexte',inspect:'Inspecter ce pack',submit:'Fournir ce contexte à l’assistant',ask:'Demander une explication',
+ 'read-pack':'Faire lire ce pack à l’assistant','text-note':'Prépare une demande de lecture du pack entier et de ses sources archivées par l’outil texte. Confirmez l’envoi dans la conversation si nécessaire. La lecture et la réponse doivent être observées dans la conversation.',
+ 'native-heading':'Canal natif expérimental',readPending:'Préparation de la demande de lecture…',readPrepared:'Demande préparée par l’hôte. Confirmez son envoi si nécessaire. Lecture du pack et réponse non observées par le composant.',readUnconfirmed:'Demande non confirmée. L’hôte peut l’avoir reçue. Vérifiez la conversation avant de réinspecter pour une nouvelle tentative.',readUnavailable:'L’hôte ne déclare pas la préparation de messages texte. Demandez manuellement read_gcr_pack dans la conversation avec l’identité du pack inspecté.',
+ 'intent-label':'Besoin','language-label':'Langue du contexte',inspect:'Inspecter ce pack',submit:'Soumettre par le canal natif',ask:'Demander une explication',
  transmission:'L’aperçu détaillé reste dans le composant et chez son hôte; son identité figure dans le résultat d’outil. Le bouton fournit une projection texte complète du pack et de ses sources archivées. Un contexte déjà accepté peut rester dans l’historique.',
  'content-heading':'Contenu du contexte sélectionné',limits:'Vérification d’intégrité de l’exemple fictif. Elle ne prouve ni vérité, ni autorité, ni permission, ni fidélité d’une réponse. Aucune action n’est autorisée.',
  'conditions-heading':'Conditions et exclusions','declared-heading':'Contenu déclaré complet','sources-heading':'Sources archivées','sources-note':'Octets archivés disponibles dans cet exemple. Les URL déclarées ne sont pas consultées; aucun lien de source n’est suivi automatiquement.',
  'proof-heading':'Identité et détails de vérification','host-heading':'Client et transmission',
- selected:'Pack sélectionné. Inspectez-le avant de le soumettre.',loading:'Vérification du pack entier et de ses archives…',displayed:'Pack affiché et intégrité vérifiée. Contexte complet pas encore soumis.',
+ selected:'Pack sélectionné. Inspectez-le avant de le soumettre.',loading:'Vérification du pack entier et de ses archives…',displayed:'Pack affiché et intégrité vérifiée.',
  submitted:'Soumis à l’hôte. Accusé de réception en attente…',accepted:'Accusé de réception de l’hôte reçu. Usage du contexte par le modèle non vérifié.',
  failed:'Vérification ou chargement refusé. Aucun contexte vérifié disponible.',unconfirmed:'Transmission non confirmée. L’hôte peut avoir reçu le contexte; aucun succès n’est affirmé. Réinspectez avant une nouvelle tentative.',
  disconnected:'Connexion fermée. État précédent invalidé.',empty:'Connexion à l’hôte…',
@@ -22,12 +24,14 @@ const messages={
  requestAccepted:'Demande préparée par l’hôte. Confirmez son envoi dans la conversation si nécessaire, puis observez la réponse; ce composant ne peut pas la lire.',
  requestFailed:'Demande refusée ou non confirmée. Aucune réponse observée.'},
  en:{eyebrow:'Fictional example · local prototype',heading:'Choose context for the assistant',intro:'Inspect a whole pack, its conditions and archived sources before supplying it to the conversation.',
- 'intent-label':'Need','language-label':'Context language',inspect:'Inspect this pack',submit:'Supply this context to the assistant',ask:'Ask for an explanation',
+ 'read-pack':'Have the assistant read this pack','text-note':'Prepares a request to read the whole pack and its archived sources through the text tool. Confirm sending in the conversation if required. Observe the actual read and response in the conversation.',
+ 'native-heading':'Experimental native channel',readPending:'Preparing the read request…',readPrepared:'Request prepared by the host. Confirm sending if required. The component has not observed a pack read or a response.',readUnconfirmed:'Request unconfirmed. The host may have received it. Check the conversation before inspecting again to retry.',readUnavailable:'This host does not declare text message preparation. Ask for read_gcr_pack manually in the conversation using the inspected pack identity.',
+ 'intent-label':'Need','language-label':'Context language',inspect:'Inspect this pack',submit:'Submit through the native channel',ask:'Ask for an explanation',
  transmission:'The detailed preview stays with the component and its host; its identity appears in the tool result. The button supplies a complete text projection of the pack and its archived sources. Previously accepted context may remain in conversation history.',
  'content-heading':'Selected context contents',limits:'Integrity verification of a fictional example. It establishes neither truth, authority, permission nor answer fidelity. No action is authorized.',
  'conditions-heading':'Conditions and exclusions','declared-heading':'Complete declared content','sources-heading':'Archived sources','sources-note':'Archived bytes available in this example. Declared URLs are not consulted; source links are never followed automatically.',
  'proof-heading':'Identity and verification details','host-heading':'Client and transmission',
- selected:'Pack selected. Inspect it before submitting.',loading:'Verifying the whole pack and its archives…',displayed:'Pack displayed and integrity verified. Full context has not been submitted.',
+ selected:'Pack selected. Inspect it before submitting.',loading:'Verifying the whole pack and its archives…',displayed:'Pack displayed and integrity verified.',
  submitted:'Submitted to the host. Waiting for acknowledgement…',accepted:'Host acknowledgement received. Model use of the context remains unverified.',
  failed:'Verification or loading refused. No verified context is available.',unconfirmed:'Transmission unconfirmed. The host may have received the context; no success is claimed. Inspect again before retrying.',
  disconnected:'Connection closed. Previous state invalidated.',empty:'Connecting to host…',
@@ -46,14 +50,16 @@ function localize(){
 function render(state){
  el('status').textContent=t()[state.phase]??state.phase;
  if(state.error)el('status').textContent+=' ('+state.error+')';
- el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted'||!!diagnosticUI?.busy();
+ el('inspect').disabled=!connected||!catalog.length||state.phase==='submitted'||state.readRequest==='pending'||!!diagnosticUI?.busy();
  el('language').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();el('intent').disabled=state.phase==='submitted'||!!diagnosticUI?.busy();
- el('submit').disabled=state.phase!=='displayed'||!caps.updateModelContext?.text||!!diagnosticUI?.enabled();
+ el('submit').disabled=state.phase!=='displayed'||state.readRequest!=='idle'||!caps.updateModelContext?.text||!!diagnosticUI?.enabled();
+ el('read-pack').disabled=!connected||state.phase!=='displayed'||state.readRequest!=='idle'||!caps.message?.text||!!diagnosticUI?.enabled();
+ el('read-request').textContent=({pending:t().readPending,prepared:t().readPrepared,unconfirmed:t().readUnconfirmed})[state.readRequest]??(state.phase==='displayed'&&!caps.message?.text?t().readUnavailable:'');
  el('ask').disabled=state.phase!=='accepted'||!caps.message?.text||!!diagnosticUI?.enabled();
  el('content').hidden=!state.view;
  el('identity').textContent=state.view?state.view.pack.packId+' · '+state.view.pack.lang+' · '+state.view.pack.version:state.selection?state.selection.intentToken+' · '+state.selection.lang+' · '+state.selection.version:'';
  if(state.phase!=='accepted')el('response').textContent='';
- if(state.phase==='displayed'&&!caps.updateModelContext?.text)el('status').textContent+=' '+t().unsupported;
+ el('transmission').textContent=t().transmission+(connected&&!caps.updateModelContext?.text?' '+t().unsupported:'');
  diagnosticUI?.render();
  if(!state.view)return;
  const view=state.view;
@@ -72,6 +78,7 @@ function render(state){
 const session=new PackSession({
  load:args=>app.callServerTool({name:'inspect_gcr_pack',arguments:args},{timeout:15000}),
  send:text=>app.updateModelContext({content:[{type:'text',text}]},{timeout:15000}),
+ request:text=>app.sendMessage({role:'user',content:[{type:'text',text}]},{timeout:15000}),
  changed:render
 });
 diagnosticUI=bindDiagnostic({app,session,lang,environment:()=>({connected,caps,hostVersion}),render,select});
@@ -82,6 +89,7 @@ app.onerror=()=>{connected=false;diagnosticUI?.invalidate();session.disconnect()
 el('language').addEventListener('change',select);
 el('inspect').addEventListener('click',()=>{diagnosticUI.invalidate();return session.inspect();});
 el('submit').addEventListener('click',()=>session.submit());
+el('read-pack').addEventListener('click',()=>session.requestRead());
 el('ask').addEventListener('click',async()=>{
  const epoch=session.epoch;el('ask').disabled=true;
  try{const result=await app.sendMessage({role:'user',content:[{type:'text',text:t().askText}]},{timeout:15000});
@@ -90,5 +98,5 @@ el('ask').addEventListener('click',async()=>{
 });
 localize();render(session.state);
 try{await app.connect();caps=app.getHostCapabilities()??{};hostVersion=app.getHostVersion();connected=true;
- el('host').textContent=JSON.stringify({host:hostVersion,capabilities:caps,preview:'UI metadata: readable by host; not secret',submission:'ui/update-model-context',followUp:'ui/message',responseObserved:false},null,2);render(session.state);
+ el('host').textContent=JSON.stringify({host:hostVersion,capabilities:caps,preview:'UI metadata: readable by host; not secret',submission:'ui/update-model-context',followUp:'ui/message',textReadRequest:'ui/message -> model-visible read_gcr_pack',toolReadObserved:false,responseObserved:false},null,2);render(session.state);
 }catch(error){connected=false;diagnosticUI?.invalidate();session.disconnect();}

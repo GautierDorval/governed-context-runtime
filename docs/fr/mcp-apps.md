@@ -8,6 +8,10 @@ Deux essais du parcours attendu ont échoué après déclaration de capacité, s
 
 **Diagnostic réel du 26 octobre 2026 : essais A/B non exécutés.** Dans Claude Desktop 3.6556.2 pour Windows, les deux nouvelles conversations affichent le composant, mais le statut affiché reste « Connexion à l’hôte… » ; inspection et soumission sont désactivées. Aucun jeton n’a été soumis. C et D ne sont pas déclenchés. Ce libellé ne distingue pas une connexion inachevée d’une connexion établie en attente d’un catalogue utilisable. Le panneau de capacités n’a pas été relevé. La cause reste inconnue et le volet d’observation demeure ouvert. Les tests locaux du diagnostic ne remplacent pas cet essai réel.
 
+**Parcours texte du 27 octobre 2026 : résultat positif borné.** Un appel explicite de `read_gcr_pack` dans Claude Desktop 3.6556.2.0, modèle affiché Opus 5.5 Max, a renvoyé la projection française complète de 57 236 octets. La réponse restitue exactement les 11 éléments des cinq listes demandées, l’identité du pack, la conduite à tenir devant des preuves manquantes ou contradictoires et l’absence de permission de réservation, paiement ou travaux. Il s’agit d’un essai fictif unique, distinct du canal natif et du pilote comparatif. Le [relevé daté](../../records/mcp-apps-2026-10-26.md#text-tool-qualification-t1-2026-10-27) précise la preuve et ses limites.
+
+Le sélecteur prépare désormais cette demande avec **Faire lire ce pack à l’assistant**, après inspection. Ce bouton utilise la capacité de message texte, indépendamment de la capacité de mise à jour du contexte. Un accusé signifie seulement que l’hôte a préparé la demande. Le clic du nouveau bouton jusqu’à la réponse dans Claude Desktop reste à qualifier ; l’essai T1 utilisait une question saisie directement.
+
 ## Architecture et confiance
 
 Les sources se trouvent dans [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Le préparateur matérialise six fichiers de référence inchangés depuis le commit Git `57a09f1830ed20864ec66a6d153fc230b0331865`, vérifie leurs empreintes SHA-256 et place l’application installée **hors du dossier de référence**. Le compagnon ne maintient aucune copie divergente du vérificateur. Le paquet racine, sa politique de dépendances, le kit historique et les contrats restent inchangés.
@@ -23,10 +27,13 @@ Le composant présente les conditions, exclusions, preuves nécessaires, déduct
 | Ouvrir le sélecteur | Catalogue seulement. Aucun pack complet ajouté automatiquement au contexte du modèle. |
 | Choisir la langue | Invalidation de l’aperçu et de l’acceptation pour la sélection courante. L’historique déjà transmis ne peut pas être retiré. |
 | Inspecter | Vérification complète. Aperçu et projection dans `_meta`, lisibles par le composant et son hôte. Identité et racine également dans le texte du résultat. Ces métadonnées ne sont pas secrètes. |
-| Fournir le contexte | Requête explicite `ui/update-model-context`, avec conditions, exclusions et texte des sources archivées. |
+| Soumettre par le canal natif expérimental | Requête explicite `ui/update-model-context`, avec conditions, exclusions et texte des sources archivées. |
 | Recevoir un accusé | Accusé de la requête par l’hôte ; aucune preuve d’usage effectif par le modèle. |
 | Demander une explication | Requête distincte `ui/message`. La personne observe la réponse dans le clavardage ; le composant ne peut pas la lire. |
-| Utiliser le repli texte | `read_gcr_pack` fournit immédiatement la projection complète dans le texte visible par le modèle, après demande de l’utilisateur. |
+| Faire lire ce pack | Prépare une demande `ui/message` contenant uniquement les quatre champs de sélection inspectés. L’assistant, et non le composant, doit appeler l’outil texte. L’hôte peut exiger l’envoi manuel du brouillon. |
+| Lire par l’outil texte | `read_gcr_pack` fournit immédiatement la projection complète dans le texte visible par le modèle, après demande de l’utilisateur. |
+
+La demande de lecture est bloquée avant inspection, pendant le diagnostic et après une tentative jusqu’à réinspection. Les changements de sélection et déconnexions invalident son état ; un accusé tardif ne valide pas la sélection courante. Avant de réessayer une demande non confirmée, vérifiez la conversation : l’hôte peut l’avoir reçue. Le rechargement ne relance aucune demande. Sans capacité de message texte, la lecture directe par une question manuelle reste distincte.
 
 Aucun pack complet n’est placé dans `structuredContent`. Une erreur invalide le contexte utilisable. Les réponses asynchrones tardives ne peuvent pas valider une autre sélection. Un refus, un délai expiré ou un accusé absent reste **non confirmé**, puisque l’hôte peut avoir reçu la requête. Une projection trop volumineuse est refusée sans troncature. Le composant ne consulte aucun site et n’accorde aucune permission d’action métier.
 
@@ -65,7 +72,7 @@ Fusionnez une entrée dans `mcpServers` du fichier accessible par Paramètres > 
 }}} | ConvertTo-Json -Depth 5
 ```
 
-Redémarrez Desktop ou rechargez sa configuration MCP. Demandez uniquement `open_gcr_selector`, sans autre outil. Inspectez une langue, cliquez sur **Fournir ce contexte**, puis sur **Demander une explication**. Vérifiez chaque état et comparez la réponse aux exclusions affichées. Aucun accès aux fichiers personnels, tunnel, identifiant, OAuth ou `ui.domain` n’est nécessaire. Retirez l’entrée d’essai et rechargez la configuration à la fin.
+Redémarrez Desktop ou rechargez sa configuration MCP. Demandez uniquement `open_gcr_selector`, sans autre outil. Inspectez une langue, cliquez sur **Faire lire ce pack à l’assistant**, puis confirmez l’envoi du message dans la conversation si l’hôte prépare un brouillon. Le canal natif expérimental conserve séparément **Soumettre par le canal natif** et **Demander une explication**. Vérifiez chaque état et comparez la réponse aux exclusions affichées. Aucun accès aux fichiers personnels, tunnel, identifiant, OAuth ou `ui.domain` n’est nécessaire. Retirez l’entrée d’essai et rechargez la configuration à la fin.
 
 Un catalogue retourné sans composant visible ne prouve pas le fonctionnement de l’interface. Le repli texte reste un autre parcours : demandez explicitement `read_gcr_pack` avec les quatre champs de sélection du catalogue, sans son libellé d’affichage. La qualification datée précise le client essayé et le résultat observé.
 
