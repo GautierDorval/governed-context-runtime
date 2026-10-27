@@ -89,4 +89,4 @@ Code and configuration are available under the [Apache License 2.0](LICENSE). Do
 
 ## Optional local MCP Apps companion
 
-[English setup](docs/en/mcp-apps.md) · [Instructions françaises](docs/fr/mcp-apps.md) · [Dated qualification](records/mcp-apps-2026-10-26.md). Whole fictional pack selection and inspection, explicit context submission and text fallback. The actual Desktop trial establishes rendering and host acknowledgement, not end-to-end model use of the UI-submitted context. No public MCP Apps deployment; comparative pilot **NOT_RUN**.
+[English setup](docs/en/mcp-apps.md) · [Instructions françaises](docs/fr/mcp-apps.md) · [Dated qualification](records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27). Select and inspect a whole fictional pack, then explicitly request its text-tool reading. T3 completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. No public MCP Apps service deployment; comparative pilot **NOT_RUN**.
