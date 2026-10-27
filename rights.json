@@ -522,7 +522,7 @@
       "path": "spec/examples/mcp-apps/diagnostic.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7f38c5c34f7857b5cf930aa50a38d82e5b1a8f3d4184d5bebd1011574dc9fa99"
+      "sha256": "132e93c837e6a55e28dc63a87985f1f76e713933fb67befb78f0e3ab1a37c914"
     },
     {
       "path": "spec/examples/mcp-apps/package-lock.json",
@@ -570,13 +570,13 @@
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "f459034aefbfe3a42e868596a5b5f077364adff305f4847cb695dd94f412f45f"
+      "sha256": "eacc2fe025aeb43bab1de74cf9f3a71b2535008b4195f655d6a3e7e92165057e"
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "dfae4bfad94146cbaa675ddf31f5212f84bc78afb4a252193390f89d44da432e"
+      "sha256": "7bb274e8f37b695ea3510fec74fc04cc645ac9b85d854cf2feadd625f6e148f1"
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
@@ -588,7 +588,7 @@
       "path": "spec/examples/mcp-apps/ui.html",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7d9e8d61ae94134ce1b2aadf6859cee6d551e2319aa6816673f57cbc4f76a7a4"
+      "sha256": "10355c9a8ec12d1bd8950c3eb3b27f365fb7e14deee4bd50bdb6e45fc60a8f01"
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",

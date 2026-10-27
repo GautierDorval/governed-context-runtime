@@ -29,6 +29,7 @@ export class DiagnosticSession {
   if(this.state.phase==='preparing'||this.state.phase==='submitted')throw Error('diagnostic_in_progress');
   if(!connected||!textCapability)throw Error('text_context_capability_required');
   if(!['short','full'].includes(mode)||!['fr','en'].includes(lang))throw Error('diagnostic_selection_invalid');
+  if(packSession?.readPending)throw Error('pack_read_in_progress');
   if(mode==='full'&&(packSession?.state.phase!=='displayed'||!packSession.state.view||!packSession.state.text||packSession.state.view.pack.lang!==lang))throw Error('verified_preview_required');
   const projection=mode==='full'?packSession.state.text:'';
   const packId=mode==='full'?packSession.state.view.pack.packId:null;

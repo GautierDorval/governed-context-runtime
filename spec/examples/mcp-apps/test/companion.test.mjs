@@ -117,11 +117,12 @@ test('wrong preview cannot prepare a text request',async()=>{
  assert.throws(()=>readPackPrompt(wanted('de')),/unsupported_request_language/);
 });
 
-for(const outcome of ['reply','error'])test('in-flight read lock survives selection and inspection until '+outcome,async()=>{
- let finish,fail;let calls=0;const s=new PackSession({load:()=>reply('fr'),request:()=>{calls++;return new Promise((r,j)=>{finish=r;fail=j;});}});
+for(const outcome of ['reply','error'])test('in-flight read lock survives selection and inspection until '+outcome,{timeout:5000},async()=>{
+ let finish,fail;let calls=0;const s=new PackSession({load:()=>reply('fr'),request:()=>{if(++calls>1)return Promise.resolve({});return new Promise((r,j)=>{finish=r;fail=j;});}});
  s.select(wanted('fr'));await s.inspect();const pending=s.requestRead();assert.equal(s.readPending,true);
  s.select(wanted('fr'));await s.inspect();assert.equal(s.state.readRequest,'idle');assert.equal(s.readPending,true);
- await assert.rejects(s.requestRead(),/verified_preview_required/);await assert.rejects(s.submit(),/verified_preview_required/);assert.equal(calls,1);
+ const duplicate=s.requestRead();assert.equal(calls,1,'a duplicate request must never reach the host');
+ await assert.rejects(duplicate,/verified_preview_required/);await assert.rejects(s.submit(),/verified_preview_required/);
  if(outcome==='reply')finish({});else fail(Error('late_failure'));await pending;
  assert.equal(s.readPending,false);assert.equal(s.state.readRequest,'idle');assert.equal(s.state.phase,'displayed');
 });
