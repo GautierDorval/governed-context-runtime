@@ -91,8 +91,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "c59c5540bfe2dfe120e21e8ebe641e591a75767aca0ebdda0c1a72da88621ac7",
-      "bytes": 8962
+      "sha256": "e60e963e1a912df238be23e2b341875dc56187ffc8e5fa67aaf804fc1c8898b1",
+      "bytes": 8975
     },
     {
       "path": "SECURITY.md",
@@ -136,8 +136,8 @@
     },
     {
       "path": "docs/en/README.md",
-      "sha256": "04ef6673abea2abb4b289996e786872b66578ce63d8d438c2fbbf714a41aa73d",
-      "bytes": 12114
+      "sha256": "26e3dd1e9bae5d83aff495f3d54de1ff080fae75e2b090d639055f04c55fe66a",
+      "bytes": 12123
     },
     {
       "path": "docs/en/instance.md",
@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "10f0619262f1886814ed6d5c6f7f3d30d80fb28c3575efa5ba22c8219da07b1e",
-      "bytes": 17119
+      "sha256": "57d87e01090f052dac643cf2937be8f4fc7f1cdbd27dec3fbed3043ffbe688c5",
+      "bytes": 17129
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -171,8 +171,8 @@
     },
     {
       "path": "docs/fr/README.md",
-      "sha256": "56e24f67035e668b13849b638e0fed803937a2f3233335ee845f2ed70c8dc98d",
-      "bytes": 14222
+      "sha256": "14355f0f1e11f1e8c57dd369c312e298c251ae12847c0ca3bac5eac2d900e75f",
+      "bytes": 14231
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "003e0030a32cf452756660307dd63ba5cc465a5302a8b6f2ff74bce88bbe1dff",
-      "bytes": 18961
+      "sha256": "9bd6ab3734cf16a0924b0bb0d7fbc73a6fbeb53e3a54d8d5528c3027d29e4119",
+      "bytes": 18958
     },
     {
       "path": "docs/fr/observations.md",
@@ -271,8 +271,8 @@
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/README.md",
-      "sha256": "246ff14eda33621736b2bb2543a56875a56fb3cea8f2ee89c4da4e23fd03f971",
-      "bytes": 8725
+      "sha256": "04281e9cc0bd24cdebb3fbc30689a9d581fafb43736f971f2c928ccf379e599c",
+      "bytes": 8981
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/answer.txt",
@@ -281,8 +281,8 @@
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/editorial-review.json",
-      "sha256": "6a95a3d12eba37fcafa0c5761fa5f60362632dd6a6b11b554e864cb7926578c8",
-      "bytes": 2637
+      "sha256": "bd66f71639b53cfb8e92dbf1e85c862a50d998e663044cbcd02654caef5e7b2c",
+      "bytes": 2956
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/expected-lists.json",
@@ -291,8 +291,8 @@
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/manifest.json",
-      "sha256": "617c4c1fc870bf5fe634ab0ed2a19d6abfd65435b30525d24f6f7ea04bc55d00",
-      "bytes": 7264
+      "sha256": "51e27a04030f710d5777a5389659fadce20a46c65ed92da5bb894ae963e42316",
+      "bytes": 7391
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/request.txt",
@@ -301,8 +301,8 @@
     },
     {
       "path": "evidence/mcp-apps-t3-2026-10-27/validation.json",
-      "sha256": "adc52dfc6f825ff96dd497127013ce4706992e557ed27b9175d09aa8b3d12292",
-      "bytes": 3000
+      "sha256": "c69ac95359177eeaa218d3b520eada36ccaf68847cff9c2aceb7c71106382fea",
+      "bytes": 3001
     },
     {
       "path": "evidence/publication.json",
@@ -356,8 +356,8 @@
     },
     {
       "path": "records/mcp-apps-2026-10-26.md",
-      "sha256": "210444e4999db6a3c9dadb9fc23a2151a0579cf5d83e9e901acdf8289efacb6a",
-      "bytes": 31076
+      "sha256": "e512b9a1265f3449a5afc46f01537162ed4549e810ceec71d21442a571d60080",
+      "bytes": 31309
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -366,7 +366,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "77b01b54a850d5e695f5b4f8d51991fe2f196fc6c518c2d34a82d8a466719c8d",
+      "sha256": "21eb072642b64fce0bcfa46304bf1db4c2f165f5318ac7c70b482284105840c1",
       "bytes": 40135
     },
     {
@@ -411,8 +411,8 @@
     },
     {
       "path": "scripts/verify-t3-evidence.mjs",
-      "sha256": "0f08b26f5611f6a6c3f87c4a9b71d1ccbf5b2a548d21c056190783a06f8e2e13",
-      "bytes": 7611
+      "sha256": "2148b4412ac36d245ce2f2acc6f6296a769ca3b4e9feacfcdc3880f265bf8e76",
+      "bytes": 7631
     },
     {
       "path": "spec/LICENSE",

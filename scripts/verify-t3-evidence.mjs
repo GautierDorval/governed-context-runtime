@@ -81,7 +81,7 @@ export function compareLists(answer, expected) {
   });
 }
 
-/** Public files only. Private transport, historical execution and manual review are not replayed. */
+/** Public files only. Private transport, historical execution and Codex editorial assessment are not replayed. */
 export async function verifyT3Evidence() {
   const manifest = JSON.parse(await readFile(new URL('manifest.json', dossier), 'utf8'));
   assert.equal(manifest.kind, 'retained-mcp-apps-t3-evidence');
@@ -140,11 +140,11 @@ export async function verifyT3Evidence() {
     criteriaDerivedFromPinnedFixture: true,
     historicalClientReplayed: false,
     privateTransportReproduced: false,
-    manualEditorialReviewReproduced: false,
+    editorialAssessmentReproduced: false,
     modelCalls: 0,
     networkCalls: 0,
     limits:
-      'Byte correspondence is not independent authentication of the historical event. The no-addition/no-omission result covers these lists, not the whole answer. Private producer checks and manual interpretations remain separately attributed.',
+      'Byte correspondence is not independent authentication of the historical event. The no-addition/no-omission result covers these lists, not the whole answer. Private producer checks and Codex editorial interpretations remain separately attributed.',
   };
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

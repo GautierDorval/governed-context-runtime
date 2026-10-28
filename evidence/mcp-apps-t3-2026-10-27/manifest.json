@@ -7,7 +7,7 @@
   "historicalTrialDate": "2026-10-27",
   "originalProtocolDeclaredAt": "2026-10-27T19:04:28.7104375Z",
   "originalAnswerValidationDeclaredAt": "2026-10-27T19:11:35.391Z",
-  "recalculatedAt": "2026-10-28T00:36:34.453326+00:00",
+  "recalculatedAt": "2026-10-28T12:31:46.968194+00:00",
   "publication": "Established by the first public Git revision containing this dossier, not by a filesystem timestamp or a retrospective preregistration claim",
   "testedImplementation": {
     "commit": "d068b16241f1aeab09058e7b9b455baba85b40ab",
@@ -38,8 +38,8 @@
   "publicFiles": [
     {
       "path": "README.md",
-      "bytes": 8725,
-      "sha256": "246ff14eda33621736b2bb2543a56875a56fb3cea8f2ee89c4da4e23fd03f971"
+      "bytes": 8981,
+      "sha256": "04281e9cc0bd24cdebb3fbc30689a9d581fafb43736f971f2c928ccf379e599c"
     },
     {
       "path": "answer.txt",
@@ -58,13 +58,13 @@
     },
     {
       "path": "validation.json",
-      "bytes": 3000,
-      "sha256": "adc52dfc6f825ff96dd497127013ce4706992e557ed27b9175d09aa8b3d12292"
+      "bytes": 3001,
+      "sha256": "c69ac95359177eeaa218d3b520eada36ccaf68847cff9c2aceb7c71106382fea"
     },
     {
       "path": "editorial-review.json",
-      "bytes": 2637,
-      "sha256": "6a95a3d12eba37fcafa0c5761fa5f60362632dd6a6b11b554e864cb7926578c8"
+      "bytes": 2956,
+      "sha256": "bd66f71639b53cfb8e92dbf1e85c862a50d998e663044cbcd02654caef5e7b2c"
     }
   ],
   "pinnedInputs": [
@@ -162,7 +162,7 @@
     },
     {
       "publicFile": "editorial-review.json",
-      "method": "New manual assessment with exact excerpts; not an automated judge"
+      "method": "New documentary assessment by Codex with exact excerpts; no separate human review attested or scripted automated judge"
     }
   ],
   "limits": [
@@ -174,7 +174,8 @@
   ],
   "verifier": {
     "path": "scripts/verify-t3-evidence.mjs",
-    "bytes": 7611,
-    "sha256": "0f08b26f5611f6a6c3f87c4a9b71d1ccbf5b2a548d21c056190783a06f8e2e13"
-  }
+    "bytes": 7631,
+    "sha256": "2148b4412ac36d245ce2f2acc6f6296a769ca3b4e9feacfcdc3880f265bf8e76"
+  },
+  "documentaryCorrectionRecordedAt": "2026-10-28T12:30:35.535029+00:00"
 }

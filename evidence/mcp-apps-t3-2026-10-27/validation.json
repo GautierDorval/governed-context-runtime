@@ -1,5 +1,5 @@
 {
-  "recalculatedAt": "2026-10-28T00:36:34.453326+00:00",
+  "recalculatedAt": "2026-10-28T12:31:46.968194+00:00",
   "nature": "Verification of retained T3 artifacts; no new client or model execution",
   "publicComparison": {
     "status": "PASS_PUBLIC_ARTIFACT_COMPARISON",
@@ -66,7 +66,6 @@
     "artifactMembersVerified": 24,
     "draft": "Retained prompt equals the historical readPackPrompt result; one-button provenance remains a producer observation."
   },
-  "manualEditorialAssessment": "editorial-review.json",
   "limits": [
     "No new trial T4",
     "No native or English real-client trial",
@@ -74,5 +73,6 @@
     "One conversation retried after T2",
     "One GCR read across T2/T3, not a reliability rate",
     "GCR stdio does not reveal all internal model inputs or tools"
-  ]
+  ],
+  "editorialAssessmentByCodex": "editorial-review.json"
 }
