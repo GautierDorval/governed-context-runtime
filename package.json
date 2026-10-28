@@ -18,7 +18,7 @@
   },
   "scripts": {
     "demo": "node spec/examples/demo.mjs",
-    "test": "node scripts/check-package.mjs && node scripts/regenerate.mjs --check && node --test test/pilot-plan.test.mjs test/qualification.test.mjs test/mcp-response.test.mjs test/semantic-boundaries.test.mjs spec/examples/test-verified-pack.mjs spec/examples/reproduction/test-kit.mjs scripts/test-regenerate.mjs test/verification-paths.test.mjs test/graph.test.mjs test/svg-profile.test.mjs test/editorial.test.mjs test/mutation-verdict.test.mjs scripts/test-mutations.mjs spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/reference/test-archive-profile.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json",
+    "test": "node scripts/check-package.mjs && node scripts/regenerate.mjs --check && node --test test/t3-evidence.test.mjs test/pilot-plan.test.mjs test/qualification.test.mjs test/mcp-response.test.mjs test/semantic-boundaries.test.mjs spec/examples/test-verified-pack.mjs spec/examples/reproduction/test-kit.mjs scripts/test-regenerate.mjs test/verification-paths.test.mjs test/graph.test.mjs test/svg-profile.test.mjs test/editorial.test.mjs test/mutation-verdict.test.mjs scripts/test-mutations.mjs spec/examples/test-verified-unit.mjs spec/reference/test-vectors.mjs spec/reference/test-consumer.mjs spec/reference/test-public-finish.mjs spec/reference/test-archive-profile.mjs spec/public-evidence/test-publication.mjs spec/public-evidence/test-store.mjs && node spec/examples/demo.mjs && node spec/public-evidence/verify.mjs evidence/publication.json",
     "regenerate": "node scripts/regenerate.mjs --write",
     "regenerate:check": "node scripts/regenerate.mjs --check",
     "regenerate:recover": "node scripts/regenerate.mjs --recover",
@@ -27,7 +27,8 @@
     "typecheck": "tsc -p tsconfig.json",
     "test:dev": "npm run format:check && npm run typecheck && node --test test/schemas.test.mjs test/observation-schemas.test.mjs test/semantic-boundaries-schemas.test.mjs",
     "demo:semantics": "node spec/examples/semantic-boundaries/demo.mjs",
-    "reproduce": "node spec/examples/reproduction/run.mjs"
+    "reproduce": "node spec/examples/reproduction/run.mjs",
+    "verify:t3": "node scripts/verify-t3-evidence.mjs"
   },
   "devDependencies": {
     "@types/node": "24.19.2",

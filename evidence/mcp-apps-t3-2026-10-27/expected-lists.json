@@ -1,0 +1,47 @@
+{
+  "derivation": "Decoded selected pack archive from the pinned bundle, not extracted from the answer.",
+  "sourceCommit": "57a09f1830ed20864ec66a6d153fc230b0331865",
+  "fixturePath": "spec/examples/semantic-boundaries/bundle.json",
+  "fixtureSha256": "a4740cd7627d39b7f360bd44d500485a4fbff5f780bc80d9413202c67b9f23cd",
+  "packSourcePath": "public/semantic-boundaries/fr.json",
+  "packId": "fictional-boreal-quebec-fr",
+  "chainId": "project-assessment-chain",
+  "lists": [
+    {
+      "field": "activationConditions",
+      "values": [
+        "Le projet se situe au Québec.",
+        "Une évaluation technique écrite, favorable et propre au projet est disponible."
+      ]
+    },
+    {
+      "field": "nonApplicabilityConditions",
+      "values": [
+        "Le projet se situe hors du Québec.",
+        "L’évaluation technique propre au projet est défavorable."
+      ]
+    },
+    {
+      "field": "requiredEvidence",
+      "values": [
+        "Un élément documenté établit le lieu du projet.",
+        "Le compte rendu daté de l’évaluation indique le projet visé et une conclusion technique favorable."
+      ]
+    },
+    {
+      "field": "forbiddenInferences",
+      "values": [
+        "Étendre le territoire déclaré du Québec à l’ensemble du Canada.",
+        "Tenir l’admissibilité pour acquise à partir de la seule description du service.",
+        "Transformer l’explication d’une condition en autorisation de réservation, de paiement ou de travaux."
+      ]
+    },
+    {
+      "field": "applicabilityAbuseBoundaries",
+      "values": [
+        "Ne pas transférer l’évaluation d’un projet à un autre projet.",
+        "Ne pas transformer cette priorité documentaire locale en autorité universelle."
+      ]
+    }
+  ]
+}

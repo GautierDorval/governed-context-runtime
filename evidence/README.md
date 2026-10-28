@@ -1,6 +1,6 @@
 # Evidence you can reproduce
 
-This directory separates three kinds of material: the fictional offline verification exercise and synthetic metric projection; dated producer observations of the hosted HTTP/MCP service; and model-fidelity experiments, which remain `NOT_RUN`. Start with the [October 19 service observation](instance-2026-10-19.json) for the latest dated producer record in this edition. None of these categories substitutes for another.
+This directory separates four kinds of material: the fictional offline verification exercise and synthetic metric projection; dated producer observations of the hosted HTTP/MCP service; a retained historical MCP Apps answer with a bounded offline comparison; and comparative model-fidelity experiments, which remain `NOT_RUN`. Start with the [October 19 service observation](instance-2026-10-19.json) for the latest dated producer record in this edition. None of these categories substitutes for another.
 
 Run `npm test` for reference checks, the complete fictional context exercise, and the existing synthetic public-evidence projection. Run `npm run demo` for the shortest path from receipt to verified snapshot.
 
@@ -8,7 +8,7 @@ The fictional examples and metric projection are synthetic. They measure no prod
 
 The synthetic projection in `evidence/publication.json` preserves measured, measured-zero, partial, unavailable and non-applicable states. Missing values are not zero. Its digest supports integrity checks; it does not authenticate the source or prove completeness of a private source. Real-data export is not supported by this edition. Publication thresholds alone do not prevent inference across reports or overlapping periods.
 
-The reference checks are producer validation. Documentation, a repository and a site rendering of the same evidence are one lineage, not independent confirmations. External model experiments: `NOT_RUN`. Production transport and current deployment are not established by these offline tests.
+The reference checks are producer validation. Documentation, a repository and a site rendering of the same evidence are one lineage, not independent confirmations. Comparative model-fidelity pilot: `NOT_RUN`. The bounded T3 client observation is recorded separately. Production transport and current deployment are not established by these offline tests.
 
 [Verification limits](../docs/verification.md) · [Synthetic publication](publication.json)
 
@@ -22,7 +22,7 @@ The reference checks are producer validation. Documentation, a repository and a 
 | [spec/examples/semantic-boundaries/bundle.json](../spec/examples/semantic-boundaries/bundle.json) | Separate unsigned fictional semantic example with its own context and root; no receipt. | It illustrates conditions, limits and source relationships; it is neither a production corpus nor an external-model experiment. |
 | [October 12](instance-2026-10-12.json), [October 14](instance-2026-10-14.json) and [October 19](instance-2026-10-19.json) | Dated producer observations with their original bytes, dates, counts and historical roots. | No raw response bodies are published, no current hosted check is performed by the offline suite, and no independent organization is authenticated by the summaries. |
 
-These artifacts do not form several independent confirmations of one event. A byte digest establishes correspondence to committed bytes; a canonical digest does so under its declared representation profile. Matching bytes alone cannot distinguish reading a stored file from deterministic reconstruction of the same content by a server. A verified snapshot binds related artifacts under the admitted root; a test signature checks its cryptographic test profile; a local decision applies the supplied policy. None of those facts substitutes for a model evaluation, which remains `NOT_RUN` here.
+These artifacts do not form several independent confirmations of one event. A byte digest establishes correspondence to committed bytes; a canonical digest does so under its declared representation profile. Matching bytes alone cannot distinguish reading a stored file from deterministic reconstruction of the same content by a server. A verified snapshot binds related artifacts under the admitted root; a test signature checks its cryptographic test profile; a local decision applies the supplied policy. None of those facts substitutes for a comparative model evaluation, which remains `NOT_RUN` here.
 
 The [observation contracts](../docs/observations.md) validate each historical shape and its bounded date/count relationships with a separate local schema catalogue. They preserve the producer's declared result and report recalculated internal consistency separately. The [hosted diagnostic dossier](../docs/hosted-diagnostics.md) records the unresolved lifecycle/`initialize` cases, their missing captures and `NOT_RUN` status without replacing historical results.
 
@@ -46,3 +46,7 @@ The record publishes hashes and scope, not raw HTTP bodies or a signed deploymen
 ## Offline qualification, October 20, 2026
 
 [Local retained-asset and adapter qualification](../docs/en/qualification.md) · [Français](../docs/fr/qualification.md). This separate record preserves the historical observations. It qualifies retained bytes and a local adapter with an injected asset binding, not the currently hosted service. The six auditor retrievals declared for October 19 remain unreconciled; no metric subtraction was applied.
+
+## Retained MCP Apps T3 answer, October 27, 2026
+
+[Public answer, criteria and comparison](mcp-apps-t3-2026-10-27/README.md) provide a dependency-free offline check of five lists and their eleven entries in one historical French answer. The producer retained the final answer after a successful retry through the text-tool button. Exact list comparison, manual editorial judgments and private transport checks are separate. This dossier does not replay or independently authenticate the client session, qualify the native channel or change the comparative pilot's `NOT_RUN` state. It preserves the original fixture and does not convert the fictional corpus into production telemetry.

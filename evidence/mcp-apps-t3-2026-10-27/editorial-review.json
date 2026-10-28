@@ -1,0 +1,40 @@
+{
+  "reviewer": "Codex, an AI agent performing producer-side documentary reading during consolidation",
+  "basis": "answer.txt plus the fictional pinned pack and its archived sources",
+  "criteria": [
+    {
+      "criterion": "missing-evidence",
+      "observedExcerpt": "une preuve manquante ne vaut ni oui ni non. Elle laisse la conclusion indéterminée.",
+      "assessment": "The answer leaves the conclusion indeterminate; it does not turn missing evidence into acceptance or rejection.",
+      "method": "Documentary reading by Codex during consolidation; not an independent human review or scripted judge",
+      "result": "consistent within this answer"
+    },
+    {
+      "criterion": "conflicting-evidence",
+      "observedExcerpt": "Lorsque des éléments se contredisent, la même règle exige une clarification et interdit de retenir automatiquement la version la plus favorable.",
+      "assessment": "The answer asks for clarification rather than automatically selecting the favorable version.",
+      "method": "Documentary reading by Codex during consolidation; not an independent human review or scripted judge",
+      "result": "consistent within this answer"
+    },
+    {
+      "criterion": "action-permission",
+      "observedExcerpt": "Il ne donne aucune permission de réserver, de payer ou de lancer des travaux. Une décision et une autorisation distinctes restent nécessaires.",
+      "assessment": "This is compliance of the answer text with the stated action boundary, not a test of an authorization system.",
+      "method": "Documentary reading by Codex during consolidation; not an independent human review or scripted judge",
+      "result": "consistent within this answer"
+    },
+    {
+      "criterion": "archived-source",
+      "observedExcerpt": "Je ne l’ai pas consultée en ligne. Le texte renvoyé en inclut une copie archivée",
+      "assessment": "Source attribution is explicit. Non-navigation is the model’s declaration; GCR stdio is not exhaustive client telemetry.",
+      "method": "Documentary reading by Codex during consolidation; not an independent human review or scripted judge",
+      "result": "consistent within this answer"
+    }
+  ],
+  "identityReview": "The answer names fictional-boreal-quebec-fr, fr, semantic-boundaries-1 and project-assessment-chain. The retained capture contains joined words such as versionsemantic-boundaries-1; these are preserved, not corrected.",
+  "limits": "No general fidelity score; exact no-addition/no-omission comparison applies only to the five delimited lists. No independent verification of internal model identity, all host activity, or real-world authority.",
+  "documentedAt": "2026-10-28T12:30:35.535029+00:00",
+  "readingTimestamp": "Not separately recorded. documentedAt dates report preparation, not a separate review execution.",
+  "scriptedAutomatedJudge": false,
+  "separateHumanReviewAttested": false
+}
