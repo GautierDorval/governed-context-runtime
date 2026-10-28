@@ -1,0 +1,36 @@
+La lecture a réussi. Tout ce qui suit provient uniquement du texte renvoyé par read_gcr_pack, et je n’ai visité aucune URL.
+Identification du pack
+Le pack sélectionné a pour packId fictional-boreal-quebec-fr, pour lang fr et pour versionsemantic-boundaries-1. Son statut est proposed. La racine renvoyée correspond à l’expectedRoot fourni, mais le bloc de vérification de l’outil limite lui-même la portée de ce constat : il ne vérifie que l’intégrité, la confiance dans la signature n’est pas établie et la permission d’usage n’a pas été évaluée. L’en-tête du résultat précise que l’intégrité n’établit ni vérité, ni autorité, ni permission, et qu’aucune action n’est autorisée. Je relaie ces vérifications sans avoir recalculé d’empreinte moi-même.
+Chaîne d’applicabilité
+La chaîne project-assessment-chain est liée au contexte causal quebec-conditional-service. Elle vise la capacité fictional-boreal-service, libellée « Service technique fictif Atelier Boréal ». Sa situation déclencheuse est une demande de prise en charge d’un projet dont le lieu et l’évaluation doivent être établis. Son besoin latent consiste à expliquer les conditions sans promettre de prise en charge ni engager d’action. Elle relève de la classe de risque fictional-conditional-eligibility et du domaine fictional-technical-service, au statut proposed. Le contexte causal cherche à éviter un risque précis : promettre une prise en charge hors Québec ou avant l’évaluation technique.
+Les cinq listes, telles quelles
+Elles sont identiques au niveau de la chaîne, au niveau du pack et dans les unités incluses.
+activationConditions
+• Le projet se situe au Québec.
+• Une évaluation technique écrite, favorable et propre au projet est disponible.
+nonApplicabilityConditions
+• Le projet se situe hors du Québec.
+• L’évaluation technique propre au projet est défavorable.
+requiredEvidence
+• Un élément documenté établit le lieu du projet.
+• Le compte rendu daté de l’évaluation indique le projet visé et une conclusion technique favorable.
+forbiddenInferences
+• Étendre le territoire déclaré du Québec à l’ensemble du Canada.
+• Tenir l’admissibilité pour acquise à partir de la seule description du service.
+• Transformer l’explication d’une condition en autorisation de réservation, de paiement ou de travaux.
+applicabilityAbuseBoundaries
+• Ne pas transférer l’évaluation d’un projet à un autre projet.
+• Ne pas transformer cette priorité documentaire locale en autorité universelle.
+Preuves manquantes ou contradictoires
+La règle local-explicit-restrictions-first exige que les deux conditions d’activation soient établies, chacune par sa preuve requise. Le point décisif, c’est qu’une preuve manquante ne vaut ni oui ni non. Elle laisse la conclusion indéterminée. L’absence de preuve n’active pas la chaîne, mais elle ne déclenche pas non plus les conditions de non-applicabilité, qui visent des faits précis : un projet hors du Québec ou une évaluation défavorable. Concrètement, plusieurs cas ne suffisent pas à activer la chaîne sans pour autant l’exclure :
+• un lieu non documenté ;
+• une évaluation favorable qui n’existe pas par écrit ;
+• un compte rendu non daté, ou qui ne désigne pas le projet visé.
+Quant à une évaluation faite pour un autre projet, elle ne peut pas être transférée, selon la première limite d’abus.
+Lorsque des éléments se contredisent, la même règle exige une clarification et interdit de retenir automatiquement la version la plus favorable. Dans cet exercice seulement, les restrictions explicites priment aussi sur toute reformulation promotionnelle. La politique de composition archivée confirme qu’une preuve manquante comme une preuve contradictoire laisse la conclusion indéterminée. Elle précise qu’il s’agit d’une convention pédagogique propre à l’exemple, et non d’une logique normative pour tout le Runtime. Le pack ajoute que cette convention ne tranche aucun conflit avec des sources extérieures.
+Dans les deux cas, la limite de réponse retain-conditions-and-uncertainty impose trois choses : conserver « Québec » et « évaluation technique favorable » dans toute reformulation, expliquer la condition et l’incertitude sans conclure à une admissibilité acquise, et citer la source fictive ainsi que la chaîne project-assessment-chain.
+Réservation, paiement et travaux
+Expliquer n’est pas autoriser. Selon la limite de réponse explanation-is-not-permission, le pack sert uniquement à expliquer l’offre fictive, même si les éléments pédagogiques satisfont les deux conditions. Il ne donne aucune permission de réserver, de payer ou de lancer des travaux. Une décision et une autorisation distinctes restent nécessaires.
+Plusieurs autres éléments du pack disent la même chose. La troisième inférence interdite l’énonce directement, et le contexte causal interdit de déduire une permission d’engager des travaux. La frontière de sélection précise que le Runtime transporte le pack préparé sans décider de l’admissibilité du projet ni de l’autorisation d’une action. Enfin, la politique de composition résume l’intention ainsi : expliquer ce service fictif, ne jamais exécuter d’action.
+Source déclarée
+Toutes les unités déclarent la même source canonique, https://gautierdorval.com/semantic-boundaries/content.json, qui correspond au chemin public/semantic-boundaries/content.json. Elles lui attribuent la portée d’autorité fictional_teaching_example_only et la classefictional_service_boundary. Je ne l’ai pas consultée en ligne. Le texte renvoyé en inclut une copie archivée, d’identité boreal-quebec-technical-service-example-v1. Son avis de source la présente comme du matériel pédagogique entièrement fictif, sans offre réelle, sans réponse de modèle observée, sans signature ni permission d’exécution.

@@ -1,0 +1,180 @@
+{
+  "formatVersion": 1,
+  "kind": "retained-mcp-apps-t3-evidence",
+  "producer": "Codex working with Gautier Dorval",
+  "evidenceLineage": "Producer-retained client observation and later producer artifact comparison; not independent replications",
+  "historicalStatus": "PASS_BOUNDED_TEXT_BUTTON_FR",
+  "historicalTrialDate": "2026-10-27",
+  "originalProtocolDeclaredAt": "2026-10-27T19:04:28.7104375Z",
+  "originalAnswerValidationDeclaredAt": "2026-10-27T19:11:35.391Z",
+  "recalculatedAt": "2026-10-28T00:36:34.453326+00:00",
+  "publication": "Established by the first public Git revision containing this dossier, not by a filesystem timestamp or a retrospective preregistration claim",
+  "testedImplementation": {
+    "commit": "d068b16241f1aeab09058e7b9b455baba85b40ab",
+    "tree": "f4f4bcdd55ca9b972837265d0436503bea696efa"
+  },
+  "historicalDocumentation": {
+    "candidate": "98919d9af47b5f27aedf915c950fafbe2967c5c8",
+    "merge": "d1d087e7d779d97d7fc1d3e6d089a87f6c96874d",
+    "tree": "681a46af5d63de7dc467ce5a6ecd045c39cdbb18"
+  },
+  "client": "Claude Desktop Windows 3.6556.2.0",
+  "displayedModel": "Opus 5.5 Max",
+  "modelIdentityIndependentlyVerified": false,
+  "packId": "fictional-boreal-quebec-fr",
+  "chainId": "project-assessment-chain",
+  "selection": {
+    "intentToken": "representation-gap",
+    "lang": "fr",
+    "version": "semantic-boundaries-1",
+    "expectedRoot": "sha-256:0b0bb14fdd5c29a04a7304c9d5b7fe901c8dd62fb145546e638ccc736efd944a"
+  },
+  "resource": {
+    "uri": "ui://gcr/pack-selector-892547510d0f653d82c02b27a17c3ca758fa9f140f6f9dca323b7c09db748326.html",
+    "bytes": 1126336,
+    "sha256": "892547510d0f653d82c02b27a17c3ca758fa9f140f6f9dca323b7c09db748326",
+    "producerObservedRequestAt": "2026-10-27T18:53:34.873Z"
+  },
+  "publicFiles": [
+    {
+      "path": "README.md",
+      "bytes": 8725,
+      "sha256": "246ff14eda33621736b2bb2543a56875a56fb3cea8f2ee89c4da4e23fd03f971"
+    },
+    {
+      "path": "answer.txt",
+      "bytes": 6029,
+      "sha256": "1a26f25e38f6e6c56255ca6d708b5b5ddc5fff05ce275539acdcecd10acb2634"
+    },
+    {
+      "path": "request.txt",
+      "bytes": 921,
+      "sha256": "f2e6f0fbc2cdd98bfc3f38cd184589c5cea5813be56be813c08aabb100848cdd"
+    },
+    {
+      "path": "expected-lists.json",
+      "bytes": 1818,
+      "sha256": "625c6ee2704841836ae4a7e4796fe6b02b46b34bdb9a72909236b467049b1f62"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 3000,
+      "sha256": "adc52dfc6f825ff96dd497127013ce4706992e557ed27b9175d09aa8b3d12292"
+    },
+    {
+      "path": "editorial-review.json",
+      "bytes": 2637,
+      "sha256": "6a95a3d12eba37fcafa0c5761fa5f60362632dd6a6b11b554e864cb7926578c8"
+    }
+  ],
+  "pinnedInputs": [
+    {
+      "path": "spec/examples/semantic-boundaries/bundle.json",
+      "commit": "57a09f1830ed20864ec66a6d153fc230b0331865",
+      "bytes": 140159,
+      "sha256": "a4740cd7627d39b7f360bd44d500485a4fbff5f780bc80d9413202c67b9f23cd",
+      "url": "https://github.com/GautierDorval/governed-context-runtime/blob/57a09f1830ed20864ec66a6d153fc230b0331865/spec/examples/semantic-boundaries/bundle.json"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/expected-root.json",
+      "commit": "57a09f1830ed20864ec66a6d153fc230b0331865",
+      "bytes": 305,
+      "sha256": "a48058212859faab4cb7928247face1da7fc1eba8acd646ecf905c8456531c93",
+      "url": "https://github.com/GautierDorval/governed-context-runtime/blob/57a09f1830ed20864ec66a6d153fc230b0331865/spec/examples/semantic-boundaries/expected-root.json"
+    }
+  ],
+  "privateOriginals": [
+    {
+      "id": "historical-answer-validation",
+      "bytes": 2915,
+      "sha256": "3ab90be6aaaafd9d8c3ab8c391484f3d65404c158b740ea370f67fe2ca1099ff",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "retained-final-answer",
+      "bytes": 6029,
+      "sha256": "1a26f25e38f6e6c56255ca6d708b5b5ddc5fff05ce275539acdcecd10acb2634",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "historical-handoff",
+      "bytes": 8814,
+      "sha256": "1a4eb1e09fc7a70d05164497516e51df0bacd1dcb3e6178ee7ac106cc5bfc6d0",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "historical-protocol",
+      "bytes": 661,
+      "sha256": "dc3a266d02c92b545fde3b5ebb5c7d760fbd1ba9b5497cd9ce4937be78c543a7",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "historical-result",
+      "bytes": 1516,
+      "sha256": "58ce4c2ce31df7f8291c3d818297b770725a3db178d01f2c355e7dbad024884a",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "historical-transport-verification",
+      "bytes": 688,
+      "sha256": "ba9c2e193820edc10ed70f3e690118da2dac54e1db4d782cf54624334f8cbc67",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "gcr-stdio-trace",
+      "bytes": 4007,
+      "sha256": "bcf8f301c3c228248c9c18afa4cfa6b2f762b176cc92a594a1ef479056591ed1",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    },
+    {
+      "id": "retained-draft-json",
+      "bytes": 23051,
+      "sha256": "ff8f6d0375e044019a599e831045cccca64f5b1c99e4a482379b0f071376ee28",
+      "availability": "retained privately by producer; not distributed",
+      "digestRecalculated": true
+    }
+  ],
+  "transformations": [
+    {
+      "publicFile": "answer.txt",
+      "sourceId": "retained-final-answer",
+      "method": "Raw byte-identical copy; no redaction, normalization, corrections or added newline"
+    },
+    {
+      "publicFile": "request.txt",
+      "sourceId": "retained-draft-json",
+      "method": "Extract prompt string only; encode UTF-8 without appended newline; surrounding private accessibility capture omitted; evaluated request text unchanged"
+    },
+    {
+      "publicFile": "expected-lists.json",
+      "method": "Derive list values from selected pack archive in the pinned fixture, not from the answer"
+    },
+    {
+      "publicFile": "validation.json",
+      "method": "New producer report; public deterministic comparison separated from private transport reconstruction"
+    },
+    {
+      "publicFile": "editorial-review.json",
+      "method": "New manual assessment with exact excerpts; not an automated judge"
+    }
+  ],
+  "limits": [
+    "Same private conversation after T2 cancellation",
+    "One effective GCR read, not repeated controlled trials",
+    "No full host telemetry or independent event authentication",
+    "No new native, English or comparative trial",
+    "No general fidelity, business, SEO or adoption claim"
+  ],
+  "verifier": {
+    "path": "scripts/verify-t3-evidence.mjs",
+    "bytes": 7611,
+    "sha256": "0f08b26f5611f6a6c3f87c4a9b71d1ccbf5b2a548d21c056190783a06f8e2e13"
+  }
+}

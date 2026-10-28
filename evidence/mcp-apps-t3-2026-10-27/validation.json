@@ -1,0 +1,78 @@
+{
+  "recalculatedAt": "2026-10-28T00:36:34.453326+00:00",
+  "nature": "Verification of retained T3 artifacts; no new client or model execution",
+  "publicComparison": {
+    "status": "PASS_PUBLIC_ARTIFACT_COMPARISON",
+    "listCount": 5,
+    "itemCount": 11,
+    "lists": [
+      {
+        "field": "activationConditions",
+        "cardinality": 2,
+        "contentAndOrderExact": true,
+        "noMissingAddedOrDuplicateEntries": true
+      },
+      {
+        "field": "nonApplicabilityConditions",
+        "cardinality": 2,
+        "contentAndOrderExact": true,
+        "noMissingAddedOrDuplicateEntries": true
+      },
+      {
+        "field": "requiredEvidence",
+        "cardinality": 2,
+        "contentAndOrderExact": true,
+        "noMissingAddedOrDuplicateEntries": true
+      },
+      {
+        "field": "forbiddenInferences",
+        "cardinality": 3,
+        "contentAndOrderExact": true,
+        "noMissingAddedOrDuplicateEntries": true
+      },
+      {
+        "field": "applicabilityAbuseBoundaries",
+        "cardinality": 2,
+        "contentAndOrderExact": true,
+        "noMissingAddedOrDuplicateEntries": true
+      }
+    ],
+    "scope": "Exact contents, order and cardinalities of the five delimited lists in the retained final answer only."
+  },
+  "producerPrivateChecks": {
+    "availability": "Originals retained privately; these checks are not replayable from public hashes alone.",
+    "originalReportedDigestsMatched": 7,
+    "traceReadRequests": 1,
+    "requestId": 7,
+    "arguments": {
+      "intentToken": "representation-gap",
+      "lang": "fr",
+      "version": "semantic-boundaries-1",
+      "expectedRoot": "sha-256:0b0bb14fdd5c29a04a7304c9d5b7fe901c8dd62fb145546e638ccc736efd944a"
+    },
+    "requestAt": "2026-10-27T19:06:31.103Z",
+    "responseAt": "2026-10-27T19:06:31.132Z",
+    "inspectionRequestIds": [
+      5,
+      6
+    ],
+    "T2": "No read_gcr_pack before T3 in the retained observer trace; cancellation is also recorded in the earlier answer.",
+    "projection": {
+      "bytes": 57236,
+      "sha256": "1bb47ac187021159b6130ed25ab01115a8f8ac1b517d40a4c62b1ae95442f67b",
+      "reconstruction": "Exact raw-byte match to offline reconstruction using hash-verified archived historical projection code and pinned complete sources; no bilingual material filtered."
+    },
+    "artifactArchiveSha256": "292964573a85ccac8df6c74dbd8fdd88100200a514fa5ddc1bb5ed13f5b30f05",
+    "artifactMembersVerified": 24,
+    "draft": "Retained prompt equals the historical readPackPrompt result; one-button provenance remains a producer observation."
+  },
+  "manualEditorialAssessment": "editorial-review.json",
+  "limits": [
+    "No new trial T4",
+    "No native or English real-client trial",
+    "No comparative pilot",
+    "One conversation retried after T2",
+    "One GCR read across T2/T3, not a reliability rate",
+    "GCR stdio does not reveal all internal model inputs or tools"
+  ]
+}
