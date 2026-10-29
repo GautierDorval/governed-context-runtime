@@ -74,3 +74,5 @@ The new comparison has no real conversational-client qualification. T3's histori
 
 
 Commercial-source review: truth PASS (local capability and availability match executed evidence); commercial clarity PASS (review changed conditions/sources before reuse, followed by the existing diagnostic action); human intelligibility PASS for the existing audience of organization owners and project leads without Runtime implementation knowledge. Technical mechanics stay in the linked reference. These are Codex editorial verdicts, not an independent review or a measured user study.
+
+Final visual correction: native mobile select controls clipped long version labels despite passing scroll-width assertions. The options now use short names; complete versions remain visible below each selector, and full catalog identities are expandable before verification. Browser assertions measure the selected text width as well as checking the explicit version labels. No comparison or reading semantics changed.

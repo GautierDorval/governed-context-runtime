@@ -356,8 +356,8 @@
     },
     {
       "path": "records/comparison-2026-10-29.md",
-      "sha256": "5a64abde37409c1b2ae175e13b72e0131ad0900d7d2cd73871b36cfb7b6e0d4d",
-      "bytes": 11311
+      "sha256": "d4babe435f248944c3d0a8ea63064875ce96c5350873a0885e4be9a154cab575",
+      "bytes": 11731
     },
     {
       "path": "records/comparison-identity-decision-2026-10-29.md",
@@ -391,7 +391,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "a5d93d34acc9c875d4b8f1cebfb755cb1ebad65e5dd27caa7cec6968d2e3328b",
+      "sha256": "7128eb35c0e8b1c4b28b350c8819ec14330c6927285c77368872530b512fd635",
       "bytes": 44171
     },
     {
@@ -536,8 +536,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/comparison-ui.mjs",
-      "sha256": "cac83375556959a29a4cd46b0f9efe6fcae98b613e2d383f755089f25b92a897",
-      "bytes": 10164
+      "sha256": "7d6de68df2274fe3f198bdf16f7d8f97d1830358946a1f74416f5e646673e30e",
+      "bytes": 10699
     },
     {
       "path": "spec/examples/mcp-apps/comparison-worker.mjs",
@@ -596,8 +596,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
-      "sha256": "7f8dae936d199f955acc67a7e4c8b87f7c173b2617016c8c5e908fad2e49f32d",
-      "bytes": 24778
+      "sha256": "a3b065306d60e6af14d5f7bfa5dc10707e16155ca9aedf9946ec9f44340b0d8c",
+      "bytes": 25293
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
@@ -621,8 +621,8 @@
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
-      "sha256": "1e5c63474425dfdea942b1c602d1e42932ca5db3a20aa94855416ad056cecf90",
-      "bytes": 6014
+      "sha256": "2139a4e569e9fb4755f0fbcbe483b3b2b663b1b470e5fd5357dd849f142b5d65",
+      "bytes": 6236
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",

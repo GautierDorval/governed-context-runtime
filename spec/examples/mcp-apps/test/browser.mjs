@@ -67,6 +67,8 @@ try{
   const frame=page.frames().find(f=>f.url().endsWith('/app'));
   await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
   await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  const selections=await frame.evaluate(()=>{const c=document.createElement('canvas').getContext('2d');return [...document.querySelectorAll('#c-a,#c-b')].map(e=>{c.font=getComputedStyle(e).font;return {fits:c.measureText(e.selectedOptions[0].text).width<e.clientWidth-50,version:document.getElementById(e.id+'-version').textContent};});});
+  assert.ok(selections.every(s=>s.fits));assert.ok(selections[0].version.includes('semantic-boundaries-1'));assert.ok(selections[1].version.includes('comparison-example-2'));
   const report=await frame.$eval('#c-export-text',e=>JSON.parse(e.textContent));
   const ids=await frame.$$eval('[data-operation]',nodes=>nodes.map(n=>n.dataset.operation));
   assert.deepEqual(ids.sort(),report.operations.map(o=>o.id).sort());
