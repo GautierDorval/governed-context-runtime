@@ -18,6 +18,8 @@ export class ComparisonSession{
    }
    if(report.rawCoverage?.complete!==true||report.presentationCoverage?.complete!==true)throw Error('comparison_coverage_incomplete');
    this.state={...this.state,phase:'ready',report,error:null};
+   // A renderer refusal invalidates the report just like a loading/validation refusal.
+   this.changed(this.state);return;
   }catch(error){if(epoch!==this.epoch)return;this.state={...this.state,phase:'failed',report:null,error:error.message};}
   this.changed(this.state);
  }

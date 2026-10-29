@@ -22,7 +22,7 @@ window.qualification={contexts:[],messages:[],calls:[],toolResults:[]};
 const modes=new URL(location.href).searchParams;
 const caps={serverTools:{},...(modes.has('no-message')?{}:{message:{text:{}}}),...(modes.has('unsupported')?{}:{updateModelContext:{text:{}}})};
 const bridge=new AppBridge(null,{name:'SIMULATED LOCAL HOST - NO MODEL',version:'0.1.0'},caps);
-bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();if(params.name==='compare_gcr_packs'&&modes.has('comparison-hostile'))result._meta.gcr.comparison.operations[0].after='<img src="https://example.invalid/x" onerror="window.injected=true">';window.qualification.toolResults.push(result);if(params.name==='compare_gcr_packs'&&modes.has('comparison-delay'))await new Promise(r=>window.releaseComparison=r);return result;};
+bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();if(params.name==='compare_gcr_packs'&&modes.has('comparison-hostile'))result._meta.gcr.comparison.operations[0].after='<img src="https://example.invalid/x" onerror="window.injected=true">';if(params.name==='compare_gcr_packs'&&modes.has('comparison-coverage')){const report=result._meta.gcr.comparison;report.operations[0].category='applicabilityChains';report.groups=[...new Set(report.operations.map(o=>o.category))].map(category=>({category,operationIds:report.operations.filter(o=>o.category===category).map(o=>o.id)}));if(window.qualification.calls.filter(c=>c.name==='compare_gcr_packs').length>1)report.groups[0].operationIds.pop();}window.qualification.toolResults.push(result);if(params.name==='compare_gcr_packs'&&modes.has('comparison-delay'))await new Promise(r=>window.releaseComparison=r);return result;};
 bridge.onupdatemodelcontext=async params=>{
  if(modes.has('refuse'))throw Error('Simulated host refusal');
  window.qualification.contexts.push(params);return {};
@@ -116,6 +116,28 @@ try{
   assert.equal(attemptedExternal,0);assert.equal(await frame.evaluate(()=>window.injected),undefined);
   const report=await frame.$eval('#c-export-text',e=>JSON.parse(e.textContent));assert.ok(report.operations[0].after.includes('<img'));
   cases.push({route:'comparison',mode:'hostile-renderer-only',lang,status:'PASS',host:'simulated',notAnAdmissionTest:true});await page.close();
+ }
+
+ // Renderer counter-check: a valid report, then a report with a missing group operation.
+ // Host changes are deliberate renderer-only inputs, not admission evidence.
+ for(const lang of ['fr','en']){
+  const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewport({width:390,height:844});await page.setRequestInterception(true);
+  page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host?comparison-coverage');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
+  await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  assert.ok(await frame.$eval('#c-filter',(e,label)=>e.textContent.includes(label),lang==='fr'?'Chaînes d’applicabilité':'Applicability chains'));
+  if(lang==='fr')assert.ok(await frame.$eval('#c-summary',e=>e.textContent.includes('pack : ')));
+  await frame.click('#c-run');await frame.waitForFunction(()=>document.querySelector('#c-status').textContent.includes('render_group_coverage_failed'));
+  assert.equal(await frame.$eval('#c-result',e=>e.hidden),true);
+  for(const id of ['c-summary','c-shown','c-groups','c-proof','c-context','c-export-text'])assert.equal(await frame.$eval('#'+id,e=>e.textContent),'');
+  assert.equal(await frame.$eval('#c-download',e=>e.getAttribute('href')),null);
+  assert.equal(await frame.$eval('#c-run',e=>e.disabled),false);assert.deepEqual(errors,[]);
+  await page.evaluate(()=>{const f=document.querySelector('iframe'),e=f.contentDocument.querySelector('#c-heading');window.scrollTo({top:scrollY+f.getBoundingClientRect().top+e.getBoundingClientRect().top,behavior:'instant'});});
+  await page.screenshot({path:resolve(output,'comparison-'+lang+'-390-coverage-refused.png')});
+  cases.push({route:'comparison',mode:'coverage-refused-after-success',lang,status:'PASS',host:'simulated',notAnAdmissionTest:true});await page.close();
  }
 
  for(const width of [390,780]){

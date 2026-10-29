@@ -11,7 +11,10 @@ const keys={causalContexts:'id',applicabilityChains:'id',weightingRules:'ruleId'
 const readKey=(object,key)=>key.split('.').reduce((v,k)=>v?.[k],object);
 function matchingMaps(a,b){
  const map=new WeakMap();
- function visit(value,path=''){
+ function visit(value,path='',scope=''){
+  // Array positions belong to occurrence paths, not matching scopes. The engine
+  // compares hashes only within an already matched pair of collections.
+  // Keep numeric object-property names literal; only array traversal uses '*'.
   if(!value||typeof value!=='object')return;
   if(Array.isArray(value)){
    const key=keys[path.split('/').at(-1)];
@@ -22,15 +25,15 @@ function matchingMaps(a,b){
      if(typeof object==='string'&&path.startsWith('/manifest/'))continue;
      const id=readKey(object,key);
      if(typeof id!=='string'||!id||seen.has(id))throw Error('matching_key_missing_or_duplicate:'+path);
-     seen.add(id);map.set(object,path+':'+key+':'+id);
+     seen.add(id);map.set(object,scope+':'+key+':'+id);
     }
    }else {
     // Unspecified selected-value collections match exact complete values only, never persistent identities.
     const stable=v=>v&&typeof v==='object'?Array.isArray(v)?v.map(stable):Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;
-    for(const object of value)if(object&&typeof object==='object')map.set(object,path+':exact-complete-value:'+JSON.stringify(stable(object)));
+    for(const object of value)if(object&&typeof object==='object')map.set(object,scope+':exact-complete-value:'+JSON.stringify(stable(object)));
    }
   }
-  for(const [key,valueChild] of Object.entries(value))visit(valueChild,child(path,key));
+  for(const [key,valueChild] of Object.entries(value))visit(valueChild,child(path,key),child(scope,Array.isArray(value)?'*':key));
  }
  visit(a);visit(b);return map;
 }
@@ -57,6 +60,7 @@ function category(path){
  if(path.startsWith('/units')||path.includes('/includedUnits'))return 'units';
  if(path.includes('/causalContexts'))return 'causalContexts';
  if(/\/(weightingRules|answerBoundaries)\//.test(path))return 'rules';
+ if(path.split('/').includes('applicabilityChains'))return 'applicabilityChains';
  if(/(Url|Path|Digest|digest|canonicalization|includedArtifacts)/.test(path))return 'references';
  return 'metadata';
 }

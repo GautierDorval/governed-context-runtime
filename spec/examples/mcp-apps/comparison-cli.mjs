@@ -13,7 +13,7 @@ export async function compareFiles(configPath){
   const snapshotBytes=await readFile(resolve(directory,c.snapshotPath));
   const archives=resolve(directory,c.archivesDirectory);
   const expectedIntents=c.expectedIntentsPath?strictParse(await readFile(resolve(directory,c.expectedIntentsPath))):undefined;
-  return admitComparison({...c,expectedIntents,snapshotBytes,getArchive:uri=>{
+  return admitComparison({...c,fictional:false,expectedIntents,snapshotBytes,getArchive:uri=>{
    if(!/^\/v0\/artifacts\/[a-f0-9]{64}$/.test(uri))throw Error('local_archive_uri_required');
    return readFile(resolve(archives,uri.split('/').at(-1)+'.json'));
   }});

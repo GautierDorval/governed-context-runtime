@@ -48,7 +48,7 @@ Original English packs are 7,200 bytes; their canonical representations are 6,15
 
 ## Validation and acceptance
 
-The companion suite covers 85 cases including the existing reading/diagnostic tests and the real stdio entrypoint. The separate browser harness has 30 cases on the local built resource with the official AppBridge and real stdio server, but a simulated host and no model. Comparison is exercised in FR/EN at 390 x 844 and 1365 x 900, with operation coverage, filtering, zero changes, selection invalidation, close/reopen, keyboard access and hostile content rendered as text. The prior full-read and diagnostic journeys remain covered. CSP connectDomains/resourceDomains stay empty.
+The companion suite covers 92 cases including the existing reading/diagnostic tests and the real stdio entrypoint. The separate browser harness has 32 cases on the local built resource with the official AppBridge and real stdio server, but a simulated host and no model. Comparison is exercised in FR/EN at 390 x 844 and 1365 x 900, with operation coverage, filtering, zero changes, selection invalidation, close/reopen, keyboard access and hostile content rendered as text. The prior full-read and diagnostic journeys remain covered. CSP connectDomains/resourceDomains stay empty.
 
 | Brief matrix | Evidence and boundary |
 | --- | --- |
@@ -68,7 +68,7 @@ Dependency review: jsondiffpatch 0.7.6 and Ajv 8.20.0 are exact locked versions.
 
 The eight named FR/EN site sources now explain the comparison need, exact inputs, conservative matching and local availability. Historical generated sections, translation keys and conceptual versions are preserved. Site validation includes the personal site's checks/build/editorial audit and existing offline visual harness, plus PAGUP's full npm run check and 19-page accessibility run. Targeted comparison captures cover all eight sources on mobile and desktop through intercepted local builds. Generated editorial report changes are retained only where the source additions change their measurements.
 
-All three surfaces remain local candidates. Their final references, file hashes, local checks and capture locations belong to the private consolidated handoff. Site links are prepared against the immutable Runtime candidate; that reference must be published before dependent pages. No remote PR, CI, merge, public synchronization, deployment, protected-laboratory navigation, hosted Runtime call, audit transmission or model call is established by this record.
+All three surfaces remain local candidates. Their final references, file hashes, local checks and capture locations belong to the private consolidated handoff. Site links are prepared against the immutable Runtime candidate; that reference must be published before dependent pages. No remote PR, CI, merge, public synchronization, deployment, protected-laboratory navigation, hosted Runtime call or experimental model call is established by this record.
 
 The new comparison has no real conversational-client qualification. T3's historical evidence remains byte-preserved and French-only. Host download/cancellation support may vary. Practical benefit requires representative organizational documents and a named human reviewer; the model pilot remains NOT_RUN.
 
@@ -76,3 +76,11 @@ The new comparison has no real conversational-client qualification. T3's histori
 Commercial-source review: truth PASS (local capability and availability match executed evidence); commercial clarity PASS (review changed conditions/sources before reuse, followed by the existing diagnostic action); human intelligibility PASS for the existing audience of organization owners and project leads without Runtime implementation knowledge. Technical mechanics stay in the linked reference. These are Codex editorial verdicts, not an independent review or a measured user study.
 
 Final visual correction: native mobile select controls clipped long version labels despite passing scroll-width assertions. The options now use short names; complete versions remain visible below each selector, and full catalog identities are expandable before verification. Browser assertions measure the selected text width as well as checking the explicit version labels. No comparison or reading semantics changed.
+
+## Consolidated review corrections
+
+An owner-authorized independent Claude code review of the initial three candidates found one P2 and five P3 points. The corrected implementation removes ancestor array positions from matching scopes while preserving actual occurrence paths and numeric object-property names. It labels applicability-chain structure explicitly, no longer presents co-produced teaching catalogs as independent evidence, forces offline CLI inputs to remain non-fictional, and invalidates a report when rendering coverage fails. French summary punctuation is corrected.
+
+Seven targeted regressions failed before correction and passed afterward. The 92 companion tests and 32 local browser cases passed; two new FR/EN browser cases show that a malformed grouping after an earlier success hides the result and clears the summary, details and export without an unhandled rejection. They deliberately alter a simulated-host response and qualify renderer refusal, not admission. The producer also replayed both private real pairs with the corrected engine: full reports are exactly unchanged, nine operations per language. No private original was sent to the reviewer.
+
+These statements describe executed producer qualification and the corrections prompted by the first review. The final independent re-review belongs to the immutable corrected candidates identified in the private handoff; this versioned record does not predeclare that verdict.

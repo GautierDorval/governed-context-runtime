@@ -194,3 +194,70 @@ test('patch-like data stays inert data',()=>{
 test('literal _t object properties are fields, not array delta metadata',()=>{
  const n=normalized({object:{_t:'old'}},{object:{_t:'new'}});assert.equal(n.operations.length,1);assert.equal(n.operations[0].pathB,'/object/_t');assert.equal(n.operations[0].after,'new');
 });
+
+test('review regression: moved units keep unchanged nested values',()=>{
+ const a=structuredClone(reference.scope),b=structuredClone(a);b.units.reverse();
+ const ops=normalized(a,b).operations;
+ assert.ok(ops.length);assert.ok(ops.every(op=>op.kind==='order'));
+ for(const op of ops)assert.deepEqual(op.before,op.after);
+});
+
+test('review regression: moved chains keep nested keys within their own parent',()=>{
+ const a={pack:{applicabilityChains:[
+  {id:'c1',includedUnits:[{unitId:'shared',label:'first'}],selectedValue:[{text:'unchanged first'}]},
+  {id:'c2',includedUnits:[{unitId:'shared',label:'second'}],selectedValue:[{text:'unchanged second'}]}
+ ]}},b=structuredClone(a);b.pack.applicabilityChains.reverse();
+ const moved=normalized(a,b).operations;assert.equal(moved.length,1);assert.equal(moved[0].kind,'order');
+ b.pack.applicabilityChains[1].includedUnits[0].label='changed first';
+ const ops=normalized(a,b).operations;
+ assert.equal(ops.length,2);
+ const changed=ops.find(op=>op.kind==='replace');
+ assert.equal(changed.pathA,'/pack/applicabilityChains/0/includedUnits/0/label');
+ assert.equal(changed.pathB,'/pack/applicabilityChains/1/includedUnits/0/label');
+ assert.equal(changed.before,'first');assert.equal(changed.after,'changed first');
+});
+
+test('review regression: numeric object keys remain distinct under moved parents',()=>{
+ const a={pack:{applicabilityChains:[{id:'c1','0':{selectedValue:[{text:'zero'}]},'1':{selectedValue:[{text:'one'}]}},{id:'c2'}]}},b=structuredClone(a);
+ b.pack.applicabilityChains.reverse();b.pack.applicabilityChains[1]['1'].selectedValue.push({text:'new'});
+ const ops=normalized(a,b).operations;assert.equal(ops.length,2);
+ assert.deepEqual(ops.filter(op=>op.kind!=='order').map(op=>[op.kind,op.pathB,op.after]),[['add','/pack/applicabilityChains/1/1/selectedValue/1',{text:'new'}]]);
+});
+
+test('review regression: applicability chain structure has an explicit category',()=>{
+ const a={pack:{applicabilityChains:[{id:'c1',linkedCausalContextId:'old',requiredEvidence:['same']},{id:'c2'}]}},b=structuredClone(a);
+ b.pack.applicabilityChains.reverse();b.pack.applicabilityChains[1].linkedCausalContextId='new';b.pack.applicabilityChains[1].requiredEvidence.push('new evidence');
+ const ops=normalized(a,b).operations;
+ assert.equal(ops.find(op=>op.kind==='order').category,'applicabilityChains');
+ assert.equal(ops.find(op=>op.kind==='replace').category,'applicabilityChains');
+ assert.equal(ops.find(op=>op.kind==='add').category,'requiredEvidence');
+});
+
+test('review regression: co-produced fixture catalogs are not independent evidence',async()=>{
+ for(const id of comparisonCatalog.map(c=>c.id)){
+  const admitted=await loadComparisonEntry(id);
+  assert.equal(admitted.identity.integrity.independentlySuppliedCatalog,false,id);
+ }
+});
+
+test('review regression: offline CLI cannot opt real inputs into fictional coherence',async()=>{
+ const {mkdtemp,mkdir,writeFile,rm}=await import('node:fs/promises');
+ const {tmpdir}=await import('node:os');const {join,resolve,sep}=await import('node:path');
+ const {compareFiles}=await import('../comparison-cli.mjs');
+ const directory=await mkdtemp(join(tmpdir(),'gcr-comparison-cli-test-'));
+ try{
+  await mkdir(join(directory,'archives'));await writeFile(join(directory,'snapshot.json'),canonical(base.snapshot));
+  for(const [uri,bytes] of Object.entries(base.archives))await writeFile(join(directory,'archives',uri.split('/').at(-1)+'.json'),Buffer.from(bytes,'base64'));
+  const config={snapshotPath:'snapshot.json',archivesDirectory:'archives',expectedRoot:anchor.expectedRoot,rootProvenance:'Test fixture supplied separately',intentToken:entry.intentToken,lang:'fr',version:entry.version,fictional:true};
+  const path=join(directory,'pair.json');await writeFile(path,JSON.stringify({A:config,B:config}));
+  const report=await compareFiles(path);
+  for(const side of ['A','B']){assert.equal(report[side].fictional,false);assert.equal(report.coherence[side].status,'not-defined');}
+ }finally{assert.ok(resolve(directory).startsWith(resolve(tmpdir())+sep));await rm(directory,{recursive:true,force:true});}
+});
+
+test('review regression: rendering refusal clears the ready report and becomes failed',async()=>{
+ const phases=[];const session=new ComparisonSession({load:reply,changed:state=>{phases.push(state.phase);if(state.phase==='ready')throw Error('render_group_coverage_failed');}});
+ session.select(selection('reference-fr'),selection('variant-fr'));
+ await session.compare();assert.equal(session.state.phase,'failed');assert.equal(session.state.report,null);
+ assert.equal(session.state.error,'render_group_coverage_failed');assert.deepEqual(phases,['selected','loading','ready','failed']);
+});

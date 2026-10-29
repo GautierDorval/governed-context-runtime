@@ -4,6 +4,8 @@
 
 Le compagnon local facultatif compare B par rapport à A pour la même famille de pack, la même intention et la même langue. Choisissez explicitement les deux états, puis **Comparer B à A**. L’exemple conservé et un nouvel état fictif sont disponibles en français et en anglais. Cette opération ne transmet aucun contexte au modèle. Elle ne choisit pas le meilleur état et n’établit aucune succession officielle de publications.
 
+Les catalogues d’intentions des deux exemples fictifs sont produits avec leurs instantanés. Ils ne sont pas présentés comme des catalogues fournis indépendamment.
+
 L’admission contrôle d’abord une racine attendue fournie séparément, l’instantané complet et toutes les archives requises avec le vérificateur de référence inchangé. Le pack et le manifeste originaux subissent ensuite une validation complète contre les schémas draft-2020-12 épinglés, avec Ajv 8.20.0. Les formats ne sont pas assertés ; ce profil figure dans chaque identité. Intégrité, conformité au schéma, confiance dans les signatures et permission restent distinctes. Une entrée absente ou refusée ne devient jamais une comparaison vide réussie.
 
 La vue regroupe les ajouts, retraits, valeurs modifiées et déplacements calculés. Chaque opération conserve ses emplacements A/B et ses valeurs complètes. Dépliez les groupes, filtrez par catégorie, inspectez les originaux ou exportez le JSON. Le filtre modifie seulement la visibilité. Le compteur porte sur les opérations structurales, pas sur des règles distinctes : une projection racine et son occurrence dans une chaîne restent séparées. Une phrase réécrite produit un retrait et un ajout. Les répétitions conservent leur multiplicité et les déplacements ambigus sont signalés. Aucun score de similarité ni reformulation sémantique n’intervient.
@@ -23,6 +25,8 @@ Depuis l’artefact préparé, en conservant chemins et rapports privés :
 ```powershell
 node comparison-cli.mjs 'C:\prive\paire.json' 'C:\prive\nouveau-rapport.json'
 ```
+
+Le CLI marque toujours ses entrées comme non fictives ; une option de configuration ne peut pas activer la cohérence propre à l’exemple Boréal.
 
 La sortie ne doit pas exister. L’export contient tous les originaux, y compris les sources archivées. Conservez les rapports réels dans le dossier privé autorisé. Le catalogue visuel expose uniquement les exemples fictifs fixes ; il ne constitue pas un service de téléversement privé. Si l’hôte bloque le téléchargement, le JSON complet demeure sélectionnable dans l’interface. L’hôte peut lire les métadonnées : elles ne constituent pas une frontière de confidentialité.
 

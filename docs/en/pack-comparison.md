@@ -4,6 +4,8 @@
 
 The optional local companion compares B relative to A for the same pack family, intent and language. Select both states explicitly, then choose **Compare B to A**. The original example and a new fictional comparison state are available in French and English. This feature does not send context to a model. It neither selects a better state nor establishes that B officially succeeds A.
 
+Both fictional intent catalogs are co-produced with their snapshots. They are not presented as independently supplied catalogs.
+
 Admission first checks an independently supplied expected root, the complete snapshot and every required archive with the unchanged reference verifier. The original pack and manifest then undergo full validation against the pinned draft-2020-12 schemas using Ajv 8.20.0. Formats are not asserted; this profile is stated in each identity. Integrity, schema conformance, signature trust and permission are separate results. An unavailable or refused input never becomes an empty successful comparison.
 
 The view groups additions, removals, changed values and calculated moves. Each operation identifies its A/B locations and retains full before/after values. Expand groups, filter by category, inspect full context and originals, or export JSON. Filtering changes visibility only. The visible count describes structural operations, not distinct rules: a root projection and its chain occurrence remain separate. Rewritten list strings are removal plus addition. Repeated values retain multiplicity and ambiguous movement attribution. No similarity score or semantic rewrite is used.
@@ -23,6 +25,8 @@ Run from the prepared companion artifact, keeping paths and reports private:
 ```powershell
 node comparison-cli.mjs 'C:\private\pair.json' 'C:\private\new-report.json'
 ```
+
+The CLI always marks its inputs as non-fictional; configuration cannot activate the coherence rule specific to the Boreal example.
 
 The output must not already exist. The JSON export contains complete original material, including archived sources. Keep real reports in the authorized private evidence location. The browser catalog exposes only the fixed fictional examples; it is not a private file upload service. A download may be restricted by the host; the complete selectable JSON is also available in the interface. A host can read metadata: it is not a secrecy boundary.
 

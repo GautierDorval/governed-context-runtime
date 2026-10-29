@@ -186,7 +186,7 @@
       "path": "docs/en/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "c07887e03473b414e06ebe1e5c412e56a48c3ffaa981282e98a630418932c2f2"
+      "sha256": "f8ee4ad962823f56ff5fcbb973491079ffcf3a3aab3fc44308a0f450b30f9660"
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -240,7 +240,7 @@
       "path": "docs/fr/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "93170dc0539e60e061adc3cc54741a6eef727dd4aea460cefc87769e3af92cab"
+      "sha256": "eba77ab78d67464a24a7c2ae318c536283ac3e2295467daf48667ec984567ed5"
     },
     {
       "path": "docs/fr/pack-semantics.md",
@@ -426,13 +426,13 @@
       "path": "records/comparison-2026-10-29.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "d4babe435f248944c3d0a8ea63064875ce96c5350873a0885e4be9a154cab575"
+      "sha256": "d8ee802e45d51f180c8a861c590a04c277b4a952ff2b5b5b5e33102975273fd5"
     },
     {
       "path": "records/comparison-identity-decision-2026-10-29.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "bdf9e8349f1c4ec02752e1242743f5c4bb0643f11788823c6c1609124274835b"
+      "sha256": "c5031c3da5d8190d9ba847a215edfc1a56b103940c24cb57a179a582b0476198"
     },
     {
       "path": "records/consumer-mandate-2026-10-20.md",
@@ -600,13 +600,13 @@
       "path": "spec/examples/mcp-apps/comparison-cli.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "3a21777c594fa5b3cf151a2c2d465a54f82770c5bef35feaf836fa842dbf2d0e"
+      "sha256": "2738f53a36e986af8c47584861828d501a5ace5cd23a0547a5895c11aed8aa73"
     },
     {
       "path": "spec/examples/mcp-apps/comparison-data.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "4e92c759cd9c500d4205fe2f22286c675381892910e2a3ca4d5024e96a16b042"
+      "sha256": "6e04bfcf0862c97c80d8bd466561fdca1a8c19c8463c88c5ce16684cb8ce7e6e"
     },
     {
       "path": "spec/examples/mcp-apps/comparison-example.json",
@@ -630,13 +630,13 @@
       "path": "spec/examples/mcp-apps/comparison-session.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "e734cdb161f2e5cb935500670d9b5275e4e146cbda6dfc993c3cbf72f4935eca"
+      "sha256": "44bc070e52bade21d87587f18ecba0225ca2a9280b772f7e9f002f802fbf7ee3"
     },
     {
       "path": "spec/examples/mcp-apps/comparison-ui.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7d6de68df2274fe3f198bdf16f7d8f97d1830358946a1f74416f5e646673e30e"
+      "sha256": "7b027195f479b20b236aca92e829eb5796de6eaee901677e16052de7d867e584"
     },
     {
       "path": "spec/examples/mcp-apps/comparison-worker.mjs",
@@ -648,7 +648,7 @@
       "path": "spec/examples/mcp-apps/comparison.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7f61d5ee6236377351fdef30ad0f2ff96435514d9eb1101a767e4b7b3fb23542"
+      "sha256": "a8c5eb70e352e013a39e27d8e383c093d35648434c0756af124cd87090dde026"
     },
     {
       "path": "spec/examples/mcp-apps/data.mjs",
@@ -708,7 +708,7 @@
       "path": "spec/examples/mcp-apps/test/browser.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "a3b065306d60e6af14d5f7bfa5dc10707e16155ca9aedf9946ec9f44340b0d8c"
+      "sha256": "59e7405a30c2daa4a080b52ca5fdbdf619bd4765f06366941131d0b1a0174fe7"
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
@@ -720,7 +720,7 @@
       "path": "spec/examples/mcp-apps/test/comparison.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "605750d7aaa5a49e7858ffbb25e84c0fca1dcb26e5f20b1263117e23f8de9b58"
+      "sha256": "cce231d8bf6aad03e18e4d78f404fa55fd0da3e4ba031c9844945bc488453232"
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",

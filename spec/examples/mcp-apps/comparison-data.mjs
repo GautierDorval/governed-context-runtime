@@ -16,7 +16,8 @@ export async function loadComparisonEntry(id){
  const selection=comparisonCatalog.find(c=>c.id===id);if(!selection)throw Error('comparison_selection_not_admitted');
  const index=id.startsWith('reference-')?0:1,bundle=bundles[index];
  return admitComparison({snapshotBytes:canonical(bundle.snapshot),expectedRoot:selection.expectedRoot,
-  rootProvenance:index===0?anchors[index].trustScope:anchors[index].provenance,expectedIntents:bundle.expectedIntents,fictional:true,
+  // Both teaching catalogs are co-produced with their bundle, not independent evidence.
+  rootProvenance:index===0?anchors[index].trustScope:anchors[index].provenance,fictional:true,
   intentToken:selection.intentToken,lang:selection.lang,version:selection.version,
   getArchive:uri=>{if(!Object.hasOwn(bundle.archives,uri))throw Error('required_archive_missing');return Buffer.from(bundle.archives[uri],'base64');}});
 }
