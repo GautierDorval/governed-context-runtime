@@ -18,7 +18,7 @@ On October 27, A/B answered `NON_DISPONIBLE` under an instruction forbidding too
 
 ## Architecture and trust
 
-The source lives in [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Its preparer materializes six unmodified reference files from Git commit `57a09f1830ed20864ec66a6d153fc230b0331865`, verifies their SHA-256 digests and keeps the installed application **outside the reference checkout**. It does not copy or fork the verifier's implementation into maintained companion code. The root package, dependency policy, historical kit and contracts are unchanged.
+The source lives in [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Its preparer materializes eight unmodified reference files from Git commit `57a09f1830ed20864ec66a6d153fc230b0331865`, verifies their SHA-256 digests and keeps the installed application **outside the reference checkout**. It does not copy or fork the verifier's implementation into maintained companion code. The root package, dependency policy, historical kit and contracts are unchanged.
 
 Each inspection reuses `inspectVerifiedPack` against the complete snapshot and archived records. The expected corpus root comes from the separately pinned educational anchor, not from the selected pack's self-declaration. Both languages belong to that same corpus root; each selection still has its own pack identity and language. The root is an integrity anchor for a fictional example, not authenticated business authority. Signature trust is not established and use permission is not evaluated.
 
@@ -118,3 +118,7 @@ Record exact value reproduction separately from formatting, tool calls and times
 The [pinned API source](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/src/app.ts) describes availability to subsequent turns and replacement of the previous contribution. Resolution is an acknowledgement, not telemetry of the input used. Tool-result limits in Claude troubleshooting do not establish limits for this method.
 
 Dependency advisory check, 2026-10-26: `npm audit` reports two packages with high advisories in the existing MCP client/server 2.0.0 lockfile (HTTP/OAuth scenarios). This companion uses only stdio, local fictional data and no OAuth. No upgrade or HTTP extension is included; reassess these advisories before changing transport or scope.
+
+## Local comparison of two states
+
+The [FR/EN comparator](pack-comparison.md) lets a person choose compatible states, verify each input and inspect every difference with the originals. The [October 29 record](../../records/comparison-2026-10-29.md) distinguishes fictional tests from the real offline diagnosis. This extension sends no pack to the model and changes neither T3 nor the complete-read lock.

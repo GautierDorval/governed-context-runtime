@@ -1,0 +1,421 @@
+{
+  "schema": "gcr-retained-comparison-summary/1",
+  "date": "2026-10-29",
+  "producer": "Codex",
+  "scope": "Private retained originals, local offline execution; no hosted or model calls",
+  "rootAdmission": "Expected roots transcribed from the separate public qualification record at reference base 6b89fbebcdb88cc6c10ffe894497b7cb48874a1e; producer-controlled evidence, no external authority authentication",
+  "qualification": {
+    "A": {
+      "status": "PASS",
+      "archives": 59,
+      "checks": 1768,
+      "selections": [
+        {
+          "lang": "fr",
+          "version": "0.1.0",
+          "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+        },
+        {
+          "lang": "en",
+          "version": "0.1.0",
+          "packId": "gd-pack-interpretive-governance-overview-en-v0"
+        }
+      ],
+      "reportSha256": "90dd521f90e199d47caa05613eb1b7c7f446bce519d9a32587f5f5bc4e1ca020"
+    },
+    "B": {
+      "status": "PASS",
+      "archives": 59,
+      "checks": 1780,
+      "selections": [
+        {
+          "lang": "fr",
+          "version": "0.1.1",
+          "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+        },
+        {
+          "lang": "en",
+          "version": "0.1.1",
+          "packId": "gd-pack-interpretive-governance-overview-en-v0"
+        }
+      ],
+      "reportSha256": "5d6a51b75d2703a9ca6ca12bb962461f1037698bffff7c25afede2df1300d4e0"
+    }
+  },
+  "pairs": [
+    {
+      "lang": "fr",
+      "A": {
+        "fictional": false,
+        "selection": {
+          "intentToken": "interpretive-governance-overview",
+          "lang": "fr",
+          "version": "0.1.0",
+          "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+        },
+        "root": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+        "rootProvenance": "Public qualification-2026-10-20.json at 6b89fbebcdb88cc6c10ffe894497b7cb48874a1e; producer observation, not independent signature trust",
+        "snapshotDigest": "sha-256:31983a764082a641c91d72d15cc28c2d1faf0e72f532ff6f7c31fa3946e71d88",
+        "packBytesDigest": "sha-256:cafe88853f5bfdc7f3f3dcff3cab3874315d270c2dc902068db94cdb23d50e94",
+        "packBytesLength": 7518,
+        "payloadDigest": "sha-256:81008c2f045aea72caa000392c78f72c6f5baa8749c05b126c712ae58c346ff8",
+        "payloadDigestScope": "canonical-json",
+        "packBytesScope": "repository-bytes",
+        "canonicalizationPolicyId": "gd-deterministic-json-v1",
+        "payloadFileDigest": "sha-256:cafe88853f5bfdc7f3f3dcff3cab3874315d270c2dc902068db94cdb23d50e94",
+        "payloadFileDigestScope": "repository-bytes",
+        "packPath": "public/context-packs/fr/interpretive-governance-overview.v0.1.0.json",
+        "manifestPath": "public/context-packs/fr/interpretive-governance-overview.v0.1.0.manifest.json",
+        "manifestBytesDigest": "sha-256:8fcd999ee9cb77bf30cdc4b512a1410ef2b80de8ac4a09cbdb7002db1c2749ef",
+        "schema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack.schema.json",
+          "digest": "sha-256:8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "manifestSchema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack-manifest.schema.json",
+          "digest": "sha-256:e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "integrity": {
+          "corpusRootDigest": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+          "snapshotId": "governed-context-runtime:sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+          "snapshotChecks": 1768,
+          "selection": {
+            "intentToken": "interpretive-governance-overview",
+            "lang": "fr",
+            "version": "0.1.0",
+            "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+          },
+          "snapshotMembership": "verified-complete-records",
+          "independentlySuppliedCatalog": false,
+          "integrityOnly": true,
+          "signatureTrust": "not-established",
+          "usePermission": "not-evaluated",
+          "modelUseObserved": false
+        },
+        "schemaConformance": "validated",
+        "canonicalPackBytes": 6471,
+        "canonicalPackDigest": "sha-256:81008c2f045aea72caa000392c78f72c6f5baa8749c05b126c712ae58c346ff8"
+      },
+      "B": {
+        "fictional": false,
+        "selection": {
+          "intentToken": "interpretive-governance-overview",
+          "lang": "fr",
+          "version": "0.1.1",
+          "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+        },
+        "root": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "rootProvenance": "Public qualification-2026-10-20.json at 6b89fbebcdb88cc6c10ffe894497b7cb48874a1e; producer observation, not independent signature trust",
+        "snapshotDigest": "sha-256:59059efeacf9fca4bee43874a711bd972d6e850bd143bb6257f535469620ffe3",
+        "packBytesDigest": "sha-256:2e153ce498dccf037899e6654296f3b263f38b1f60063a3566f9bcf693be4db6",
+        "packBytesLength": 7518,
+        "payloadDigest": "sha-256:979da3ad164fa14eed40993e75af83a385dea407e794f7089941f739301c8cef",
+        "payloadDigestScope": "canonical-json",
+        "packBytesScope": "repository-bytes",
+        "canonicalizationPolicyId": "gd-deterministic-json-v1",
+        "payloadFileDigest": "sha-256:2e153ce498dccf037899e6654296f3b263f38b1f60063a3566f9bcf693be4db6",
+        "payloadFileDigestScope": "repository-bytes",
+        "packPath": "public/context-packs/fr/interpretive-governance-overview.v0.1.1.json",
+        "manifestPath": "public/context-packs/fr/interpretive-governance-overview.v0.1.1.manifest.json",
+        "manifestBytesDigest": "sha-256:961607220db3510daf031520d481234517fa6031145b074617c4e640c6310ea3",
+        "schema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack.schema.json",
+          "digest": "sha-256:8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "manifestSchema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack-manifest.schema.json",
+          "digest": "sha-256:e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "integrity": {
+          "corpusRootDigest": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+          "snapshotId": "governed-context-runtime:sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+          "snapshotChecks": 1780,
+          "selection": {
+            "intentToken": "interpretive-governance-overview",
+            "lang": "fr",
+            "version": "0.1.1",
+            "packId": "gd-pack-interpretive-governance-overview-fr-v0"
+          },
+          "snapshotMembership": "verified-complete-records",
+          "independentlySuppliedCatalog": false,
+          "integrityOnly": true,
+          "signatureTrust": "not-established",
+          "usePermission": "not-evaluated",
+          "modelUseObserved": false
+        },
+        "schemaConformance": "validated",
+        "canonicalPackBytes": 6471,
+        "canonicalPackDigest": "sha-256:979da3ad164fa14eed40993e75af83a385dea407e794f7089941f739301c8cef"
+      },
+      "status": "complete",
+      "operations": [
+        {
+          "id": "op-00001",
+          "kind": "replace",
+          "pathA": "/pack/version",
+          "pathB": "/pack/version",
+          "category": "metadata"
+        },
+        {
+          "id": "op-00002",
+          "kind": "replace",
+          "pathA": "/pack/includedArtifacts/4/digest",
+          "pathB": "/pack/includedArtifacts/4/digest",
+          "category": "references"
+        },
+        {
+          "id": "op-00003",
+          "kind": "replace",
+          "pathA": "/pack/manifestUrl",
+          "pathB": "/pack/manifestUrl",
+          "category": "references"
+        },
+        {
+          "id": "op-00004",
+          "kind": "replace",
+          "pathA": "/manifest/version",
+          "pathB": "/manifest/version",
+          "category": "metadata"
+        },
+        {
+          "id": "op-00005",
+          "kind": "replace",
+          "pathA": "/manifest/payloadUrl",
+          "pathB": "/manifest/payloadUrl",
+          "category": "references"
+        },
+        {
+          "id": "op-00006",
+          "kind": "replace",
+          "pathA": "/manifest/payloadDigest",
+          "pathB": "/manifest/payloadDigest",
+          "category": "references"
+        },
+        {
+          "id": "op-00007",
+          "kind": "replace",
+          "pathA": "/manifest/payloadFileDigest",
+          "pathB": "/manifest/payloadFileDigest",
+          "category": "references"
+        },
+        {
+          "id": "op-00008",
+          "kind": "replace",
+          "pathA": "/sources/6/repositoryDigest",
+          "pathB": "/sources/6/repositoryDigest",
+          "category": "sources"
+        },
+        {
+          "id": "op-00009",
+          "kind": "replace",
+          "pathA": "/sources/6/contentBase64",
+          "pathB": "/sources/6/contentBase64",
+          "category": "sources"
+        }
+      ],
+      "reportSha256": "b9af605745e89faf9086b3a37d9e75f5766c6ea6a83b0211e87b50375d3e2b6b",
+      "rawCoverageComplete": true,
+      "presentationCoverageComplete": true
+    },
+    {
+      "lang": "en",
+      "A": {
+        "fictional": false,
+        "selection": {
+          "intentToken": "interpretive-governance-overview",
+          "lang": "en",
+          "version": "0.1.0",
+          "packId": "gd-pack-interpretive-governance-overview-en-v0"
+        },
+        "root": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+        "rootProvenance": "Public qualification-2026-10-20.json at 6b89fbebcdb88cc6c10ffe894497b7cb48874a1e; producer observation, not independent signature trust",
+        "snapshotDigest": "sha-256:31983a764082a641c91d72d15cc28c2d1faf0e72f532ff6f7c31fa3946e71d88",
+        "packBytesDigest": "sha-256:3718b1a6b1e50f01857d115855e9d5d5b73cb875cc8e9d1bcec237d165f617dd",
+        "packBytesLength": 7200,
+        "payloadDigest": "sha-256:0d645632fe79a715e86f3b333f7f9b9a30bca1ed9bdbb90896983332130fa331",
+        "payloadDigestScope": "canonical-json",
+        "packBytesScope": "repository-bytes",
+        "canonicalizationPolicyId": "gd-deterministic-json-v1",
+        "payloadFileDigest": "sha-256:3718b1a6b1e50f01857d115855e9d5d5b73cb875cc8e9d1bcec237d165f617dd",
+        "payloadFileDigestScope": "repository-bytes",
+        "packPath": "public/context-packs/en/interpretive-governance-overview.v0.1.0.json",
+        "manifestPath": "public/context-packs/en/interpretive-governance-overview.v0.1.0.manifest.json",
+        "manifestBytesDigest": "sha-256:82c0a22d536639fa8873a4b56564bcdea0d271299597794c4dbcbc1b390d86f5",
+        "schema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack.schema.json",
+          "digest": "sha-256:8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "manifestSchema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack-manifest.schema.json",
+          "digest": "sha-256:e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "integrity": {
+          "corpusRootDigest": "sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+          "snapshotId": "governed-context-runtime:sha-256:01aef227a841aa21094cbaf8f0eaa103309d6e65eb2330771da999489869976d",
+          "snapshotChecks": 1768,
+          "selection": {
+            "intentToken": "interpretive-governance-overview",
+            "lang": "en",
+            "version": "0.1.0",
+            "packId": "gd-pack-interpretive-governance-overview-en-v0"
+          },
+          "snapshotMembership": "verified-complete-records",
+          "independentlySuppliedCatalog": false,
+          "integrityOnly": true,
+          "signatureTrust": "not-established",
+          "usePermission": "not-evaluated",
+          "modelUseObserved": false
+        },
+        "schemaConformance": "validated",
+        "canonicalPackBytes": 6153,
+        "canonicalPackDigest": "sha-256:0d645632fe79a715e86f3b333f7f9b9a30bca1ed9bdbb90896983332130fa331"
+      },
+      "B": {
+        "fictional": false,
+        "selection": {
+          "intentToken": "interpretive-governance-overview",
+          "lang": "en",
+          "version": "0.1.1",
+          "packId": "gd-pack-interpretive-governance-overview-en-v0"
+        },
+        "root": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+        "rootProvenance": "Public qualification-2026-10-20.json at 6b89fbebcdb88cc6c10ffe894497b7cb48874a1e; producer observation, not independent signature trust",
+        "snapshotDigest": "sha-256:59059efeacf9fca4bee43874a711bd972d6e850bd143bb6257f535469620ffe3",
+        "packBytesDigest": "sha-256:91e3aa2903ce773afad95fe1ff0e21129eb6546e3c4decd8e7ea2b3a8592e400",
+        "packBytesLength": 7200,
+        "payloadDigest": "sha-256:7033f35cc870b8676cc8eb19adb4249179aa85452d97c88169a134c184adb8fe",
+        "payloadDigestScope": "canonical-json",
+        "packBytesScope": "repository-bytes",
+        "canonicalizationPolicyId": "gd-deterministic-json-v1",
+        "payloadFileDigest": "sha-256:91e3aa2903ce773afad95fe1ff0e21129eb6546e3c4decd8e7ea2b3a8592e400",
+        "payloadFileDigestScope": "repository-bytes",
+        "packPath": "public/context-packs/en/interpretive-governance-overview.v0.1.1.json",
+        "manifestPath": "public/context-packs/en/interpretive-governance-overview.v0.1.1.manifest.json",
+        "manifestBytesDigest": "sha-256:ceb872f6834fd56e4e4555278b37dd362fe02cfad7da364c11a7ff251f941d4f",
+        "schema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack.schema.json",
+          "digest": "sha-256:8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "manifestSchema": {
+          "id": "https://gautierdorval.com/spec/governed-context-runtime/context-pack-manifest.schema.json",
+          "digest": "sha-256:e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289",
+          "profile": "draft-2020-12-ajv-8.20.0-formats-not-asserted"
+        },
+        "integrity": {
+          "corpusRootDigest": "sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+          "snapshotId": "governed-context-runtime:sha-256:beaeed142e9b3898734414eeebf7ab6283ef57dbd7c2af53479405395e5a4fe4",
+          "snapshotChecks": 1780,
+          "selection": {
+            "intentToken": "interpretive-governance-overview",
+            "lang": "en",
+            "version": "0.1.1",
+            "packId": "gd-pack-interpretive-governance-overview-en-v0"
+          },
+          "snapshotMembership": "verified-complete-records",
+          "independentlySuppliedCatalog": false,
+          "integrityOnly": true,
+          "signatureTrust": "not-established",
+          "usePermission": "not-evaluated",
+          "modelUseObserved": false
+        },
+        "schemaConformance": "validated",
+        "canonicalPackBytes": 6153,
+        "canonicalPackDigest": "sha-256:7033f35cc870b8676cc8eb19adb4249179aa85452d97c88169a134c184adb8fe"
+      },
+      "status": "complete",
+      "operations": [
+        {
+          "id": "op-00001",
+          "kind": "replace",
+          "pathA": "/pack/version",
+          "pathB": "/pack/version",
+          "category": "metadata"
+        },
+        {
+          "id": "op-00002",
+          "kind": "replace",
+          "pathA": "/pack/includedArtifacts/4/digest",
+          "pathB": "/pack/includedArtifacts/4/digest",
+          "category": "references"
+        },
+        {
+          "id": "op-00003",
+          "kind": "replace",
+          "pathA": "/pack/manifestUrl",
+          "pathB": "/pack/manifestUrl",
+          "category": "references"
+        },
+        {
+          "id": "op-00004",
+          "kind": "replace",
+          "pathA": "/manifest/version",
+          "pathB": "/manifest/version",
+          "category": "metadata"
+        },
+        {
+          "id": "op-00005",
+          "kind": "replace",
+          "pathA": "/manifest/payloadUrl",
+          "pathB": "/manifest/payloadUrl",
+          "category": "references"
+        },
+        {
+          "id": "op-00006",
+          "kind": "replace",
+          "pathA": "/manifest/payloadDigest",
+          "pathB": "/manifest/payloadDigest",
+          "category": "references"
+        },
+        {
+          "id": "op-00007",
+          "kind": "replace",
+          "pathA": "/manifest/payloadFileDigest",
+          "pathB": "/manifest/payloadFileDigest",
+          "category": "references"
+        },
+        {
+          "id": "op-00008",
+          "kind": "replace",
+          "pathA": "/sources/6/repositoryDigest",
+          "pathB": "/sources/6/repositoryDigest",
+          "category": "sources"
+        },
+        {
+          "id": "op-00009",
+          "kind": "replace",
+          "pathA": "/sources/6/contentBase64",
+          "pathB": "/sources/6/contentBase64",
+          "category": "sources"
+        }
+      ],
+      "reportSha256": "92d51c2922817832898151d65a0a1e1d8ac2db2196026f8815ca344b4d6dc65e",
+      "rawCoverageComplete": true,
+      "presentationCoverageComplete": true
+    }
+  ],
+  "classification": {
+    "businessConditionsChanged": false,
+    "selectedUnitRecordsChanged": false,
+    "changedSource": "public/governed-context-runtime.json",
+    "sourceChanges": [
+      "Declared schemaVersion 0.2.0 to 0.3.0",
+      "Additional declared service routes",
+      "Added serviceContracts and observabilityContext declarations"
+    ],
+    "meaning": "Pack version, manifest references/digests and an archived Runtime declaration differ. This establishes no deployment succession, business benefit or semantic fidelity."
+  },
+  "privateEvidence": "Full reports and absolute archive locations retained outside this public package",
+  "limits": [
+    "No separately supplied intent catalog for this replay",
+    "No new remote observation",
+    "No signature trust established",
+    "No permission or model fidelity evaluated"
+  ]
+}

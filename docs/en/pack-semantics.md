@@ -106,3 +106,7 @@ node --test test/semantic-boundaries-schemas.test.mjs
 ```
 
 Schema tests require the locked development dependencies. The demo and other tests use Node only. Output includes the pack, manifest, units, source references and limits: `signatureTrust: not-established`, `usePermission: not-evaluated`, `modelExperiment: NOT_RUN`. The root in [expected-root.json](../../spec/examples/semantic-boundaries/expected-root.json) is a teaching anchor kept separate from the bundle and delivered by the same producer; it is not independent trust.
+
+## Occurrences and comparison
+
+The [comparison contract](pack-comparison.md) keeps root lists, chains and causal contexts separate. A digest-bound JSON Pointer identifies an occurrence in an exact state, not a persistent rule. Coherence relations are checked only for a declared supported composition policy. Any future logical identity belongs to the producer and requires a new schema edition; no historical field is silently enriched.

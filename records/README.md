@@ -14,3 +14,5 @@ Ces journaux conservent les résultats et attributions d’origine. Une fusion o
 | 2026-10-20 | [Consumer delivery report](consumer-report-2026-10-20.md) |
 | 2026-10-20 | [Consumer mandate](consumer-mandate-2026-10-20.md) |
 | 2026-10-19 | [Historical handoff](handoff-2026-10-19.md) |
+
+- [Pack comparison and identity, 2026-10-29](comparison-2026-10-29.md): local qualification and retained real diagnosis; [identity decision](comparison-identity-decision-2026-10-29.md).

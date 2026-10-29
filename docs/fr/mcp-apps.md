@@ -18,7 +18,7 @@ Le 27 octobre, A/B ont répondu `NON_DISPONIBLE` sous une consigne interdisant l
 
 ## Architecture et confiance
 
-Les sources se trouvent dans [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Le préparateur matérialise six fichiers de référence inchangés depuis le commit Git `57a09f1830ed20864ec66a6d153fc230b0331865`, vérifie leurs empreintes SHA-256 et place l’application installée **hors du dossier de référence**. Le compagnon ne maintient aucune copie divergente du vérificateur. Le paquet racine, sa politique de dépendances, le kit historique et les contrats restent inchangés.
+Les sources se trouvent dans [spec/examples/mcp-apps](../../spec/examples/mcp-apps/README.md). Le préparateur matérialise les fichiers de référence inchangés depuis le commit Git `57a09f1830ed20864ec66a6d153fc230b0331865`, vérifie leurs empreintes SHA-256 et place l’application installée **hors du dossier de référence**. Le compagnon ne maintient aucune copie divergente du vérificateur. Le paquet racine, sa politique de dépendances, le kit historique et les contrats restent inchangés.
 
 Chaque inspection réutilise `inspectVerifiedPack` sur le snapshot complet et ses archives. La racine attendue vient de l’ancre pédagogique épinglée séparément, jamais d’une autodéclaration du pack sélectionné. Les deux langues appartiennent au même corpus, mais chaque sélection conserve son identité de pack et sa langue. Cette racine sert à vérifier l’intégrité d’un exemple fictif ; elle n’authentifie aucune autorité métier. La confiance dans les signatures n’est pas établie et la permission d’usage n’est pas évaluée.
 
@@ -118,3 +118,7 @@ Consignez séparément la valeur exacte, le respect du format, tout appel d’ou
 La [source de l’API épinglée](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/src/app.ts) décrit la mise à disposition aux tours suivants et le remplacement de la contribution précédente. La promesse résolue constitue l’accusé, pas une télémétrie de l’entrée utilisée. Les limites de résultats d’outils citées dans le diagnostic Claude ne sont pas des limites démontrées de cette méthode.
 
 Avis de dépendances du 26 octobre 2026 : le verrouillage existant présente deux paquets avec des avis élevés dans `npm audit` (client/serveur MCP 2.0.0, scénarios HTTP/OAuth). Ce compagnon utilise uniquement stdio, des données fictives locales et aucun OAuth. Aucune mise à niveau ni extension HTTP n’est incluse ; réévaluer ces avis avant un changement de transport ou de périmètre.
+
+## Comparaison locale de deux états
+
+Le [comparateur FR/EN](pack-comparison.md) permet de choisir deux états compatibles, vérifier chaque entrée et inspecter toutes les différences avec les originaux. Le [relevé du 29 octobre](../../records/comparison-2026-10-29.md) distingue les tests fictifs du diagnostic réel hors ligne. Cette extension ne transmet aucun pack au modèle et ne modifie ni T3 ni le verrou de lecture complète.

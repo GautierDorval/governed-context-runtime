@@ -2,7 +2,8 @@
 import {App} from '@modelcontextprotocol/ext-apps';
 import {PackSession} from './session.mjs';
 import {bindDiagnostic} from './diagnostic-ui.mjs';
-let diagnosticUI;
+import {bindComparison} from './comparison-ui.mjs';
+let diagnosticUI,comparisonUI;
 const app=new App({name:'GCR whole-pack selector',version:'0.1.0-dev'},{});
 const el=id=>document.getElementById(id);
 let catalog=[],caps={},connected=false,hostVersion=null;
@@ -43,7 +44,7 @@ const messages={
 const lang=()=>el('language').value;
 const t=()=>messages[lang()];
 function localize(){
- document.documentElement.lang=lang();diagnosticUI?.localize();
+ document.documentElement.lang=lang();diagnosticUI?.localize();comparisonUI?.localize();
  for(const [id,value] of Object.entries(t())){const node=el(id);if(node)node.textContent=value;}
  el('intent').options[0].textContent=lang()==='fr'?'Limites du service Atelier Boréal':'Boreal Workshop service limits';
 }
@@ -83,9 +84,10 @@ const session=new PackSession({
 });
 diagnosticUI=bindDiagnostic({app,session,lang,environment:()=>({connected,caps,hostVersion}),render,select});
 function select(){diagnosticUI?.invalidate();localize();const entry=catalog.find(c=>c.lang===lang());if(!entry)return;const {label,...selection}=entry;session.select(selection);}
-app.ontoolresult=result=>{if(result?._meta?.gcr?.catalog){catalog=result._meta.gcr.catalog;select();}};
-app.onclose=()=>{connected=false;diagnosticUI?.invalidate();session.disconnect();};
-app.onerror=()=>{connected=false;diagnosticUI?.invalidate();session.disconnect();};
+comparisonUI=bindComparison({app,lang,connected:()=>connected});
+app.ontoolresult=result=>{if(result?._meta?.gcr?.catalog){catalog=result._meta.gcr.catalog;comparisonUI.setCatalog(result._meta.gcr.comparisonCatalog??[]);select();}};
+app.onclose=()=>{connected=false;diagnosticUI?.invalidate();comparisonUI?.disconnect();session.disconnect();};
+app.onerror=()=>{connected=false;diagnosticUI?.invalidate();comparisonUI?.disconnect();session.disconnect();};
 el('language').addEventListener('change',select);
 el('inspect').addEventListener('click',()=>{diagnosticUI.invalidate();return session.inspect();});
 el('submit').addEventListener('click',()=>session.submit());
@@ -97,6 +99,6 @@ el('ask').addEventListener('click',async()=>{
  }catch{if(epoch===session.epoch)el('response').textContent=t().requestFailed;}
 });
 localize();render(session.state);
-try{await app.connect();caps=app.getHostCapabilities()??{};hostVersion=app.getHostVersion();connected=true;
+try{await app.connect();caps=app.getHostCapabilities()??{};hostVersion=app.getHostVersion();connected=true;comparisonUI?.refresh();
  el('host').textContent=JSON.stringify({host:hostVersion,capabilities:caps,preview:'UI metadata: readable by host; not secret',submission:'ui/update-model-context',followUp:'ui/message',textReadRequest:'ui/message -> model-visible read_gcr_pack',toolReadObserved:false,responseObserved:false},null,2);render(session.state);
-}catch(error){connected=false;diagnosticUI?.invalidate();session.disconnect();}
+}catch(error){connected=false;diagnosticUI?.invalidate();comparisonUI?.disconnect();session.disconnect();}

@@ -13,11 +13,16 @@ test('real stdio MCP entrypoint, UI resource and usable text fallback',{timeout:
  t.after(async()=>{await client.close();assert.equal(errors,'');});
  await client.connect(transport);
  const list=await client.listTools();
- assert.deepEqual(list.tools.map(t=>t.name).sort(),['inspect_gcr_pack','open_gcr_selector','read_gcr_pack']);
+ assert.deepEqual(list.tools.map(t=>t.name).sort(),['compare_gcr_packs','inspect_gcr_pack','open_gcr_selector','read_gcr_pack']);
  assert.deepEqual(list.tools.find(t=>t.name==='inspect_gcr_pack')._meta.ui.visibility,['app']);
  const opening=await client.callTool({name:'open_gcr_selector',arguments:{}});
  assert.equal(opening.isError,undefined);assert.ok(!JSON.stringify(opening.content).includes('activationConditions'));
  assert.equal(opening._meta.gcr.catalog.length,2);
+ assert.equal(opening._meta.gcr.comparisonCatalog.length,4);
+ assert.deepEqual(list.tools.find(t=>t.name==='compare_gcr_packs')._meta.ui.visibility,['app']);
+ const comparison=await client.callTool({name:'compare_gcr_packs',arguments:{A:'reference-fr',B:'variant-fr'}});
+ assert.equal(comparison._meta.gcr.comparison.status,'complete');assert.equal(comparison.structuredContent,undefined);
+ assert.ok(!JSON.stringify(comparison.content).includes('activationConditions'));
  const preview=await client.callTool({name:'inspect_gcr_pack',arguments:{...selection,lang:'fr'}});
  assert.ok(preview._meta.gcr.view.verification.snapshotChecks>0);assert.equal(preview.structuredContent,undefined);
  assert.ok(!JSON.stringify(preview.content).includes('activationConditions'));

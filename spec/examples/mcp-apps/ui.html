@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contexte GCR</title><style>
-:root{font:16px/1.5 system-ui,sans-serif;color:#152b32;background:#f7f9fa;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:20px}main{max-width:780px;margin:auto}h1{font-size:1.55rem;line-height:1.2;margin:.4em 0}h2{font-size:1.08rem}p{margin:.6em 0}.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:#356775}.note{background:#e9f1f4;border-left:3px solid #367085;padding:12px}.controls{display:grid;gap:10px;margin:16px 0}label{font-weight:600}input[type=checkbox]{width:20px;height:20px;vertical-align:middle}label:has(input){display:block;padding:8px 0}select,button{font:inherit;max-width:100%;min-height:44px;padding:9px 12px;border-radius:6px;border:1px solid #9eaeb5}button{background:#155766;color:white;font-weight:650;text-wrap:wrap;cursor:pointer}button.secondary{background:#fff;color:#155766}button:disabled,select:disabled{background:#dce3e5;color:#43555c;cursor:not-allowed}select{width:100%;background:white;color:inherit}button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d27600;outline-offset:3px}.status{padding:12px;background:white;border:1px solid #b8cbd1;border-radius:7px}details{border-top:1px solid #bacbd0;padding:12px 0}summary{cursor:pointer;font-weight:650;min-height:36px}pre,.data{font: .83rem/1.55 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;background:#fff;padding:12px;border-radius:5px}code{overflow-wrap:anywhere}ul{padding-left:22px}li{margin:.45em 0}.identity{overflow-wrap:anywhere}.small{font-size:.86rem;color:#43555c}[hidden]{display:none!important}#read-request:empty{display:none}@media(max-width:420px){body{padding:14px}h1{font-size:1.35rem}}
+:root{font:16px/1.5 system-ui,sans-serif;color:#152b32;background:#f7f9fa;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:20px}main{max-width:780px;margin:auto}h1{font-size:1.55rem;line-height:1.2;margin:.4em 0}h2{font-size:1.08rem}p{margin:.6em 0}.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:#356775}.note{background:#e9f1f4;border-left:3px solid #367085;padding:12px}.controls{display:grid;gap:10px;margin:16px 0}label{font-weight:600}input[type=checkbox]{width:20px;height:20px;vertical-align:middle}label:has(input){display:block;padding:8px 0}select,button{font:inherit;max-width:100%;min-height:44px;padding:9px 12px;border-radius:6px;border:1px solid #9eaeb5}button{background:#155766;color:white;font-weight:650;text-wrap:wrap;cursor:pointer}button.secondary{background:#fff;color:#155766}button:disabled,select:disabled{background:#dce3e5;color:#43555c;cursor:not-allowed}select{width:100%;background:white;color:inherit}button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d27600;outline-offset:3px}.status{padding:12px;background:white;border:1px solid #b8cbd1;border-radius:7px}details{border-top:1px solid #bacbd0;padding:12px 0}summary{overflow-wrap:anywhere;cursor:pointer;font-weight:650;min-height:36px}pre,.data{font: .83rem/1.55 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;background:#fff;padding:12px;border-radius:5px}code{overflow-wrap:anywhere}ul{padding-left:22px}li{margin:.45em 0}.identity{overflow-wrap:anywhere}.small{font-size:.86rem;color:#43555c}[hidden]{display:none!important}#read-request:empty{display:none}@media(max-width:420px){body{padding:14px}h1{font-size:1.35rem}}
 </style></head><body><main>
 <p class="eyebrow" id="eyebrow">Exemple fictif · prototype local</p>
 <h1 id="heading">Choisir un contexte pour l’assistant</h1>
@@ -41,5 +41,18 @@
 <details><summary id="sources-heading">Sources archivées</summary><p class="small" id="sources-note"></p><div id="sources"></div></details>
 <details><summary id="proof-heading">Identité et détails de vérification</summary><pre id="proof"></pre></details>
 </section>
+<details id="comparison"><summary id="c-heading">Comparer deux états de pack</summary>
+<p class="note" id="c-note"></p><div class="controls">
+<label id="c-a-label" for="c-a"></label><select id="c-a"></select>
+<label id="c-b-label" for="c-b"></label><select id="c-b"></select>
+<button id="c-run" disabled></button><button id="c-cancel" class="secondary" hidden></button></div>
+<p class="status identity" id="c-status" role="status" aria-live="polite"></p>
+<div id="c-result" hidden><p id="c-summary"></p>
+<details><summary id="c-proof-heading"></summary><div id="c-proof"></div></details>
+<label id="c-filter-label" for="c-filter"></label><select id="c-filter"></select><p id="c-shown"></p>
+<div id="c-groups"></div>
+<details><summary id="c-context-heading"></summary><div id="c-context"></div></details>
+<details><summary id="c-export-heading"></summary><p><a id="c-download" download="gcr-comparison.json"></a></p><p id="c-fallback"></p><pre id="c-export-text" tabindex="0"></pre></details>
+</div></details>
 <details><summary id="host-heading">Client et transmission</summary><pre id="host"></pre></details>
 </main><!-- APP_SCRIPT --></body></html>

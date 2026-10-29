@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "a6a9a16ece45090c7121ffd730f9ffd8b7c83c29f6a1095f4520972791c484c0",
-      "bytes": 10487
+      "sha256": "bdf063e0a51b2fa8acebf75af25bae0453cf9c559049cdde0bf8b5c421e47fc3",
+      "bytes": 10883
     },
     {
       "path": "CITATION.cff",
@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "57d87e01090f052dac643cf2937be8f4fc7f1cdbd27dec3fbed3043ffbe688c5",
-      "bytes": 17129
+      "sha256": "571bf83970b739aa3ba00d91aec434bd4b4e5791cbe40b37f8cf1bcb37c3f99a",
+      "bytes": 17537
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -155,9 +155,14 @@
       "bytes": 12573
     },
     {
+      "path": "docs/en/pack-comparison.md",
+      "sha256": "c07887e03473b414e06ebe1e5c412e56a48c3ffaa981282e98a630418932c2f2",
+      "bytes": 6479
+    },
+    {
       "path": "docs/en/pack-semantics.md",
-      "sha256": "51e9170e9373b9be8ee4f6c06fef8429ca485937368e43641b250154879762f4",
-      "bytes": 9998
+      "sha256": "724e8e901478cc2d263e46e636d54e7c43bb056a5226f7aaca77d559f0476d17",
+      "bytes": 10437
     },
     {
       "path": "docs/en/qualification.md",
@@ -186,8 +191,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "9bd6ab3734cf16a0924b0bb0d7fbc73a6fbeb53e3a54d8d5528c3027d29e4119",
-      "bytes": 18958
+      "sha256": "c18de1e40086ad93b68df947f12f2c6e0e14410bb25d7d648595afed11ec65e7",
+      "bytes": 19397
     },
     {
       "path": "docs/fr/observations.md",
@@ -195,9 +200,14 @@
       "bytes": 7460
     },
     {
+      "path": "docs/fr/pack-comparison.md",
+      "sha256": "93170dc0539e60e061adc3cc54741a6eef727dd4aea460cefc87769e3af92cab",
+      "bytes": 7371
+    },
+    {
       "path": "docs/fr/pack-semantics.md",
-      "sha256": "008856294b895942d9cb43fbfdaec9614effe8cc17415374d0ca4b30f66474d3",
-      "bytes": 11254
+      "sha256": "d6491913e7cf559502fb6f407f08b0afa6cc4e8690192ed09a0649f49fd21e42",
+      "bytes": 11811
     },
     {
       "path": "docs/fr/qualification.md",
@@ -248,6 +258,11 @@
       "path": "evidence/README.md",
       "sha256": "8ac55a133c502a1040f4e3932da07c9bb471b9102c3de611f078faaaf058e550",
       "bytes": 8633
+    },
+    {
+      "path": "evidence/comparison-2026-10-29.json",
+      "sha256": "41a36f7ec0d86d64b0df7d95b09eba7badceb8a24731e3f57af5407ef6a23d41",
+      "bytes": 18757
     },
     {
       "path": "evidence/consumer-cost-2026-10-20.json",
@@ -321,8 +336,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "7bc6d6e8494ed90c4c0523809314d9a3fa1b474e17743727b371ecdf82676308",
-      "bytes": 8263
+      "sha256": "3b169553c4ccfa237d04e8f24376fb1ffb07e71f36b798b2b120a331c206057f",
+      "bytes": 9091
     },
     {
       "path": "package.json",
@@ -331,13 +346,23 @@
     },
     {
       "path": "records/README.md",
-      "sha256": "aeacb9d51a72d4e28f126dab2554ce5231a3b6da88c0dfa4a0fa56df50159502",
-      "bytes": 1534
+      "sha256": "15306077bff3a074a8ed3d56e0ec27bbeb8b3a17bb9baaa178de927cea3cf80e",
+      "bytes": 1721
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
       "sha256": "58da56c814316b4b212583a2cac4b9959df9567fe300e28b12b37351d584e534",
       "bytes": 8806
+    },
+    {
+      "path": "records/comparison-2026-10-29.md",
+      "sha256": "5a64abde37409c1b2ae175e13b72e0131ad0900d7d2cd73871b36cfb7b6e0d4d",
+      "bytes": 11311
+    },
+    {
+      "path": "records/comparison-identity-decision-2026-10-29.md",
+      "sha256": "bdf9e8349f1c4ec02752e1242743f5c4bb0643f11788823c6c1609124274835b",
+      "bytes": 4837
     },
     {
       "path": "records/consumer-mandate-2026-10-20.md",
@@ -366,8 +391,8 @@
     },
     {
       "path": "rights.json",
-      "sha256": "21eb072642b64fce0bcfa46304bf1db4c2f165f5318ac7c70b482284105840c1",
-      "bytes": 40135
+      "sha256": "a5d93d34acc9c875d4b8f1cebfb755cb1ebad65e5dd27caa7cec6968d2e3328b",
+      "bytes": 44171
     },
     {
       "path": "scripts/check-package.mjs",
@@ -456,18 +481,73 @@
     },
     {
       "path": "spec/examples/mcp-apps/README.fr.md",
-      "sha256": "a6223748b260cb1de9d9071a958382ef86aaf1814f2b3df228721e2ef5b62056",
-      "bytes": 522
+      "sha256": "e56491be3f85667bf09f29e9bcf2fcb07861f4dae9ef0df46b155309910a5264",
+      "bytes": 859
     },
     {
       "path": "spec/examples/mcp-apps/README.md",
-      "sha256": "3170677071343e0183582d3aaf428a4a249de0752ab670f9a09b775ea4385d92",
-      "bytes": 1526
+      "sha256": "dd3b3dca69180d1019829f61b2c917fb28d45a092b78d30a536a3771fa766002",
+      "bytes": 1821
     },
     {
       "path": "spec/examples/mcp-apps/build.mjs",
       "sha256": "ba8deb2c025fea799b6d3a7fe637870010b0f8c557f28e6f5f98482bf72b3136",
       "bytes": 1839
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-admission.mjs",
+      "sha256": "bc8011d8975972883a4d6ada28f6d798d30b3c8a4d53186bca25dc60b8ed8c83",
+      "bytes": 4818
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-anchor.json",
+      "sha256": "af2cb140b67bf8868f7e39f92d7d7c831c20922ce4c7ef050182e007860b3a8b",
+      "bytes": 203
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-cli.mjs",
+      "sha256": "3a21777c594fa5b3cf151a2c2d465a54f82770c5bef35feaf836fa842dbf2d0e",
+      "bytes": 1716
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-data.mjs",
+      "sha256": "4e92c759cd9c500d4205fe2f22286c675381892910e2a3ca4d5024e96a16b042",
+      "bytes": 2004
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-example.json",
+      "sha256": "0d4dde7e798173776bfe2f9fc04931c2457fee07384d52a535a0b72f0f8e575b",
+      "bytes": 141814
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-fixture.mjs",
+      "sha256": "2890e60ed032f002b9e4f4eb8abeddf0092da34f54e369b85b8d62eafa594fa3",
+      "bytes": 5559
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-runner.mjs",
+      "sha256": "4ec1294f5f6f0d7d7db8e6b2c8a86740a5fd07dcaa714bfd525b4fbc90d95726",
+      "bytes": 1271
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-session.mjs",
+      "sha256": "e734cdb161f2e5cb935500670d9b5275e4e146cbda6dfc993c3cbf72f4935eca",
+      "bytes": 1924
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-ui.mjs",
+      "sha256": "cac83375556959a29a4cd46b0f9efe6fcae98b613e2d383f755089f25b92a897",
+      "bytes": 10164
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison-worker.mjs",
+      "sha256": "f70dc78bd9b10c78b43495628b39577ba05a94bd423144950d26dd3bcc06d834",
+      "bytes": 300
+    },
+    {
+      "path": "spec/examples/mcp-apps/comparison.mjs",
+      "sha256": "7f61d5ee6236377351fdef30ad0f2ff96435514d9eb1101a767e4b7b3fb23542",
+      "bytes": 10086
     },
     {
       "path": "spec/examples/mcp-apps/data.mjs",
@@ -486,28 +566,28 @@
     },
     {
       "path": "spec/examples/mcp-apps/package-lock.json",
-      "sha256": "cbb3732884ebdd2b141208a845cf6bdb5fe2a1d14f58f93d3e37c1f12d61b962",
-      "bytes": 21880
+      "sha256": "e28b6e87ad82409806fd70fa54f41bb41f4ef0803de1c171e0d4649cdbf8c8f6",
+      "bytes": 24877
     },
     {
       "path": "spec/examples/mcp-apps/package.json",
-      "sha256": "8e2098dda0c9801aecb764d368ce8fe9d935575381cb4677cafef28f4b0a3c71",
-      "bytes": 576
+      "sha256": "19a050b320989ebb0271073992954d0e5c7a0c074fb050e63e661d9c7a398cff",
+      "bytes": 627
     },
     {
       "path": "spec/examples/mcp-apps/prepare.mjs",
-      "sha256": "f9543cbab5bebaae318e5fb085247988cc8059162afb9a5c51c8b67fb8adc17e",
-      "bytes": 2466
+      "sha256": "f37392683f52f315a8f65e2165cc39a12f40ced12413db653e25f17c4faeab7b",
+      "bytes": 2749
     },
     {
       "path": "spec/examples/mcp-apps/reference-source.json",
-      "sha256": "78d15e512dafea2f442b9b1d1d4d6e0ef3a2ed0b6b03c758caa79d2e707472b0",
-      "bytes": 824
+      "sha256": "4e4e54e445f89265fe603c5edaa25cccaaf01af6fa79ea2aa192269f672fc88a",
+      "bytes": 1043
     },
     {
       "path": "spec/examples/mcp-apps/server.mjs",
-      "sha256": "d4180fc14f509ecc5e28948eebe36846f053fc936c6c6e249d54f3f2ece7af2a",
-      "bytes": 3853
+      "sha256": "4e7523a79c4ed599c97d71b83758f8071797c8e0b0fd4c8b474bd47fd7b38209",
+      "bytes": 4857
     },
     {
       "path": "spec/examples/mcp-apps/session.mjs",
@@ -516,13 +596,18 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
-      "sha256": "916518cc6ac5b9c90550ced1d95b012b64c8085c28bbf400ebf317676cf69158",
-      "bytes": 18764
+      "sha256": "7f8dae936d199f955acc67a7e4c8b87f7c173b2617016c8c5e908fad2e49f32d",
+      "bytes": 24778
     },
     {
       "path": "spec/examples/mcp-apps/test/companion.test.mjs",
       "sha256": "eacc2fe025aeb43bab1de74cf9f3a71b2535008b4195f655d6a3e7e92165057e",
       "bytes": 11040
+    },
+    {
+      "path": "spec/examples/mcp-apps/test/comparison.test.mjs",
+      "sha256": "605750d7aaa5a49e7858ffbb25e84c0fca1dcb26e5f20b1263117e23f8de9b58",
+      "bytes": 15972
     },
     {
       "path": "spec/examples/mcp-apps/test/diagnostic.test.mjs",
@@ -531,18 +616,18 @@
     },
     {
       "path": "spec/examples/mcp-apps/test/stdio.test.mjs",
-      "sha256": "23fd7e9dd9720e14e641886644f9a2171e000069e3b6dfdffaaf3b315fa52edf",
-      "bytes": 3295
+      "sha256": "933de7f04acdd9d266b31618c6960ff47dad22d15ba3ca5645ab8b6741d3ce88",
+      "bytes": 3787
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
-      "sha256": "10355c9a8ec12d1bd8950c3eb3b27f365fb7e14deee4bd50bdb6e45fc60a8f01",
-      "bytes": 4981
+      "sha256": "1e5c63474425dfdea942b1c602d1e42932ca5db3a20aa94855416ad056cecf90",
+      "bytes": 6014
     },
     {
       "path": "spec/examples/mcp-apps/ui.mjs",
-      "sha256": "ccd3a07f909eba0d5a347462d58b3570c674a9878a43737334570e29e9a1545b",
-      "bytes": 12297
+      "sha256": "837adf1f17b37151c52b8311b29d167b3c58f0443bd6b914763fa3a7272409c8",
+      "bytes": 12621
     },
     {
       "path": "spec/examples/read-mcp-response.mjs",
