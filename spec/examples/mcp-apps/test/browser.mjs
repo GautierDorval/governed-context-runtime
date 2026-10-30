@@ -22,7 +22,7 @@ window.qualification={contexts:[],messages:[],calls:[],toolResults:[]};
 const modes=new URL(location.href).searchParams;
 const caps={serverTools:{},...(modes.has('no-message')?{}:{message:{text:{}}}),...(modes.has('unsupported')?{}:{updateModelContext:{text:{}}})};
 const bridge=new AppBridge(null,{name:'SIMULATED LOCAL HOST - NO MODEL',version:'0.1.0'},caps);
-bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();window.qualification.toolResults.push(result);return result;};
+bridge.oncalltool=async params=>{window.qualification.calls.push(params);const result=await (await fetch('/tool',{method:'POST',body:JSON.stringify(params)})).json();if(params.name==='compare_gcr_packs'&&modes.has('comparison-hostile'))result._meta.gcr.comparison.operations[0].after='<img src="https://example.invalid/x" onerror="window.injected=true">';if(params.name==='compare_gcr_packs'&&modes.has('comparison-coverage')){const report=result._meta.gcr.comparison;report.operations[0].category='applicabilityChains';report.groups=[...new Set(report.operations.map(o=>o.category))].map(category=>({category,operationIds:report.operations.filter(o=>o.category===category).map(o=>o.id)}));if(window.qualification.calls.filter(c=>c.name==='compare_gcr_packs').length>1)report.groups[0].operationIds.pop();}window.qualification.toolResults.push(result);if(params.name==='compare_gcr_packs'&&modes.has('comparison-delay'))await new Promise(r=>window.releaseComparison=r);return result;};
 bridge.onupdatemodelcontext=async params=>{
  if(modes.has('refuse'))throw Error('Simulated host refusal');
  window.qualification.contexts.push(params);return {};
@@ -47,7 +47,7 @@ const server=httpServer(async(req,res)=>{
   else if(req.method==='GET'&&req.url==='/app'){res.setHeader('Content-Type','text/html');res.end(await readFile(resolve(root,'app.html')));}
   else if(req.method==='POST'&&req.url==='/tool'){
    let text='';for await(const b of req){text+=b;if(text.length>10000)throw Error('too_large');}
-   const params=JSON.parse(text);if(!['open_gcr_selector','inspect_gcr_pack'].includes(params.name))throw Error('tool_not_admitted');
+   const params=JSON.parse(text);if(!['open_gcr_selector','inspect_gcr_pack','compare_gcr_packs'].includes(params.name))throw Error('tool_not_admitted');
    res.setHeader('Content-Type','application/json');res.end(JSON.stringify(await client.callTool(params)));
   }else{res.statusCode=404;res.end();}
  }catch(e){res.statusCode=500;res.end(JSON.stringify({isError:true,error:e.message}));}
@@ -57,6 +57,89 @@ const port=server.address().port;
 let browser;const cases=[];
 try{
  browser=await puppeteer.launch({executablePath:process.argv.includes('--browser')?arg('--browser'):'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
+
+ for(const width of [390,1365])for(const lang of ['fr','en']){
+  const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewport({width,height:width===390?844:900,deviceScaleFactor:1,isMobile:width===390,hasTouch:width===390});
+  await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));
+  await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
+  await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  const selections=await frame.evaluate(()=>{const c=document.createElement('canvas').getContext('2d');return [...document.querySelectorAll('#c-a,#c-b')].map(e=>{c.font=getComputedStyle(e).font;return {fits:c.measureText(e.selectedOptions[0].text).width<e.clientWidth-50,version:document.getElementById(e.id+'-version').textContent};});});
+  assert.ok(selections.every(s=>s.fits));assert.ok(selections[0].version.includes('semantic-boundaries-1'));assert.ok(selections[1].version.includes('comparison-example-2'));
+  const report=await frame.$eval('#c-export-text',e=>JSON.parse(e.textContent));
+  const ids=await frame.$$eval('[data-operation]',nodes=>nodes.map(n=>n.dataset.operation));
+  assert.deepEqual(ids.sort(),report.operations.map(o=>o.id).sort());
+  await frame.select('#c-filter','requiredEvidence');
+  assert.equal(await frame.$$eval('#c-groups > details:not([hidden])',n=>n.length),1);
+  await frame.$eval('#c-groups > details:not([hidden]) > details',e=>e.open=true);
+  await frame.$eval('#c-filter-label',e=>e.scrollIntoView({block:'start'}));
+  const metrics=await frame.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,clipped:[...document.querySelectorAll('#comparison button,#comparison summary,#comparison label')].filter(e=>e.getBoundingClientRect().width&&e.scrollWidth>e.clientWidth+2).map(e=>e.id||e.tagName)}));
+  assert.equal(metrics.width,width);assert.ok(metrics.scrollWidth<=width);assert.deepEqual(metrics.clipped,[]);
+  await page.screenshot({path:resolve(output,'comparison-'+lang+'-'+width+'-operations.png')});
+  await frame.select('#c-filter','all');await page.evaluate(()=>{const f=document.querySelector('iframe'),e=f.contentDocument.querySelector('#c-a-label');window.scrollTo({top:scrollY+f.getBoundingClientRect().top+e.getBoundingClientRect().top,behavior:'instant'});});
+  await page.screenshot({path:resolve(output,'comparison-'+lang+'-'+width+'-selection.png')});
+  const q=await page.evaluate(()=>window.qualification);
+  assert.equal(q.contexts.length,0);assert.equal(q.messages.length,0);assert.deepEqual(q.calls.map(c=>c.name),['compare_gcr_packs']);
+  await frame.click('#comparison > summary');await frame.waitForFunction(()=>document.querySelector('#c-result').hidden);await frame.click('#comparison > summary');assert.equal((await page.evaluate(()=>window.qualification.calls)).length,1);
+  await frame.select('#c-b','reference-'+lang);assert.equal(await frame.$eval('#c-result',e=>e.hidden),true);
+  await frame.click('#c-run');await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  assert.equal(await frame.$eval('#c-export-text',e=>JSON.parse(e.textContent).operations.length),0);
+  await frame.$eval('#c-a',e=>e.focus());await page.keyboard.press('Tab');assert.equal(await frame.evaluate(()=>document.activeElement.id),'c-b');
+  assert.deepEqual(errors,[]);cases.push({route:'comparison',width,lang,metrics,operationCount:ids.length,status:'PASS',host:'simulated',modelCalled:false});await page.close();
+ }
+ for(const lang of ['fr','en']){
+  const page=await browser.newPage();await page.setViewport({width:390,height:844});
+  await page.setRequestInterception(true);page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host?comparison-delay');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
+  await page.waitForFunction(()=>typeof window.releaseComparison==='function');
+  await frame.select('#c-b','reference-'+lang);await page.evaluate(()=>window.releaseComparison());await new Promise(r=>setTimeout(r,250));
+  assert.equal(await frame.$eval('#c-result',e=>e.hidden),true);
+  cases.push({route:'comparison',mode:'late-pair',lang,status:'PASS',host:'simulated'});await page.close();
+ }
+
+
+
+ for(const lang of ['fr','en']){
+  const page=await browser.newPage();await page.setViewport({width:390,height:844});let attemptedExternal=0;
+  await page.setRequestInterception(true);page.on('request',r=>{if(new URL(r.url()).hostname==='127.0.0.1')r.continue();else{attemptedExternal++;r.abort();}});
+  await page.goto('http://127.0.0.1:'+port+'/host?comparison-hostile');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
+  await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  assert.equal(await frame.$eval('#c-groups',e=>e.querySelectorAll('img,script,iframe').length),0);
+  assert.ok(await frame.$eval('#c-groups',e=>e.textContent.includes('<img')));
+  assert.equal(attemptedExternal,0);assert.equal(await frame.evaluate(()=>window.injected),undefined);
+  const report=await frame.$eval('#c-export-text',e=>JSON.parse(e.textContent));assert.ok(report.operations[0].after.includes('<img'));
+  cases.push({route:'comparison',mode:'hostile-renderer-only',lang,status:'PASS',host:'simulated',notAnAdmissionTest:true});await page.close();
+ }
+
+ // Renderer counter-check: a valid report, then a report with a missing group operation.
+ // Host changes are deliberate renderer-only inputs, not admission evidence.
+ for(const lang of ['fr','en']){
+  const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.setViewport({width:390,height:844});await page.setRequestInterception(true);
+  page.on('request',r=>new URL(r.url()).hostname==='127.0.0.1'?r.continue():r.abort());
+  await page.goto('http://127.0.0.1:'+port+'/host?comparison-coverage');
+  await page.waitForFunction(()=>!!document.querySelector('iframe').contentDocument?.querySelector('#inspect:not([disabled])'));
+  const frame=page.frames().find(f=>f.url().endsWith('/app'));await frame.select('#language',lang);await frame.click('#comparison > summary');await frame.click('#c-run');
+  await frame.waitForFunction(()=>!document.querySelector('#c-result').hidden);
+  assert.ok(await frame.$eval('#c-filter',(e,label)=>e.textContent.includes(label),lang==='fr'?'Chaînes d’applicabilité':'Applicability chains'));
+  if(lang==='fr')assert.ok(await frame.$eval('#c-summary',e=>e.textContent.includes('pack : ')));
+  await frame.click('#c-run');await frame.waitForFunction(()=>document.querySelector('#c-status').textContent.includes('render_group_coverage_failed'));
+  assert.equal(await frame.$eval('#c-result',e=>e.hidden),true);
+  for(const id of ['c-summary','c-shown','c-groups','c-proof','c-context','c-export-text'])assert.equal(await frame.$eval('#'+id,e=>e.textContent),'');
+  assert.equal(await frame.$eval('#c-download',e=>e.getAttribute('href')),null);
+  assert.equal(await frame.$eval('#c-run',e=>e.disabled),false);assert.deepEqual(errors,[]);
+  await page.evaluate(()=>{const f=document.querySelector('iframe'),e=f.contentDocument.querySelector('#c-heading');window.scrollTo({top:scrollY+f.getBoundingClientRect().top+e.getBoundingClientRect().top,behavior:'instant'});});
+  await page.screenshot({path:resolve(output,'comparison-'+lang+'-390-coverage-refused.png')});
+  cases.push({route:'comparison',mode:'coverage-refused-after-success',lang,status:'PASS',host:'simulated',notAnAdmissionTest:true});await page.close();
+ }
+
  for(const width of [390,780]){
   for(const lang of ['fr','en']){
    const page=await browser.newPage();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR',e.message);});page.on('console',m=>{if(m.type()==='error')console.error('CONSOLE',m.text());});

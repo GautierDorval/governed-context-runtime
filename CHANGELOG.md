@@ -1,5 +1,9 @@
 # Changes
 
+## Local comparison candidate, 2026-10-29
+
+Optional FR/EN pack comparison with separate admission and schema validation, exact-occurrence matching, complete normalized export, original byte retention and bounded workers. Historical schemas, examples and T3 evidence are preserved. See [qualification](records/comparison-2026-10-29.md). Local candidate only; no hosted deployment or model pilot.
+
 ## 0.2.1-proposed, 2026-10-21
 
 Reference prerelease with real retained-corpus qualification, local MCP binding, bilingual guides and historical record relocation. The four-condition semantic pilot remains NOT_RUN. Protocol `four-condition-pilot-3` closes the four final review observations: prose follows the source wording, trial metadata and response accounting are pinned, empty/truncated judgments have common precedence, and citation/release-date instructions agree. See [release notes](docs/release-0.2.1-proposed.md). This reference release does not deploy the hosted service or execute a model experiment. Earlier entries below retain their historical preparation status.

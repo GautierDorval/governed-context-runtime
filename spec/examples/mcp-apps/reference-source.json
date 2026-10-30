@@ -7,6 +7,8 @@
     "spec/reference/consumer.mjs": "d07674c456c92e04bae16438640a9e2082d69806ef6ce61e7e01c9b5c2389904",
     "spec/reference/signatures.mjs": "f6ce269fc707b9f40c779e9da728505bf7a684e8fc99d43cfe61b08103a43a68",
     "spec/examples/semantic-boundaries/bundle.json": "a4740cd7627d39b7f360bd44d500485a4fbff5f780bc80d9413202c67b9f23cd",
-    "spec/examples/semantic-boundaries/expected-root.json": "a48058212859faab4cb7928247face1da7fc1eba8acd646ecf905c8456531c93"
+    "spec/examples/semantic-boundaries/expected-root.json": "a48058212859faab4cb7928247face1da7fc1eba8acd646ecf905c8456531c93",
+    "spec/context-pack.schema.json": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5",
+    "spec/context-pack-manifest.schema.json": "e82dfd8b12932e6a19795b0283d924fd3d57ae9c8cda79bcbd115afd692cc289"
   }
 }

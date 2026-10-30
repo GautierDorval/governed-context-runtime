@@ -8,6 +8,8 @@ import {pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {catalog,inspect,contextText} from './data.mjs';
+import {comparisonCatalog} from './comparison-data.mjs';
+import {runComparison} from './comparison-runner.mjs';
 const uiHtml=await readFile(new URL('./app.html',import.meta.url),'utf8');
 // A changed build must not reuse a host's cached resource.
 export const RESOURCE='ui://gcr/pack-selector-'+createHash('sha256').update(uiHtml).digest('hex')+'.html';
@@ -21,7 +23,7 @@ export function createServer() {
     description:'Open a bilingual selector of a fictional whole context pack. Opening sends only the catalog, never the pack. If no UI is available, use read_gcr_pack with an exact catalog selection.',
     inputSchema:z.object({}).strict(),annotations,
     _meta:{ui:{resourceUri:RESOURCE,visibility:['model']}}
-  },async()=>({content:[{type:'text',text:'Fictional GCR catalog. No pack has been sent. For text-only access call read_gcr_pack with intentToken, lang, version and expectedRoot from one entry; omit its display label. The shared root covers a corpus with distinct language-specific pack identities:\n'+JSON.stringify(catalog)}],_meta:{gcr:{catalog}}}));
+  },async()=>({content:[{type:'text',text:'Fictional GCR catalog. No pack has been sent. For text-only access call read_gcr_pack with intentToken, lang, version and expectedRoot from one entry; omit its display label. The shared root covers a corpus with distinct language-specific pack identities:\n'+JSON.stringify(catalog)}],_meta:{gcr:{catalog,comparisonCatalog}}}));
   registerAppTool(server,'inspect_gcr_pack',{
     title:'Inspect the selected whole pack',
     description:'UI preview: full verification against the separately pinned fictional anchor. Content stays in the UI metadata; the host can read it. No source URLs are fetched.',
@@ -38,6 +40,13 @@ export function createServer() {
     description:'Text fallback. This call sends the FULL selected pack, its conditions, exclusions, units, manifest and archived sources to the model immediately. Use only when a user asks to supply that context. No semantic fidelity or permission is established.',
     inputSchema:schema,annotations,_meta:{ui:{visibility:['model']}}
   },async args=>{try{return {content:[{type:'text',text:contextText(await inspect(args))}]};}catch(error){return errorResult(error);}});
+  registerAppTool(server,'compare_gcr_packs',{
+    title:'Compare two admitted fictional states',
+    description:'UI-only comparison with full snapshot integrity and separate JSON Schema validation. No model context update, network resolution or publication succession.',
+    inputSchema:z.object({A:z.enum(comparisonCatalog.map(c=>c.id)),B:z.enum(comparisonCatalog.map(c=>c.id))}).strict(),
+    annotations,_meta:{ui:{resourceUri:RESOURCE,visibility:['app']}}
+  },async ({A,B},extra)=>{try{const comparison=await runComparison(A,B,{signal:extra?.signal});return {content:[{type:'text',text:'Local comparison completed. Detailed results remain in host-readable UI metadata.'}],_meta:{gcr:{comparison}}};}
+   catch(error){return {isError:true,content:[{type:'text',text:'Comparison refused; no valid comparison supplied.'}],_meta:{gcr:{comparisonError:error.message}}};}});
   const ui={csp:{connectDomains:[],resourceDomains:[]},permissions:{},prefersBorder:true};
   registerAppResource(server,'GCR fictional context selector',RESOURCE,{mimeType:RESOURCE_MIME_TYPE,_meta:{ui}},
     async()=>({contents:[{uri:RESOURCE,mimeType:RESOURCE_MIME_TYPE,text:uiHtml,_meta:{ui}}]}));

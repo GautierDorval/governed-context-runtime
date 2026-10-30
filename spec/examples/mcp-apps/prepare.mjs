@@ -24,7 +24,7 @@ for (const [path, expected] of Object.entries(pin.files)) {
   referenceFiles.push([path, bytes]);
 }
 await mkdir(actualTarget);
-const artifactSources=['package.json','package-lock.json','reference-source.json','build.mjs','data.mjs','server.mjs','session.mjs','diagnostic.mjs','diagnostic-ui.mjs','ui.mjs','ui.html','test/companion.test.mjs','test/diagnostic.test.mjs','test/stdio.test.mjs','test/browser.mjs'];
+const artifactSources=['comparison-cli.mjs','test/comparison.test.mjs','comparison-data.mjs','comparison-worker.mjs','comparison-runner.mjs','comparison-session.mjs','comparison-ui.mjs','comparison-example.json','comparison-anchor.json','comparison-fixture.mjs','comparison-admission.mjs','comparison.mjs','package.json','package-lock.json','reference-source.json','build.mjs','data.mjs','server.mjs','session.mjs','diagnostic.mjs','diagnostic-ui.mjs','ui.mjs','ui.html','test/companion.test.mjs','test/diagnostic.test.mjs','test/stdio.test.mjs','test/browser.mjs'];
 for (const name of artifactSources) {
   const destination=resolve(actualTarget,name);
   await mkdir(dirname(destination),{recursive:true});

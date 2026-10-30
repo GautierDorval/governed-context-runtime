@@ -106,3 +106,7 @@ node --test test/semantic-boundaries-schemas.test.mjs
 ```
 
 Les tests de schéma utilisent les dépendances de développement verrouillées. La démonstration et les autres tests fonctionnent avec Node seul. La sortie expose le pack, le manifeste, les unités, les sources et les limites : `signatureTrust: not-established`, `usePermission: not-evaluated`, `modelExperiment: NOT_RUN`. La racine dans [expected-root.json](../../spec/examples/semantic-boundaries/expected-root.json) est un ancrage pédagogique séparé du bundle, livré par le même producteur ; elle n’est pas une confiance indépendante.
+
+## Occurrences et comparaison
+
+Le [contrat de comparaison](pack-comparison.md) conserve séparément les listes racine, les chaînes et les contextes causaux. Un JSON Pointer lié à une empreinte identifie une occurrence dans un état exact, pas une règle persistante. Les relations de cohérence ne sont contrôlées que pour une politique de composition déclarée et prise en charge. Une éventuelle identité logique future appartient au producteur et exige une nouvelle édition de schéma ; aucun champ historique n’est enrichi silencieusement.
