@@ -42,7 +42,7 @@
       "path": ".github/workflows/verify.yml",
       "source": "pinned-read-only-workflow",
       "license": "Apache-2.0",
-      "sha256": "465768e94ba19e2be774f32611b84bcdf31d030741f76fcc125b2061a076f6d9"
+      "sha256": "7d71dd9a5b350659fafb7861b46d7c7f319113d1abad5b7f91bc63b2d250b9b2"
     },
     {
       "path": ".gitignore",
@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "e60e963e1a912df238be23e2b341875dc56187ffc8e5fa67aaf804fc1c8898b1"
+      "sha256": "a613a1affb2cabdb7a447ac213690dbf6fa9c90dd2aa8f4cc2ee0a478d288a64"
     },
     {
       "path": "SECURITY.md",
@@ -186,7 +186,7 @@
       "path": "docs/en/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "f8ee4ad962823f56ff5fcbb973491079ffcf3a3aab3fc44308a0f450b30f9660"
+      "sha256": "59d21a956c12ef29c62b18434f4f3bf97e3364710999c99d0f0baff54fd2041f"
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -240,7 +240,7 @@
       "path": "docs/fr/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "eba77ab78d67464a24a7c2ae318c536283ac3e2295467daf48667ec984567ed5"
+      "sha256": "5704553b29db31be4212452af98d3b741c8f2ea343e9b297cc9a170b0802f4a4"
     },
     {
       "path": "docs/fr/pack-semantics.md",
@@ -402,7 +402,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "3b169553c4ccfa237d04e8f24376fb1ffb07e71f36b798b2b120a331c206057f"
+      "sha256": "7e2913cbe7fd5e645384d720cb4a49346eab6b4be84a0dccc8d2e4fbd5528769"
     },
     {
       "path": "package.json",
@@ -414,7 +414,7 @@
       "path": "records/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "15306077bff3a074a8ed3d56e0ec27bbeb8b3a17bb9baaa178de927cea3cf80e"
+      "sha256": "342fa804657c45cd2c294c7e30dd9c48f89dd4413259269d05293e5d72de09b3"
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -433,6 +433,12 @@
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
       "sha256": "c5031c3da5d8190d9ba847a215edfc1a56b103940c24cb57a179a582b0476198"
+    },
+    {
+      "path": "records/comparison-web-2026-10-29.md",
+      "source": "qualification-edition-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "21bb37760443c86b07969f9b0a65c3e6774d6c9e615457f392d158930a4572f0"
     },
     {
       "path": "records/consumer-mandate-2026-10-20.md",
@@ -570,13 +576,13 @@
       "path": "spec/examples/mcp-apps/README.fr.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "e56491be3f85667bf09f29e9bcf2fcb07861f4dae9ef0df46b155309910a5264"
+      "sha256": "c4fcbf32661553623f2e3cfa0c5b845225a4285fc1270450aa6db8952e30a377"
     },
     {
       "path": "spec/examples/mcp-apps/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "dd3b3dca69180d1019829f61b2c917fb28d45a092b78d30a536a3771fa766002"
+      "sha256": "d0da52340cb9ac74f8c161f9976ba44b5dee5a8ddf6f558849876a181f94655c"
     },
     {
       "path": "spec/examples/mcp-apps/build.mjs",
@@ -636,7 +642,7 @@
       "path": "spec/examples/mcp-apps/comparison-ui.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "7b027195f479b20b236aca92e829eb5796de6eaee901677e16052de7d867e584"
+      "sha256": "8ed52afdfa89804c5cb6729e2610236a5959ac1bcb7b0f05f70b268ff1c6b23a"
     },
     {
       "path": "spec/examples/mcp-apps/comparison-worker.mjs",
@@ -684,7 +690,7 @@
       "path": "spec/examples/mcp-apps/prepare.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "f37392683f52f315a8f65e2165cc39a12f40ced12413db653e25f17c4faeab7b"
+      "sha256": "6446f55232424137d501e4a9e1c43dfc20c306361d839f296167378ef5de45ee"
     },
     {
       "path": "spec/examples/mcp-apps/reference-source.json",
@@ -703,6 +709,12 @@
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
       "sha256": "10f963b622709368589a0ac448b5a1739094d28255da971ac4be6e6653fcfc34"
+    },
+    {
+      "path": "spec/examples/mcp-apps/test/browser-web.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "cb7694702bd3b7ee93c8585736639860f2c5d69a2c7c908f44a92851d4a0a32c"
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
@@ -735,6 +747,12 @@
       "sha256": "933de7f04acdd9d266b31618c6960ff47dad22d15ba3ca5645ab8b6741d3ce88"
     },
     {
+      "path": "spec/examples/mcp-apps/test/web.test.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "d1482cfeb1217764a31bd1f108e10de2d4ee18f37e07c9132584bde8d8027a5b"
+    },
+    {
       "path": "spec/examples/mcp-apps/ui.html",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
@@ -745,6 +763,30 @@
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
       "sha256": "837adf1f17b37151c52b8311b29d167b3c58f0443bd6b914763fa3a7272409c8"
+    },
+    {
+      "path": "spec/examples/mcp-apps/web-build.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "04293f0f707b40fbfa68c0dabf5bc265f6d15b305c5077a11f78868cfa98c01d"
+    },
+    {
+      "path": "spec/examples/mcp-apps/web-transport.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "79a02f3f919710b3bc6bc596a052eda7b0277b12744e9b8b7a9bf857280beaf9"
+    },
+    {
+      "path": "spec/examples/mcp-apps/web-ui.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "9e280f0c49d1ed7bcbbc41702c1899746994ee58df95bfd5dd89efffc54c0c5b"
+    },
+    {
+      "path": "spec/examples/mcp-apps/web-wrangler.jsonc",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "b910fd4ff4c5f286c93841ff8973ce2fd3207279edd945e97ffc468ffd8774e0"
     },
     {
       "path": "spec/examples/read-mcp-response.mjs",

@@ -11,3 +11,7 @@ The selector can prepare a model-visible `read_gcr_pack` request after verified 
 ## Comparison prepared October 29
 
 After rebuilding the artifact, expand “Compare two pack states”. The [guide](../../../docs/en/pack-comparison.md) documents the fictional catalog, full export and private offline command. Comparison dependencies remain confined to this optional artifact.
+
+## Standalone Web publication
+
+After the companion build, run `node web-build.mjs` from the clean materialized artifact. See the [Web publication record](../../../records/comparison-web-2026-10-29.md). The Web surface loads complete precomputed reports for the fixed fictional catalog; it does not expose the local MCP server over HTTP.
