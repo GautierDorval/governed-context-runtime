@@ -41,3 +41,13 @@ Les identifiants d’opération sont uniques dans ce rapport. Les types sont add
 Chaque opération conserve sa méthode de rapprochement, son indicateur d’ambiguïté et les branches brutes correspondantes. rawCoverage couvre toutes les opérations brutes et le marqueur de tableau reconnu. presentationCoverage énumère exactement les mêmes identifiants uniques que operations et groups. Les marqueurs techniques ne comptent pas comme règles. Le contenu inchangé demeure disponible dans context. Aucune relation éditoriale n’est inventée : editorialRelations reste vide.
 
 Les essais automatisés locaux et l’examen dans un hôte simulé qualifient l’implémentation. La comparaison réelle FR/EN conservée est un diagnostic hors ligne, sans nouvelle observation du service ou d’un client réel. T3 demeure inchangé. Une revue humaine et des documents organisationnels représentatifs seraient nécessaires pour mesurer un bénéfice pratique ; le pilote comparatif sur modèles reste NOT_RUN.
+
+## Consultation Web du catalogue fictif
+
+[Ouvrir la version Web française](https://gcr-pack-comparison.ctvf.workers.dev/fr/) · [Version anglaise](https://gcr-pack-comparison.ctvf.workers.dev/en/).
+
+Cette surface présente les deux états fictifs par langue dans un navigateur, sans installation de client conversationnel. Les huit paires ordonnées compatibles, y compris les comparaisons d’un état avec lui-même, sont calculées à la construction avec le moteur et l’admission complète du compagnon. Le choix A/B charge le rapport correspondant ; aucun calcul sur des documents fournis par le visiteur ni téléversement n’est proposé. Les filtres, les originaux et l’export JSON complet restent disponibles.
+
+Le navigateur borne la lecture du rapport et contrôle son empreinte SHA-256, son identité A/B et sa couverture avant affichage. Un résultat altéré, incomplet, d’une autre paire ou arrivé après changement de sélection est refusé. Les empreintes distribuées par ce même site assurent la cohérence de ses actifs ; elles ne constituent pas une autorité de confiance indépendante.
+
+La version Web est une publication distincte du serveur Runtime et de son adaptateur MCP existants. Elle ne fournit pas de transport MCP distant, ne transmet pas le pack au modèle et ne remplace pas T3. Les jeux privés restent hors ligne. Consultez sa [provenance de publication](https://gcr-pack-comparison.ctvf.workers.dev/version.json) et le [relevé de construction](../../records/comparison-web-2026-10-29.md). Un commit ou un build local ne suffit pas à établir que cette URL sert le candidat attendu.

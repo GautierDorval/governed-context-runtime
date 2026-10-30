@@ -10,8 +10,8 @@ const labels={
  reference:'Retained example',variant:'New example',selectionIdentities:'Selected catalog identities',identities:'Both input identities and checks',context:'Complete contents, originals and coherence relations',export:'Export JSON report',download:'Download JSON',fallback:'If the host prevents downloading, the complete JSON remains selectable below.',before:'In A',after:'In B',absent:'Absent',count:'structural operations (not a count of distinct rules)',all:'All categories',filter:'Displayed category',shown:'displayed operations',nodiff:'No structural differences within the declared scope.',bytes:'Pack bytes equal',structure:'Pack structure equal',yes:'yes',no:'no',add:'Added in B',remove:'Present in A, absent from B',replace:'Different value',order:'Order changed',ambiguous:'Repeated occurrences: move attribution is ambiguous.',
  activationConditions:'Activation conditions',nonApplicabilityConditions:'Exclusions',requiredEvidence:'Required evidence',forbiddenInferences:'Forbidden inferences',applicabilityAbuseBoundaries:'Applicability boundaries',rules:'Rules',applicabilityChains:'Applicability chains',causalContexts:'Causal contexts',units:'Selected units',sources:'Archived sources',references:'References and digests',metadata:'Metadata'}
 };
-export function bindComparison({app,lang,connected}){
- const el=id=>document.getElementById(id),t=()=>labels[lang()];
+export function bindComparison({app,lang,connected,messages={}}){
+ const el=id=>document.getElementById(id),t=()=>({...labels[lang()],...messages[lang()]});
  let catalog=[],lastLang=lang(),url=null;
  const session=new ComparisonSession({load:(A,B,{signal})=>app.callServerTool({name:'compare_gcr_packs',arguments:{A,B}},{timeout:15000,signal}),changed:render});
  const node=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};

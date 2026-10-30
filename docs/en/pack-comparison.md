@@ -41,3 +41,13 @@ Operation IDs are unique within the report. Kinds are add, remove, replace and o
 Each operation retains matching policy, ambiguity flag and originating raw branch references. rawCoverage accounts for all raw operations plus the recognized array marker. presentationCoverage enumerates the exact same unique IDs as operations and groups. Metadata markers are not counted as rules. Unchanged content is available in context, so no filter can silently turn a partial view into a claim of full coverage. No editorial relation is invented; the current report contains an empty editorialRelations array.
 
 Local automated checks and a simulated-host browser examination qualify the implementation. The real retained FR/EN comparison is an offline diagnosis, not a new hosted or real-client observation. Historical T3 remains unchanged. A business reviewer and representative organizational inputs would be required to measure practical benefit; the comparative model pilot remains NOT_RUN.
+
+## Web access to the fictional catalog
+
+[Open the English Web version](https://gcr-pack-comparison.ctvf.workers.dev/en/) · [French version](https://gcr-pack-comparison.ctvf.workers.dev/fr/).
+
+This surface presents the two fictional states per language in a browser, without installing a conversational client. The eight compatible ordered pairs, including each state's comparison with itself, are computed at build time using the companion's unchanged comparison engine and full admission. Selecting A/B loads the corresponding report; visitors cannot upload documents or request calculations on their own data. Filters, original content and the complete JSON export remain available.
+
+The browser bounds report reads and checks SHA-256, A/B identities and coverage before display. Altered, incomplete, mismatched or stale results are refused. Digests distributed by this same site establish asset consistency, not an independent trust authority.
+
+The Web version has a separate publication lifecycle from the existing Runtime server and MCP adapter. It does not provide remote MCP transport, send packs to a model or replace T3. Private inputs remain offline. Inspect its [publication provenance](https://gcr-pack-comparison.ctvf.workers.dev/version.json) and [build record](../../records/comparison-web-2026-10-29.md). A commit or local build alone does not establish that this URL serves the expected candidate.

@@ -22,6 +22,7 @@ By [Gautier Dorval](https://gautierdorval.com/). [English guide](docs/en/README.
 | Inspect a complete pack | [Consumer kit](docs/en/reproduction.md) | Admission, inspection and permission remain distinct. |
 | Understand semantic boundaries | [Example and glossary](docs/en/pack-semantics.md) | Fictional exercise, no observed model answer. |
 | Examine local evidence | [Qualification](docs/en/qualification.md) | Retained assets and local adapter, no current hosted diagnosis. |
+| Review changes between two pack states | [Web comparison](https://gcr-pack-comparison.ctvf.workers.dev/en/) | Two fictional states per language; complete build-verified reports, no document uploads. |
 | Prepare a comparison | [Four-condition pilot](docs/en/model-comparison.md) | 560 planned responses per configuration, **NOT_RUN**. |
 
 The hosted service and this repository have separate publication lifecycles. This repository does not bundle a generic deployment or a production signing infrastructure.

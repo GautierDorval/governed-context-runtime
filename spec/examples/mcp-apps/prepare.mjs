@@ -24,7 +24,7 @@ for (const [path, expected] of Object.entries(pin.files)) {
   referenceFiles.push([path, bytes]);
 }
 await mkdir(actualTarget);
-const artifactSources=['comparison-cli.mjs','test/comparison.test.mjs','comparison-data.mjs','comparison-worker.mjs','comparison-runner.mjs','comparison-session.mjs','comparison-ui.mjs','comparison-example.json','comparison-anchor.json','comparison-fixture.mjs','comparison-admission.mjs','comparison.mjs','package.json','package-lock.json','reference-source.json','build.mjs','data.mjs','server.mjs','session.mjs','diagnostic.mjs','diagnostic-ui.mjs','ui.mjs','ui.html','test/companion.test.mjs','test/diagnostic.test.mjs','test/stdio.test.mjs','test/browser.mjs'];
+const artifactSources=['test/browser-web.mjs','web-build.mjs','web-ui.mjs','web-transport.mjs','web-wrangler.jsonc','test/web.test.mjs','comparison-cli.mjs','test/comparison.test.mjs','comparison-data.mjs','comparison-worker.mjs','comparison-runner.mjs','comparison-session.mjs','comparison-ui.mjs','comparison-example.json','comparison-anchor.json','comparison-fixture.mjs','comparison-admission.mjs','comparison.mjs','package.json','package-lock.json','reference-source.json','build.mjs','data.mjs','server.mjs','session.mjs','diagnostic.mjs','diagnostic-ui.mjs','ui.mjs','ui.html','test/companion.test.mjs','test/diagnostic.test.mjs','test/stdio.test.mjs','test/browser.mjs'];
 for (const name of artifactSources) {
   const destination=resolve(actualTarget,name);
   await mkdir(dirname(destination),{recursive:true});
@@ -35,5 +35,10 @@ for (const [path, bytes] of referenceFiles) {
   await mkdir(dirname(destination), {recursive:true});
   await writeFile(destination, bytes);
 }
-await writeFile(resolve(actualTarget, '.gcr-companion-artifact.json'), JSON.stringify({sourceRoot:root,referenceCommit:pin.commit}, null, 2)+'\n');
+const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
+const sourceTree=execFileSync('git',['rev-parse','HEAD^{tree}'],{cwd:root,encoding:'utf8'}).trim();
+const sourceDirty=execFileSync('git',['status','--porcelain','--untracked-files=all'],{cwd:root,encoding:'utf8'}).trim()!=='';
+const artifactSourceDigests={};
+for(const name of artifactSources)artifactSourceDigests[name]=createHash('sha256').update(await readFile(resolve(actualTarget,name))).digest('hex');
+await writeFile(resolve(actualTarget,'.gcr-companion-artifact.json'),JSON.stringify({sourceRoot:root,referenceCommit:pin.commit,sourceCommit,sourceTree,sourceDirty,artifactSourceDigests},null,2)+'\n');
 console.log('Prepared companion artifact: ' + actualTarget);
