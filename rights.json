@@ -186,7 +186,7 @@
       "path": "docs/en/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "59d21a956c12ef29c62b18434f4f3bf97e3364710999c99d0f0baff54fd2041f"
+      "sha256": "2cfd8c7477779180559719e7333b4ddcafe0b253aa290387f6969e78a24c1e56"
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -240,7 +240,7 @@
       "path": "docs/fr/pack-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "5704553b29db31be4212452af98d3b741c8f2ea343e9b297cc9a170b0802f4a4"
+      "sha256": "6b14dcc7d1b1e439dda998ace6c772ca30e62718931e4ff154dd0b4ab48971dc"
     },
     {
       "path": "docs/fr/pack-semantics.md",
@@ -438,7 +438,7 @@
       "path": "records/comparison-web-2026-10-29.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "21bb37760443c86b07969f9b0a65c3e6774d6c9e615457f392d158930a4572f0"
+      "sha256": "33fe81959cec0420185b06f9c4dfdc94fdb26f30753398e28755e5eb915d1844"
     },
     {
       "path": "records/consumer-mandate-2026-10-20.md",
@@ -714,7 +714,7 @@
       "path": "spec/examples/mcp-apps/test/browser-web.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "cb7694702bd3b7ee93c8585736639860f2c5d69a2c7c908f44a92851d4a0a32c"
+      "sha256": "9d740153b8ad68d35953f4055026460556c67e7f3d844543ff17eebdd5c13911"
     },
     {
       "path": "spec/examples/mcp-apps/test/browser.mjs",
@@ -750,7 +750,7 @@
       "path": "spec/examples/mcp-apps/test/web.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "d1482cfeb1217764a31bd1f108e10de2d4ee18f37e07c9132584bde8d8027a5b"
+      "sha256": "8139bd4610943a6007a3a188d3c46569d09eef73c3dbc85f4a7b42a0444a628c"
     },
     {
       "path": "spec/examples/mcp-apps/ui.html",
@@ -768,13 +768,13 @@
       "path": "spec/examples/mcp-apps/web-build.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "04293f0f707b40fbfa68c0dabf5bc265f6d15b305c5077a11f78868cfa98c01d"
+      "sha256": "e3c4a1f6670c66c953f9a5f3f0185429c27ec74af82a068ee0dbd847607d3d7e"
     },
     {
       "path": "spec/examples/mcp-apps/web-transport.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "79a02f3f919710b3bc6bc596a052eda7b0277b12744e9b8b7a9bf857280beaf9"
+      "sha256": "454102bf8d7df3f42f2580c89cfc2ef65f6910fce897f551214cc5a5ceb41d7c"
     },
     {
       "path": "spec/examples/mcp-apps/web-ui.mjs",

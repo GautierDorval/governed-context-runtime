@@ -36,3 +36,11 @@ Target Worker: `gcr-pack-comparison`, Cloudflare account's existing `ctvf.worker
 The site's `version.json` identifies the actual published source. Local qualification is not live proof. Retain the final publication receipt with the PR and the private mandate evidence. The two explanatory sites require corresponding FR/EN availability and entry links under their own repository authorization before claiming synchronization of the three public surfaces.
 
 The package inventory adds only Web source/configuration, targeted tests and this record under existing licence rules. No fixture, schema, engine profile, edition, historical evidence or root dependency policy changes.
+
+## Consolidated audit corrections, 2026-10-30
+
+The follow-up candidate strengthens transport regression tests for exact status, bounded streaming, fatal UTF-8, in-flight cancellation and filename/digest agreement. MIME admission is restricted to application/json (case-insensitive), and rejected response bodies are explicitly cancelled. The build parses its qualification flag independently of the output path.
+
+New builds include assetSha256 in version.json for every other public file, including the JavaScript and generated third-party notices. Compare these digests against independently acquired build bytes; a same-origin receipt remains self-attested and is not proof of CI authorship or an independent trust authority. Moving production exclusively to CI-built artifacts is a separate publication-process decision.
+
+The local browser harness serves the actual _headers policy, checks for CSP violations and verifies real click-to-download files instead of fetching blob URLs. These changes preserve the fixed fictional catalog, report bytes, local stdio defaults and dependency lockfile. They do not establish deployment of the follow-up candidate: the public version receipt remains the authority for the actually served source revision.

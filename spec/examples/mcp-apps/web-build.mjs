@@ -9,8 +9,10 @@ import {comparisonCatalog} from './comparison-data.mjs';
 import {runComparison} from './comparison-runner.mjs';
 import {ComparisonSession} from './comparison-session.mjs';
 const root=dirname(fileURLToPath(import.meta.url));
-const out=resolve(process.argv[2]??join(root,'web-dist'));
-const qualification=process.argv.includes('--qualification');
+const args=process.argv.slice(2),positionals=args.filter(arg=>!arg.startsWith('-'));
+if(args.some(arg=>arg.startsWith('-')&&arg!=='--qualification')||positionals.length>1||args.filter(arg=>arg==='--qualification').length>1)throw Error('usage: web-build.mjs [output-directory] [--qualification]');
+const out=resolve(positionals[0]??join(root,'web-dist'));
+const qualification=args.includes('--qualification');
 const provenance=JSON.parse(await readFile(join(root,'.gcr-companion-artifact.json'),'utf8'));
 assert.match(provenance.sourceCommit??'',/^[a-f0-9]{40}$/);
 assert.match(provenance.sourceTree??'',/^[a-f0-9]{40}$/);
@@ -49,6 +51,10 @@ for(const [lang,t] of Object.entries(languages)){
 }
 await writeFile(join(out,'assets','style.css'),style+'\nnav{display:flex;gap:12px;justify-content:flex-end}a{color:#155766}a:focus-visible{outline:3px solid #d27600;outline-offset:3px}footer{border-top:1px solid #bacbd0;margin-top:32px;padding-top:16px}#c-download{display:inline-block;padding:12px;border:1px solid #155766;border-radius:6px}#c-run{scroll-margin-top:16px}\n');
 await writeFile(join(out,'third-party-notices.txt'),await readFile(join(root,'third-party-notices.txt')));
-await writeFile(join(out,'version.json'),JSON.stringify({schemaVersion:'gcr-comparison-web-version-1',gitSha:manifest.sourceCommit,gitTree:manifest.sourceTree,sourceDirty:manifest.sourceDirty,qualificationOnly:qualification,catalogSha256:digest(await readFile(join(out,'catalog.json'))),reportCount:8,mode:manifest.computation},null,2)+'\n');
+// Bind public bytes, including generated notices, for independent artifact comparison.
+// Same-origin provenance remains self-attested, not proof of CI authorship.
+const assetSha256={};
+for(const path of ['index.html','fr/index.html','en/index.html','assets/app.js','assets/style.css','catalog.json','third-party-notices.txt',...manifest.reports.map(report=>report.path)])assetSha256[path]=digest(await readFile(join(out,path)));
+await writeFile(join(out,'version.json'),JSON.stringify({schemaVersion:'gcr-comparison-web-version-1',gitSha:manifest.sourceCommit,gitTree:manifest.sourceTree,sourceDirty:manifest.sourceDirty,qualificationOnly:qualification,catalogSha256:digest(await readFile(join(out,'catalog.json'))),reportCount:8,mode:manifest.computation,assetSha256},null,2)+'\n');
 await writeFile(join(out,'_headers'),'/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: no-referrer\n  X-Frame-Options: DENY\n  Content-Security-Policy: default-src \'none\'; script-src \'self\'; style-src \'self\'; connect-src \'self\'; img-src \'self\'; base-uri \'none\'; form-action \'none\'; frame-ancestors \'none\'\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n/version.json\n  Cache-Control: no-store\n/catalog.json\n  Cache-Control: no-store\n/assets/app.js\n  Cache-Control: no-cache\n/reports/*\n  Cache-Control: public, max-age=31536000, immutable\n');
 console.log(JSON.stringify({out,reportCount:8,reportBytes:manifest.reports.reduce((n,r)=>n+r.bytes,0),sourceCommit:manifest.sourceCommit,qualificationOnly:qualification}));

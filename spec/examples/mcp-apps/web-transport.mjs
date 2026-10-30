@@ -11,10 +11,10 @@ export function createReportLoader(manifest,{fetchImpl=globalThis.fetch,baseUrl=
   const controller=new AbortController(),cancel=()=>controller.abort();
   if(signal?.aborted)throw Error('comparison_cancelled');
   signal?.addEventListener('abort',cancel,{once:true});
-  const timer=setTimeout(cancel,timeoutMs);let reader;
+  const timer=setTimeout(cancel,timeoutMs);let reader,response;
   try{
-   const response=await fetchImpl(url,{method:'GET',redirect:'error',credentials:'omit',signal:controller.signal});
-   if(response.status!==200||!response.headers.get('content-type')?.split(';')[0].trim().endsWith('/json'))throw Error('comparison_response_refused');
+   response=await fetchImpl(url,{method:'GET',redirect:'error',credentials:'omit',signal:controller.signal});
+   if(response.status!==200||response.headers.get('content-type')?.split(';')[0].trim().toLowerCase()!=='application/json')throw Error('comparison_response_refused');
    if(!response.headers.has('content-encoding')&&response.headers.has('content-length')&&Number(response.headers.get('content-length'))!==record.bytes)throw Error('comparison_size_mismatch');
    if(!response.body)throw Error('comparison_body_missing');
    reader=response.body.getReader();const chunks=[];let total=0;
@@ -26,6 +26,6 @@ export function createReportLoader(manifest,{fetchImpl=globalThis.fetch,baseUrl=
    if(controller.signal.aborted)throw Error('comparison_cancelled');
    const report=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
    return {_meta:{gcr:{comparison:report}}};
-  }finally{clearTimeout(timer);signal?.removeEventListener('abort',cancel);await reader?.cancel().catch(()=>{});reader?.releaseLock();}
+  }finally{clearTimeout(timer);signal?.removeEventListener('abort',cancel);if(reader){await reader.cancel().catch(()=>{});reader.releaseLock();}else{await response?.body?.cancel().catch(()=>{});}}
  };
 }
