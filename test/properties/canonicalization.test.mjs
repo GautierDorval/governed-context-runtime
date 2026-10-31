@@ -9,6 +9,7 @@ import {
   portableValue,
   keyOrderPair,
   nfcPair,
+  numericKeyPair,
   asciiString,
   unicodeString,
   pythonWhitespace,
@@ -29,10 +30,7 @@ export function registerCanonicalization(subject = reference, config = {}) {
     fc.property(keyOrderPair, ([bmp, supplementary]) => {
       const b = String.fromCodePoint(bmp),
         s = String.fromCodePoint(supplementary);
-      /** @type {Uint8Array | undefined} */ let actual;
-      assert.doesNotThrow(() => {
-        actual = subject.canonical({[b]: 1, [s]: 2});
-      });
+      const actual = subject.canonical({[b]: 1, [s]: 2});
       assert(actual instanceof Uint8Array);
       equalBytes(actual, pairBytes(s, 2, b, 1));
     }),
@@ -62,14 +60,15 @@ export function registerCanonicalization(subject = reference, config = {}) {
   );
   propertyTest(
     meta('json-insertion-order', 'portable / historical / NFC safe-integer domain', 31003),
-    fc.property(portableValue, value => {
+    fc.property(portableValue, numericKeyPair, (value, [short, long]) => {
       // A relational property, supplemented by independent literal and Python witnesses.
       for (const options of [{}, {historical: true}, {historical: true, nfc: true}]) {
-        assert.doesNotThrow(() => subject.canonical(value, options));
         assert.deepEqual(subject.canonical(value, options), subject.canonical(reverseInsertion(value), options));
         const left = {10: value, 2: {z: false, a: true}, '01': null};
         const right = {'01': null, 2: {a: true, z: false}, 10: value};
         assert.deepEqual(subject.canonical(left, options), subject.canonical(right, options));
+        // Numeric enumeration order differs from the required lexical key order.
+        equalBytes(subject.canonical({[short]: 1, [long]: 2}, options), pairBytes(long, 2, short, 1));
       }
     }),
     config,
@@ -88,7 +87,6 @@ export function registerCanonicalization(subject = reference, config = {}) {
       let escaped = '"';
       for (let i = 0; i < value.length; i++) escaped += '\\u' + value.charCodeAt(i).toString(16).padStart(4, '0');
       escaped += '"';
-      assert.doesNotThrow(() => subject.strictParse(escaped));
       assert.deepEqual(
         subject.canonical(subject.strictParse(escaped)),
         subject.canonical(subject.strictParse(JSON.stringify(value))),
@@ -122,17 +120,16 @@ export function registerCanonicalization(subject = reference, config = {}) {
         () => subject.canonical(value, {historical: true, nfc: true}),
         verificationError('normalized_key_collision'),
       );
-      assert.doesNotThrow(() => subject.canonical(value));
-      assert.doesNotThrow(() => subject.canonical(value, {historical: true}));
+      subject.canonical(value);
+      subject.canonical(value, {historical: true});
     }),
     config,
   );
   propertyTest(
     meta('portable-roundtrip', portable, 31008),
     fc.property(portableValue, value => {
-      assert.doesNotThrow(() => subject.canonical(value));
+      subject.canonical(value);
       const first = subject.canonical(value);
-      assert.doesNotThrow(() => subject.strictParse(first));
       assert.deepEqual(subject.canonical(subject.strictParse(first)), first);
     }),
     config,
@@ -230,12 +227,11 @@ export function registerCanonicalization(subject = reference, config = {}) {
                 ? subject.canonical(value, step.options)
                 : subject.textBytes(/** @type {string} */ (value));
           if (vector.expected.status === 'reject' && vector.expected.stage === step.function) {
-            assert.throws(perform, {name: vector.expected.errorName, message: vector.expected.errorMessage});
+            assert.equal(vector.expected.errorName, 'VerificationError');
+            assert.throws(perform, verificationError(vector.expected.errorMessage ?? ''));
             return;
           }
-          assert.doesNotThrow(() => {
-            value = perform();
-          });
+          value = perform();
         }
         assert.equal(vector.expected.status, 'accept', 'expected rejection was not reached');
         equalBytes(/** @type {Uint8Array} */ (value), vector.expected.canonicalText ?? vector.expected.text ?? '');

@@ -8,6 +8,10 @@ export const unicodeString = fc.oneof(
 );
 export const asciiString = fc.string({unit: 'grapheme-ascii', maxLength: 24});
 export const keyOrderPair = fc.tuple(fc.integer({min: 0xe000, max: 0xffff}), fc.integer({min: 0x10000, max: 0x10ffff}));
+// Short numeric keys enumerate first in JS, while the longer key sorts first lexically.
+export const numericKeyPair = fc
+  .tuple(fc.integer({min: 2, max: 9}), fc.integer({min: 0, max: 9}))
+  .map(([digit, tail]) => [String(digit), String(digit - 1) + '0' + tail]);
 export const nfcPair = fc.constantFrom(['e\u0301', '\u00e9'], ['A\u030a', '\u00c5'], ['n\u0303', '\u00f1']);
 export const pythonWhitespace = Object.freeze([
   ...Array.from({length: 5}, (_, i) => 9 + i),
@@ -52,7 +56,29 @@ export function jsonValue(depth = 6, historical = false, members = 8) {
   return fc.oneof({weight: 6, arbitrary: leaf}, {weight: 1, arbitrary: array}, {weight: 1, arbitrary: object});
 }
 export const portableValue = jsonValue();
-export const historicalValue = jsonValue(3, true, 4);
+export const historicalValue = pythonValue(true);
+/** Independent collision-free witnesses supplement indexed recursive objects.
+ * Unprefixed private-use keys are NFC-inert and discriminate UTF-16/code-point order.
+ * Child depth two keeps these outer objects within the Python depth-three budget.
+ * @param {boolean} [historical] @returns {fc.Arbitrary<Json>} */
+export function pythonValue(historical = false) {
+  const child = jsonValue(2, historical, 4);
+  const ordered = fc
+    .tuple(fc.integer({min: 0xe000, max: 0xf8ff}), fc.integer({min: 0xf0000, max: 0xffffd}), child, child)
+    .map(([bmp, supplementary, a, b]) => ({[String.fromCodePoint(bmp)]: a, [String.fromCodePoint(supplementary)]: b}));
+  const numeric = fc.tuple(numericKeyPair, child, child).map(([[short, long], a, b]) => ({[short]: a, [long]: b}));
+  const normalized = fc.tuple(nfcPair, child, child).map(([[decomposed], a, b]) => ({[decomposed]: a, sibling: b}));
+  return fc.oneof(jsonValue(3, historical, 4), ordered, numeric, normalized);
+}
+export const pythonText = fc.oneof(
+  unicodeString,
+  fc
+    .tuple(fc.constantFrom(...pythonWhitespace, 0xfeff), nfcPair, fc.constantFrom(...pythonWhitespace, 0xfeff))
+    .map(
+      ([left, [decomposed], right]) =>
+        String.fromCodePoint(left) + 'x' + decomposed + 'y' + String.fromCodePoint(right),
+    ),
+);
 /** @param {Json} value @returns {Json} */
 export function reverseInsertion(value) {
   if (Array.isArray(value)) return value.map(reverseInsertion);

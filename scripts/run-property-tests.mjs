@@ -45,6 +45,24 @@ const archiveIds = [
   'archive-fixed-boundaries',
 ];
 const pythonIds = ['python-historical', 'python-nfc', 'python-text'];
+// Independent declared budgets: reports cannot ratify a silently reduced generator count.
+const declaredRuns = new Map([
+  ...canonicalIds.map(
+    id =>
+      /** @type {[string,number]} */ ([id, id === 'text-whitespace-witnesses' || id.startsWith('vector-') ? 1 : 1000]),
+  ),
+  ...rawIds.map(
+    id => /** @type {[string,number]} */ ([id, ['raw-number-boundaries', 'depth-boundary'].includes(id) ? 1 : 1000]),
+  ),
+  ...archiveIds.map(
+    id =>
+      /** @type {[string,number]} */ ([
+        id,
+        ['archive-valid-controls', 'archive-fixed-boundaries'].includes(id) ? 1 : 20,
+      ]),
+  ),
+  ...pythonIds.map((id, i) => /** @type {[string,number]} */ ([id, i === 0 ? 5000 : 1000])),
+]);
 const files = [
   ['test/properties/canonicalization.test.mjs', canonicalIds],
   ['test/properties/strict-parse.test.mjs', rawIds],
@@ -102,8 +120,7 @@ const reportDir = await mkdtemp(join(temporaryBase, 'gcr-properties-'));
   status: 'INCOMPLETE',
   campaign,
   selection: only ?? mutation ?? null,
-  completeFixedSeedQualification:
-    campaign === 'all' && seed === undefined && path === undefined && timeoutMs === 120000,
+  completeFixedSeedQualification: false,
   budgetMs: timeoutMs,
   reportDir,
   node: process.versions.node,
@@ -129,7 +146,7 @@ try {
   const commit = git(['rev-parse', 'HEAD']),
     dirty = git(['status', '--porcelain=v1', '--untracked-files=all']) !== '';
   const python = await pythonVersion(undefined, Math.min(5000, remaining()));
-  Object.assign(report, {testedCommit: commit, dirty, python, generatorVersion: 'lot03-v1'});
+  Object.assign(report, {testedCommit: commit, dirty, python, generatorVersion: 'lot03-v2'});
   const config = {only, mutation, seed, path, commit, dirty, python, reportDir};
   const env = {...process.env, GCR_PROPERTY_CONFIG: JSON.stringify(config)};
   /** @param {string} name @param {string[]} commandArgs */
@@ -177,6 +194,7 @@ try {
     const value = JSON.parse(await readFile(join(reportDir, id + '.json'), 'utf8'));
     if (
       value.property !== id ||
+      value.requestedRuns !== declaredRuns.get(id) ||
       value.failed ||
       value.interrupted ||
       (path === undefined ? value.executedRuns !== value.requestedRuns : value.executedRuns < 1) ||
@@ -194,7 +212,18 @@ try {
   if ((campaign === 'all' || campaign === 'node') && (!only || only === 'harness-controls'))
     await readFile(join(reportDir, 'harness-controls.json'));
   if (campaign === 'all' || campaign === 'mutations') await readFile(join(reportDir, 'mutation-campaign.json'));
-  Object.assign(report, {status: 'PASS', properties: summaries, propertyCount: summaries.length});
+  Object.assign(report, {
+    status: 'PASS',
+    properties: summaries,
+    propertyCount: summaries.length,
+    completeFixedSeedQualification:
+      !dirty &&
+      campaign === 'all' &&
+      seed === undefined &&
+      path === undefined &&
+      timeoutMs === 120000 &&
+      summaries.length === declaredRuns.size,
+  });
 } catch (error) {
   report.status = 'FAIL';
   report.error = error instanceof Error ? {name: error.name, message: error.message} : String(error);

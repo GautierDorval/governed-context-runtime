@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fc from 'fast-check';
-import {mkdtemp, writeFile, readFile, rm} from 'node:fs/promises';
+import {mkdtemp, writeFile, readFile, readdir, mkdir, rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join, dirname, resolve} from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
@@ -10,6 +10,7 @@ import {configuration, assertPropertyResult} from './harness.mjs';
 import {runFile, verdict} from '../../scripts/mutation-verdict.mjs';
 import {runBounded} from '../../scripts/property-process.mjs';
 import {replaceUnique} from '../../scripts/test-property-mutations.mjs';
+import {historicalValue, pythonValue, pythonText, numericKeyPair} from './arbitraries.mjs';
 const config = configuration(),
   root = fileURLToPath(new URL('../../', import.meta.url));
 if (!config.only || config.only === 'harness-controls')
@@ -19,6 +20,39 @@ if (!config.only || config.only === 'harness-controls')
     const moduleURL = /** @param {string} p */ p => JSON.stringify(pathToFileURL(join(root, p)).href);
     const header = `import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport fc from ${moduleURL('node_modules/fast-check/lib/fast-check.js')};\nimport {runProperty} from ${moduleURL('test/properties/harness.mjs')};\n`;
     const records = [];
+    const codepoints = /** @param {string} a @param {string} b */ (a, b) => {
+      const left = Array.from(a, c => c.codePointAt(0) ?? 0),
+        right = Array.from(b, c => c.codePointAt(0) ?? 0);
+      for (let i = 0; i < Math.min(left.length, right.length); i++) if (left[i] !== right[i]) return left[i] - right[i];
+      return left.length - right.length;
+    };
+    const coverage = [];
+    for (const [arbitrary, seed, numRuns] of /** @type {const} */ ([
+      [historicalValue, 31401, 5000],
+      [pythonValue(), 31402, 1000],
+    ])) {
+      const values = fc.sample(arbitrary, {seed, numRuns});
+      const keySets = values.flatMap(v =>
+        v !== null && typeof v === 'object' && !Array.isArray(v) ? [Object.keys(v)] : [],
+      );
+      const ordering = keySets.filter(
+        keys => JSON.stringify([...keys].sort()) !== JSON.stringify([...keys].sort(codepoints)),
+      ).length;
+      const numeric = keySets.filter(keys => keys.some(k => /^(0|[1-9][0-9]*)$/.test(k))).length;
+      assert(ordering > 0, 'Python stream must distinguish UTF-16 from code-point key order');
+      assert(numeric > 0, 'Python stream must include numeric keys');
+      coverage.push({seed, numRuns, ordering, numeric});
+    }
+    const texts = fc.sample(pythonText, {seed: 31403, numRuns: 1000});
+    for (const point of [0x1c, 0x1d, 0x1e, 0x1f, 0x85, 0xfeff])
+      assert(
+        texts.some(v => v.startsWith(String.fromCodePoint(point)) || v.endsWith(String.fromCodePoint(point))),
+        'Python text stream must exercise distinct trim boundaries: ' + point,
+      );
+    for (const [short, long] of fc.sample(numericKeyPair, {seed: 31003, numRuns: 100})) {
+      assert(Number(short) < Number(long));
+      assert(long < short);
+    }
     try {
       for (const [id, body, expected] of [
         ['control-true', 'assert.equal(n,n)', 'pass'],
@@ -37,6 +71,85 @@ if (!config.only || config.only === 'harness-controls')
         if (id === 'control-assertion')
           assert.equal(result.fileEnd?.exitCode, 1, 'a contractual violation really exits nonzero');
       }
+      for (const [id, index, replacement, errorName] of /** @type {const} */ ([
+        [
+          'subject-reference-error',
+          0,
+          'const keys = [...normalized.keys()].sort(missingComparator);',
+          'ReferenceError',
+        ],
+        ['subject-type-error', 0, 'const keys = [...normalized.keys()].sort(42);', 'TypeError'],
+        [
+          'rejection-type-error',
+          1,
+          "if (normalized.has(k)) throw new TypeError('subject collision crash');",
+          'TypeError',
+        ],
+      ])) {
+        const outputDir = join(config.reportDir ?? dir, 'controls', id);
+        const options = {...config, mutation: id, reportDir: outputDir};
+        await writeFile(
+          join(dir, 'control.mjs'),
+          `import test from 'node:test';import {MUTATIONS,runPropertyMutations} from ${moduleURL('scripts/test-property-mutations.mjs')};\n` +
+            `MUTATIONS.push({...MUTATIONS[${index}],id:${JSON.stringify(id)},to:${JSON.stringify(replacement)}});\n` +
+            `test(${JSON.stringify(id)},()=>runPropertyMutations(${JSON.stringify(options)}));\n`,
+        );
+        const result = await runFile(dir, 'control.mjs', 15000);
+        assert.equal(verdict(result), 'other failure', id + ' must invalidate the mutation campaign');
+        assert.equal(result.fileEnd?.exitCode, 1);
+        const campaign = JSON.parse(await readFile(join(outputDir, 'mutation-campaign.json'), 'utf8'));
+        assert.deepEqual(
+          campaign.records.map(/** @param {{classification:string}} r */ r => r.classification),
+          ['pass', 'pass', 'other failure'],
+        );
+        const property = index === 0 ? 'portable-key-order' : 'nfc-collision';
+        const failed = JSON.parse(
+          await readFile(join(outputDir, 'mutations', id, 'mutant', property + '.json'), 'utf8'),
+        );
+        assert.equal(failed.error.name, errorName);
+        records.push({
+          id,
+          expected: 'other failure',
+          observed: verdict(result),
+          result,
+          subjectError: failed.error,
+          controls: campaign.records,
+        });
+      }
+      const refusalOptions = {
+        ...config,
+        only: 'portable-key-order',
+        reportDir: join(config.reportDir ?? dir, 'controls', 'subject-refusal'),
+      };
+      await writeFile(
+        join(dir, 'control.mjs'),
+        `import * as reference from ${moduleURL('spec/reference/verification.mjs')};\n` +
+          `import {registerCanonicalization} from ${moduleURL('test/properties/canonicalization.test.mjs')};\n` +
+          `registerCanonicalization({...reference,canonical(){reference.fail('deliberate_unexpected_refusal')}},${JSON.stringify(refusalOptions)});\n`,
+      );
+      const refusal = await runFile(dir, 'control.mjs', 10000);
+      assert.equal(verdict(refusal), 'assertion failure');
+      const refusalReport = JSON.parse(
+        await readFile(join(refusalOptions.reportDir, 'portable-key-order.json'), 'utf8'),
+      );
+      assert.equal(refusalReport.error.name, 'VerificationError');
+      records.push({id: 'subject-refusal', expected: 'assertion failure', observed: verdict(refusal), result: refusal});
+
+      // A failed full request must not advertise a complete qualification.
+      const failedBase = join(dir, 'failed-full-reports');
+      await mkdir(failedBase);
+      const failedFull = await runBounded(process.execPath, [join(root, 'scripts/run-property-tests.mjs')], {
+        cwd: root,
+        timeoutMs: 10000,
+        env: {...process.env, RUNNER_TEMP: failedBase, GCR_PROPERTY_PYTHON: join(dir, 'absent-python.exe')},
+      });
+      assert.equal(failedFull.code, 1);
+      assert.equal(failedFull.timedOut, false);
+      const reportDirs = await readdir(failedBase);
+      assert.equal(reportDirs.length, 1);
+      const failedSummary = JSON.parse(await readFile(join(failedBase, reportDirs[0], 'report.json'), 'utf8'));
+      assert.equal(failedSummary.status, 'FAIL');
+      assert.equal(failedSummary.completeFixedSeedQualification, false);
       const skipped = fc.check(
         fc.property(fc.integer(), () => fc.pre(false)),
         {numRuns: 5, maxSkipsPerRun: 1},
@@ -112,6 +225,8 @@ if (!config.only || config.only === 'harness-controls')
           JSON.stringify(
             {
               records,
+              coverage,
+              failedFull: failedSummary,
               skips: {failed: skipped.failed, count: skipped.numSkips},
               interruption: {failed: interrupted.failed, interrupted: interrupted.interrupted},
               stalled,

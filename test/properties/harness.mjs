@@ -42,10 +42,14 @@ export function assertPropertyResult(result, reproduction) {
   if (result.interrupted || (result.failed && result.errorInstance === null))
     throw new Error(`Incomplete property campaign (${result.numRuns} runs, ${result.numSkips} skips). ${reproduction}`);
   if (!result.failed) return;
-  if (!(result.errorInstance instanceof AssertionError))
+  const cause = result.errorInstance;
+  const refusal = cause instanceof Error && cause.constructor === Error && cause.name === 'VerificationError';
+  // A valid generated input refused by the verifier violates the contract. Engine/import
+  // exceptions remain harness failures, even when they originate inside the subject.
+  if (!(cause instanceof Error) || (!(cause instanceof AssertionError) && !refusal))
     throw new Error(`Unexpected property exception. ${reproduction}`, {cause: result.errorInstance});
   throw new AssertionError({
-    message: `${result.errorInstance.message}\n${reproduction}`,
+    message: `${cause.message}\n${reproduction}`,
     actual: result.counterexample,
     expected: 'contract holds',
     operator: 'property',
@@ -81,7 +85,7 @@ export async function runProperty(meta, property, overrides = {}) {
       python: config.python ?? 'not probed in direct invocation',
       fastCheck: fc.__version,
     },
-    generatorVersion: 'lot03-v1',
+    generatorVersion: 'lot03-v2',
     subjectSha256: config.subjectSha256,
     context: config.context ?? 'candidate',
     seed: result.seed,

@@ -18,7 +18,7 @@ propertyTest(
       assert.throws(() => strictParse(raw), verificationError('duplicate_key'));
       assert.throws(() => strictParse('[{"nested":' + raw + '}]'), verificationError('duplicate_key'));
     }
-    assert.doesNotThrow(() => strictParse('{' + literal + ':1}'));
+    strictParse('{' + literal + ':1}');
   }),
 );
 propertyTest(
@@ -112,7 +112,6 @@ propertyTest(
     // Root value is depth zero. A scalar under 64 array edges is admitted; under 65 it is refused.
     for (const depth of [0, 1, 63, 64]) {
       const raw = '['.repeat(depth) + '0' + ']'.repeat(depth);
-      assert.doesNotThrow(() => strictParse(raw));
       assert.deepEqual(canonical(strictParse(raw)), bytes.encode(raw));
     }
     const raw = '['.repeat(65) + '0' + ']'.repeat(65);

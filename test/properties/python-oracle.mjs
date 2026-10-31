@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {join, dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {runBounded, requireSuccess} from '../../scripts/property-process.mjs';
-import {historicalValue, jsonValue, unicodeString} from './arbitraries.mjs';
+import {historicalValue, pythonValue, pythonText} from './arbitraries.mjs';
 import {runProperty, configuration} from './harness.mjs';
 import {canonical, textBytes} from '../../spec/reference/verification.mjs';
 import {equalBytes} from './oracles.mjs';
@@ -83,7 +83,7 @@ export async function runPythonOracle(options = {}) {
         profile: 'gd-deterministic-json-v1',
         seed: 31402,
         count: options.count ?? 1000,
-        arbitrary: jsonValue(3, false, 4),
+        arbitrary: pythonValue(),
       },
       {
         family: 'text',
@@ -91,7 +91,7 @@ export async function runPythonOracle(options = {}) {
         profile: 'utf8-nfc-lf-trimmed-v0',
         seed: 31403,
         count: options.count ?? 1000,
-        arbitrary: unicodeString,
+        arbitrary: pythonText,
       },
     ];
     const campaigns = availableCampaigns.filter(c => !config.only || c.id === config.only);
@@ -123,13 +123,10 @@ export async function runPythonOracle(options = {}) {
           oracle = (await exchange(one))[c.family][0];
           cache.set(key, oracle);
         }
-        /** @type {Uint8Array | undefined} */ let actual;
-        assert.doesNotThrow(() => {
-          actual =
-            c.family === 'text'
-              ? textBytes(/** @type {string} */ (value))
-              : canonical(value, {historical: true, nfc: c.family === 'nfc'});
-        }, 'constructed admitted value must be accepted');
+        const actual =
+          c.family === 'text'
+            ? textBytes(/** @type {string} */ (value))
+            : canonical(value, {historical: true, nfc: c.family === 'nfc'});
         assert(actual instanceof Uint8Array);
         equalBytes(actual, oracle);
       });

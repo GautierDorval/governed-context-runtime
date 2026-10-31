@@ -13,12 +13,15 @@ export const MUTATIONS = [
     property: 'portable-key-order',
     from: 'const keys = [...normalized.keys()].sort(historical ? codepointCompare : undefined);',
     to: 'const keys = [...normalized.keys()].sort(codepointCompare);',
+    equivalent:
+      'const keys = [...normalized.keys()].sort((a, b) => historical ? codepointCompare(a, b) : a < b ? -1 : a > b ? 1 : 0);',
   },
   {
     id: 'nfc-collision',
     property: 'nfc-collision',
     from: "if (normalized.has(k)) fail('normalized_key_collision');",
     to: '// deliberate test mutation: collision guard removed',
+    equivalent: "if ([...normalized.keys()].includes(k)) fail('normalized_key_collision');",
   },
 ];
 /** @param {string} source @param {string} from @param {string} to */
@@ -43,7 +46,7 @@ export async function runPropertyMutations(options = {}) {
       const altered = replaceUnique(original, mutation.from, mutation.to);
       for (const [context, source] of [
         ['original', original],
-        ['equivalent', original + '\n// equivalent development rewrite\n'],
+        ['equivalent', replaceUnique(original, mutation.from, mutation.equivalent)],
         ['mutant', altered],
       ]) {
         const reportDir = join(config.reportDir ?? dir, 'mutations', mutation.id, context);
