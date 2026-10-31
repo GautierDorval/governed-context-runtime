@@ -36,8 +36,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "sha256": "7d71dd9a5b350659fafb7861b46d7c7f319113d1abad5b7f91bc63b2d250b9b2",
-      "bytes": 2106
+      "sha256": "e38023813c3a1bb561524d4b30bdaef2166c581b064fd4a6bd771c8f6ee91588",
+      "bytes": 2336
     },
     {
       "path": ".gitignore",
@@ -66,8 +66,8 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "2d6d1a243b996d58d9014c2792fe4965d54cad02b50e0648d4f96314dc4f4f97",
-      "bytes": 1490
+      "sha256": "4a1bd49b964d05a8fe5c1581d0339036956a8a4970b58b18fd5b4e31a966f0e9",
+      "bytes": 1642
     },
     {
       "path": "LICENSE",
@@ -81,8 +81,8 @@
     },
     {
       "path": "MAINTAINING.md",
-      "sha256": "7d55a98aa2be644f7fc228ce086447bcf649c1dce809facb1653314846e6021b",
-      "bytes": 10448
+      "sha256": "a8ee93801f561e880506dfb966097a881c46e6127647e7816fd134e038fdce35",
+      "bytes": 11015
     },
     {
       "path": "NOTICE.md",
@@ -235,6 +235,11 @@
       "bytes": 7669
     },
     {
+      "path": "docs/property-testing.md",
+      "sha256": "d4fc15e0b0638a3e52b716e4dbace89d875566f555510da2e2912032a9f0c834",
+      "bytes": 12536
+    },
+    {
       "path": "docs/release-0.2.1-proposed.md",
       "sha256": "15beb24d6c189a2c817b4d59573ef39bf5366825ca280b76f99524279559d601",
       "bytes": 7895
@@ -331,18 +336,18 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "9fc25bfd757da63f2a266956adcebd5f285f612cbe8ee89ba23555dab94bede1",
-      "bytes": 16146
+      "sha256": "9e5724c2ac0ebc2fd874e64b0934e70d60fcf1b9eaa03c010156da946f68ca52",
+      "bytes": 17408
     },
     {
       "path": "package-policy.json",
-      "sha256": "7e2913cbe7fd5e645384d720cb4a49346eab6b4be84a0dccc8d2e4fbd5528769",
-      "bytes": 9416
+      "sha256": "fb9bcae81c0168b12e5f5b8236d98d1aef6ce0efb6417f6f64def6f08053d9dc",
+      "bytes": 9977
     },
     {
       "path": "package.json",
-      "sha256": "ad673f80e761f22973672c71d22e25604bdea785eaf507aeba0e9e19f25bda05",
-      "bytes": 2456
+      "sha256": "a323e77037d5786f0411299fb0d0f29622cdc45ad30ea66845d9e1a871e095cf",
+      "bytes": 2573
     },
     {
       "path": "records/README.md",
@@ -396,8 +401,8 @@
     },
     {
       "path": "rights.json",
-      "sha256": "2c59c9b2af27ebb950f9bd4191e80670ee78bc40d588c402a1b198c77b1a289c",
-      "bytes": 45818
+      "sha256": "032b36a2f8ab24aa777390ddb69c92ecc39c441a4a2fa1230b9b9eee08169897",
+      "bytes": 49024
     },
     {
       "path": "scripts/check-package.mjs",
@@ -415,6 +420,11 @@
       "bytes": 1962
     },
     {
+      "path": "scripts/property-process.mjs",
+      "sha256": "c5d5c867f922bd8f4e1757fff2370408d233b9b2726df105f7243c6674e68362",
+      "bytes": 3206
+    },
+    {
       "path": "scripts/qualify-offline.mjs",
       "sha256": "3921babcb30bdedd72cd908b29cb231401a1e920e89e07cccf382b56d8c44a80",
       "bytes": 10441
@@ -425,6 +435,11 @@
       "bytes": 11884
     },
     {
+      "path": "scripts/run-property-tests.mjs",
+      "sha256": "15b0a1309153e97ccf7a49ebcbab72c65971d3193de076ee005ed84ff2a6c43b",
+      "bytes": 8909
+    },
+    {
       "path": "scripts/svg-profile.mjs",
       "sha256": "fd2241c7f8d05d5d4b22dd07827057d0b5eb02ced0fa19dc03c4390a942907b8",
       "bytes": 7564
@@ -433,6 +448,11 @@
       "path": "scripts/test-mutations.mjs",
       "sha256": "c2035bad89f59c2f9ceca94171c3e2470f2187d117cd1ce6c37d4093b4e3aba1",
       "bytes": 7005
+    },
+    {
+      "path": "scripts/test-property-mutations.mjs",
+      "sha256": "8a4f9ba0cc175035a78c39938c2b0056656eee2d7a8afffc036855b5c1c11260",
+      "bytes": 5212
     },
     {
       "path": "scripts/test-regenerate.mjs",
@@ -958,6 +978,56 @@
       "path": "test/pilot-plan.test.mjs",
       "sha256": "91d0a5cc430daefc34d9f089eb46835aa21e329dacae1020dfba9de228dbf719",
       "bytes": 19216
+    },
+    {
+      "path": "test/properties/acceptance-vectors.json",
+      "sha256": "b15ba197bab80f244605f340c60eaa0c86730139795265e50e88962d114300f3",
+      "bytes": 10598
+    },
+    {
+      "path": "test/properties/arbitraries.mjs",
+      "sha256": "4c6066a4dc124fe90c9bfa6dc18e6a8dd311f40c606df8ad339c5e560c1adf4c",
+      "bytes": 2725
+    },
+    {
+      "path": "test/properties/archives.test.mjs",
+      "sha256": "8747ea313a7cdfe96560e7180af42762209a4f5af1fc867ac4790e8b419bd111",
+      "bytes": 10780
+    },
+    {
+      "path": "test/properties/canonicalization.test.mjs",
+      "sha256": "e18721b04bb4f4ec7c57c7ee0a77b88206cd82c14180ada4b3ede0b44bdbe428",
+      "bytes": 10663
+    },
+    {
+      "path": "test/properties/harness.mjs",
+      "sha256": "9f7d12c6711ff68062d2d46be63e482f4694f4f711f04ef8e4b082fa2321c31c",
+      "bytes": 5534
+    },
+    {
+      "path": "test/properties/harness.test.mjs",
+      "sha256": "50d355a4b02abec05dea58e5a82e616d52f50814e88de839826157e506b83bbe",
+      "bytes": 6519
+    },
+    {
+      "path": "test/properties/oracles.mjs",
+      "sha256": "83bec96cde7a4b06f2757246ac563ca9e89811a77e0f5b41e0cd504cabba75d2",
+      "bytes": 995
+    },
+    {
+      "path": "test/properties/python-oracle.mjs",
+      "sha256": "961f403e45dae5f97449676a63429565ba853148aadabffb035ab57a25699ad8",
+      "bytes": 7647
+    },
+    {
+      "path": "test/properties/python-oracle.py",
+      "sha256": "62d6c24e24969db1b8306aeb0f21a173dbb45bd71b46d655eb3041f843213051",
+      "bytes": 1798
+    },
+    {
+      "path": "test/properties/strict-parse.test.mjs",
+      "sha256": "9cd2abb6b591cfafd066b0249cd323eabedfbcda4c133db5eb2ae1ab964f6683",
+      "bytes": 5341
     },
     {
       "path": "test/qualification.test.mjs",
