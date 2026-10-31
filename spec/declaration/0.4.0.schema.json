@@ -1,0 +1,549 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/declaration/0.4.0.schema.json",
+  "title": "Governed context runtime declaration 0.4.0",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "type",
+    "status",
+    "site",
+    "infrastructureToken",
+    "notLayer",
+    "recommendedRuntimeOrigin",
+    "currentRuntimeDeployment",
+    "publicSpecRepositoryPath",
+    "canonicalIntentRegistry",
+    "wellKnownIntentRegistry",
+    "v0Boundary",
+    "allowedOperations",
+    "forbiddenOperations",
+    "privacyBoundary",
+    "observability",
+    "serviceContracts",
+    "observabilityContext",
+    "referenceDiscovery"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.4.0"
+    },
+    "type": {
+      "const": "GovernedContextRuntimeDeclaration"
+    },
+    "status": {
+      "enum": [
+        "stable",
+        "deprecated"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "format": "uri"
+    },
+    "infrastructureToken": {
+      "const": "governed-context-runtime"
+    },
+    "notLayer": {
+      "const": true
+    },
+    "recommendedRuntimeOrigin": {
+      "type": "string",
+      "format": "uri"
+    },
+    "currentRuntimeDeployment": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ]
+    },
+    "publicSpecRepositoryPath": {
+      "const": "spec/governed-context-runtime/",
+      "description": "Historical source-layout identifier; resolve public schemas through referenceDiscovery.schemaEdition.files, never by concatenation."
+    },
+    "canonicalIntentRegistry": {
+      "type": "string",
+      "format": "uri"
+    },
+    "wellKnownIntentRegistry": {
+      "type": "string",
+      "format": "uri"
+    },
+    "v0Boundary": {
+      "type": "object",
+      "required": [
+        "runtimeSelectsIntentFromFreeText",
+        "agentSelectsIntent",
+        "runtimeComposesAtRequestTime",
+        "runtimeProducesAnswers",
+        "runtimeRecommendsServices",
+        "runtimeScoresFidelity"
+      ],
+      "properties": {
+        "runtimeSelectsIntentFromFreeText": {
+          "const": false
+        },
+        "agentSelectsIntent": {
+          "const": true
+        },
+        "runtimeComposesAtRequestTime": {
+          "const": false
+        },
+        "runtimeProducesAnswers": {
+          "const": false
+        },
+        "runtimeRecommendsServices": {
+          "const": false
+        },
+        "runtimeScoresFidelity": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "forbiddenOperations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "resolve_intent_from_free_text",
+          "compose_pack_at_request_time",
+          "generate_answer",
+          "recommend_service",
+          "score_response_fidelity",
+          "write_governance_state"
+        ]
+      },
+      "minItems": 1
+    },
+    "privacyBoundary": {
+      "type": "object",
+      "required": [
+        "noCookies",
+        "noRawIpStorage",
+        "noHashedIpStorage",
+        "noRawUserAgentStorage",
+        "noPromptStorage",
+        "noResponseStorage",
+        "rawEventJournal",
+        "ledgerScope"
+      ],
+      "properties": {
+        "noCookies": {
+          "const": true
+        },
+        "noRawIpStorage": {
+          "const": true
+        },
+        "noPromptStorage": {
+          "const": true
+        },
+        "noResponseStorage": {
+          "const": true
+        },
+        "ledgerScope": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "noHashedIpStorage": {
+          "const": true
+        },
+        "noRawUserAgentStorage": {
+          "const": true
+        },
+        "rawEventJournal": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "allowedOperations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "GET /",
+          "GET /v0/health",
+          "GET /v0/capabilities",
+          "GET /v0/intents",
+          "GET /v0/intents/:intentToken",
+          "GET /v0/packs",
+          "GET /v0/packs/:intentToken/:lang",
+          "GET /v0/packs/:intentToken/:lang/manifest",
+          "GET /v0/units/:unitId",
+          "GET /v0/snapshot",
+          "GET /v0/snapshots/:snapshotDigest",
+          "GET /v0/artifacts/:artifactDigest",
+          "GET /v0/verification",
+          "GET /v0/linkset",
+          "GET /v0/lifecycle",
+          "GET /v0/openapi",
+          "GET /v0/errors"
+        ]
+      },
+      "minItems": 17,
+      "maxItems": 17,
+      "uniqueItems": true
+    },
+    "observability": {
+      "type": "object",
+      "required": [
+        "ledgerStatus",
+        "eventSchema",
+        "dataPolicy",
+        "aggregateOnly",
+        "productionActivationState",
+        "stateObservedAt",
+        "stateEvidence",
+        "authorizationEvidenceState",
+        "standingAuthorizationForFutureMutation",
+        "functionalObservationStatus",
+        "functionalObservationCapturedAt",
+        "functionalExerciseState"
+      ],
+      "properties": {
+        "ledgerStatus": {
+          "const": "active"
+        },
+        "eventSchema": {
+          "const": "https://gautierdorval.com/runtime-ledger-event.schema.json"
+        },
+        "dataPolicy": {
+          "const": "https://gautierdorval.com/runtime-data-policy.json"
+        },
+        "aggregateOnly": {
+          "const": true
+        },
+        "productionActivationState": {
+          "const": "active"
+        },
+        "stateObservedAt": {
+          "const": "2026-07-25T22:51:28.8944126Z",
+          "format": "date-time"
+        },
+        "stateEvidence": {
+          "const": "https://gautierdorval.com/runtime-ledger-spec.json"
+        },
+        "authorizationEvidenceState": {
+          "const": "operator_evidence_not_committed"
+        },
+        "standingAuthorizationForFutureMutation": {
+          "const": false
+        },
+        "functionalObservationStatus": {
+          "const": "candidate_pending_independent_audit"
+        },
+        "functionalObservationCapturedAt": {
+          "const": "2026-08-07T16:52:28Z",
+          "format": "date-time"
+        },
+        "functionalExerciseState": {
+          "const": "accepted_and_report_paths_observed_strict_outcomes_not_observed_after_0002"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Historical observations of the separate aggregate ledger. Their dates and audit status do not qualify the current REST/MCP release; see serviceContracts for its live descriptions."
+    },
+    "serviceContracts": {
+      "type": "object",
+      "required": [
+        "index",
+        "capabilities",
+        "openapi",
+        "mcpDiscoveryDocument",
+        "mcpDiscoveryPointer"
+      ],
+      "properties": {
+        "index": {
+          "const": "https://context.gautierdorval.com/"
+        },
+        "capabilities": {
+          "const": "https://context.gautierdorval.com/v0/capabilities"
+        },
+        "openapi": {
+          "const": "https://context.gautierdorval.com/v0/openapi"
+        },
+        "mcpDiscoveryDocument": {
+          "const": "https://context.gautierdorval.com/v0/health"
+        },
+        "mcpDiscoveryPointer": {
+          "const": "/externalAdapters/mcp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "observabilityContext": {
+      "type": "object",
+      "required": [
+        "component",
+        "temporalScope",
+        "qualifiesCurrentRuntimeRelease"
+      ],
+      "properties": {
+        "component": {
+          "const": "runtime-ledger"
+        },
+        "temporalScope": {
+          "const": "historical-observations-only"
+        },
+        "qualifiesCurrentRuntimeRelease": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "referenceDiscovery": {
+      "type": "object",
+      "description": "Explicit public discovery, closed contracts, independent versions and bounded deployment provenance.",
+      "required": [
+        "publicRepository",
+        "legacyPathRole",
+        "schemaEdition",
+        "documentation",
+        "declarationContract",
+        "versioning",
+        "deploymentSemantics",
+        "explanations"
+      ],
+      "properties": {
+        "publicRepository": {
+          "const": "https://github.com/GautierDorval/governed-context-runtime",
+          "description": "Public reference repository; it does not contain the hosted Worker implementation."
+        },
+        "legacyPathRole": {
+          "const": "historical-source-layout-identifier",
+          "description": "publicSpecRepositoryPath identifies the historical source layout, not a path to append to this repository."
+        },
+        "schemaEdition": {
+          "type": "object",
+          "description": "Schema edition is pinned independently of the documentation.",
+          "required": [
+            "commit",
+            "directoryUrl",
+            "files"
+          ],
+          "properties": {
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$",
+              "description": "Full immutable commit of the four compatible historical schemas."
+            },
+            "directoryUrl": {
+              "type": "string",
+              "pattern": "^https://github\\.com/GautierDorval/governed-context-runtime/tree/[0-9a-f]{40}/spec/$",
+              "description": "Navigation only; validators use the raw files below."
+            },
+            "files": {
+              "type": "object",
+              "description": "Exact schema identifier suffix to public raw-file mapping.",
+              "required": [
+                "context-pack.schema.json",
+                "context-pack-manifest.schema.json",
+                "intent-registry.schema.json",
+                "runtime-snapshot.schema.json"
+              ],
+              "properties": {
+                "context-pack.schema.json": {
+                  "type": "string",
+                  "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/context-pack\\.schema\\.json$",
+                  "description": "Raw JSON Schema file at schemaEdition.commit."
+                },
+                "context-pack-manifest.schema.json": {
+                  "type": "string",
+                  "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/context-pack-manifest\\.schema\\.json$",
+                  "description": "Raw JSON Schema file at schemaEdition.commit."
+                },
+                "intent-registry.schema.json": {
+                  "type": "string",
+                  "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/intent-registry\\.schema\\.json$",
+                  "description": "Raw JSON Schema file at schemaEdition.commit."
+                },
+                "runtime-snapshot.schema.json": {
+                  "type": "string",
+                  "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/runtime-snapshot\\.schema\\.json$",
+                  "description": "Raw JSON Schema file at schemaEdition.commit."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "documentation": {
+          "type": "object",
+          "description": "Public documentation revision, independently pinned from the historical schemas.",
+          "required": [
+            "commit",
+            "referenceEdition",
+            "schemaMapping",
+            "instanceGuides"
+          ],
+          "properties": {
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$",
+              "description": "Full immutable public documentation revision; not necessarily the release-tag commit."
+            },
+            "referenceEdition": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+-proposed$",
+              "description": "Reference documentation edition at this revision, not the hosted runtime version."
+            },
+            "schemaMapping": {
+              "type": "string",
+              "pattern": "^https://github\\.com/GautierDorval/governed-context-runtime/blob/[0-9a-f]{40}/docs/schemas\\.md$",
+              "description": "Mapping from historical identifiers to real public files."
+            },
+            "instanceGuides": {
+              "type": "object",
+              "description": "Equivalent French and English discovery and provenance guides.",
+              "required": [
+                "fr",
+                "en"
+              ],
+              "properties": {
+                "fr": {
+                  "type": "string",
+                  "pattern": "^https://github\\.com/GautierDorval/governed-context-runtime/blob/[0-9a-f]{40}/docs/fr/instance\\.md$",
+                  "description": "Instance guide at documentation.commit."
+                },
+                "en": {
+                  "type": "string",
+                  "pattern": "^https://github\\.com/GautierDorval/governed-context-runtime/blob/[0-9a-f]{40}/docs/en/instance\\.md$",
+                  "description": "Instance guide at documentation.commit."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "declarationContract": {
+          "type": "object",
+          "description": "Select the schema using the received schemaVersion; no silent downgrade.",
+          "required": [
+            "version",
+            "schemaUrl",
+            "previousVersion",
+            "previousSchemaUrl"
+          ],
+          "properties": {
+            "version": {
+              "const": "0.4.0",
+              "description": "Closed format of this declaration; independent of runtimeVersion."
+            },
+            "schemaUrl": {
+              "type": "string",
+              "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/declaration/0\\.4\\.0\\.schema\\.json$",
+              "description": "Applicable closed declaration schema at documentation.commit."
+            },
+            "previousVersion": {
+              "const": "0.3.0",
+              "description": "Historical closed declaration version; it rejects this new shape."
+            },
+            "previousSchemaUrl": {
+              "type": "string",
+              "pattern": "^https://raw\\.githubusercontent\\.com/GautierDorval/governed-context-runtime/[0-9a-f]{40}/spec/declaration/0\\.3\\.0\\.schema\\.json$",
+              "description": "Byte-preserved historical contract at documentation.commit."
+            }
+          },
+          "additionalProperties": false
+        },
+        "versioning": {
+          "type": "object",
+          "description": "Version scopes and current sources, without copying volatile identities.",
+          "required": [
+            "referenceAndRuntimeReleaseCycles",
+            "documentFormatField",
+            "runtimeVersionSource",
+            "corpusVersionIdentifiesExactContent",
+            "exactCorpusContentField",
+            "exactCorpusContentSource"
+          ],
+          "properties": {
+            "referenceAndRuntimeReleaseCycles": {
+              "const": "independent",
+              "description": "Reference and hosted software editions describe different components."
+            },
+            "documentFormatField": {
+              "const": "schemaVersion",
+              "description": "Schema version belongs to the specific document type."
+            },
+            "runtimeVersionSource": {
+              "const": "https://context.gautierdorval.com/v0/health",
+              "description": "Read runtimeVersion from health; this block does not duplicate its current value."
+            },
+            "corpusVersionIdentifiesExactContent": {
+              "const": false,
+              "description": "corpusVersion labels a corpus family, not exact bytes."
+            },
+            "exactCorpusContentField": {
+              "const": "corpusRootDigest",
+              "description": "Digest identifying one exact snapshot; it does not create trust."
+            },
+            "exactCorpusContentSource": {
+              "const": "https://context.gautierdorval.com/v0/snapshot",
+              "description": "Read and verify the selected snapshot under a separately admitted root."
+            }
+          },
+          "additionalProperties": false
+        },
+        "deploymentSemantics": {
+          "type": "object",
+          "description": "Meanings only; no deployment attestation or activation is asserted.",
+          "required": [
+            "sourceCommitRole",
+            "sourceCommitIsPublicReferenceCommit",
+            "timestampMeaning",
+            "sourceCommitVerifiedMeaning"
+          ],
+          "properties": {
+            "sourceCommitRole": {
+              "const": "runtime-implementation-source",
+              "description": "Commit of the separate implementation source; no private locator is published."
+            },
+            "sourceCommitIsPublicReferenceCommit": {
+              "const": false,
+              "description": "Do not resolve this commit against the public reference or compare their recency."
+            },
+            "timestampMeaning": {
+              "const": "worker-version-creation-time",
+              "description": "Creation of a Worker version, not its first production traffic or documentation lag."
+            },
+            "sourceCommitVerifiedMeaning": {
+              "const": "independent-deployment-provenance-verification-status",
+              "description": "A false value remains an independently verifiable provenance limit."
+            }
+          },
+          "additionalProperties": false
+        },
+        "explanations": {
+          "type": "object",
+          "description": "Short equivalent explanations for readers that see only the declaration.",
+          "required": [
+            "fr",
+            "en"
+          ],
+          "properties": {
+            "fr": {
+              "type": "string",
+              "minLength": 80,
+              "description": "Descriptive fr explanation; not an instruction to a model."
+            },
+            "en": {
+              "type": "string",
+              "minLength": 80,
+              "description": "Descriptive en explanation; not an instruction to a model."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

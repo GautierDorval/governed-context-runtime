@@ -88,6 +88,8 @@ Sources vérifiées le 2026-10-26 : [présentation MCP Apps](https://modelconte
 
 ## Diagnostic facultatif par jeton
 
+`gcrDiagnosticNonce` est un jeton de diagnostic destiné à observer si le modèle peut restituer une valeur imprévisible fournie uniquement par le canal testé. Il n’authentifie ni une personne ni un client, ne crée pas de session antirobot et n’accorde aucune permission. Il n’est pas lié à une adresse IP, à un User-Agent ou à un cookie. Dans le [relevé du 26 octobre 2026](../../records/mcp-apps-2026-10-26.md#nonce-diagnostic-local-qualification-and-real-client-preflight-2026-10-26), « real-client preflight » désigne la vérification préliminaire permettant de commencer l’essai dans le client conversationnel.
+
 Le diagnostic est désactivé par défaut. Ouvrez **Diagnostic facultatif** et activez-le explicitement. **Court** fournit uniquement une enveloppe de 140 octets UTF-8, sans pack. **Complet** exige une inspection de la sélection courante et ajoute la projection entière inchangée après la même enveloppe. L’enveloppe commence le texte transmis et se termine par deux sauts de ligne. Elle ne fait pas partie des données GCR vérifiées. La limite locale reste 200 000 octets UTF-8, enveloppe comprise, sans troncature ; ce n’est pas une limite démontrée du client.
 
 À chaque clic de soumission, le navigateur tire 16 octets cryptographiques et les encode en 32 caractères hexadécimaux pour `gcrDiagnosticNonce`. Il génère un identifiant d’essai indépendant. L’absence de `crypto.getRandomValues` ou du calcul SHA-256 Web Crypto refuse l’essai ; aucun repli `Math.random` n’existe. Le SDK reste épinglé à 2.0.3.

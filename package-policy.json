@@ -94,6 +94,8 @@
     "spec/attestation-recipes.json",
     "spec/context-pack-manifest.schema.json",
     "spec/context-pack.schema.json",
+    "spec/declaration/0.3.0.schema.json",
+    "spec/declaration/0.4.0.schema.json",
     "spec/evidence/observations.mjs",
     "spec/evidence/runtime-public-deployment-observation-v1.schema.json",
     "spec/evidence/runtime-public-observation-v1.schema.json",

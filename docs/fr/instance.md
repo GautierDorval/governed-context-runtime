@@ -43,6 +43,16 @@ L’implémentation des Workers de production est maintenue dans un dépôt priv
 
 Sur une archive immuable, un instantané adressé par digest ou un pack épinglé par version, `X-Corpus-Root-Digest` peut conserver la racine relevée lors de la mise en cache de cette réponse. Ce n’est pas un signal de fraîcheur du corpus courant. Lire `/v0/snapshot` pour sélectionner la racine courante, puis vérifier l’inventaire choisi et les octets des ressources référencées. Distinguer les racines historiques de la découverte courante.
 
+### Déclaration de découverte et éditions épinglées
+
+Lire la [déclaration](https://gautierdorval.com/governed-context-runtime.json) comme un document versionné. Le contrat préparé `0.4.0` ajoute `referenceDiscovery` ; sa description dans ce guide ne prouve pas que cette version est déjà servie. Vérifier le `schemaVersion` reçu. Un validateur strict limité à `0.3.0` refuse cette nouvelle forme : le consommateur doit sélectionner explicitement le contrat applicable. Le contrat historique et les déclarations archivées restent inchangés.
+
+Dans `referenceDiscovery`, `schemaEdition` fournit le commit exact des schémas, un lien de répertoire pour naviguer et des localisateurs absolus de fichiers JSON Schema bruts pour valider. `documentation` épingle séparément la correspondance et les guides d’instance FR/EN. Son `referenceEdition` désigne l’édition documentaire à ce commit, pas le commit de création d’une étiquette de release. Le champ historique `publicSpecRepositoryPath` demeure un identifiant d’organisation des sources : ne jamais le concaténer à l’URL du dépôt public. Voir la [correspondance des schémas](../schemas.md).
+
+Le [schéma de déclaration 0.4.0](../../spec/declaration/0.4.0.schema.json) et le [contrat 0.3.0 conservé](../../spec/declaration/0.3.0.schema.json) sont distincts des quatre schémas Runtime historiques. `declarationContract` fournit leurs localisateurs bruts épinglés à la révision documentaire.
+
+Ces pointeurs décrivent des cycles de publication indépendants. Lire les identités courantes du logiciel et du corpus dans la [ressource de santé](https://context.gautierdorval.com/v0/health) et l’[instantané](https://context.gautierdorval.com/v0/snapshot). `corpusVersion` nomme une famille ; `corpusRootDigest` identifie le contenu exact. Le commit de déploiement appartient à l’implémentation distincte, pas à cette référence publique. `deployment.timestamp` désigne la création de la version du Worker, pas son premier trafic de production ni un retard sur un commit documentaire. `sourceCommitVerified: false` demeure une limite de provenance. Ni les empreintes concordantes ni ces explications ne prouvent vérité, autorité, permission ou fidélité du modèle.
+
 ## 1. Choisir un contexte déclaré
 
 Lire le registre avant de choisir un identifiant. Par exemple, `representation-gap` sert à examiner un écart déjà identifié entre une représentation et les sources publiées. Le Runtime ne déduit pas cette intention d’un texte libre.
@@ -169,7 +179,7 @@ Le SDK MCP et le client Python indépendant ont joint l’adaptateur par un hôt
 - **Runtime disponible** : les réponses techniques observées montrent un service accessible à une date donnée.
 - **Transport cohérent** : le contrôle publié compare les octets REST et MCP d’un pack précis. Il ne certifie pas tous les usages d’un client.
 - **Contexte vérifié** : la vérification complète exige un instantané et ses archives, sous la politique locale du consommateur.
-- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Les expériences sur modèles restent `NOT_RUN` à ce jour.
+- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Le pilote comparatif sur modèles à quatre conditions reste `NOT_RUN` à ce jour.
 
 Dans `/v0/health`, `mcpEnabled: false` concerne uniquement le Worker résolveur. `externalAdapters.mcp` désigne l’adaptateur séparé ; sa disponibilité se vérifie sur `/mcp`. Le champ `sourceCommitVerified: false` signifie que la déclaration du commit ne constitue pas une attestation indépendante du déploiement.
 
