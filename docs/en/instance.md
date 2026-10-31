@@ -43,6 +43,16 @@ The production Worker implementation is maintained in a private repository. A de
 
 On an immutable archive, digest-addressed snapshot or version-pinned pack, `X-Corpus-Root-Digest` can retain the root recorded when that response entered a cache. It is not a freshness signal for the current corpus. Read `/v0/snapshot` to select the current root, then verify the selected inventory and referenced resource bytes; keep historical roots distinct from current discovery.
 
+### Discovery declaration and pinned editions
+
+Read the [declaration](https://gautierdorval.com/governed-context-runtime.json) as a versioned document. The prepared declaration contract `0.4.0` adds `referenceDiscovery`; its presence in this guide does not establish that this version is already served. Check the received `schemaVersion`. A strict `0.3.0` validator rejects the new shape; consumers must select the applicable contract explicitly. The historical contract and archived declarations remain unchanged.
+
+In `referenceDiscovery`, `schemaEdition` provides the exact schema commit, a directory link for navigation and absolute raw JSON Schema locators for validation. `documentation` pins the mapping and FR/EN instance guides separately. Its `referenceEdition` labels the documentation at that commit, not the commit that created a release tag. The historical `publicSpecRepositoryPath` remains a source-layout identifier: never concatenate it with the public repository URL. See the [schema mapping](../schemas.md).
+
+The applicable [0.4.0 declaration schema](../../spec/declaration/0.4.0.schema.json) and the preserved [0.3.0 contract](../../spec/declaration/0.3.0.schema.json) are separate from the four historical Runtime schemas. `declarationContract` supplies their pinned raw locators at the documentation revision.
+
+These pointers describe independent release cycles. Read current software and corpus identities from the [health resource](https://context.gautierdorval.com/v0/health) and [snapshot](https://context.gautierdorval.com/v0/snapshot). `corpusVersion` names a family; `corpusRootDigest` identifies exact content. The deployment source commit belongs to the separate implementation, not this public reference. `deployment.timestamp` means Worker-version creation time, not first production traffic or delay relative to a documentation commit. `sourceCommitVerified: false` remains a provenance limit. Neither matching digests nor these explanations establish truth, authority, permission or model fidelity.
+
 ## 1. Select a declared context
 
 Read the registry before choosing an identifier. For example, `representation-gap` supports examination of an already identified gap between a representation and published sources. The Runtime does not infer that intent from free text.
@@ -169,7 +179,7 @@ The MCP SDK and the independent Python client reached the adapter through a loop
 - **Available Runtime**: observed technical responses establish an accessible service at a specified time.
 - **Consistent transport**: the published check compares REST and MCP bytes for one specific pack. It does not qualify every client usage.
 - **Verified context**: complete verification requires a snapshot and its archives under the consumer’s local policy.
-- **Faithful answer**: evaluating this requires a separate experiment. Model experiments remain `NOT_RUN` to date.
+- **Faithful answer**: evaluating this requires a separate experiment. The four-condition comparative model pilot remains `NOT_RUN` to date.
 
 In `/v0/health`, `mcpEnabled: false` concerns the resolver Worker only. `externalAdapters.mcp` identifies the separate adapter; its availability is checked at `/mcp`. `sourceCommitVerified: false` means the declared commit is not an independent deployment attestation.
 

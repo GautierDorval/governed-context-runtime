@@ -96,7 +96,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "7d55a98aa2be644f7fc228ce086447bcf649c1dce809facb1653314846e6021b"
+      "sha256": "d6321bee93cf74ac2e99428b6ac6dfb7cc5b1b644a2d6b03a6930c908e4f8373"
     },
     {
       "path": "NOTICE.md",
@@ -108,7 +108,7 @@
       "path": "README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "a613a1affb2cabdb7a447ac213690dbf6fa9c90dd2aa8f4cc2ee0a478d288a64"
+      "sha256": "c5b133f5f051a0c474829561a9cd6db076d08ae6ced6ea62ea125b329e37d6bb"
     },
     {
       "path": "SECURITY.md",
@@ -162,19 +162,19 @@
       "path": "docs/en/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "26e3dd1e9bae5d83aff495f3d54de1ff080fae75e2b090d639055f04c55fe66a"
+      "sha256": "fb72ce891b26f0e6048e40efd17f9432449553983835246066786162c0413107"
     },
     {
       "path": "docs/en/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "409ece14137180bdaf23584c86b002d0bf750b57deacdd4e0f6ccbd599365166"
+      "sha256": "a902aedb547b783031f9a81e50e0a868957f8a9ec0c9e23e60b41b981b911ef6"
     },
     {
       "path": "docs/en/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "571bf83970b739aa3ba00d91aec434bd4b4e5791cbe40b37f8cf1bcb37c3f99a"
+      "sha256": "79a01c9191f7dc9ab568b1fdca69973ce16fa1b5f819c27fbf92838b5e767951"
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -210,7 +210,7 @@
       "path": "docs/fr/README.md",
       "source": "paired-editorial-source",
       "license": "CC-BY-4.0",
-      "sha256": "14355f0f1e11f1e8c57dd369c312e298c251ae12847c0ca3bac5eac2d900e75f"
+      "sha256": "e2a0ea188a380fdba2e3659b689f69babf0735a4a8471ba20edacb9fcf311598"
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -222,13 +222,13 @@
       "path": "docs/fr/instance.md",
       "source": "dated-operational-documentation",
       "license": "CC-BY-4.0",
-      "sha256": "f0def077a185fcd927e79e91add3d08edfd421b9c82f1189f1aa735545ff2884"
+      "sha256": "222384c4c849535b8a282485ef938585526170bb3c5eb139bdf30c5f47526201"
     },
     {
       "path": "docs/fr/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "c18de1e40086ad93b68df947f12f2c6e0e14410bb25d7d648595afed11ec65e7"
+      "sha256": "02a545b1993746c1a193f5c1f98924a124dc125e13b79fab5dec45be7e8621e4"
     },
     {
       "path": "docs/fr/observations.md",
@@ -288,7 +288,7 @@
       "path": "docs/schemas.md",
       "source": "reviewed-schema-mapping",
       "license": "CC-BY-4.0",
-      "sha256": "fa8d353f7dd3b3affefcd28f97ea419767f3349878a0d6a1e4b783f7b8bf21d8"
+      "sha256": "97ce299287e61b76cfbf1503f41db0301d4fc0a4c31e659c955ef4e4ef172842"
     },
     {
       "path": "docs/source.json",
@@ -402,7 +402,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "7e2913cbe7fd5e645384d720cb4a49346eab6b4be84a0dccc8d2e4fbd5528769"
+      "sha256": "622dfe17b9bb06a3ef48e4ca26aaacbb67773b6befe1310a0f574f5c5f1f03cd"
     },
     {
       "path": "package.json",
@@ -547,6 +547,18 @@
       "source": "spec/context-pack.schema.json",
       "license": "Apache-2.0",
       "sha256": "8960237a8d8c310b436ed6137c39357ba2eafa2cc677ef52da1e19a3f44769a5"
+    },
+    {
+      "path": "spec/declaration/0.3.0.schema.json",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "9fd063fab4e5d865b3cb3efbd8971ecacdc6abedcdd5eac9f41d355fbd0c0cb3"
+    },
+    {
+      "path": "spec/declaration/0.4.0.schema.json",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "96d48b24b9af59d41c8e442fad7b4fd91d28cdf6c1ed13801e1deb2ee1bd1a71"
     },
     {
       "path": "spec/evidence/observations.mjs",
@@ -1152,7 +1164,7 @@
       "path": "test/schemas.test.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "2d0a0e441cb55b12d09f5fd131bdb18eb235af82b3841e522e9ae965f91a00f2"
+      "sha256": "9db08362a3dc7de310a7f7ca921109a6ce5c46394079ac1d028cdb0dd31f73e4"
     },
     {
       "path": "test/semantic-boundaries-schemas.test.mjs",
