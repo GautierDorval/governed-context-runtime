@@ -238,7 +238,7 @@ const citationDates = [
     .matchAll(/^[^\S\r\n]*["']?date-released["']?[^\S\r\n]*:[^\r\n]*/gm),
 ];
 assert.equal(citationDates.length, 1, 'edition: exactly one release date');
-assert.equal(citationDates[0][0], 'date-released: 2026-11-01', 'edition: reviewed release date');
+assert.equal(citationDates[0][0], 'date-released: 2026-11-02', 'edition: reviewed release date');
 {
   const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);

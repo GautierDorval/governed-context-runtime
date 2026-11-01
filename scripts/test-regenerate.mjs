@@ -386,13 +386,13 @@ for (const variant of [
   test('release citation refuses changed date metadata after refreshed digests: ' + variant, async t =>
     withCopy(t, async dir => {
       await edit(dir, 'CITATION.cff', text => {
-        const date = 'date-released: 2026-11-01';
+        const date = 'date-released: 2026-11-02';
         const replacement = {
           missing: '',
           different: 'date-released: 2026-10-22',
           impossible: 'date-released: 2026-02-30',
           duplicate: date + '\n' + date,
-          'quoted-key': '"date-released": 2026-11-01',
+          'quoted-key': '"date-released": 2026-11-02',
           indented: '  ' + date,
           'trailing-space': date + ' ',
           'valid-plus-indented': date + '\n  date-released: 2026-10-22',

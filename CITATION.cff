@@ -3,7 +3,7 @@ message: "Cite v0.3.0-proposed and the exact executed commit. The contracts rema
 title: "Governed Context Runtime"
 type: software
 version: 0.3.0-proposed
-date-released: 2026-11-01
+date-released: 2026-11-02
 authors:
   - family-names: Dorval
     given-names: Gautier

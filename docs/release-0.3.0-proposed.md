@@ -1,6 +1,6 @@
 # Reference prerelease 0.3.0-proposed
 
-This edition groups the changes integrated after `v0.2.1-proposed` through `eaca7780e56a02457269fd72f03a4eb10abd8638`, plus the edition metadata reviewed for this publication. The planned UTC publication date is **2026-11-01**. The remote tag and GitHub prerelease establish actual publication; this document and the CFF date do not. Cite `v0.3.0-proposed` together with the exact executed commit.
+This edition groups the changes integrated after `v0.2.1-proposed` through `eaca7780e56a02457269fd72f03a4eb10abd8638`, plus the edition metadata reviewed for this publication. The planned UTC publication date is **2026-11-02**. The remote tag and GitHub prerelease establish actual publication; this document and the CFF date do not. Cite `v0.3.0-proposed` together with the exact executed commit.
 
 ## Included changes
 
@@ -11,6 +11,10 @@ This edition groups the changes integrated after `v0.2.1-proposed` through `eaca
 - Local policy characterization and consolidation of retained T3 evidence, preserving the recorded observations and their attribution limits.
 
 The source integrations are recorded in PRs [10](https://github.com/GautierDorval/governed-context-runtime/pull/10), [12](https://github.com/GautierDorval/governed-context-runtime/pull/12), [13](https://github.com/GautierDorval/governed-context-runtime/pull/13), [14](https://github.com/GautierDorval/governed-context-runtime/pull/14), [15](https://github.com/GautierDorval/governed-context-runtime/pull/15), [16](https://github.com/GautierDorval/governed-context-runtime/pull/16), [17](https://github.com/GautierDorval/governed-context-runtime/pull/17), [18](https://github.com/GautierDorval/governed-context-runtime/pull/18), [19](https://github.com/GautierDorval/governed-context-runtime/pull/19) and [20](https://github.com/GautierDorval/governed-context-runtime/pull/20). Their earlier review and CI results do not substitute for verification of this edition's final commit and archive.
+
+## Dependency security maintenance
+
+The optional companion pins `@modelcontextprotocol/client`, `core` and `server` to 2.3.0, replacing 2.0.0. These packages declare Apache-2.0; their licence texts and notices are included by the existing build. The root development lockfile updates `fast-uri` from 3.1.8 to 3.1.9. These updates address the dependency advisories identified during release preparation. They introduce no dependency in the root runtime path and do not update an already hosted service. The final receipt records the dependency audit and the rebuilt companion checks.
 
 ## Version and compatibility boundaries
 
@@ -32,6 +36,8 @@ L’édition **0.3.0-proposed** regroupe le compagnon MCP Apps facultatif, la le
 
 Cette édition de référence suit son propre cycle. Elle ne modifie pas les services hébergés, leurs révisions Cloudflare, la version du contrat de déclaration ou celle des packs. Les schémas historiques, recettes, vérificateurs, consommateurs, exemples synthétiques et anciennes publications conservent leurs octets. Les nouveaux contrats fermés exigent une sélection explicite du consommateur.
 
+Le compagnon épingle les trois paquets SDK MCP client, core et server à **2.3.0**, avec leurs textes de licence Apache-2.0 inclus par la construction. Le lockfile de développement principal passe `fast-uri` à **3.1.9**. Ces corrections de dépendances ne constituent pas une mise à jour des services hébergés.
+
 Les contrats restent **proposés**, les signatures de démonstration restent réservées aux tests et le pilote scientifique à quatre conditions demeure **NOT_RUN**. Les preuves T3 et les observations de clients gardent leurs dates, leur attribution et leurs limites. Elles ne deviennent pas une preuve générale de fidélité des modèles ou d’amélioration causale.
 
-Les [guides FR](fr/README.md), [comparaison](fr/pack-comparison.md), [instance](fr/instance.md) et [reproduction](fr/reproduction.md) détaillent les usages et leurs limites. La date UTC prévue est le **1er novembre 2026** ; si la publication est reportée, ses métadonnées et leurs contrôles doivent être révisés avant la création de l’étiquette. Aucune ancienne étiquette ni archive n’est réécrite.
+Les [guides FR](fr/README.md), [comparaison](fr/pack-comparison.md), [instance](fr/instance.md) et [reproduction](fr/reproduction.md) détaillent les usages et leurs limites. La date UTC prévue est le **2 novembre 2026** ; si la publication est reportée, ses métadonnées et leurs contrôles doivent être révisés avant la création de l’étiquette. Aucune ancienne étiquette ni archive n’est réécrite.

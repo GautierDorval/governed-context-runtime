@@ -60,13 +60,13 @@
       "path": "CHANGELOG.md",
       "source": "edition-notes",
       "license": "CC-BY-4.0",
-      "sha256": "08beffe5da676a6f7c654eff3601f9346123a87008e1b675ad2a9bcdb8c60287"
+      "sha256": "807f1914c73b6e0d7a2b4f506e9f9b852bc303a432a623758dbbc0bacda270e5"
     },
     {
       "path": "CITATION.cff",
       "source": "citation",
       "license": "CC-BY-4.0",
-      "sha256": "61375f49f39f0e28c16f7d0436beb0d18ad17c6fbf11c13526b2b8d1bf53e50a"
+      "sha256": "f5af6406dcb1709c51037981e535a8fca90090c73d53d51a269634503797d19c"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
@@ -96,7 +96,7 @@
       "path": "MAINTAINING.md",
       "source": "repository-maintenance-2026-10-14",
       "license": "CC-BY-4.0",
-      "sha256": "70d24dcbd88bf7c71a122bbcffc13f21343004ddaeac8c7f2b4692f245ed4e54"
+      "sha256": "f2a00521693f1f36e5752a39f3486e0c615e830bdd7fcaca8cc065ef36f12ec3"
     },
     {
       "path": "NOTICE.md",
@@ -294,7 +294,7 @@
       "path": "docs/release-0.3.0-proposed.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "03dbec0f518c31cded3559eb0f0d90c97667e8c50c229345bfc0ebfca73cb1e1"
+      "sha256": "4624bb249f5ffebbdf3133c8453fe636e6392ab7ca3c74feefe7d11d95c47cdb"
     },
     {
       "path": "docs/schemas.md",
@@ -408,13 +408,13 @@
       "path": "package-lock.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "efd1d6ac02c342d160d83deafb8ca959e5a0c855e428650aa7ff46f94cfe2387"
+      "sha256": "ccfacaab0fabfa8624467e75f72bf6da647d6b8b7d708e8d01804cfbb560537b"
     },
     {
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "92ef76045ec8d02ff0c4321620cec4a527bd6276534fcef092ed89e17f0774b1"
+      "sha256": "afdb920ef20c9f88fe432d5ffc1300b4687a64bbb8863a90dddfa34d40bd3b06"
     },
     {
       "path": "package.json",
@@ -486,7 +486,7 @@
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "89962f74c9d9f4b92b57155a7e93e0614b8fe0666f11b27633c83a1cc86c6ae4"
+      "sha256": "60ccc0f3f45b916d879f0f5041a59a3b0f0254ee5b66596ab881d9dbb9713e2b"
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -546,7 +546,7 @@
       "path": "scripts/test-regenerate.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "5aac85a9091d457228850682a2fcb2ed96a23ceb4017f6ef539dee550abfa209"
+      "sha256": "2f808044f38ce0b9e6868ffbac442bfd5d3e4258e7777c1c029b08363890d824"
     },
     {
       "path": "scripts/verify-t3-evidence.mjs",
@@ -720,13 +720,13 @@
       "path": "spec/examples/mcp-apps/package-lock.json",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "e28b6e87ad82409806fd70fa54f41bb41f4ef0803de1c171e0d4649cdbf8c8f6"
+      "sha256": "d03cc593426acda31c11a705869d3421afe3c643d1587efbcbbb31d2f2459e9e"
     },
     {
       "path": "spec/examples/mcp-apps/package.json",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "19a050b320989ebb0271073992954d0e5c7a0c074fb050e63e661d9c7a398cff"
+      "sha256": "0a7927154555e44a5df6ad0e9b9edff9b474147edac207a470b59c5cbad86f05"
     },
     {
       "path": "spec/examples/mcp-apps/prepare.mjs",

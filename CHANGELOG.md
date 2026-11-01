@@ -2,7 +2,7 @@
 
 ## 0.3.0-proposed, publication candidate
 
-New reference edition grouping the optional MCP Apps companion, complete-pack reading, bounded diagnostics, exact pack comparison and its bilingual Web view, declaration discovery/contracts, retained T3 documentation and development-only generative testing. Historical contracts, synthetic bytes and prior releases are preserved. Contracts remain proposed; the scientific pilot remains NOT_RUN. The tag, archive and release receipt establish publication separately from service deployment. See [release notes](docs/release-0.3.0-proposed.md).
+New reference edition grouping the optional MCP Apps companion, complete-pack reading, bounded diagnostics, exact pack comparison and its bilingual Web view, declaration discovery/contracts, retained T3 documentation and development-only generative testing. SDK client/core/server 2.3.0 and development fast-uri 3.1.9 address the dependency advisories found during release preparation. Historical contracts, synthetic bytes and prior releases are preserved. Contracts remain proposed; the scientific pilot remains NOT_RUN. The tag, archive and release receipt establish publication separately from service deployment. See [release notes](docs/release-0.3.0-proposed.md).
 
 ## Local comparison candidate, 2026-10-29
 
