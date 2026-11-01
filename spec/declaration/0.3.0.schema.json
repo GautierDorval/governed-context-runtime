@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gautierdorval.com/spec/governed-context-runtime/governed-context-runtime-declaration.schema.json",
+  "title": "Governed context runtime declaration",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "type",
+    "status",
+    "site",
+    "infrastructureToken",
+    "notLayer",
+    "recommendedRuntimeOrigin",
+    "currentRuntimeDeployment",
+    "publicSpecRepositoryPath",
+    "canonicalIntentRegistry",
+    "wellKnownIntentRegistry",
+    "v0Boundary",
+    "allowedOperations",
+    "forbiddenOperations",
+    "privacyBoundary",
+    "observability",
+    "serviceContracts",
+    "observabilityContext"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.3.0"
+    },
+    "type": {
+      "const": "GovernedContextRuntimeDeclaration"
+    },
+    "status": {
+      "enum": [
+        "stable",
+        "deprecated"
+      ]
+    },
+    "site": {
+      "type": "string",
+      "format": "uri"
+    },
+    "infrastructureToken": {
+      "const": "governed-context-runtime"
+    },
+    "notLayer": {
+      "const": true
+    },
+    "recommendedRuntimeOrigin": {
+      "type": "string",
+      "format": "uri"
+    },
+    "currentRuntimeDeployment": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ]
+    },
+    "publicSpecRepositoryPath": {
+      "const": "spec/governed-context-runtime/"
+    },
+    "canonicalIntentRegistry": {
+      "type": "string",
+      "format": "uri"
+    },
+    "wellKnownIntentRegistry": {
+      "type": "string",
+      "format": "uri"
+    },
+    "v0Boundary": {
+      "type": "object",
+      "required": [
+        "runtimeSelectsIntentFromFreeText",
+        "agentSelectsIntent",
+        "runtimeComposesAtRequestTime",
+        "runtimeProducesAnswers",
+        "runtimeRecommendsServices",
+        "runtimeScoresFidelity"
+      ],
+      "properties": {
+        "runtimeSelectsIntentFromFreeText": {
+          "const": false
+        },
+        "agentSelectsIntent": {
+          "const": true
+        },
+        "runtimeComposesAtRequestTime": {
+          "const": false
+        },
+        "runtimeProducesAnswers": {
+          "const": false
+        },
+        "runtimeRecommendsServices": {
+          "const": false
+        },
+        "runtimeScoresFidelity": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "forbiddenOperations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "resolve_intent_from_free_text",
+          "compose_pack_at_request_time",
+          "generate_answer",
+          "recommend_service",
+          "score_response_fidelity",
+          "write_governance_state"
+        ]
+      },
+      "minItems": 1
+    },
+    "privacyBoundary": {
+      "type": "object",
+      "required": [
+        "noCookies",
+        "noRawIpStorage",
+        "noHashedIpStorage",
+        "noRawUserAgentStorage",
+        "noPromptStorage",
+        "noResponseStorage",
+        "rawEventJournal",
+        "ledgerScope"
+      ],
+      "properties": {
+        "noCookies": {
+          "const": true
+        },
+        "noRawIpStorage": {
+          "const": true
+        },
+        "noPromptStorage": {
+          "const": true
+        },
+        "noResponseStorage": {
+          "const": true
+        },
+        "ledgerScope": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "noHashedIpStorage": {
+          "const": true
+        },
+        "noRawUserAgentStorage": {
+          "const": true
+        },
+        "rawEventJournal": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "allowedOperations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "GET /",
+          "GET /v0/health",
+          "GET /v0/capabilities",
+          "GET /v0/intents",
+          "GET /v0/intents/:intentToken",
+          "GET /v0/packs",
+          "GET /v0/packs/:intentToken/:lang",
+          "GET /v0/packs/:intentToken/:lang/manifest",
+          "GET /v0/units/:unitId",
+          "GET /v0/snapshot",
+          "GET /v0/snapshots/:snapshotDigest",
+          "GET /v0/artifacts/:artifactDigest",
+          "GET /v0/verification",
+          "GET /v0/linkset",
+          "GET /v0/lifecycle",
+          "GET /v0/openapi",
+          "GET /v0/errors"
+        ]
+      },
+      "minItems": 17,
+      "maxItems": 17,
+      "uniqueItems": true
+    },
+    "observability": {
+      "type": "object",
+      "required": [
+        "ledgerStatus",
+        "eventSchema",
+        "dataPolicy",
+        "aggregateOnly",
+        "productionActivationState",
+        "stateObservedAt",
+        "stateEvidence",
+        "authorizationEvidenceState",
+        "standingAuthorizationForFutureMutation",
+        "functionalObservationStatus",
+        "functionalObservationCapturedAt",
+        "functionalExerciseState"
+      ],
+      "properties": {
+        "ledgerStatus": {
+          "const": "active"
+        },
+        "eventSchema": {
+          "const": "https://gautierdorval.com/runtime-ledger-event.schema.json"
+        },
+        "dataPolicy": {
+          "const": "https://gautierdorval.com/runtime-data-policy.json"
+        },
+        "aggregateOnly": {
+          "const": true
+        },
+        "productionActivationState": {
+          "const": "active"
+        },
+        "stateObservedAt": {
+          "const": "2026-07-25T22:51:28.8944126Z",
+          "format": "date-time"
+        },
+        "stateEvidence": {
+          "const": "https://gautierdorval.com/runtime-ledger-spec.json"
+        },
+        "authorizationEvidenceState": {
+          "const": "operator_evidence_not_committed"
+        },
+        "standingAuthorizationForFutureMutation": {
+          "const": false
+        },
+        "functionalObservationStatus": {
+          "const": "candidate_pending_independent_audit"
+        },
+        "functionalObservationCapturedAt": {
+          "const": "2026-08-07T16:52:28Z",
+          "format": "date-time"
+        },
+        "functionalExerciseState": {
+          "const": "accepted_and_report_paths_observed_strict_outcomes_not_observed_after_0002"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Historical observations of the separate aggregate ledger. Their dates and audit status do not qualify the current REST/MCP release; see serviceContracts for its live descriptions."
+    },
+    "serviceContracts": {
+      "type": "object",
+      "required": [
+        "index",
+        "capabilities",
+        "openapi",
+        "mcpDiscoveryDocument",
+        "mcpDiscoveryPointer"
+      ],
+      "properties": {
+        "index": {
+          "const": "https://context.gautierdorval.com/"
+        },
+        "capabilities": {
+          "const": "https://context.gautierdorval.com/v0/capabilities"
+        },
+        "openapi": {
+          "const": "https://context.gautierdorval.com/v0/openapi"
+        },
+        "mcpDiscoveryDocument": {
+          "const": "https://context.gautierdorval.com/v0/health"
+        },
+        "mcpDiscoveryPointer": {
+          "const": "/externalAdapters/mcp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "observabilityContext": {
+      "type": "object",
+      "required": [
+        "component",
+        "temporalScope",
+        "qualifiesCurrentRuntimeRelease"
+      ],
+      "properties": {
+        "component": {
+          "const": "runtime-ledger"
+        },
+        "temporalScope": {
+          "const": "historical-observations-only"
+        },
+        "qualifiesCurrentRuntimeRelease": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

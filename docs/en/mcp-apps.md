@@ -88,6 +88,8 @@ Sources checked on 2026-10-26: [MCP Apps overview](https://modelcontextprotocol.
 
 ## Optional nonce diagnostic
 
+`gcrDiagnosticNonce` is a diagnostic token used to observe whether the model can reproduce an unpredictable value supplied only through the channel being tested. It does not authenticate a person or client, create an anti-bot session, or grant permission. It is not tied to an IP address, User-Agent or cookie. In the [October 26, 2026 record](../../records/mcp-apps-2026-10-26.md#nonce-diagnostic-local-qualification-and-real-client-preflight-2026-10-26), “real-client preflight” means the preliminary check needed to begin the trial in the conversational client.
+
 Diagnostics are off by default. Open **Optional diagnostic** and enable it explicitly. **Short** supplies only a 140-byte UTF-8 envelope, with no pack. **Full** requires inspection of the current selection and appends the entire unchanged projection. Both modes place the envelope first, ending with two newline characters. It is not verified GCR data. The existing local limit is 200,000 UTF-8 bytes including the envelope, with no truncation; this is not an established host limit.
 
 Each explicit submission draws 16 cryptographic browser bytes encoded as 32 hexadecimal characters for `gcrDiagnosticNonce`, with an independent trial identifier. Missing `crypto.getRandomValues` or Web Crypto SHA-256 refuses the trial; there is no `Math.random` fallback. The SDK remains pinned at 2.0.3.

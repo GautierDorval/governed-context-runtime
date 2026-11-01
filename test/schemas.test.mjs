@@ -220,3 +220,24 @@ test('an envelope-scope unit without claimClass or canonicalText is refused by t
     'unit_recipe_mismatch',
   );
 });
+
+// Declaration contracts have separate identities and never join the four-schema catalogue.
+test('versioned declaration contracts compile as closed draft 2020-12 schemas offline', async () => {
+  // Historical observability uses const with format but no type. strictTypes is an Ajv lint, not a JSON Schema assertion.
+  const declarations = new Ajv2020({
+    strict: true,
+    strictTypes: false,
+    strictRequired: false,
+    allErrors: true,
+    validateFormats: false,
+  });
+  for (const version of ['0.3.0', '0.4.0']) {
+    const schema = JSON.parse(
+      await readFile(new URL('../spec/declaration/' + version + '.schema.json', import.meta.url), 'utf8'),
+    );
+    assert.equal(schema.properties.schemaVersion.const, version);
+    assert.equal(schema.additionalProperties, false);
+    declarations.addSchema(schema);
+    assert.equal(typeof declarations.getSchema(schema.$id), 'function');
+  }
+});

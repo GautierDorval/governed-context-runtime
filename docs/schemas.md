@@ -11,6 +11,18 @@ The four JSON Schema files under `spec/` are included in this package. Their `$i
 
 The repository base is `https://github.com/GautierDorval/governed-context-runtime`. `docs/source.json.publicSpecRepositoryPath` is the full locator of the already-published compatible schema edition. The historical runtime declaration’s `spec/governed-context-runtime/` is a source-layout identifier; resolve the four listed identifiers with the explicit mapping above, not by appending that path to the public repository. Relative links resolve from each containing document in GitHub or a clone. Website links should use that absolute base and the intended published revision. No private checkout is needed. The fixture is fictional and follows the existing instance schema, including its closed intent tokens and historical `generatedBy` token. That token does not name this fixture’s generator; the bundle states its actual fictional provenance.
 
+## Discovery from the declaration
+
+The prepared declaration contract `0.4.0` exposes `referenceDiscovery`: `schemaEdition.files` supplies absolute raw URLs at the declared schema commit; `documentation` links this mapping and the instance guides at a separate documentation commit. A directory URL is for navigation, not a JSON Schema response. Read the received declaration version before selecting its closed contract; a validator restricted to `0.3.0` rejects `0.4.0`. This documentation describes a prepared transition, not proof of its deployment.
+
+The four schema identities and their bytes above are unchanged. Their compatible edition remains pinned independently of the guides. Follow the [English discovery guide](en/instance.md#discovery-declaration-and-pinned-editions) or [guide français](fr/instance.md#déclaration-de-découverte-et-éditions-épinglées) to distinguish declaration, reference, software, corpus and deployment identities.
+
+### Versioned declaration contracts
+
+The declaration is a separate object from packs, manifests, intents and snapshots. Its [historical closed 0.3.0 contract](../spec/declaration/0.3.0.schema.json) is preserved byte for byte. The [prepared 0.4.0 contract](../spec/declaration/0.4.0.schema.json) requires `referenceDiscovery` and has a distinct `$id`. Resolve these identifiers with these local files or the pinned raw URLs in `referenceDiscovery.declarationContract`. The schema identifier is not a promise of a live download endpoint.
+
+Select by the received declaration’s `schemaVersion`. Do not feed a 0.4.0 declaration to a validator restricted to 0.3.0, strip unknown fields or silently fall back. Historical declarations remain readable with 0.3.0; current-source consumers move explicitly to 0.4.0 when that transition is published. The four historical Runtime schemas above remain unchanged and are pinned to their separate edition.
+
 ## Validation layers
 
 A schema checks the structure of an object that has already been parsed. It cannot see what parsing discarded, and the historical schemas do not state every requirement of the verification profile.
