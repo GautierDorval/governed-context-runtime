@@ -1,9 +1,9 @@
 cff-version: 1.2.0
-message: "Cite v0.2.1-proposed and the exact executed commit. The contracts remain proposed; the GitHub release records publication of this reference package, not deployment of the hosted service."
+message: "Cite v0.3.0-proposed and the exact executed commit. The contracts remain proposed; the GitHub release records publication of this reference package, not deployment of the hosted service."
 title: "Governed Context Runtime"
 type: software
-version: 0.2.1-proposed
-date-released: 2026-10-21
+version: 0.3.0-proposed
+date-released: 2026-11-01
 authors:
   - family-names: Dorval
     given-names: Gautier

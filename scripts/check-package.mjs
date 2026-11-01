@@ -121,7 +121,7 @@ for (const path of licences.reserved) assert(expected.includes(path), 'reserved 
 const manifest = parse(await readFile(resolve(root, 'package-manifest.json')));
 exact(manifest, 'schema,documentVersion,fictionalContextRoot,publicEvidencePublicationId,files');
 assert.equal(manifest.schema, 'runtime-public-package/0.2.0-proposed');
-const REFERENCE_EDITION = '0.2.1-proposed';
+const REFERENCE_EDITION = '0.3.0-proposed';
 assert.equal(manifest.documentVersion, REFERENCE_EDITION, 'edition: manifest');
 assert.equal(runtimePackage.version, REFERENCE_EDITION, 'edition: package');
 assert.deepEqual(
@@ -238,7 +238,7 @@ const citationDates = [
     .matchAll(/^[^\S\r\n]*["']?date-released["']?[^\S\r\n]*:[^\r\n]*/gm),
 ];
 assert.equal(citationDates.length, 1, 'edition: exactly one release date');
-assert.equal(citationDates[0][0], 'date-released: 2026-10-21', 'edition: reviewed release date');
+assert.equal(citationDates[0][0], 'date-released: 2026-11-01', 'edition: reviewed release date');
 {
   const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);

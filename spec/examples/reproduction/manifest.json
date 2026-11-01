@@ -17,12 +17,12 @@
     {
       "path": "docs/en/reproduction.md",
       "bytes": 7941,
-      "sha256": "5acda11ff88aca744f4efe72311cd717561a7004ec54450ffe31dcc06bbe454d"
+      "sha256": "a20949d5ffbad290d39635dcfd72a5ab535c5d13e3d5aa7db562471bd36fa7c0"
     },
     {
       "path": "docs/fr/reproduction.md",
       "bytes": 8428,
-      "sha256": "f342c837d6fcb08a52a7ba2695a46739a9fe03d3e4a5d1ae377758ee6c2baceb"
+      "sha256": "efbb0c56bdca6b867b7d39be48433fcfe34c8a231ebb307e7ae582f3a0dcb22f"
     },
     {
       "path": "spec/attestation-recipes.json",

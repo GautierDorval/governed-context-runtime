@@ -1,6 +1,6 @@
 {
   "name": "governed-context-runtime-reference",
-  "version": "0.2.1-proposed",
+  "version": "0.3.0-proposed",
   "description": "Reference contracts, bilingual documentation and synthetic verification examples for Governed Context Runtime.",
   "license": "Apache-2.0 AND CC-BY-4.0",
   "homepage": "https://github.com/GautierDorval/governed-context-runtime#readme",

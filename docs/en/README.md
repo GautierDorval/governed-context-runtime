@@ -46,7 +46,7 @@ WebMCP could provide another interface to this path, but this reference contains
 
 ## Reference version
 
-Reference edition 0.2.1-proposed is a prerelease of proposed contracts. Cite v0.2.1-proposed and the exact executed commit; the GitHub release records its publication. The hosted service follows a separate publication lifecycle. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains.
+Reference edition 0.3.0-proposed is a prerelease of proposed contracts. Cite v0.3.0-proposed and the exact executed commit; the GitHub release records its publication. The hosted service follows a separate publication lifecycle. This repository contains offline reference code and fictional examples, not the hosted service, its production corpus or a turnkey deployment for other domains. The release tag fixes the distributed bytes; main may contain later changes.
 
 ## Choose context
 
@@ -111,7 +111,7 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 [Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](model-comparison.md).
 
-[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.2.1-proposed.md). The four-condition pilot is **NOT_RUN**.
+[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.3.0-proposed.md). The four-condition pilot is **NOT_RUN**.
 
 ## Local MCP Apps companion
 

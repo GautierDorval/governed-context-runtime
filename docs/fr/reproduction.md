@@ -122,4 +122,4 @@ cas d’échec. Voir le [contrat d’entrée](../verification.md).
 
 ## Préversion de référence et qualification
 
-La préversion de référence `0.2.1-proposed` est identifiée par son étiquette distante et sa release GitHub. Citer cette étiquette et le commit exact exécuté ; `v0.2.0-proposed` conserve ses octets historiques. La [qualification hors ligne](qualification.md), le [pilote à quatre conditions, NOT_RUN](../model-comparison.md) et les [notes de version](../release-0.2.1-proposed.md) ont des portées distinctes. La trousse fictive signée reste distincte de l’exemple sémantique non signé.
+La préversion de référence `0.3.0-proposed` est identifiée par son étiquette distante et sa release GitHub. Citer cette étiquette et le commit exact exécuté ; `v0.2.0-proposed` conserve ses octets historiques. La [qualification hors ligne](qualification.md), le [pilote à quatre conditions, NOT_RUN](../model-comparison.md) et les [notes de version](../release-0.3.0-proposed.md) ont des portées distinctes. La trousse fictive signée reste distincte de l’exemple sémantique non signé.
