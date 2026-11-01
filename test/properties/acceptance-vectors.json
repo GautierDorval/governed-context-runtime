@@ -1,0 +1,396 @@
+{
+  "description": "Literal acceptance witnesses from the owner-supplied lot 03; execution status belongs to the generated report, not this fixture.",
+  "referenceCommit": "6feacce82d9d46125d01b08cb189158837e048d9",
+  "cases": [
+    {
+      "id": "portable-key-order-e000-vs-10000",
+      "profile": "gd-portable-json-v1",
+      "purpose": "Le tri UTF-16 place U+10000 avant U+E000.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"\\ue000\":1,\"\\ud800\\udc00\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": false,
+            "nfc": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "canonicalText": "{\"𐀀\":2,\"\":1}"
+      },
+      "mutationWitness": {
+        "mutation": "portable-sort",
+        "seed": 31001,
+        "path": "0:0:0",
+        "counterexample": [
+          [
+            57344,
+            65536
+          ]
+        ],
+        "generatorVersion": "lot03-v1",
+        "fastCheck": "4.10.2",
+        "note": "Independently supplied literal also matches the minimized injected-fault witness; not a production defect."
+      }
+    },
+    {
+      "id": "historical-key-order-e000-vs-10000",
+      "profile": "deterministic-json-sort-keys-v0",
+      "purpose": "Le tri par points de code place U+E000 avant U+10000.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"\\ue000\":1,\"\\ud800\\udc00\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": true
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": true,
+            "nfc": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "canonicalText": "{\"\":1,\"𐀀\":2}"
+      }
+    },
+    {
+      "id": "portable-preserves-decomposed-string",
+      "profile": "gd-portable-json-v1",
+      "purpose": "La chaîne reste U+0065 U+0301. Ce profil ne normalise pas en NFC.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"s\":\"e\\u0301\"}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": false,
+            "nfc": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "canonicalText": "{\"s\":\"é\"}"
+      }
+    },
+    {
+      "id": "pack-profile-composes-string-nfc",
+      "profile": "gd-deterministic-json-v1",
+      "purpose": "La chaîne U+0065 U+0301 devient U+00E9 dans le profil NFC des packs.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"s\":\"e\\u0301\"}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": true,
+            "nfc": true
+          }
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "canonicalText": "{\"s\":\"é\"}"
+      }
+    },
+    {
+      "id": "pack-profile-rejects-normalized-key-collision",
+      "profile": "gd-deterministic-json-v1",
+      "purpose": "Les clés décodées sont distinctes avant NFC, puis entrent en collision. Le refus intervient dans canonical.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"\\u00e9\":1,\"e\\u0301\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": true,
+            "nfc": true
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "stage": "canonical",
+        "errorName": "VerificationError",
+        "errorMessage": "normalized_key_collision"
+      }
+    },
+    {
+      "id": "portable-keeps-distinct-non-normalized-keys",
+      "profile": "gd-portable-json-v1",
+      "purpose": "Les mêmes clés restent distinctes sans NFC et sont triées selon UTF-16.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"\\u00e9\":1,\"e\\u0301\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": false,
+            "nfc": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "canonicalText": "{\"é\":2,\"é\":1}"
+      }
+    },
+    {
+      "id": "portable-rejects-escaped-decoded-duplicate",
+      "profile": "gd-portable-json-v1",
+      "purpose": "x et son échappement U+0078 sont la même clé après décodage, avant toute normalisation.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"x\":1,\"\\u0078\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "stage": "strictParse",
+        "errorName": "VerificationError",
+        "errorMessage": "duplicate_key"
+      }
+    },
+    {
+      "id": "portable-rejects-escaped-unpaired-surrogate",
+      "profile": "gd-portable-json-v1",
+      "purpose": "L’entrée est un texte JSON ASCII contenant un échappement de substitut isolé. L’enveloppe ne contient aucun substitut isolé.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "\"\\ud800\""
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "stage": "strictParse",
+        "errorName": "VerificationError",
+        "errorMessage": "invalid_unicode"
+      }
+    },
+    {
+      "id": "portable-rejects-invalid-utf8-byte",
+      "profile": "gd-portable-json-v1",
+      "purpose": "L’octet FF entre deux guillemets n’est pas une séquence UTF-8 valide.",
+      "input": {
+        "kind": "utf8-bytes-hex",
+        "hex": "22ff22"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": false
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "stage": "strictParse",
+        "errorName": "VerificationError",
+        "errorMessage": "invalid_utf8"
+      }
+    },
+    {
+      "id": "text-profile-trims-0085-and-composes-nfc",
+      "profile": "utf8-nfc-lf-trimmed-v0",
+      "purpose": "U+0085 est retiré aux deux extrémités, CRLF est normalisé puis retiré en bordure, et e plus accent devient é.",
+      "input": {
+        "kind": "text",
+        "text": "é\r\n"
+      },
+      "steps": [
+        {
+          "function": "textBytes"
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "encoding": "utf-8",
+        "text": "é"
+      }
+    },
+    {
+      "id": "text-profile-preserves-interior-0085-and-normalizes-cr",
+      "profile": "utf8-nfc-lf-trimmed-v0",
+      "purpose": "Le retrait des blancs ne s’applique pas à U+0085 à l’intérieur du texte. Un CR intérieur devient LF.",
+      "input": {
+        "kind": "text",
+        "text": "AB\rC"
+      },
+      "steps": [
+        {
+          "function": "textBytes"
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "encoding": "utf-8",
+        "text": "AB\nC"
+      }
+    },
+    {
+      "id": "text-profile-keeps-feff-at-boundaries",
+      "profile": "utf8-nfc-lf-trimmed-v0",
+      "purpose": "U+FEFF n’appartient pas à l’ensemble de blancs Python déclaré. Le traitement texte ne doit pas adopter le comportement de String.trim.",
+      "input": {
+        "kind": "text",
+        "text": "﻿x﻿"
+      },
+      "steps": [
+        {
+          "function": "textBytes"
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "encoding": "utf-8",
+        "text": "﻿x﻿"
+      }
+    },
+    {
+      "id": "text-interior-nfc-2000",
+      "profile": "utf8-nfc-lf-trimmed-v0",
+      "purpose": "Reduced oracle-construction regression: interior whitespace is retained, then canonical Unicode composition still applies. Confirmed independently with Python unicodedata.",
+      "input": {
+        "kind": "text",
+        "text": "A B"
+      },
+      "steps": [
+        {
+          "function": "textBytes"
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "text": "A B"
+      }
+    },
+    {
+      "id": "text-interior-nfc-2001",
+      "profile": "utf8-nfc-lf-trimmed-v0",
+      "purpose": "Reduced oracle-construction regression: interior whitespace is retained, then canonical Unicode composition still applies. Confirmed independently with Python unicodedata.",
+      "input": {
+        "kind": "text",
+        "text": "A B"
+      },
+      "steps": [
+        {
+          "function": "textBytes"
+        }
+      ],
+      "expected": {
+        "status": "accept",
+        "text": "A B"
+      }
+    },
+    {
+      "id": "reduced-nfc-collision",
+      "profile": "gd-deterministic-json-v1",
+      "purpose": "Exact minimized witness from controlled removal of the NFC collision guard, not a production defect.",
+      "input": {
+        "kind": "json-text",
+        "rawJson": "{\"e\\u0301\":1,\"\\u00e9\":2}"
+      },
+      "steps": [
+        {
+          "function": "strictParse",
+          "options": {
+            "historical": true
+          }
+        },
+        {
+          "function": "canonical",
+          "options": {
+            "historical": true,
+            "nfc": true
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "stage": "canonical",
+        "errorName": "VerificationError",
+        "errorMessage": "normalized_key_collision"
+      },
+      "mutationWitness": {
+        "mutation": "nfc-collision",
+        "seed": 31007,
+        "path": "0:0:0",
+        "counterexample": [
+          "",
+          [
+            "é",
+            "é"
+          ]
+        ],
+        "generatorVersion": "lot03-v1",
+        "fastCheck": "4.10.2"
+      }
+    }
+  ]
+}

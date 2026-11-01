@@ -25,14 +25,16 @@
     "format": "prettier --write \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
     "format:check": "prettier --check \"scripts/**/*.{mjs,mts}\" \"test/**/*.{mjs,mts}\"",
     "typecheck": "tsc -p tsconfig.json",
-    "test:dev": "npm run format:check && npm run typecheck && node --test test/schemas.test.mjs test/observation-schemas.test.mjs test/semantic-boundaries-schemas.test.mjs",
+    "test:dev": "npm run format:check && npm run typecheck && node --test test/schemas.test.mjs test/observation-schemas.test.mjs test/semantic-boundaries-schemas.test.mjs && npm run test:properties",
     "demo:semantics": "node spec/examples/semantic-boundaries/demo.mjs",
     "reproduce": "node spec/examples/reproduction/run.mjs",
-    "verify:t3": "node scripts/verify-t3-evidence.mjs"
+    "verify:t3": "node scripts/verify-t3-evidence.mjs",
+    "test:properties": "node scripts/run-property-tests.mjs"
   },
   "devDependencies": {
     "@types/node": "24.19.2",
     "ajv": "8.20.0",
+    "fast-check": "4.10.2",
     "prettier": "3.9.10",
     "typescript": "7.0.2"
   }

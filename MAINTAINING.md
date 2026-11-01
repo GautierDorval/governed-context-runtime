@@ -41,6 +41,10 @@ Dependabot cannot perform step 2 itself, and no workflow with write access does 
 
 `scripts/test-mutations.mjs` applies controlled mutations to a temporary copy of `spec/reference/verification.mjs` and requires each one to make these tests fail on an assertion. `scripts/mutation-verdict.mjs` reads that outcome from the structured events of the `node:test` runner, not from printed output; a crash, a timeout or an inconsistent count is reported as a broken mutant, never as a detection. When a reviewed change to the verifier moves or rewrites a mutated line, the harness stops with "mutation target must occur exactly once": update the mutation list in the same pull request rather than deleting the case.
 
+## Development property campaigns
+
+`npm run test:properties`, included in `test:dev`, adds fast-check and an exact Python 3.14.9 oracle only to the development path. Its [guide](docs/property-testing.md) specifies the distinct profiles, seeds, budgets, independent witnesses, controlled mutations and partial replay commands. Reports stay outside the repository; a reduced case becomes a fixture only after explicit review and inventory regeneration. Keep `npm test` and the demo installation-free, and prove that on a clean inventoried copy of the final candidate.
+
 ## Interrupted regeneration
 
 `npm run regenerate` prepares both backups and replacement files in `.regenerate-staging/`, then publishes the complete recovery state as `.regenerate/` before replacing either registry. If interrupted, the generator refuses both working directories. Run `npm run regenerate:recover`, then `npm run regenerate` and `npm test`.
