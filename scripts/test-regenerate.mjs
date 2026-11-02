@@ -413,3 +413,55 @@ for (const variant of [
     }),
   );
 }
+
+for (const extra of [
+  '"version": 0.2.1-proposed',
+  "'version': 0.2.1-proposed",
+  'version : 0.2.1-proposed',
+  '  version: 0.2.1-proposed',
+]) {
+  test('release citation refuses an alternate duplicate version after refreshed digests: ' + extra, async t =>
+    withCopy(t, async dir => {
+      await edit(dir, 'CITATION.cff', text => text + extra + '\n');
+      const raw = await readFile(join(dir, 'CITATION.cff'));
+      await edit(dir, 'package-policy.json', text => {
+        const value = JSON.parse(text);
+        value.declarationDigests['CITATION.cff'] = hash(raw);
+        return JSON.stringify(value, null, 2) + '\n';
+      });
+      await write(dir);
+      assert.deepEqual(await check(dir), [], 'refreshed digests must not hide a conflicting version');
+      assert.match(checker(dir), /^FAIL .*edition: exactly one plain CFF version/);
+    }),
+  );
+}
+
+for (const variant of ['cff-message', 'en-status', 'fr-status', 'both-status']) {
+  test('current citation refuses a stale edition after refreshed digests: ' + variant, async t =>
+    withCopy(t, async dir => {
+      if (variant === 'cff-message') {
+        await edit(dir, 'CITATION.cff', text => text.replace('Cite v0.3.0-proposed', 'Cite v0.2.1-proposed'));
+        const raw = await readFile(join(dir, 'CITATION.cff'));
+        await edit(dir, 'package-policy.json', text => {
+          const value = JSON.parse(text);
+          value.declarationDigests['CITATION.cff'] = hash(raw);
+          return JSON.stringify(value, null, 2) + '\n';
+        });
+      } else {
+        const documentation = JSON.parse(await readFile(join(dir, 'docs/source.json'), 'utf8'));
+        for (const lang of ['en', 'fr']) {
+          if (variant !== 'both-status' && variant !== lang + '-status') continue;
+          const before = documentation[lang].status;
+          const after = before.replaceAll('0.3.0-proposed', '0.2.1-proposed');
+          documentation[lang].status = after;
+          for (const path of lang === 'en' ? ['README.md', 'docs/en/README.md'] : ['docs/fr/README.md'])
+            await edit(dir, path, text => text.replace(before, after));
+        }
+        await writeFile(join(dir, 'docs/source.json'), JSON.stringify(documentation, null, 2) + '\n');
+      }
+      await write(dir);
+      assert.deepEqual(await check(dir), [], 'refreshed digests must not hide stale visible citations');
+      assert.match(checker(dir), /^FAIL .*edition: citation (message|status)/);
+    }),
+  );
+}

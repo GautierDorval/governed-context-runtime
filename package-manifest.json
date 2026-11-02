@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "79a01c9191f7dc9ab568b1fdca69973ce16fa1b5f819c27fbf92838b5e767951",
-      "bytes": 18107
+      "sha256": "b5bb144bbe43e1653d6eeafce216dcbd36657fffc000eb1d01da680c45c0b102",
+      "bytes": 18234
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -191,8 +191,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "02a545b1993746c1a193f5c1f98924a124dc125e13b79fab5dec45be7e8621e4",
-      "bytes": 20039
+      "sha256": "790e24f6c7f5b51b00512b04897b0f9f1595b3ee8caf782640134da25be573f2",
+      "bytes": 20217
     },
     {
       "path": "docs/fr/observations.md",
@@ -406,13 +406,13 @@
     },
     {
       "path": "rights.json",
-      "sha256": "cc568de66bc1f6d0ac0003b6568fb95227532151062a4bfbe7ca582d5f18168e",
+      "sha256": "c9d64ed32c93d36e086114108b3434c1a3fb03e099d96411b31eac23766f3b47",
       "bytes": 49712
     },
     {
       "path": "scripts/check-package.mjs",
-      "sha256": "60ccc0f3f45b916d879f0f5041a59a3b0f0254ee5b66596ab881d9dbb9713e2b",
-      "bytes": 14220
+      "sha256": "fcae9a7ffe07fcf201068486133c19445e21453e75a6e29cced4384713c6c62c",
+      "bytes": 15019
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -461,8 +461,8 @@
     },
     {
       "path": "scripts/test-regenerate.mjs",
-      "sha256": "2f808044f38ce0b9e6868ffbac442bfd5d3e4258e7777c1c029b08363890d824",
-      "bytes": 19077
+      "sha256": "676ef260702a4795f5c679a7c863ef9dd8597912026172f76eab5f0dcf511c53",
+      "bytes": 21540
     },
     {
       "path": "scripts/verify-t3-evidence.mjs",

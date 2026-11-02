@@ -174,7 +174,7 @@
       "path": "docs/en/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "79a01c9191f7dc9ab568b1fdca69973ce16fa1b5f819c27fbf92838b5e767951"
+      "sha256": "b5bb144bbe43e1653d6eeafce216dcbd36657fffc000eb1d01da680c45c0b102"
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -228,7 +228,7 @@
       "path": "docs/fr/mcp-apps.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "02a545b1993746c1a193f5c1f98924a124dc125e13b79fab5dec45be7e8621e4"
+      "sha256": "790e24f6c7f5b51b00512b04897b0f9f1595b3ee8caf782640134da25be573f2"
     },
     {
       "path": "docs/fr/observations.md",
@@ -486,7 +486,7 @@
       "path": "scripts/check-package.mjs",
       "source": "closed-export-verifier",
       "license": "Apache-2.0",
-      "sha256": "60ccc0f3f45b916d879f0f5041a59a3b0f0254ee5b66596ab881d9dbb9713e2b"
+      "sha256": "fcae9a7ffe07fcf201068486133c19445e21453e75a6e29cced4384713c6c62c"
     },
     {
       "path": "scripts/mutation-verdict.mjs",
@@ -546,7 +546,7 @@
       "path": "scripts/test-regenerate.mjs",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "2f808044f38ce0b9e6868ffbac442bfd5d3e4258e7777c1c029b08363890d824"
+      "sha256": "676ef260702a4795f5c679a7c863ef9dd8597912026172f76eab5f0dcf511c53"
     },
     {
       "path": "scripts/verify-t3-evidence.mjs",

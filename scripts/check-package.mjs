@@ -251,10 +251,26 @@ assert.equal(docs.documentVersion, REFERENCE_EDITION, 'edition: documentation so
 const citationVersions = [
   ...file('CITATION.cff')
     .toString()
-    .matchAll(/^version: ([^\r\n]+)$/gm),
+    .matchAll(/^[^\S\r\n]*["']?version["']?[^\S\r\n]*:[^\r\n]*/gm),
 ];
 assert.equal(citationVersions.length, 1, 'edition: exactly one plain CFF version');
-assert.equal(citationVersions[0][1], REFERENCE_EDITION, 'edition: CFF');
+assert.equal(citationVersions[0][0], 'version: ' + REFERENCE_EDITION, 'edition: CFF');
+// Bind current citation prose without constraining historical records or the rest of the wording.
+/** @param {string} text */
+const editionMentions = text => text.match(/\bv?\d+\.\d+\.\d+-proposed\b/g) ?? [];
+const citationMessages = [
+  ...file('CITATION.cff')
+    .toString()
+    .matchAll(/^[^\S\r\n]*["']?message["']?[^\S\r\n]*:[^\r\n]*/gm),
+];
+assert.equal(citationMessages.length, 1, 'edition: exactly one citation message');
+assert.deepEqual(editionMentions(citationMessages[0][0]), ['v' + REFERENCE_EDITION], 'edition: citation message');
+for (const lang of /** @type {const} */ (['en', 'fr']))
+  assert.deepEqual(
+    editionMentions(docs[lang].status),
+    [REFERENCE_EDITION, 'v' + REFERENCE_EDITION],
+    'edition: citation status ' + lang,
+  );
 exact(docs, 'schema,documentVersion,project,author,authorUrl,repository,publicSpecRepositoryPath,en,fr');
 assert.equal(
   docs.publicSpecRepositoryPath,
