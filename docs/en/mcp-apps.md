@@ -55,7 +55,7 @@ npm test
 Pop-Location
 ```
 
-Do not run `npm install` in the companion source directory inside the reference checkout. Dependencies and the lockfile are isolated: ext-apps 2.0.3, MCP client/server 2.0.0, Zod 4.6.7 and esbuild 0.28.2. The build embeds the installed packages' actual licence and notice texts. In particular, the ext-apps tag's transitional licence text is more precise than its package metadata; retain the shipped notices.
+Do not run `npm install` in the companion source directory inside the reference checkout. Dependencies and the lockfile are isolated: ext-apps 2.0.3, MCP client/core/server 2.3.0, Zod 4.6.7 and esbuild 0.28.2. The build embeds the installed packages' actual licence and notice texts. In particular, the ext-apps tag's transitional licence text is more precise than its package metadata; retain the shipped notices.
 
 The browser harness is optional and uses an already installed Puppeteer module; it downloads no browser:
 
@@ -119,7 +119,7 @@ Record exact value reproduction separately from formatting, tool calls and times
 
 The [pinned API source](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/src/app.ts) describes availability to subsequent turns and replacement of the previous contribution. Resolution is an acknowledgement, not telemetry of the input used. Tool-result limits in Claude troubleshooting do not establish limits for this method.
 
-Dependency advisory check, 2026-10-26: `npm audit` reports two packages with high advisories in the existing MCP client/server 2.0.0 lockfile (HTTP/OAuth scenarios). This companion uses only stdio, local fictional data and no OAuth. No upgrade or HTTP extension is included; reassess these advisories before changing transport or scope.
+Dependency advisory check, 2026-11-02: this edition upgrades MCP client/core/server to 2.3.0. `npm audit --package-lock-only` reports no known vulnerabilities for this companion lockfile at the time of the check. This supersedes the 2026-10-26 observation of high advisories in MCP client/server 2.0.0. The companion still uses only stdio, local fictional data and no OAuth; no HTTP transport is added. Reassess advisories before changing transport or scope.
 
 ## Local comparison of two states
 

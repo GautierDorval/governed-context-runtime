@@ -121,7 +121,7 @@ for (const path of licences.reserved) assert(expected.includes(path), 'reserved 
 const manifest = parse(await readFile(resolve(root, 'package-manifest.json')));
 exact(manifest, 'schema,documentVersion,fictionalContextRoot,publicEvidencePublicationId,files');
 assert.equal(manifest.schema, 'runtime-public-package/0.2.0-proposed');
-const REFERENCE_EDITION = '0.2.1-proposed';
+const REFERENCE_EDITION = '0.3.0-proposed';
 assert.equal(manifest.documentVersion, REFERENCE_EDITION, 'edition: manifest');
 assert.equal(runtimePackage.version, REFERENCE_EDITION, 'edition: package');
 assert.deepEqual(
@@ -238,7 +238,7 @@ const citationDates = [
     .matchAll(/^[^\S\r\n]*["']?date-released["']?[^\S\r\n]*:[^\r\n]*/gm),
 ];
 assert.equal(citationDates.length, 1, 'edition: exactly one release date');
-assert.equal(citationDates[0][0], 'date-released: 2026-10-21', 'edition: reviewed release date');
+assert.equal(citationDates[0][0], 'date-released: 2026-11-02', 'edition: reviewed release date');
 {
   const notice = file('NOTICE.md').toString();
   for (const path of licences.reserved) assert(notice.includes(path), 'reserved visual missing from NOTICE: ' + path);
@@ -251,10 +251,26 @@ assert.equal(docs.documentVersion, REFERENCE_EDITION, 'edition: documentation so
 const citationVersions = [
   ...file('CITATION.cff')
     .toString()
-    .matchAll(/^version: ([^\r\n]+)$/gm),
+    .matchAll(/^[^\S\r\n]*["']?version["']?[^\S\r\n]*:[^\r\n]*/gm),
 ];
 assert.equal(citationVersions.length, 1, 'edition: exactly one plain CFF version');
-assert.equal(citationVersions[0][1], REFERENCE_EDITION, 'edition: CFF');
+assert.equal(citationVersions[0][0], 'version: ' + REFERENCE_EDITION, 'edition: CFF');
+// Bind current citation prose without constraining historical records or the rest of the wording.
+/** @param {string} text */
+const editionMentions = text => text.match(/\bv?\d+\.\d+\.\d+-proposed\b/g) ?? [];
+const citationMessages = [
+  ...file('CITATION.cff')
+    .toString()
+    .matchAll(/^[^\S\r\n]*["']?message["']?[^\S\r\n]*:[^\r\n]*/gm),
+];
+assert.equal(citationMessages.length, 1, 'edition: exactly one citation message');
+assert.deepEqual(editionMentions(citationMessages[0][0]), ['v' + REFERENCE_EDITION], 'edition: citation message');
+for (const lang of /** @type {const} */ (['en', 'fr']))
+  assert.deepEqual(
+    editionMentions(docs[lang].status),
+    [REFERENCE_EDITION, 'v' + REFERENCE_EDITION],
+    'edition: citation status ' + lang,
+  );
 exact(docs, 'schema,documentVersion,project,author,authorUrl,repository,publicSpecRepositoryPath,en,fr');
 assert.equal(
   docs.publicSpecRepositoryPath,

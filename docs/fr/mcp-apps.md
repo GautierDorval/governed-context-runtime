@@ -55,7 +55,7 @@ npm test
 Pop-Location
 ```
 
-Ne lancez pas `npm install` dans les sources du compagnon à l’intérieur du dépôt de référence. Les dépendances sont isolées et verrouillées : ext-apps 2.0.3, client et serveur MCP 2.0.0, Zod 4.6.7 et esbuild 0.28.2. Le build incorpore les véritables textes de licence et notices des paquets installés. Le texte transitoire de licence du tag ext-apps est plus précis que ses métadonnées de paquet ; les notices livrées sont conservées.
+Ne lancez pas `npm install` dans les sources du compagnon à l’intérieur du dépôt de référence. Les dépendances sont isolées et verrouillées : ext-apps 2.0.3, client, cœur et serveur MCP 2.3.0, Zod 4.6.7 et esbuild 0.28.2. Le build incorpore les véritables textes de licence et notices des paquets installés. Le texte transitoire de licence du tag ext-apps est plus précis que ses métadonnées de paquet ; les notices livrées sont conservées.
 
 Le parcours navigateur facultatif utilise un module Puppeteer déjà installé, sans télécharger de navigateur :
 
@@ -119,7 +119,7 @@ Consignez séparément la valeur exacte, le respect du format, tout appel d’ou
 
 La [source de l’API épinglée](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/src/app.ts) décrit la mise à disposition aux tours suivants et le remplacement de la contribution précédente. La promesse résolue constitue l’accusé, pas une télémétrie de l’entrée utilisée. Les limites de résultats d’outils citées dans le diagnostic Claude ne sont pas des limites démontrées de cette méthode.
 
-Avis de dépendances du 26 octobre 2026 : le verrouillage existant présente deux paquets avec des avis élevés dans `npm audit` (client/serveur MCP 2.0.0, scénarios HTTP/OAuth). Ce compagnon utilise uniquement stdio, des données fictives locales et aucun OAuth. Aucune mise à niveau ni extension HTTP n’est incluse ; réévaluer ces avis avant un changement de transport ou de périmètre.
+Vérification des dépendances du 2 novembre 2026 : cette édition met à niveau le client, le cœur et le serveur MCP vers 2.3.0. `npm audit --package-lock-only` ne signale aucune vulnérabilité connue pour ce fichier de verrouillage au moment du contrôle. Ce résultat remplace le constat du 26 octobre 2026 concernant les avis élevés du client/serveur MCP 2.0.0. Le compagnon conserve uniquement stdio, des données fictives locales et aucun OAuth ; aucun transport HTTP n’est ajouté. Réévaluer les avis avant un changement de transport ou de périmètre.
 
 ## Comparaison locale de deux états
 
