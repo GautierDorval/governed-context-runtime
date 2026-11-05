@@ -393,6 +393,12 @@
       "sha256": "c69ac95359177eeaa218d3b520eada36ccaf68847cff9c2aceb7c71106382fea"
     },
     {
+      "path": "evidence/pilot-integrity-2026-11-05.json",
+      "source": "qualification-edition-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "168d153e18f521037c88c782cf12592a0798397b7728f14f540cdaeafadaf5ce"
+    },
+    {
       "path": "evidence/publication.json",
       "source": "historical-public-synthetic-example",
       "license": "CC-BY-4.0",
@@ -414,7 +420,7 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "afdb920ef20c9f88fe432d5ffc1300b4687a64bbb8863a90dddfa34d40bd3b06"
+      "sha256": "80dcaaa653e46a4eef63dee2b014a8e987d86e2ba709bf9ee9b3f7d3a673708f"
     },
     {
       "path": "package.json",
@@ -426,7 +432,7 @@
       "path": "records/README.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "839fa610d61f4e065672b69fe285353e37b11453747ee294120266829a228211"
+      "sha256": "7a5f6023046125669ca3d00c75685dea5a0e2ad822946fdfe79e77b3032079f8"
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -475,6 +481,12 @@
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
       "sha256": "e512b9a1265f3449a5afc46f01537162ed4549e810ceec71d21442a571d60080"
+    },
+    {
+      "path": "records/pilot-integrity-2026-11-05.md",
+      "source": "qualification-edition-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "5193eeb2a41daad4e535d31e5c6c144755b6a98c53cd3303accf170e8cb2d767"
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -1182,7 +1194,7 @@
       "path": "test/pilot-plan.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "91d0a5cc430daefc34d9f089eb46835aa21e329dacae1020dfba9de228dbf719"
+      "sha256": "bb04b473c22851761a60e4a93502b8b76b41663138b7fdf9adb03f3defa127e3"
     },
     {
       "path": "test/properties/acceptance-vectors.json",

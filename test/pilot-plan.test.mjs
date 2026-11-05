@@ -1,10 +1,35 @@
 // SPDX-License-Identifier: Apache-2.0
 // Integrity and design checks only. No provider calls and no semantic scoring.
-import test from 'node:test';
+import test, {after, mock} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {assemblePilotPrompt} from '../spec/examples/semantic-boundaries/assemble-prompt.mjs';
+import http from 'node:http';
+import https from 'node:https';
+import net from 'node:net';
+import tls from 'node:tls';
+import dgram from 'node:dgram';
+
+// These guards precede the import under test. Even a swallowed network attempt fails
+// this file. They cover Node transports, not arbitrary native code or subprocesses.
+let networkAttempts = 0;
+const refuseNetwork = () => {
+  networkAttempts++;
+  throw new Error('pilot_network_forbidden');
+};
+mock.method(globalThis, 'fetch', refuseNetwork);
+mock.method(http, 'request', refuseNetwork);
+mock.method(http, 'get', refuseNetwork);
+mock.method(https, 'request', refuseNetwork);
+mock.method(https, 'get', refuseNetwork);
+mock.method(net.Socket.prototype, 'connect', refuseNetwork);
+mock.method(tls, 'connect', refuseNetwork);
+mock.method(dgram, 'createSocket', refuseNetwork);
+after(() => {
+  assert.equal(networkAttempts, 0, 'no unexpected network attempt, including caught failures');
+  mock.restoreAll();
+});
+const {assemblePilotPrompt} = await import('../spec/examples/semantic-boundaries/assemble-prompt.mjs');
 const base = new URL('../spec/examples/semantic-boundaries/', import.meta.url);
 const read = (/** @type {string} */ file) => readFile(new URL(file, base));
 const json = async (/** @type {string} */ file) => JSON.parse((await read(file)).toString('utf8'));
@@ -178,7 +203,7 @@ test('judging distinguishes applicable evidence retention, unsupported claims an
   assert.equal(plan.review.agreement.universalThreshold, null);
 });
 
-test('prompt assembly emits exact bytes with no case IDs, conditions or teaching fields in any arm', async () => {
+test('prompt assembly emits exact bytes with no case IDs, conditions or teaching fields in any arm', async t => {
   assert.deepEqual(plan.caseInput.metadataFields, ['cases[].id']);
   assert.deepEqual(plan.assembly.payloadFields, ['evidence', 'question']);
   assert.equal(plan.assembly.implementation, 'assemble-prompt.mjs');
@@ -186,6 +211,8 @@ test('prompt assembly emits exact bytes with no case IDs, conditions or teaching
     plan.assembly.layout,
     'instruction + newline + <documentation> + newline + exact file bytes decoded as UTF-8 (empty for no_documentation) + newline + </documentation> + newline + <case> + JSON.stringify({evidence,question}) + </case>',
   );
+  // Local byte sink only: this is the final available boundary, not an API/SDK request.
+  const capture = t.mock.fn((/** @type {Uint8Array} */ bytes) => Buffer.from(bytes));
   for (const language of /** @type {const} */ (['fr', 'en'])) {
     for (const condition of plan.conditions) {
       const documentationBytes =
@@ -193,6 +220,11 @@ test('prompt assembly emits exact bytes with no case IDs, conditions or teaching
       const scenario = {
         id: 'CASE_ID_SENTINEL',
         classification: 'CLASS_SENTINEL',
+        dimensions: ['DIMENSION_SENTINEL'],
+        'judging-rubric.json': 'RUBRIC_SENTINEL',
+        'prose-coverage.json': 'COVERAGE_SENTINEL',
+        'comparison-map.json': 'COMPARISON_SENTINEL',
+        'content.json': 'SOURCE_SENTINEL',
         evidence: {location: 'CASE_EVIDENCE'},
         [language]: {
           question: 'Question?',
@@ -201,12 +233,14 @@ test('prompt assembly emits exact bytes with no case IDs, conditions or teaching
         },
         condition: 'CONDITION_SENTINEL',
       };
-      const actual = assemblePilotPrompt({
-        instruction: plan.instructions[language],
-        documentationBytes,
-        scenario,
-        language,
-      });
+      const actual = capture(
+        assemblePilotPrompt({
+          instruction: plan.instructions[language],
+          documentationBytes,
+          scenario,
+          language,
+        }),
+      );
       const expected = Buffer.concat([
         Buffer.from(plan.instructions[language] + '\n<documentation>\n'),
         Buffer.from(documentationBytes),
@@ -221,11 +255,17 @@ test('prompt assembly emits exact bytes with no case IDs, conditions or teaching
         'ANSWER_SENTINEL',
         'CLAIM_SENTINEL',
         'CONDITION_SENTINEL',
+        'DIMENSION_SENTINEL',
+        'RUBRIC_SENTINEL',
+        'COVERAGE_SENTINEL',
+        'COMPARISON_SENTINEL',
+        'SOURCE_SENTINEL',
       ])
         assert(!Buffer.from(actual).toString().includes(marker));
       assert.equal(scenario.id, 'CASE_ID_SENTINEL');
     }
   }
+  assert.equal(capture.mock.callCount(), 8);
   assert.throws(
     () =>
       assemblePilotPrompt({
@@ -236,6 +276,126 @@ test('prompt assembly emits exact bytes with no case IDs, conditions or teaching
       }),
     /encoded data/,
   );
+});
+
+test('pilot network guards reject outbound calls before any transport is reached', () => {
+  assert.equal(networkAttempts, 0);
+  for (const call of [
+    () => fetch('https://example.invalid/'),
+    () => http.request('http://example.invalid/'),
+    () => http.get('http://example.invalid/'),
+    () => https.request('https://example.invalid/'),
+    () => https.get('https://example.invalid/'),
+    () => new net.Socket().connect(443, 'example.invalid'),
+    () => tls.connect(443, 'example.invalid'),
+    () => dgram.createSocket('udp4'),
+  ])
+    assert.throws(call, /pilot_network_forbidden/);
+  assert.equal(networkAttempts, 8);
+  // Only these eight intentional guard probes are excluded from the after-hook count.
+  networkAttempts = 0;
+});
+
+test('documentary UTF-8 preserves BOM, combining marks, French spaces and line endings at capture', t => {
+  // Handwritten byte witness: BOM, precomposed/decomposed e-acute, NBSP, NNBSP,
+  // thin space, ASCII/curly apostrophes, CRLF, lone CR, LF and trailing whitespace.
+  const hex = 'efbbbfc3a92065cc8120c2a020e280af20e28089202720e280990d0a410d420a2009';
+  const documentationBytes = Buffer.from(hex, 'hex');
+  const capture = t.mock.fn((/** @type {Uint8Array} */ bytes) => Buffer.from(bytes));
+  const prefix = Buffer.from('Read\n<documentation>\n');
+  const suffix = Buffer.from('\n</documentation>\n<case>{"evidence":{},"question":"?"}</case>');
+  const actual = capture(
+    assemblePilotPrompt({
+      instruction: 'Read',
+      documentationBytes,
+      scenario: {evidence: {}, fr: {question: '?'}},
+      language: 'fr',
+    }),
+  );
+  assert.deepEqual(actual, Buffer.concat([prefix, documentationBytes, suffix]));
+  assert.equal(actual.subarray(prefix.length, actual.length - suffix.length).toString('hex'), hex);
+  assert.equal(documentationBytes.toString('hex'), hex);
+  assert.equal(capture.mock.callCount(), 1);
+});
+
+test('malformed UTF-8 never reaches the local capture and a later valid input still works', t => {
+  const capture = t.mock.fn((/** @type {Uint8Array} */ bytes) => Buffer.from(bytes));
+  const input = {
+    instruction: 'Read',
+    scenario: {evidence: {}, fr: {question: '?'}},
+    language: /** @type {const} */ ('fr'),
+  };
+  for (const hex of ['ff', '80', 'c0af', 'e282', 'eda080', 'f4908080', 'efbbbfff']) {
+    assert.throws(
+      () => capture(assemblePilotPrompt({...input, documentationBytes: Buffer.from(hex, 'hex')})),
+      {name: 'TypeError', code: 'ERR_ENCODING_INVALID_ENCODED_DATA'},
+      hex,
+    );
+    assert.equal(capture.mock.callCount(), 0, hex);
+  }
+  assert.deepEqual(
+    capture(assemblePilotPrompt({...input, documentationBytes: Buffer.from('A')})),
+    Buffer.from('Read\n<documentation>\nA\n</documentation>\n<case>{"evidence":{},"question":"?"}</case>'),
+  );
+  assert.equal(capture.mock.callCount(), 1);
+});
+
+test('case interpolation is one JSON serialization and consecutive captures share no trial state', t => {
+  const capture = t.mock.fn((/** @type {Uint8Array} */ bytes) => Buffer.from(bytes));
+  const evidence = {text: '${question} {{instruction}} "quoted" \\ \r\n é e\u0301', flag: false, value: 0};
+  const question = '«\u202f{evidence}\u202f»\u00a0?';
+  const firstInput = {
+    instruction: 'FIRST_INSTRUCTION',
+    documentationBytes: Buffer.from('FIRST_DOCUMENT ${question} {{evidence}}'),
+    scenario: {id: 'FIRST_ID', evidence, fr: {question}},
+    language: /** @type {const} */ ('fr'),
+  };
+  const before = structuredClone(firstInput);
+  const first = capture(assemblePilotPrompt(firstInput));
+  const firstText = first.toString('utf8');
+  const caseText = firstText.slice(firstText.indexOf('<case>') + 6, -7);
+  assert.deepEqual(JSON.parse(caseText), {evidence, question});
+  assert.equal(caseText, JSON.stringify({evidence, question}));
+  assert(firstText.includes('FIRST_DOCUMENT ${question} {{evidence}}'));
+  assert.deepEqual(firstInput.scenario, before.scenario);
+  assert.deepEqual(firstInput.documentationBytes, Buffer.from(before.documentationBytes));
+  // Mutating a returned buffer must not modify any later return value or caller input.
+  first.fill(0);
+  const second = capture(
+    assemblePilotPrompt({
+      instruction: 'SECOND_INSTRUCTION',
+      documentationBytes: new Uint8Array(),
+      scenario: {evidence: {second: true}, en: {question: 'Second?'}},
+      language: 'en',
+    }),
+  );
+  assert.deepEqual(
+    second,
+    Buffer.from(
+      'SECOND_INSTRUCTION\n<documentation>\n\n</documentation>\n<case>{"evidence":{"second":true},"question":"Second?"}</case>',
+    ),
+  );
+  assert(!second.toString().includes('FIRST_'));
+  assert.equal(capture.mock.callCount(), 2);
+  assert.equal(Buffer.from(assemblePilotPrompt(firstInput)).toString(), firstText);
+});
+
+test('empty-response fixtures use JavaScript trim without turning U+200B into whitespace', () => {
+  // Characterization of the declared primitive only, not a response classifier or judge.
+  const fixtures = [
+    {raw: '', empty: true},
+    {raw: ' \t\r\n\u00a0\u202f\ufeff', empty: true},
+    {raw: '\u200b', empty: false},
+    {raw: 'I cannot answer.', empty: false},
+    {raw: 'The project is', empty: false},
+  ];
+  for (const {raw, empty} of fixtures) {
+    const original = Buffer.from(raw);
+    assert.equal(raw.trim().length === 0, empty);
+    assert.deepEqual(Buffer.from(raw), original);
+  }
+  assert.equal(rubric.responseHandling.completedEmpty.applicableLabel, 'UNSCORABLE');
+  assert.equal(rubric.responseHandling.completedEmpty.utility, 'UNDETERMINED');
 });
 
 test('crossover positions are nearly balanced within each language without claiming randomization', () => {
