@@ -10,8 +10,9 @@ import net from 'node:net';
 import tls from 'node:tls';
 import dgram from 'node:dgram';
 
-// These guards precede the import under test. Even a swallowed network attempt fails
-// this file. They cover Node transports, not arbitrary native code or subprocesses.
+// These guards precede the import under test. The final test counts intercepted
+// attempts during test execution, even when caught. Only the listed entry points
+// are guarded; the targeted permission run also denies network and subprocesses.
 let networkAttempts = 0;
 const refuseNetwork = () => {
   networkAttempts++;
@@ -26,8 +27,11 @@ mock.method(net.Socket.prototype, 'connect', refuseNetwork);
 mock.method(tls, 'connect', refuseNetwork);
 mock.method(dgram, 'createSocket', refuseNetwork);
 after(() => {
-  assert.equal(networkAttempts, 0, 'no unexpected network attempt, including caught failures');
-  mock.restoreAll();
+  try {
+    assert.equal(networkAttempts, 0, 'no unexpected network attempt, including caught failures');
+  } finally {
+    mock.restoreAll();
+  }
 });
 const {assemblePilotPrompt} = await import('../spec/examples/semantic-boundaries/assemble-prompt.mjs');
 const base = new URL('../spec/examples/semantic-boundaries/', import.meta.url);
@@ -351,16 +355,17 @@ test('case interpolation is one JSON serialization and consecutive captures shar
     language: /** @type {const} */ ('fr'),
   };
   const before = structuredClone(firstInput);
-  const first = capture(assemblePilotPrompt(firstInput));
+  const firstRaw = assemblePilotPrompt(firstInput);
+  const first = capture(firstRaw);
   const firstText = first.toString('utf8');
   const caseText = firstText.slice(firstText.indexOf('<case>') + 6, -7);
   assert.deepEqual(JSON.parse(caseText), {evidence, question});
   assert.equal(caseText, JSON.stringify({evidence, question}));
   assert(firstText.includes('FIRST_DOCUMENT ${question} {{evidence}}'));
+  // Mutating a returned buffer must not modify any later return value or caller input.
+  firstRaw.fill(0);
   assert.deepEqual(firstInput.scenario, before.scenario);
   assert.deepEqual(firstInput.documentationBytes, Buffer.from(before.documentationBytes));
-  // Mutating a returned buffer must not modify any later return value or caller input.
-  first.fill(0);
   const second = capture(
     assemblePilotPrompt({
       instruction: 'SECOND_INSTRUCTION',
@@ -377,7 +382,10 @@ test('case interpolation is one JSON serialization and consecutive captures shar
   );
   assert(!second.toString().includes('FIRST_'));
   assert.equal(capture.mock.callCount(), 2);
-  assert.equal(Buffer.from(assemblePilotPrompt(firstInput)).toString(), firstText);
+  const again = assemblePilotPrompt(firstInput);
+  assert.notStrictEqual(again, firstRaw);
+  assert.equal(Buffer.from(again).toString(), firstText);
+  assert(firstRaw.every(byte => byte === 0));
 });
 
 test('empty-response fixtures use JavaScript trim without turning U+200B into whitespace', () => {
@@ -390,9 +398,7 @@ test('empty-response fixtures use JavaScript trim without turning U+200B into wh
     {raw: 'The project is', empty: false},
   ];
   for (const {raw, empty} of fixtures) {
-    const original = Buffer.from(raw);
     assert.equal(raw.trim().length === 0, empty);
-    assert.deepEqual(Buffer.from(raw), original);
   }
   assert.equal(rubric.responseHandling.completedEmpty.applicableLabel, 'UNSCORABLE');
   assert.equal(rubric.responseHandling.completedEmpty.utility, 'UNDETERMINED');
@@ -554,4 +560,8 @@ test('prompt assembly preserves BOM and rejects missing evidence and unsupported
     /prompt_case/,
   );
   assert.throws(() => assemblePilotPrompt({...input, language: /** @type {any} */ ('de')}), /prompt_language/);
+});
+
+test('no unexpected network attempt during the tests, including caught failures', () => {
+  assert.equal(networkAttempts, 0);
 });

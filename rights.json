@@ -396,7 +396,7 @@
       "path": "evidence/pilot-integrity-2026-11-05.json",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "168d153e18f521037c88c782cf12592a0798397b7728f14f540cdaeafadaf5ce"
+      "sha256": "02713dbdb3f2c7e9a8dc90b9c99980631ec95c19bdcce0f9a75ffc87a5f967f4"
     },
     {
       "path": "evidence/publication.json",
@@ -486,7 +486,7 @@
       "path": "records/pilot-integrity-2026-11-05.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "5193eeb2a41daad4e535d31e5c6c144755b6a98c53cd3303accf170e8cb2d767"
+      "sha256": "b636ae2bb00b9416972037d579bf83343767a5163ae229fbb531287a5789d347"
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -1194,7 +1194,7 @@
       "path": "test/pilot-plan.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "bb04b473c22851761a60e4a93502b8b76b41663138b7fdf9adb03f3defa127e3"
+      "sha256": "0aa4ef903fd8f7ffec69e29c541889da28da1c6ea1b18f48fb4dd2e8b9159a91"
     },
     {
       "path": "test/properties/acceptance-vectors.json",

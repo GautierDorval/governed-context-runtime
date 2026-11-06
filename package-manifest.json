@@ -331,8 +331,8 @@
     },
     {
       "path": "evidence/pilot-integrity-2026-11-05.json",
-      "sha256": "168d153e18f521037c88c782cf12592a0798397b7728f14f540cdaeafadaf5ce",
-      "bytes": 15249
+      "sha256": "02713dbdb3f2c7e9a8dc90b9c99980631ec95c19bdcce0f9a75ffc87a5f967f4",
+      "bytes": 19183
     },
     {
       "path": "evidence/publication.json",
@@ -406,8 +406,8 @@
     },
     {
       "path": "records/pilot-integrity-2026-11-05.md",
-      "sha256": "5193eeb2a41daad4e535d31e5c6c144755b6a98c53cd3303accf170e8cb2d767",
-      "bytes": 15372
+      "sha256": "b636ae2bb00b9416972037d579bf83343767a5163ae229fbb531287a5789d347",
+      "bytes": 18858
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -416,7 +416,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "9e21b61adcd2f13c6034a7fd45f5c53efd28980b186389f6b458ab7876c36da4",
+      "sha256": "cf2388ba701716a426925c8e0ca5b2b37887af43f52233884145b497232bc4e9",
       "bytes": 50181
     },
     {
@@ -1001,8 +1001,8 @@
     },
     {
       "path": "test/pilot-plan.test.mjs",
-      "sha256": "bb04b473c22851761a60e4a93502b8b76b41663138b7fdf9adb03f3defa127e3",
-      "bytes": 26338
+      "sha256": "0aa4ef903fd8f7ffec69e29c541889da28da1c6ea1b18f48fb4dd2e8b9159a91",
+      "bytes": 26627
     },
     {
       "path": "test/properties/acceptance-vectors.json",

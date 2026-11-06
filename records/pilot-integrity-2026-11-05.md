@@ -1,4 +1,4 @@
-# Intégrité du pilote GCR, 5 novembre 2026
+# Intégrité du pilote GCR, 5 novembre 2026, suivi du 6 novembre
 
 ## Périmètre et état
 
@@ -13,8 +13,11 @@ préexistants sont préservés; l’index était vide au démarrage.
 La campagne demeure **`NOT_RUN`**, avec 560 réponses prévues par configuration,
 `observedResponses: []`, `scores: null` et configuration/destinations nulles.
 Les captures sont synthétiques et ne constituent aucune réponse de campagne.
-Aucun appel de modèle, juge distant, audit Claude, SDK fournisseur, fusion,
-push, publication, déploiement ou collecte n’est exécuté par ce mandat.
+Aucun appel de modèle expérimental, juge distant, SDK fournisseur, fusion,
+déploiement ou collecte n’est exécuté. Après la livraison locale du 5 novembre,
+Gautier a autorisé séparément le partage du candidat initial sur la PR brouillon
+22, puis son audit de code par Claude. Le suivi ci-dessous distingue cet audit
+de la campagne, qui reste non exécutée. La révision corrigée attend son audit final.
 
 Le rapport est un journal technique brut, sans changement d’interface ou de
 document produit rendu : `visual_applicability: not-applicable`.
@@ -82,11 +85,19 @@ ni succès d’un adaptateur ni test ignoré par Node.
 
 La capture est une copie locale des octets retournés, pas un objet API inventé.
 Les gardes interceptent `fetch`, HTTP(S), socket TCP, TLS et création UDP avant
-le chargement de l’assembleur. Un appel inattendu, même intercepté puis avalé,
-fait échouer la suite. Huit essais volontaires de ces gardes sont distingués
-des assemblages, dont le nombre de tentatives réseau reste zéro. Les gardes
-JavaScript ne sont pas une garantie contre du code natif ou des sous-processus;
-l’exécution ciblée sous permissions Node n’autorise ni réseau ni sous-processus.
+le chargement de l’assembleur. Un dernier test vérifie le compteur des tentatives
+interceptées pendant les tests, y compris celles dont l’erreur est avalée. Huit
+essais volontaires sont distingués des assemblages, dont le compteur reste zéro.
+Une activité asynchrone déclenchée après ce dernier test n’est pas couverte par
+son assertion. Le hook final conserve un contrôle supplémentaire et restaure
+toujours les espions, mais son échec seul ne garantit pas un code de sortie non
+nul sous Node 26.12.1 avec `--test-isolation=none`.
+
+Les gardes JavaScript couvrent seulement les points d’entrée énumérés, sans
+garantie sur DNS, le constructeur UDP direct, du code natif ou des sous-processus.
+L’exécution ciblée sous permissions Node n’autorise ni réseau ni sous-processus;
+la CI ordinaire n’utilise pas cette même restriction. Aucun transport n’existe
+dans l’assembleur actuel. Cette frontière devra être revue avec un vrai adaptateur.
 
 ## Contrat restant pour réponses et dénominateurs
 
@@ -118,7 +129,7 @@ applicable ici, puisqu’aucun exportateur de campagne n’existe.
 L’assembleur et les documents expérimentaux n’ont pas été modifiés : aucun
 défaut de leurs garanties locales existantes n’a été reproduit. Les écarts
 étaient des contrôles de régression manquants et des frontières non intégrées.
-Le diff ajoute cinq tests à la suite existante et renforce son test nominal,
+Le diff ajoute six tests à la suite existante et renforce son test nominal,
 plus ce rapport, ses preuves et leur inventaire/licence/empreintes générés.
 Aucune dépendance, politique expérimentale ou version de contrat ne change.
 Les deux protocoles FR/EN restent identiques à la base.
@@ -129,11 +140,12 @@ du checkout partagé. Cette copie est un artefact de validation, pas un second
 espace de développement. `npm ci --ignore-scripts --no-audit --no-fund --offline`
 y installe le verrou existant. Pour les métadonnées de la campagne générative,
 `GIT_DIR` désigne le dépôt de référence, `GIT_WORK_TREE` la copie et
-`GIT_OPTIONAL_LOCKS=0`; `testedCommit` désigne donc la base avec `dirty: true`,
-pas un candidat prétendument committé. Les empreintes distinguent le contenu testé.
+`GIT_OPTIONAL_LOCKS=0`; `testedCommit` désigne le candidat initial
+`d953df2019355e92d288bd1d40fc46cb4b36913d` avec `dirty: true`, pas une révision
+corrigée prétendument committée. Les empreintes distinguent le contenu testé.
 
-Résultats et commandes exactes : voir le registre de preuves. Échecs intermédiaires
-conservés : formatage initial, signature TypeScript de la sonde UDP corrigée,
+Résultats du suivi du 6 novembre et commandes exactes : voir le registre de preuves.
+Échecs intermédiaires du 5 novembre conservés : formatage initial, signature TypeScript de la sonde UDP corrigée,
 `fast-check` absent des dépendances préexistantes, puis campagne générative
 incapable de trouver Git dans la première copie. Aucun de ces échecs n’est
 présenté comme un défaut de la campagne expérimentale ou effacé du bilan.
@@ -141,15 +153,53 @@ présenté comme un défaut de la campagne expérimentale ou effacé du bilan.
 | Commande | Résultat observé |
 | --- | --- |
 | Suite ciblée sur la base | 13 réussites |
-| Suite ciblée finale, permissions Node sans réseau | 18 réussites, zéro échec, aucun test ignoré |
-| `npm test` | 473 réussites, zéro échec, un test de lien symbolique ignoré faute de privilèges Windows |
+| Suite ciblée finale, permissions Node sans réseau | 19 réussites, zéro échec, aucun test ignoré |
+| `npm test` | 474 réussites, zéro échec, un test de lien symbolique ignoré faute de privilèges Windows |
 | `npm run test:dev` | Formatage et types conformes; 35 tests de schémas, 75 tests de propriétés réussis |
 | Oracle Python inclus dans `test:dev` | 7000 comparaisons; deux mutants de propriétés détectés |
+| Contre-épreuves R1 et R6 sur copies corrigées | Deux échecs par assertion; chaque processus sort avec 1; aucun crash compté comme détection |
 
 La campagne générative bornée réussit, mais son indicateur
 `completeFixedSeedQualification` vaut `false`; elle n’est pas présentée comme
 la qualification complète à graines fixes. Les tests du compagnon MCP Apps ne
 sont pas relancés : leur code et leurs dépendances ne changent pas.
+
+## Audit et corrections du 6 novembre
+
+Claude a audité le candidat initial `d953df2019355e92d288bd1d40fc46cb4b36913d`
+et le paquet `3427b4c6fa8d7680d033cdb917a61ac55f10d227b3e2901ff370d4cc77d108c7`.
+Son verdict exécuté est **`NO_GO` pour ce candidat**, à cause du contrôle final
+réseau. La suite initiale passait à 18/18, mais la contre-épreuve R6 produisait
+dix tentatives interceptées puis avalées avec un code de sortie nul. R1 montrait
+que la mutation de la copie capturée ne protégeait pas contre un retour mémoïsé
+partagé. Ces défauts portent sur les tests; l’assembleur actuel reste inchangé.
+
+Corrections regroupées dans cette révision :
+
+- **R6** : dernier test explicite du compteur; restauration des espions dans
+  `finally`; limites temporelles et de couverture ci-dessus.
+- **R1** : mutation du véritable tableau retourné, contrôle de l’entrée appelante,
+  nouvelle instance à la reprise et conservation du premier tableau muté.
+- **R4** : retrait de l’assertion qui comparait deux conversions de la même chaîne
+  immuable. La caractérisation de `trim()` demeure.
+
+Les deux mutants de Claude ont été rejoués par Codex avec le test corrigé :
+19 tests chacun, 18 réussites, un échec par assertion et code de sortie 1.
+L’assembleur intact passe les 19 tests. La révision n’est pas encore approuvée
+par un audit indépendant; le verdict initial ne lui est pas transféré.
+
+Restent à traiter lors du raccordement réel, sans modification du protocole ici :
+**R2**, une demi-paire UTF-16 isolée dans `instruction` devient U+FFFD;
+**R5**, `evidence: undefined` est omis par `JSON.stringify`; et la couverture
+DNS/UDP directe. Les instructions et faits JSON du plan actuel ne présentent
+pas ces entrées. **R3** demeure une suggestion de couverture : la sonde de Claude
+a vérifié les 14 assemblages des sept cas FR/EN avec un document témoin et n’a
+observé aucune fuite; cette sonde ne devient pas un résultat de campagne.
+Ces suivis restent consignés ici; aucune intégration supplémentaire n’est ouverte.
+
+Les rapports originaux, sondes, mutations et journaux sont conservés dans le
+handoff local. Le registre de preuves épingle leurs empreintes et les résultats
+rejoués. L’audit de code est distinct de tout appel expérimental de modèle.
 
 ## Chaîne Runtime, gouvernance et Observatoire
 
@@ -190,8 +240,9 @@ Les identifiants privés et reçus détaillés restent dans le handoff local du 
 4. **D04** : les corrections Phoenix du mandat sont des motivations de tests,
    pas des défauts GCR reproduits. Aucune dépendance Phoenix n’est ajoutée et
    aucune revue de licence d’adoption n’est revendiquée.
-5. **D05** : livrer un commit local du lot; le mandat ne demande aucune publication.
-   Aucun audit distant n’est sollicité, conformément à l’exclusion des appels modèles.
+5. **D05** : livraison locale initiale le 5 novembre; partage GitHub puis audit de
+   code autorisés séparément. Le candidat corrigé conserve les mêmes exclusions :
+   aucune campagne, fusion, publication de version ou mise en production.
 
 Pour un transfert ultérieur vers InferensLab : identifier d’abord le dépôt et
 l’interface, retenir le vrai client et sa version, ratifier la répartition des
