@@ -330,6 +330,11 @@
       "bytes": 3001
     },
     {
+      "path": "evidence/pilot-integrity-2026-11-05.json",
+      "sha256": "02713dbdb3f2c7e9a8dc90b9c99980631ec95c19bdcce0f9a75ffc87a5f967f4",
+      "bytes": 19183
+    },
+    {
       "path": "evidence/publication.json",
       "sha256": "57858e6b139eeee75b77ceec87dae0b41de15377630a97aab2e239b2b53f05d4",
       "bytes": 4393
@@ -346,8 +351,8 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "afdb920ef20c9f88fe432d5ffc1300b4687a64bbb8863a90dddfa34d40bd3b06",
-      "bytes": 10099
+      "sha256": "80dcaaa653e46a4eef63dee2b014a8e987d86e2ba709bf9ee9b3f7d3a673708f",
+      "bytes": 10192
     },
     {
       "path": "package.json",
@@ -356,8 +361,8 @@
     },
     {
       "path": "records/README.md",
-      "sha256": "839fa610d61f4e065672b69fe285353e37b11453747ee294120266829a228211",
-      "bytes": 1886
+      "sha256": "7a5f6023046125669ca3d00c75685dea5a0e2ad822946fdfe79e77b3032079f8",
+      "bytes": 2069
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -400,14 +405,19 @@
       "bytes": 31309
     },
     {
+      "path": "records/pilot-integrity-2026-11-05.md",
+      "sha256": "b636ae2bb00b9416972037d579bf83343767a5163ae229fbb531287a5789d347",
+      "bytes": 18858
+    },
+    {
       "path": "records/qualification-edition-2026-10-20.md",
       "sha256": "6e4d68bde18f277f61cbfb2a4b504f1e8c5d4e0065ac2c4405079a9bfbdce02a",
       "bytes": 12115
     },
     {
       "path": "rights.json",
-      "sha256": "c9d64ed32c93d36e086114108b3434c1a3fb03e099d96411b31eac23766f3b47",
-      "bytes": 49712
+      "sha256": "cf2388ba701716a426925c8e0ca5b2b37887af43f52233884145b497232bc4e9",
+      "bytes": 50181
     },
     {
       "path": "scripts/check-package.mjs",
@@ -991,8 +1001,8 @@
     },
     {
       "path": "test/pilot-plan.test.mjs",
-      "sha256": "91d0a5cc430daefc34d9f089eb46835aa21e329dacae1020dfba9de228dbf719",
-      "bytes": 19216
+      "sha256": "0aa4ef903fd8f7ffec69e29c541889da28da1c6ea1b18f48fb4dd2e8b9159a91",
+      "bytes": 26627
     },
     {
       "path": "test/properties/acceptance-vectors.json",

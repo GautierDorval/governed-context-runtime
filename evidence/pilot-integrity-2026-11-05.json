@@ -1,0 +1,393 @@
+{
+  "recordedAt": "2026-11-06T19:44:22.548Z",
+  "repository": "GautierDorval/governed-context-runtime",
+  "baseCommit": "a51ab851c1e77a43e83913e09442979c1d6a0e89",
+  "candidateIdentity": "Original base plus current testedFiles SHA-256; corrected commit is recorded separately to avoid a self-reference.",
+  "technicalStatus": "COMPLETED_LOCAL_CONTRACT",
+  "integrationStatus": "WAITING_INTEGRATION",
+  "campaignStatus": "NOT_RUN",
+  "syntheticOnly": true,
+  "modelCalls": 0,
+  "remoteJudgeCalls": 0,
+  "campaignObservedResponses": 0,
+  "campaignScores": null,
+  "scope": "Pure assembler, prepared protocol and test transport guards. No campaign adapter, attempt scheduler, judge, response exporter or trace exporter exists.",
+  "environment": {
+    "node": "26.12.1",
+    "npm": "11.20.0",
+    "python": "3.14.9",
+    "fastCheck": "4.10.2",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "platform": "Windows"
+  },
+  "commands": [
+    {
+      "id": "E01",
+      "command": "node --test --test-reporter=spec test/pilot-plan.test.mjs",
+      "revision": "unmodified base",
+      "exitCode": 0,
+      "tests": 13,
+      "pass": 13,
+      "fail": 0
+    },
+    {
+      "id": "E02",
+      "command": "node --permission --allow-fs-read=. --test-isolation=none --test --test-reporter=tap test/pilot-plan.test.mjs",
+      "revision": "testedFiles",
+      "exitCode": 0,
+      "tests": 19,
+      "pass": 19,
+      "fail": 0,
+      "skip": 0,
+      "artifact": "pilot-final.tap"
+    },
+    {
+      "id": "E03",
+      "command": "npm test",
+      "cwd": "inventoried validation copy",
+      "revision": "testedFiles; inventory regenerated before the final documentary follow-up",
+      "exitCode": 0,
+      "tests": 475,
+      "pass": 474,
+      "fail": 0,
+      "skip": 1,
+      "skipReason": "symlinks need privileges on this platform",
+      "artifact": "npm-test.log"
+    },
+    {
+      "id": "E04",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --offline",
+      "cwd": "inventoried validation copy",
+      "exitCode": 0,
+      "packagesAdded": 12,
+      "lockfileChanged": false
+    },
+    {
+      "id": "E05",
+      "command": "npm run test:dev",
+      "cwd": "inventoried validation copy",
+      "gitMetadata": {
+        "GIT_DIR": "reference repository .git",
+        "GIT_WORK_TREE": "validation copy",
+        "GIT_OPTIONAL_LOCKS": "0",
+        "testedCommit": "d953df2019355e92d288bd1d40fc46cb4b36913d",
+        "dirty": true
+      },
+      "exitCode": 0,
+      "format": "PASS",
+      "typecheck": "PASS",
+      "schemaTests": {
+        "pass": 35,
+        "fail": 0
+      },
+      "propertyNodeTests": {
+        "pass": 75,
+        "fail": 0
+      },
+      "pythonOracle": {
+        "historical": 5000,
+        "nfc": 1000,
+        "text": 1000
+      },
+      "propertyMutantsDetected": 2,
+      "completeFixedSeedQualification": false,
+      "artifact": "npm-test-dev-final.log"
+    },
+    {
+      "id": "E06",
+      "command": "node --permission --allow-fs-read=<variant> --test-isolation=none --test --test-reporter=tap test/pilot-plan.test.mjs",
+      "cwd": "isolated m11-memo-alias copy",
+      "revision": "current test with the unchanged Claude mutant assembler",
+      "exitCode": 1,
+      "tests": 19,
+      "pass": 18,
+      "fail": 1,
+      "expectedFailure": true,
+      "detectedByAssertion": true,
+      "artifact": "m11-memo-alias.tap"
+    },
+    {
+      "id": "E07",
+      "command": "node --permission --allow-fs-read=<variant> --test-isolation=none --test --test-reporter=tap test/pilot-plan.test.mjs",
+      "cwd": "isolated m12b-late-swallowed-fetch copy",
+      "revision": "current test with the unchanged Claude mutant assembler",
+      "exitCode": 1,
+      "tests": 19,
+      "pass": 18,
+      "fail": 1,
+      "expectedFailure": true,
+      "detectedByAssertion": true,
+      "artifact": "m12b-late-swallowed-fetch.tap"
+    }
+  ],
+  "retainedIntermediateFailures": [
+    {
+      "command": "prettier --check test/pilot-plan.test.mjs",
+      "exitCode": 1,
+      "cause": "New test formatting",
+      "resolution": "Formatted only the changed test with the pinned Prettier."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 1,
+      "cause": "UDP guard probe overload mismatch and missing fast-check in existing node_modules",
+      "resolution": "Probe now blocks createSocket; locked development dependencies installed offline only in the validation copy."
+    },
+    {
+      "command": "npm run test:dev",
+      "exitCode": 1,
+      "cause": "Property runner requires Git metadata, absent from an inventory-only copy.",
+      "resolution": "Explicit read-only Git metadata environment; rerun E05 succeeded.",
+      "artifact": "npm-test-dev.log"
+    }
+  ],
+  "assertions": [
+    {
+      "case": "01",
+      "status": "LOCAL_PASS",
+      "evidence": [
+        "E01",
+        "E02"
+      ],
+      "assertion": "Eight captured FR/EN inputs across four conditions equal explicit expected byte concatenations."
+    },
+    {
+      "case": "02",
+      "status": "LOCAL_PASS",
+      "evidence": [
+        "E02"
+      ],
+      "assertion": "Handwritten UTF-8 witness equals the captured document byte slice without normalization."
+    },
+    {
+      "case": "03",
+      "status": "LOCAL_PASS",
+      "evidence": [
+        "E02"
+      ],
+      "assertion": "Seven malformed sequences raise TypeError before capture; zero captures until subsequent valid input."
+    },
+    {
+      "case": "04",
+      "status": "LOCAL_PASS",
+      "evidence": [
+        "E02"
+      ],
+      "assertion": "Ten pedagogical/metadata sentinels are absent from the final local byte capture; permitted fields remain."
+    },
+    {
+      "case": "05",
+      "status": "LOCAL_PASS",
+      "evidence": [
+        "E02"
+      ],
+      "assertion": "Braces, quotes, backslashes and French Unicode remain literal data through one JSON serialization."
+    },
+    {
+      "case": "06",
+      "status": "WAITING_INTEGRATION",
+      "evidence": [],
+      "assertion": "No API role contract or provider conversion exists."
+    },
+    {
+      "case": "07",
+      "status": "WAITING_INTEGRATION",
+      "evidence": [],
+      "assertion": "No provider system-block representation exists."
+    },
+    {
+      "case": "08",
+      "status": "LOCAL_PASS_INTEGRATION_PENDING",
+      "evidence": [
+        "E02",
+        "E06"
+      ],
+      "assertion": "The actual returned Uint8Array is mutated; caller inputs remain intact, reassembly returns a new instance with the original bytes, and later calls do not overwrite the mutated first array. Provider conversation isolation is untested."
+    },
+    {
+      "case": "09",
+      "status": "WAITING_INTEGRATION",
+      "evidence": [
+        "E01",
+        "E02"
+      ],
+      "assertion": "Response preservation declarations checked; no actual result/export path exists."
+    },
+    {
+      "case": "10",
+      "status": "WAITING_INTEGRATION",
+      "evidence": [
+        "E01",
+        "E02"
+      ],
+      "assertion": "Technical nonresponse has no declared judgment; actual exception/export path absent."
+    },
+    {
+      "case": "11",
+      "status": "WAITING_INTEGRATION",
+      "evidence": [],
+      "assertion": "No execution/export path exists in which to inject an empty-message exception."
+    },
+    {
+      "case": "12",
+      "status": "PRIMITIVE_PASS_INTEGRATION_PENDING",
+      "evidence": [
+        "E02"
+      ],
+      "assertion": "trim emptiness and declarative precedence characterized; semantic classification not implemented or simulated."
+    },
+    {
+      "case": "13",
+      "status": "DECLARATIVE_PASS_INTEGRATION_PENDING",
+      "evidence": [
+        "E01",
+        "E02"
+      ],
+      "assertion": "Prescribed retry limit, eligibility and identity retained; no scheduler execution claimed."
+    },
+    {
+      "case": "14",
+      "status": "LOCAL_GUARDS_PASS_ACCOUNTING_PENDING",
+      "evidence": [
+        "E01",
+        "E02",
+        "E07"
+      ],
+      "assertion": "560 planned trials and applicability declarations checked; eight intentional guard probes, zero unexpected attempts during tests, with an explicit final test. Late caught fetch attempts fail this final test with process exit 1. Executed-response accounting is absent."
+    }
+  ],
+  "utf8Capture": {
+    "expectedDocumentHex": "efbbbfc3a92065cc8120c2a020e280af20e28089202720e280990d0a410d420a2009",
+    "actualDocumentHex": "efbbbfc3a92065cc8120c2a020e280af20e28089202720e280990d0a410d420a2009",
+    "match": true,
+    "promptSha256": "d87ad7dd3f7d4af55661b0633a214ab2ed1bcce55af958a51a73f3a97082da3e",
+    "promptBytes": 116,
+    "boundary": "assemblePilotPrompt return copied to local Buffer; no SDK"
+  },
+  "traceStatus": "NOT_APPLICABLE_NO_CAMPAIGN_EXPORTER",
+  "testedFiles": [
+    {
+      "path": "test/pilot-plan.test.mjs",
+      "bytes": 26627,
+      "sha256": "0aa4ef903fd8f7ffec69e29c541889da28da1c6ea1b18f48fb4dd2e8b9159a91"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/assemble-prompt.mjs",
+      "bytes": 1381,
+      "sha256": "baa215c03f667415974d903a4ed0f781c2f2f43ccec36e819fc27c573e43f6ed"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/experiment-plan.json",
+      "bytes": 9951,
+      "sha256": "d3511c9629750176c3e9d433acdec21b939280a683c79a4402ebb165dd308481"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/judging-rubric.json",
+      "bytes": 27614,
+      "sha256": "c796bc634fb57c135d711a06fe83ed7569b0f9ec637cf444292d3b94101c51b4"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/scenarios.json",
+      "bytes": 9615,
+      "sha256": "5123dc129af2d9b6ffc59df68f4a7df8e519ce2921ca748b4e23b22239cddb50"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/content.json",
+      "bytes": 10660,
+      "sha256": "10827ff8a8379f1a0b1e93c73fcb6fa107c65d7730c10e0d459ba06864ec47ed"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/comparison-map.json",
+      "bytes": 54900,
+      "sha256": "10f339842f77deee1fe9bab91146ec6f5a2fe00234ef17d48010231adb8ebf8c"
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/prose-coverage.json",
+      "bytes": 104382,
+      "sha256": "c49b5bfd0ec7b52cf6703f6d69084c9925f0e7b24507ed37badceb6d8cdb608d"
+    },
+    {
+      "path": "docs/model-comparison.md",
+      "bytes": 14360,
+      "sha256": "0502f861db0f6ba120066ca64a9aa065383ed8b1e8a777320df3b5836b64733f"
+    },
+    {
+      "path": "docs/en/model-comparison.md",
+      "bytes": 12573,
+      "sha256": "b6ca4dc942a85e2e9efa9357734e1d8c72717ee2a3fff9ebe6d29b3b9302b2f4"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2573,
+      "sha256": "9f4da6e56624509af72ef1f3df4e03a5229a3ecf5afc3e80224ef9fe2b4ec4ac"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 17408,
+      "sha256": "ccfacaab0fabfa8624467e75f72bf6da647d6b8b7d708e8d01804cfbb560537b"
+    }
+  ],
+  "logs": [
+    {
+      "name": "pilot-final.tap",
+      "bytes": 4769,
+      "sha256": "1fd24a8e2b33d4d17986f239c89c74520ea1be02b6ecfa08342d0f2b5a99da9c"
+    },
+    {
+      "name": "npm-test.log",
+      "bytes": 38678,
+      "sha256": "9a44ba7aaa7d698b516209923ca4cd0c10aa0206b4835f2b5b706507a1b15970"
+    },
+    {
+      "name": "npm-test-dev-final.log",
+      "bytes": 8396,
+      "sha256": "90ee9c0f504473704abcad87e60e5c4791a0d4fccbdafb81eab949524e456cab"
+    },
+    {
+      "name": "format-check.log",
+      "bytes": 68,
+      "sha256": "f20510a9da4717c51c4cffee6d0dd88d6c9a723d0a83711d01216f5b48961283"
+    },
+    {
+      "name": "m11-memo-alias.tap",
+      "bytes": 11794,
+      "sha256": "2ab57ea0ba8873062ab4f8549b008c6a8eda5fba57844db5e58d2e6e682d7ebd"
+    },
+    {
+      "name": "m12b-late-swallowed-fetch.tap",
+      "bytes": 6997,
+      "sha256": "6e54e00638d6f6a91494fdf62253da7e2792d7a267e0722b77b1c800da5ce648"
+    }
+  ],
+  "logRetention": "Current raw logs and counter-check sources: repository-local .git/handoffs/2026-11-05-pilot-integrity/revision-20261106. Original Claude artifacts: claude-audit-20261106/executed-evidence. Initial logs and private synchronization receipts remain in the parent handoff. Only the current targeted TAP is embedded here.",
+  "targetedTap": "TAP version 13\r\n# Subtest: pilot artifacts identify exact untruncated inputs and retain unknown token counts\r\nok 1 - pilot artifacts identify exact untruncated inputs and retain unknown token counts\r\n  ---\r\n  duration_ms: 5.9728\r\n  type: 'test'\r\n  ...\r\n# Subtest: prose coverage accounts once for every source leaf and all 129 pack leaves with valid section targets\r\nok 2 - prose coverage accounts once for every source leaf and all 129 pack leaves with valid section targets\r\n  ---\r\n  duration_ms: 2.7777\r\n  type: 'test'\r\n  ...\r\n# Subtest: fixed crossover order has 560 unique trials and exactly 35 appearances per position and condition\r\nok 3 - fixed crossover order has 560 unique trials and exactly 35 appearances per position and condition\r\n  ---\r\n  duration_ms: 0.5527\r\n  type: 'test'\r\n  ...\r\n# Subtest: the prepared plan contains no observed outcomes, hidden answer inputs or fabricated configuration\r\nok 4 - the prepared plan contains no observed outcomes, hidden answer inputs or fabricated configuration\r\n  ---\r\n  duration_ms: 0.1369\r\n  type: 'test'\r\n  ...\r\n# Subtest: judging distinguishes applicable evidence retention, unsupported claims and common utility\r\nok 5 - judging distinguishes applicable evidence retention, unsupported claims and common utility\r\n  ---\r\n  duration_ms: 0.3144\r\n  type: 'test'\r\n  ...\r\n# Subtest: prompt assembly emits exact bytes with no case IDs, conditions or teaching fields in any arm\r\nok 6 - prompt assembly emits exact bytes with no case IDs, conditions or teaching fields in any arm\r\n  ---\r\n  duration_ms: 3.8613\r\n  type: 'test'\r\n  ...\r\n# Subtest: pilot network guards reject outbound calls before any transport is reached\r\nok 7 - pilot network guards reject outbound calls before any transport is reached\r\n  ---\r\n  duration_ms: 0.3316\r\n  type: 'test'\r\n  ...\r\n# Subtest: documentary UTF-8 preserves BOM, combining marks, French spaces and line endings at capture\r\nok 8 - documentary UTF-8 preserves BOM, combining marks, French spaces and line endings at capture\r\n  ---\r\n  duration_ms: 0.2102\r\n  type: 'test'\r\n  ...\r\n# Subtest: malformed UTF-8 never reaches the local capture and a later valid input still works\r\nok 9 - malformed UTF-8 never reaches the local capture and a later valid input still works\r\n  ---\r\n  duration_ms: 0.3659\r\n  type: 'test'\r\n  ...\r\n# Subtest: case interpolation is one JSON serialization and consecutive captures share no trial state\r\nok 10 - case interpolation is one JSON serialization and consecutive captures share no trial state\r\n  ---\r\n  duration_ms: 0.7828\r\n  type: 'test'\r\n  ...\r\n# Subtest: empty-response fixtures use JavaScript trim without turning U+200B into whitespace\r\nok 11 - empty-response fixtures use JavaScript trim without turning U+200B into whitespace\r\n  ---\r\n  duration_ms: 0.1455\r\n  type: 'test'\r\n  ...\r\n# Subtest: crossover positions are nearly balanced within each language without claiming randomization\r\nok 12 - crossover positions are nearly balanced within each language without claiming randomization\r\n  ---\r\n  duration_ms: 0.196\r\n  type: 'test'\r\n  ...\r\n# Subtest: completed empty and truncated answers are never eligible for technical resampling\r\nok 13 - completed empty and truncated answers are never eligible for technical resampling\r\n  ---\r\n  duration_ms: 0.0976\r\n  type: 'test'\r\n  ...\r\n# Subtest: trial identity and metadata remain external to the model input\r\nok 14 - trial identity and metadata remain external to the model input\r\n  ---\r\n  duration_ms: 0.0748\r\n  type: 'test'\r\n  ...\r\n# Subtest: both reviewers share empty and truncated judgment precedence without favourable imputation\r\nok 15 - both reviewers share empty and truncated judgment precedence without favourable imputation\r\n  ---\r\n  duration_ms: 0.0636\r\n  type: 'test'\r\n  ...\r\n# Subtest: covered source identifiers point to the prose section that actually contains them\r\nok 16 - covered source identifiers point to the prose section that actually contains them\r\n  ---\r\n  duration_ms: 2.2984\r\n  type: 'test'\r\n  ...\r\n# Subtest: normative response and retry prose remains the reviewed protocol\r\nok 17 - normative response and retry prose remains the reviewed protocol\r\n  ---\r\n  duration_ms: 0.0814\r\n  type: 'test'\r\n  ...\r\n# Subtest: prompt assembly preserves BOM and rejects missing evidence and unsupported language\r\nok 18 - prompt assembly preserves BOM and rejects missing evidence and unsupported language\r\n  ---\r\n  duration_ms: 0.1518\r\n  type: 'test'\r\n  ...\r\n# Subtest: no unexpected network attempt during the tests, including caught failures\r\nok 19 - no unexpected network attempt during the tests, including caught failures\r\n  ---\r\n  duration_ms: 0.0366\r\n  type: 'test'\r\n  ...\r\n1..19\r\n# tests 19\r\n# suites 0\r\n# pass 19\r\n# fail 0\r\n# cancelled 0\r\n# skipped 0\r\n# todo 0\r\n# duration_ms 53.3703\r\n",
+  "history": {
+    "initialQualificationCommit": "d953df2019355e92d288bd1d40fc46cb4b36913d",
+    "initialRecordedAt": "2026-11-05T19:33:34.113Z",
+    "note": "The initial record and logs remain in the initial commit and repository-local handoff. Current commands and hashes describe the consolidated correction."
+  },
+  "modelCallsScope": "Experimental campaign only. The independent Claude code audit was authorized separately.",
+  "retainedIntermediateFailuresOrigin": "Initial local qualification on 2026-11-05; historical logs remain in the original handoff.",
+  "networkGuardLimits": "Only the listed JavaScript entry points are guarded. DNS and direct UDP construction are outside those guards. The targeted Node permission run separately denies network and subprocesses. Activity scheduled after the last test is not covered by its assertion; the after-hook alone is not a reliable nonzero-exit signal under Node 26.12.1 with test-isolation=none.",
+  "auditFollowup": {
+    "auditor": "Claude Opus 5.5",
+    "auditedCommit": "d953df2019355e92d288bd1d40fc46cb4b36913d",
+    "packetSha256": "3427b4c6fa8d7680d033cdb917a61ac55f10d227b3e2901ff370d4cc77d108c7",
+    "verdict": "NO_GO",
+    "reportSha256": "4789bd675fef73572d61b89d37bef0d2547ac5650e7cbcc63b4fe8562830cfb5",
+    "blockingFinding": "R6",
+    "correctedHere": [
+      "R6: explicit final network count test and guaranteed mock restoration",
+      "R1: mutate the actual returned array, check identity and retained bytes",
+      "R4: remove the tautological immutable-string assertion"
+    ],
+    "deferredIntegration": [
+      "R2: isolated UTF-16 surrogate in instruction",
+      "R5: evidence undefined omitted by JSON serialization",
+      "L2: DNS/direct UDP guard coverage"
+    ],
+    "optionalCoverage": "R3: Claude independently observed no leak in 14 real-scenario assemblies using a placeholder document; no campaign response and no additional regression test claimed.",
+    "correctedCandidateAuditStatus": "PENDING_FINAL_REVIEW"
+  }
+}
