@@ -22,7 +22,7 @@ Each identifier names a different thing; matching numbers carry no meaning acros
 
 | Identifier | What it names |
 |---|---|
-| `0.3.0-proposed` reference prerelease | Reference verifier, documentation, optional MCP Apps companion and pack comparison; cite the tag and exact executed commit. Historical schemas, recipes and example bytes remain unchanged; earlier tags are preserved. |
+| `0.3.1-proposed` reference prerelease | Reference verifier, documentation, optional MCP Apps companion and pack comparison; cite the tag and exact executed commit. Historical schemas, recipes and example bytes remain unchanged; earlier tags are preserved. |
 | `runtimeVersion` `0.3.0-proposed` | The software of the hosted Runtime. |
 | `schemaVersion` | Object-specific: historical snapshot/archive profiles remain `0.1.0-proposed`; `0.2.0` was read only on the retained `GovernedContextRuntimeHealth` asset in the [local qualification](qualification.md). |
 | MCP revision `2026-07-28` | The protocol profile served by the MCP adapter. |
