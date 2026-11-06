@@ -386,13 +386,13 @@ for (const variant of [
   test('release citation refuses changed date metadata after refreshed digests: ' + variant, async t =>
     withCopy(t, async dir => {
       await edit(dir, 'CITATION.cff', text => {
-        const date = 'date-released: 2026-11-02';
+        const date = 'date-released: 2026-11-06';
         const replacement = {
           missing: '',
           different: 'date-released: 2026-10-22',
           impossible: 'date-released: 2026-02-30',
           duplicate: date + '\n' + date,
-          'quoted-key': '"date-released": 2026-11-02',
+          'quoted-key': '"date-released": 2026-11-06',
           indented: '  ' + date,
           'trailing-space': date + ' ',
           'valid-plus-indented': date + '\n  date-released: 2026-10-22',
@@ -440,7 +440,7 @@ for (const variant of ['cff-message', 'en-status', 'fr-status', 'both-status']) 
   test('current citation refuses a stale edition after refreshed digests: ' + variant, async t =>
     withCopy(t, async dir => {
       if (variant === 'cff-message') {
-        await edit(dir, 'CITATION.cff', text => text.replace('Cite v0.3.0-proposed', 'Cite v0.2.1-proposed'));
+        await edit(dir, 'CITATION.cff', text => text.replace('Cite v0.3.1-proposed', 'Cite v0.2.1-proposed'));
         const raw = await readFile(join(dir, 'CITATION.cff'));
         await edit(dir, 'package-policy.json', text => {
           const value = JSON.parse(text);
@@ -452,7 +452,7 @@ for (const variant of ['cff-message', 'en-status', 'fr-status', 'both-status']) 
         for (const lang of ['en', 'fr']) {
           if (variant !== 'both-status' && variant !== lang + '-status') continue;
           const before = documentation[lang].status;
-          const after = before.replaceAll('0.3.0-proposed', '0.2.1-proposed');
+          const after = before.replaceAll('0.3.1-proposed', '0.2.1-proposed');
           documentation[lang].status = after;
           for (const path of lang === 'en' ? ['README.md', 'docs/en/README.md'] : ['docs/fr/README.md'])
             await edit(dir, path, text => text.replace(before, after));

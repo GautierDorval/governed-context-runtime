@@ -1,5 +1,9 @@
 # Changes
 
+## 0.3.1-proposed, publication candidate
+
+Patch reference edition distributing the pilot-integrity checks and their bounded evidence: final message bytes, UTF-8, literal JSON, pedagogical metadata, returned-buffer isolation and attempted intercepted network calls. No campaign sender or measured result is introduced. The scientific pilot remains NOT_RUN. Historical contracts and runtime verifier bytes are preserved. See [release notes](docs/release-0.3.1-proposed.md).
+
 ## 0.3.0-proposed, publication candidate
 
 New reference edition grouping the optional MCP Apps companion, complete-pack reading, bounded diagnostics, exact pack comparison and its bilingual Web view, declaration discovery/contracts, retained T3 documentation and development-only generative testing. SDK client/core/server 2.3.0 and development fast-uri 3.1.9 address the dependency advisories found during release preparation. Historical contracts, synthetic bytes and prior releases are preserved. Contracts remain proposed; the scientific pilot remains NOT_RUN. The tag, archive and release receipt establish publication separately from service deployment. See [release notes](docs/release-0.3.0-proposed.md).

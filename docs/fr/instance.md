@@ -22,7 +22,7 @@ Chaque identifiant désigne une chose différente ; une concordance de numéros
 
 | Identifiant | Ce qu’il désigne |
 |---|---|
-| Préversion de référence `0.3.0-proposed` | Vérificateur, documentation, compagnon MCP Apps facultatif et comparaison de packs ; citer l’étiquette et le commit exact exécuté. Les schémas, recettes et octets des exemples historiques restent inchangés ; les anciennes étiquettes sont conservées. |
+| Préversion de référence `0.3.1-proposed` | Vérificateur, documentation, compagnon MCP Apps facultatif et comparaison de packs ; citer l’étiquette et le commit exact exécuté. Les schémas, recettes et octets des exemples historiques restent inchangés ; les anciennes étiquettes sont conservées. |
 | `runtimeVersion` `0.3.0-proposed` | Le logiciel du Runtime hébergé. |
 | `schemaVersion` | Propre à chaque objet : les profils historiques de snapshot et d’archive restent `0.1.0-proposed`. `0.2.0` a été lu seulement sur l’actif `GovernedContextRuntimeHealth` conservé, dans la [qualification locale](qualification.md). |
 | Révision MCP `2026-07-28` | Le profil de protocole servi par l’adaptateur MCP. |
