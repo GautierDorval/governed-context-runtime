@@ -1,5 +1,9 @@
 # Changes
 
+## Unreleased
+
+Optional provider pilot runner with exact response/error boundaries, durable shared spending reservations, bounded retries, two independent automatic judges and private status for the Observatory. [Implementation record](records/provider-pilot-2026-11-07.md). Synthetic execution and a real provider campaign remain distinct; the frozen protocol template is unchanged.
+
 ## 0.3.1-proposed, publication candidate
 
 Patch reference edition distributing the pilot-integrity checks and their bounded evidence: final message bytes, UTF-8, literal JSON, pedagogical metadata, returned-buffer isolation and attempted intercepted network calls. No campaign sender or measured result is introduced. The scientific pilot remains NOT_RUN. Historical contracts and runtime verifier bytes are preserved. See [release notes](docs/release-0.3.1-proposed.md).

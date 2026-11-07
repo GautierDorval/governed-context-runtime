@@ -80,6 +80,8 @@ Reference edition 0.3.1-proposed is a prerelease of proposed contracts. Cite v0.
 Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/reproduction.md),
 [English pack semantics](docs/en/pack-semantics.md) or [French semantics](docs/fr/pack-semantics.md).
 The [English pilot](docs/en/model-comparison.md) and [French pilot](docs/model-comparison.md) prepare four conditions and 560 responses per future configuration: **NOT_RUN**.
+
+The optional [provider execution boundary](docs/en/provider-pilot.md) adds durable attempts, a shared spending cap and two independent automatic judges. Its [implementation record](records/provider-pilot-2026-11-07.md) separates synthetic qualification from a real campaign result.
 The [observation contracts](docs/observations.md) validate dated declarations, not production.
 
 [Local qualification](docs/en/qualification.md) · [Qualification française](docs/fr/qualification.md) · [Reference prerelease notes](docs/release-0.3.1-proposed.md)

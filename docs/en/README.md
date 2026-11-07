@@ -111,6 +111,8 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 [Reproduction kit](reproduction.md) · [Pack semantics](pack-semantics.md) · [Prepared model comparison](model-comparison.md).
 
+[Provider pilot execution](provider-pilot.md): durable attempts, one shared budget, two automatic judges and private operational status. A campaign result is separate from the reusable plan and local synthetic qualification.
+
 [Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.3.1-proposed.md). The four-condition pilot is **NOT_RUN**.
 
 ## Local MCP Apps companion
