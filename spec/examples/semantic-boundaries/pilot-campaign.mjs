@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import {preparePilotTrials, executePilotTrials, PilotTechnicalError, PilotExecutionStopped} from './pilot-execution.mjs';
-import {buildProviderRequest, sendProviderRequest, PROVIDER_PROFILES} from './pilot-provider.mjs';
+import {buildProviderRequest, sendProviderRequest, decodeProviderResponse, PROVIDER_PROFILES} from './pilot-provider.mjs';
 import {createPilotBudget, tokenCostMicrousd} from './pilot-budget.mjs';
 import {JUDGE_INSTRUCTION, prepareJudgeInput, validateJudgeResponse, summarizeJudgments} from './pilot-judging.mjs';
 import {assertValue, digestBytes, parseProviderJson} from './pilot-json.mjs';
@@ -162,6 +162,83 @@ export function materializeCampaignSnapshot({objects, ...options}) {
   return loadCampaign({...options, bucket: snapshotBucket(objects)});
 }
 
+/** Explicitly pinned, additive recovery of the first DeepInfra preflight only. No new grant. */
+export async function readCampaignRecovery({bucket, campaignId, manifestSha256, recoverySha256}) {
+  assertValue(/^[a-z0-9-]{1,80}$/.test(campaignId) && HASH.test(manifestSha256) && HASH.test(recoverySha256), 'campaign_recovery_pin');
+  const prefix = `campaigns/${campaignId}/`;
+  const saved = await readCampaignRecord(bucket, prefix + `recoveries/${recoverySha256}.json`);
+  const p = saved?.payload;
+  const keys = ['schema', 'campaignId', 'manifestSha256', 'priorWorkerVersionId', 'priorIdentitySha256', 'priorBudgetSha256', 'attemptId', 'attemptSha256', 'responseSha256', 'runtimeSourceCommit', 'runtimeBundleSha256'];
+  assertValue(saved?.sha256 === recoverySha256 && p && Object.keys(p).sort().join(',') === keys.sort().join(','), 'campaign_recovery_pin');
+  assertValue(p.schema === 'runtime-pilot-preflight-recovery/1' && p.campaignId === campaignId && p.manifestSha256 === manifestSha256 && p.attemptId === 'preflight/deepinfra/1', 'campaign_recovery_scope');
+  assertValue(['priorIdentitySha256', 'priorBudgetSha256', 'attemptSha256', 'responseSha256', 'runtimeBundleSha256'].every(key => HASH.test(p[key])) && /^[a-f0-9]{40}$/.test(p.runtimeSourceCommit), 'campaign_recovery_provenance');
+  const prior = await readCampaignRecord(bucket, prefix + 'execution-identity.json');
+  assertValue(prior?.sha256 === p.priorIdentitySha256 && prior.payload.campaignId === campaignId && prior.payload.manifestSha256 === manifestSha256 && prior.payload.workerVersionId === p.priorWorkerVersionId && /^[a-f0-9-]{36}$/.test(p.priorWorkerVersionId), 'campaign_recovery_prior_identity');
+  assertValue(new Date(prior.payload.admittedAt).toISOString() === prior.payload.admittedAt, 'campaign_recovery_admission_time');
+  return {...p, recoverySha256, admittedAt: prior.payload.admittedAt};
+}
+
+export async function admitCampaignRecovery({bucket, campaign, manifestSha256, recoverySha256, workerVersionId}) {
+  const recovery = await readCampaignRecovery({bucket, campaignId: campaign.manifest.campaignId, manifestSha256, recoverySha256});
+  assertValue(/^[a-f0-9-]{36}$/.test(workerVersionId) && workerVersionId !== recovery.priorWorkerVersionId, 'campaign_recovery_worker');
+  const key = campaign.prefix + `recovery-admissions/${recoverySha256}.json`;
+  const existing = await readCampaignRecord(bucket, key);
+  const object = await bucket.get(campaign.prefix + 'budget.json');
+  assertValue(object && object.size <= 4_194_304, 'campaign_recovery_budget');
+  const budget = parseProviderJson(await object.text());
+  assertValue(budget.schema === 'runtime-pilot-spend/1' && await digestBytes(encoder.encode(JSON.stringify(budget.payload))) === budget.sha256, 'campaign_recovery_budget');
+  const ledger = createPilotBudget({bucket, key: campaign.prefix + 'budget.json', authorization: {planSha256: manifestSha256, capMicrousd: campaign.manifest.budgetCapMicrousd, maximumAttempts: campaign.manifest.maximumAttempts, expiresAt: campaign.manifest.expiresAt}});
+  await ledger.summary(); // Verifies the original immutable authorization, cap and every reservation.
+  assertValue((await ledger.inspect('preflight/anthropic/1'))?.state === 'settled' && (await ledger.inspect(recovery.attemptId))?.state === 'uncertain', 'campaign_recovery_prior_state');
+  const marker = await bucket.get(campaign.prefix + 'budget-started.json');
+  assertValue(marker && marker.size <= 4096, 'campaign_recovery_marker');
+  const started = parseProviderJson(await marker.text());
+  assertValue(started.schema === 'runtime-pilot-budget-started/1' && JSON.stringify(started.authorization) === JSON.stringify(budget.payload.authorization), 'campaign_recovery_marker');
+  const originalAttempts = Object.fromEntries(['preflight/anthropic/1', 'preflight/deepinfra/1'].map(id => [id, budget.payload.attempts[id]]));
+  const proof = {recoverySha256, workerVersionId, priorBudgetSha256: recovery.priorBudgetSha256, originalAttempts};
+  if (existing) {
+    // Even after admission, loss of both ledger and marker must never renew spending authority.
+    assertValue(JSON.stringify(existing.payload) === JSON.stringify(proof), 'campaign_recovery_admission_changed');
+    return {...recovery, workerVersionId};
+  }
+  assertValue(budget.sha256 === recovery.priorBudgetSha256, 'campaign_recovery_budget');
+  assertValue(Object.keys(budget.payload.attempts).sort().join(',') === 'preflight/anthropic/1,preflight/deepinfra/1', 'campaign_recovery_already_advanced');
+  assertValue(await readCampaignRecord(bucket, campaign.prefix + 'result.json') === null && await readCampaignRecord(bucket, campaign.prefix + 'native-preflight-summary.json') === null, 'campaign_recovery_already_advanced');
+  await writeCampaignRecord(bucket, key, proof);
+  return {...recovery, workerVersionId};
+}
+
+async function requireRecoveryExecution({bucket, prefix, recovery, workerVersionId}) {
+  const admitted = await readCampaignRecord(bucket, prefix + `recovery-admissions/${recovery.recoverySha256}.json`);
+  const identity = await readCampaignRecord(bucket, prefix + `execution-identities/${workerVersionId}.json`);
+  assertValue(admitted?.payload.workerVersionId === workerVersionId && admitted.payload.recoverySha256 === recovery.recoverySha256 && admitted.payload.priorBudgetSha256 === recovery.priorBudgetSha256 && identity?.payload.recoverySha256 === recovery.recoverySha256 && identity.payload.workerVersionId === workerVersionId && identity.payload.campaignId === recovery.campaignId && identity.payload.manifestSha256 === recovery.manifestSha256 && identity.payload.admittedAt === recovery.admittedAt, 'campaign_recovery_execution_version');
+  const object = await bucket.get(prefix + 'budget.json');
+  const marker = await bucket.get(prefix + 'budget-started.json');
+  assertValue(object && object.size <= 4_194_304 && marker && marker.size <= 4096, 'campaign_recovery_budget');
+  const budget = parseProviderJson(await object.text());
+  const started = parseProviderJson(await marker.text());
+  assertValue(budget.schema === 'runtime-pilot-spend/1' && await digestBytes(encoder.encode(JSON.stringify(budget.payload))) === budget.sha256 && started.schema === 'runtime-pilot-budget-started/1' && JSON.stringify(started.authorization) === JSON.stringify(budget.payload.authorization), 'campaign_recovery_budget');
+  const originalAttempts = Object.fromEntries(['preflight/anthropic/1', 'preflight/deepinfra/1'].map(id => [id, budget.payload.attempts?.[id]]));
+  assertValue(JSON.stringify(originalAttempts) === JSON.stringify(admitted.payload.originalAttempts), 'campaign_recovery_reservation_changed');
+}
+
+/** Reinterpret retained HTTP-200 bytes. Never overwrite the attempt or settle its reservation. */
+async function reconcilePreflight({bucket, prefix, recovery, request, ledger}) {
+  const saved = await readCampaignRecord(bucket, prefix + `attempts/${recovery.attemptId}.json`);
+  const p = saved?.payload;
+  assertValue(saved?.sha256 === recovery.attemptSha256 && p?.attemptId === recovery.attemptId && request.provider === 'deepinfra' && request.role === 'preflight' && p.request.body === request.body && p.request.provider === request.provider, 'campaign_recovery_attempt');
+  assertValue(p.response === null && p.error?.code === 'provider_usage_details' && p.error.deliveryState === 'response_rejected' && p.error.retryable === false, 'campaign_recovery_error');
+  const raw = p.error.partialResponse;
+  assertValue(typeof raw === 'string' && p.error.responseSha256 === recovery.responseSha256 && await digestBytes(encoder.encode(raw)) === recovery.responseSha256 && p.requestSha256 === await digestBytes(encoder.encode(request.body)), 'campaign_recovery_bytes');
+  assertValue(parseProviderJson(raw).usage?.prompt_tokens_details?.cache_write_tokens === null, 'campaign_recovery_null_counter');
+  const entry = await ledger.inspect(recovery.attemptId);
+  assertValue(entry?.state === 'uncertain' && entry.outcomeSha256 === saved.sha256 && entry.requestSha256 === p.requestSha256, 'campaign_recovery_reservation');
+  const response = {...decodeProviderResponse(request, raw), requestSha256: p.requestSha256, responseSha256: recovery.responseSha256};
+  const reconciliation = {schema: 'runtime-pilot-preflight-reconciliation/1', recoverySha256: recovery.recoverySha256, originalAttemptSha256: saved.sha256, responseSha256: recovery.responseSha256, reservationRetainedMicrousd: entry.reservedMicrousd};
+  await writeCampaignRecord(bucket, prefix + `reconciliations/${recovery.recoverySha256}.json`, {...reconciliation, response});
+  return {...p, response, error: null, reconciliation};
+}
+
 /** R2 reservations and outcomes survive Worker/Workflow restarts. No network retry lives here. */
 export function campaignAttemptRunner({bucket, prefix, ledger, credentials, invoke = sendProviderRequest, now = () => new Date()}) {
   async function settle(attemptId, request, saved) {
@@ -215,8 +292,13 @@ export function campaignAttemptRunner({bucket, prefix, ledger, credentials, invo
 }
 
 /** All durable I/O runs inside cached steps. R2 retains the canonical exact-byte records. */
-export async function runCampaign({bucket, campaign, manifestSha256, credentials, steps, invoke, now = () => new Date()}) {
+export async function runCampaign({bucket, campaign, manifestSha256, credentials, steps, invoke, recovery = null, now = () => new Date()}) {
   const {prefix, manifest, trials, rubric} = campaign;
+  if (recovery) {
+    const pinned = await readCampaignRecovery({bucket, campaignId: manifest.campaignId, manifestSha256, recoverySha256: recovery.recoverySha256});
+    assertValue(JSON.stringify(recovery) === JSON.stringify({...pinned, workerVersionId: recovery.workerVersionId}), 'campaign_recovery_changed');
+    await requireRecoveryExecution({bucket, prefix, recovery, workerVersionId: recovery.workerVersionId});
+  }
   const ledger = createPilotBudget({bucket, key: prefix + 'budget.json', authorization: {planSha256: manifestSha256, capMicrousd: manifest.budgetCapMicrousd, maximumAttempts: manifest.maximumAttempts, expiresAt: manifest.expiresAt}, now});
   const mode = invoke ? 'synthetic' : 'provider';
   assertValue(mode === 'synthetic' || trials.length === 560, 'campaign_trial_count');
@@ -238,7 +320,8 @@ export async function runCampaign({bucket, campaign, manifestSha256, credentials
   for (const provider of ['anthropic', ...manifest.reviewers]) {
     const judgeInput = provider === 'anthropic' ? null : prepareJudgeInput({trial: trials[0], rubric, outcome: {kind: 'completed_response', rawText: '', finishReason: 'end_turn', outputLimited: false}});
     const request = buildProviderRequest({provider, role: 'preflight', promptBytes: encoder.encode(judgeInput ? JSON.stringify(judgeInput) : 'Reply with exactly OK.'), outputTokenLimit: judgeInput ? 8192 : 128, systemInstruction: judgeInput ? JUDGE_INSTRUCTION : null});
-    const probe = await dispatch('preflight/' + provider + '/1', request);
+    let probe = await dispatch('preflight/' + provider + '/1', request);
+    if (recovery && provider === 'deepinfra') probe = await steps.run('preflight-reconciliation', async () => JSON.parse(JSON.stringify(await reconcilePreflight({bucket, prefix, recovery, request, ledger}))));
     assertValue(probe.response && !probe.response.outputLimited, 'campaign_native_preflight');
     assertValue(probe.elapsedMs < probe.timeoutMs * 0.8, 'campaign_preflight_latency');
     if (judgeInput) await validateJudgeResponse({rawText: probe.response.rawText, input: judgeInput, trialId: 'preflight', reviewerId: provider});
@@ -252,7 +335,7 @@ export async function runCampaign({bucket, campaign, manifestSha256, credentials
     const checkedAt = now();
     const latestScientificStartAt = new Date(Date.parse(manifest.expiresAt) - estimatedWindowMs).toISOString();
     assertValue(checkedAt.getTime() < Date.parse(latestScientificStartAt), 'campaign_runtime_window');
-    return writeCampaignRecord(bucket, prefix + 'native-preflight-summary.json', {schema: 'runtime-pilot-native-preflight/1', mode, preflightTimings, checkedAt: checkedAt.toISOString(), estimatedWindowMs, latestScientificStartAt, executionExpiresAt: manifest.expiresAt});
+    return writeCampaignRecord(bucket, prefix + 'native-preflight-summary.json', {schema: 'runtime-pilot-native-preflight/1', mode, preflightTimings, checkedAt: checkedAt.toISOString(), estimatedWindowMs, latestScientificStartAt, executionExpiresAt: manifest.expiresAt, ...(recovery ? {recoverySha256: recovery.recoverySha256} : {})});
   });
   let current;
   const execution = await executePilotTrials({
@@ -309,13 +392,14 @@ export async function runCampaign({bucket, campaign, manifestSha256, credentials
     judgments: summary, rejectedJudgments: rejected,
     spend: await steps.run('final-spend', () => ledger.summary()), billingBasis: 'conservative_full_price_upper_bound_not_invoice',
     scientificScope: 'seven_cases_one_fictional_service_no_global_architecture_claim',
+    ...(recovery ? {recoverySha256: recovery.recoverySha256} : {}),
   };
   await steps.run('final-result', () => writeCampaignRecord(bucket, prefix + 'result.json', result));
   return result;
 }
 
 /** Private read model. It exposes aggregates only and never initiates provider work. */
-export async function readCampaignStatus({bucket, campaignId, manifestSha256, workerVersionId, now = new Date()}) {
+export async function readCampaignStatus({bucket, campaignId, manifestSha256, workerVersionId, recoverySha256 = null, now = new Date()}) {
   assertValue(/^[a-z0-9-]{1,80}$/.test(campaignId) && HASH.test(manifestSha256), 'campaign_identity');
   assertValue(typeof workerVersionId === 'string' && /^[a-f0-9-]{36}$/.test(workerVersionId), 'campaign_worker_identity');
   const prefix = `campaigns/${campaignId}/`;
@@ -326,7 +410,9 @@ export async function readCampaignStatus({bucket, campaignId, manifestSha256, wo
   const ledger = createPilotBudget({bucket, key: prefix + 'budget.json', authorization: {planSha256: manifestSha256, capMicrousd: manifest.budgetCapMicrousd, maximumAttempts: manifest.maximumAttempts, expiresAt: manifest.expiresAt}});
   const activity = await ledger.activity();
   const result = await readCampaignRecord(bucket, prefix + 'result.json');
-  const executionIdentity = await readCampaignRecord(bucket, prefix + 'execution-identity.json');
+  const recovery = recoverySha256 ? await readCampaignRecovery({bucket, campaignId, manifestSha256, recoverySha256}) : null;
+  const executionIdentity = await readCampaignRecord(bucket, prefix + (recovery ? `execution-identities/${workerVersionId}.json` : 'execution-identity.json'));
+  if (recovery) await requireRecoveryExecution({bucket, prefix, recovery, workerVersionId});
   if (executionIdentity || activity.attempts > 0 || result) {
     assertValue(executionIdentity?.payload.campaignId === campaignId && executionIdentity.payload.manifestSha256 === manifestSha256 && executionIdentity.payload.workerVersionId === workerVersionId, 'campaign_execution_version');
   }

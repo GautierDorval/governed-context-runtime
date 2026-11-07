@@ -18,6 +18,8 @@ HTTP response bodies are bounded to 16 KiB for the respondent and 128 KiB for ju
 
 ## Durable execution and budget
 
+DeepInfra can return `cache_write_tokens: null` without a cache-retention request. This specific optional field accepts null or zero; positive writes, other unknown fields and inconsistent totals remain rejected. Every input and output token still counts at the conservative full price. This compatibility introduces no discount or implicit spending category.
+
 Cloudflare Workflows caches bounded steps; its automatic retries are disabled. R2 stores immutable inputs, requests, outcomes, annotations and journals. A conditional-write budget ledger covers all three providers. Before HTTP, it reserves a conservative full-context input bound plus the output ceiling, using exact decimal arithmetic rounded upward. Verified usage settles to a conservative price-based upper bound. Unknown cost retains the whole reservation. These amounts are not invoices.
 
 A reservation without a retained outcome cannot be dispatched again under the same attempt identifier. An outcome retained before a crash can be settled without sending again. Storage failures, expired authorization or an exhausted budget stop execution. Three technical smoke requests, one per model, run before the 560 trials and use the same ledger. A failed smoke stops the campaign.
@@ -35,6 +37,12 @@ The execution packet pins the source commit, Worker bundle hash, all nine protoc
 `scripts/prepare-pilot.mjs` prepares the private packet offline from those reviewed inputs. It neither uploads nor calls providers. Output must be outside the public package, and the destination must not already exist. Its arguments are `--campaign`, `--preflight`, `--token-measurements`, `--bundle`, `--source-commit`, `--admit-before`, `--expires`, `--pricing-verified`, `--authorization` and `--output`. Preparation validates the packet but does not independently certify its metadata or authorize a launch.
 
 The production plan must explicitly configure the Workflow subrequest allowance, which includes R2 operations as well as provider HTTP. The default 10000 allowance is insufficient: a normal durable attempt uses eleven subrequests before journals and annotations, with extra reads for initial ledger creation. The first-pilot plan uses 150000; the conservative calculation including up to seven conflicts in each ledger update is below 142000. This platform allowance does not increase the 3366-attempt or USD 50 provider limits. Effective account and deployment limits require verification before launch.
+
+## Preflight recovery
+
+A separate recovery path is limited to revalidating the first DeepInfra preflight's retained HTTP-200 bytes after a `provider_usage_details` rejection. An immutable amendment, pinned by `PILOT_RECOVERY_SHA256`, links the original manifest, previous executable and identity, stopped ledger, exact attempt and response to the corrected source commit and bundle. The operator must verify that actual deployed bundle. Scientific inputs, manifest, original admission, deadlines and spending authorization stay unchanged.
+
+Recovery admission requires exactly the two recorded preflights and no scientific trial already started. It retains the old evidence and adds an execution identity for the new version. The DeepInfra response is decoded and validated again without HTTP dispatch; its original error and full spending reservation stay intact. Losing both ledger and marker after admission still cannot recreate the budget. This mechanism cannot arbitrarily restart a campaign, semantic refusal or different provider error. A failed Mistral preflight or any failed guard still stops execution.
 
 ## Judgments and reporting
 

@@ -11,6 +11,9 @@ import {
   materializeCampaignSnapshot,
   writeCampaignRecord,
   readCampaignStatus,
+  readCampaignRecord,
+  readCampaignRecovery,
+  admitCampaignRecovery,
   PILOT_PRICING,
   qualifyCampaignStorage,
 } from '../spec/examples/semantic-boundaries/pilot-campaign.mjs';
@@ -630,4 +633,243 @@ test('insufficient time after real-shaped preflights stops before scientific dis
   assert.equal(preflightCalls, 3);
   assert.equal(respondentCalls, 0);
   assert.equal(bucket.rows.has(prefix + 'result.json'), false);
+});
+
+/** @param {Bucket} bucket @param {any} payload */
+async function pinRecovery(bucket, payload) {
+  const digest = createHash('sha256').update(JSON.stringify(payload)).digest('hex');
+  await writeCampaignRecord(bucket, prefix + `recoveries/${digest}.json`, payload);
+  return digest;
+}
+
+async function rejectedPreflightFixture() {
+  const args = await approvedInputs();
+  const smallCampaign = {...campaign, trials: trials.slice(0, 2)};
+  const priorWorkerVersionId = '11111111-2222-4333-8444-555555555555';
+  const workerVersionId = '22222222-2222-4333-8444-555555555555';
+  const priorIdentity = await writeCampaignRecord(args.bucket, prefix + 'execution-identity.json', {
+    campaignId: args.campaignId,
+    manifestSha256: args.manifestSha256,
+    workerVersionId: priorWorkerVersionId,
+    admittedAt: now().toISOString(),
+  });
+  let initialCalls = 0;
+  await assert.rejects(
+    runCampaign({
+      bucket: args.bucket,
+      campaign: smallCampaign,
+      manifestSha256: args.manifestSha256,
+      credentials,
+      steps,
+      now,
+      invoke: async input => {
+        initialCalls++;
+        if (input.request.provider !== 'deepinfra') return invoke(input);
+        const annotation = await invoke(input);
+        const raw = JSON.stringify({
+          id: 'synthetic-deepinfra',
+          model: input.request.model,
+          choices: [{index: 0, finish_reason: 'stop', message: {role: 'assistant', content: annotation.rawText}}],
+          usage: {
+            prompt_tokens: 4667,
+            completion_tokens: 723,
+            total_tokens: 5390,
+            prompt_tokens_details: {cached_tokens: 0, cache_write_tokens: null},
+          },
+        });
+        const error = new PilotTechnicalError('', {
+          code: 'provider_usage_details',
+          retryable: false,
+          partialResponse: raw,
+          deliveryState: 'response_rejected',
+        });
+        error.responseSha256 = createHash('sha256').update(raw).digest('hex');
+        throw error;
+      },
+    }),
+    /campaign_native_preflight/,
+  );
+  assert.equal(initialCalls, 2);
+  const failed = await readCampaignRecord(args.bucket, prefix + 'attempts/preflight/deepinfra/1.json');
+  const rawBudget = args.bucket.rows.get(prefix + 'budget.json');
+  assert(rawBudget && failed);
+  const beforeBudget = JSON.parse(rawBudget.text);
+  const payload = {
+    schema: 'runtime-pilot-preflight-recovery/1',
+    campaignId: args.campaignId,
+    manifestSha256: args.manifestSha256,
+    priorWorkerVersionId,
+    priorIdentitySha256: priorIdentity.sha256,
+    priorBudgetSha256: beforeBudget.sha256,
+    attemptId: 'preflight/deepinfra/1',
+    attemptSha256: failed.sha256,
+    responseSha256: failed.payload.error.responseSha256,
+    runtimeSourceCommit: 'b'.repeat(40),
+    runtimeBundleSha256: 'c'.repeat(64),
+  };
+  const recoverySha256 = await pinRecovery(args.bucket, payload);
+  return {...args, campaign: smallCampaign, workerVersionId, beforeBudget, payload, recoverySha256};
+}
+
+test('pinned recovery revalidates retained preflight bytes without resending, resetting or discounting the uncertain call', async () => {
+  const args = await rejectedPreflightFixture();
+  const originals = [
+    'execution-identity.json',
+    'budget-started.json',
+    'attempts/preflight/anthropic/1.json',
+    'attempts/preflight/deepinfra/1.json',
+  ].map(name => [name, args.bucket.rows.get(prefix + name)?.text]);
+  const recovery = await admitCampaignRecovery(args);
+  assert.equal(args.bucket.rows.get(prefix + 'budget.json')?.text, JSON.stringify(args.beforeBudget));
+  await assert.rejects(readCampaignStatus({...args, recoverySha256: null}), /campaign_execution_version/);
+  await assert.rejects(
+    readCampaignStatus({...args, recoverySha256: args.recoverySha256}),
+    /campaign_recovery_execution_version/,
+  );
+  await writeCampaignRecord(args.bucket, prefix + `execution-identities/${args.workerVersionId}.json`, {
+    campaignId: args.campaignId,
+    manifestSha256: args.manifestSha256,
+    workerVersionId: args.workerVersionId,
+    admittedAt: recovery.admittedAt,
+    recoverySha256: args.recoverySha256,
+  });
+  const status = await readCampaignStatus({...args, recoverySha256: args.recoverySha256});
+  assert.equal(status.campaignStatus, 'NOT_ESTABLISHED');
+  assert.equal(status.unresolvedAttempts, 1);
+  assert.equal(status.workerVersionId, args.workerVersionId);
+  let calls = 0;
+  const result = await runCampaign({
+    bucket: args.bucket,
+    campaign: args.campaign,
+    manifestSha256: args.manifestSha256,
+    credentials,
+    steps,
+    now,
+    recovery,
+    invoke: async input => {
+      calls++;
+      assert(!(input.request.role === 'preflight' && ['anthropic', 'deepinfra'].includes(input.request.provider)));
+      return invoke(input);
+    },
+  });
+  assert.equal(calls, 7); // Mistral preflight, two responses and four judgments.
+  assert.equal(result.spend.attempts, 9);
+  assert.equal(result.spend.unresolvedAttempts, 1);
+  assert.equal(result.status, 'SYNTHETIC_RUN');
+  assert.equal(result.judgments.acceptedAnnotations, 4);
+  const afterBudget = JSON.parse(args.bucket.rows.get(prefix + 'budget.json')?.text ?? '{}');
+  assert.deepEqual(afterBudget.payload.authorization, args.beforeBudget.payload.authorization);
+  for (const id of ['preflight/anthropic/1', 'preflight/deepinfra/1'])
+    assert.deepEqual(afterBudget.payload.attempts[id], args.beforeBudget.payload.attempts[id]);
+  for (const [name, text] of originals) assert.equal(args.bucket.rows.get(prefix + name)?.text, text);
+  assert.equal(
+    (await readCampaignRecord(args.bucket, prefix + `reconciliations/${args.recoverySha256}.json`))?.payload
+      .reservationRetainedMicrousd,
+    args.beforeBudget.payload.attempts['preflight/deepinfra/1'].reservedMicrousd,
+  );
+  assert.deepEqual(await admitCampaignRecovery(args), recovery); // Admission is durable after budget advancement.
+});
+
+test('recovery refuses unpinned scope, changed prior identity, missing marker and already advanced budget', async () => {
+  for (const defect of ['pin', 'scope', 'identity', 'marker', 'budget', 'worker', 'advanced']) {
+    const args = await rejectedPreflightFixture();
+    if (defect === 'pin') args.recoverySha256 = 'f'.repeat(64);
+    if (defect === 'scope')
+      args.recoverySha256 = await pinRecovery(args.bucket, {...args.payload, attemptId: 'respondent/trial-0001/1'});
+    if (defect === 'identity')
+      args.recoverySha256 = await pinRecovery(args.bucket, {...args.payload, priorIdentitySha256: 'f'.repeat(64)});
+    if (defect === 'marker') args.bucket.rows.delete(prefix + 'budget-started.json');
+    if (defect === 'budget')
+      args.recoverySha256 = await pinRecovery(args.bucket, {...args.payload, priorBudgetSha256: 'f'.repeat(64)});
+    if (defect === 'worker') args.workerVersionId = args.payload.priorWorkerVersionId;
+    if (defect === 'advanced') {
+      const ledger = createPilotBudget({
+        bucket: args.bucket,
+        key: prefix + 'budget.json',
+        authorization: args.beforeBudget.payload.authorization,
+        now,
+      });
+      await ledger.reserve({
+        attemptId: 'respondent/trial-0001/1',
+        requestSha256: 'd'.repeat(64),
+        reservedMicrousd: 100,
+        provider: 'anthropic',
+        role: 'respondent',
+      });
+      const advanced = JSON.parse(args.bucket.rows.get(prefix + 'budget.json')?.text ?? '{}');
+      args.recoverySha256 = await pinRecovery(args.bucket, {...args.payload, priorBudgetSha256: advanced.sha256});
+    }
+    const before = args.bucket.rows.get(prefix + 'budget.json')?.text;
+    await assert.rejects(admitCampaignRecovery(args), /campaign_recovery_/);
+    assert.equal(args.bucket.rows.get(prefix + 'budget.json')?.text, before);
+  }
+});
+
+test('a recovery definition cannot be passed directly to bypass execution admission', async () => {
+  const args = await rejectedPreflightFixture();
+  const recovery = {...(await readCampaignRecovery(args)), workerVersionId: args.workerVersionId};
+  let calls = 0;
+  await assert.rejects(
+    runCampaign({
+      bucket: args.bucket,
+      campaign: args.campaign,
+      manifestSha256: args.manifestSha256,
+      credentials,
+      steps,
+      now,
+      recovery,
+      invoke: async input => {
+        calls++;
+        return invoke(input);
+      },
+    }),
+    /campaign_recovery_execution_version/,
+  );
+  assert.equal(calls, 0);
+});
+
+test('admitted recovery still fails closed if ledger and marker disappear or a retained reservation changes', async () => {
+  for (const defect of ['lost', 'reservation', 'bytes']) {
+    const args = await rejectedPreflightFixture();
+    const recovery = await admitCampaignRecovery(args);
+    await writeCampaignRecord(args.bucket, prefix + `execution-identities/${args.workerVersionId}.json`, {
+      campaignId: args.campaignId,
+      manifestSha256: args.manifestSha256,
+      workerVersionId: args.workerVersionId,
+      admittedAt: recovery.admittedAt,
+      recoverySha256: args.recoverySha256,
+    });
+    if (defect === 'lost') {
+      args.bucket.rows.delete(prefix + 'budget.json');
+      args.bucket.rows.delete(prefix + 'budget-started.json');
+      args.bucket.rows.delete(prefix + 'attempts/preflight/anthropic/1.json');
+    } else if (defect === 'reservation') {
+      const row = args.bucket.rows.get(prefix + 'budget.json');
+      assert(row);
+      const budget = JSON.parse(row.text);
+      budget.payload.attempts['preflight/deepinfra/1'].reservedMicrousd--;
+      budget.sha256 = createHash('sha256').update(JSON.stringify(budget.payload)).digest('hex');
+      row.text = JSON.stringify(budget);
+    } else {
+      recovery.responseSha256 = 'f'.repeat(64);
+    }
+    let calls = 0;
+    await assert.rejects(
+      runCampaign({
+        bucket: args.bucket,
+        campaign: args.campaign,
+        manifestSha256: args.manifestSha256,
+        credentials,
+        steps,
+        now,
+        recovery,
+        invoke: async input => {
+          calls++;
+          return invoke(input);
+        },
+      }),
+      /campaign_recovery_/,
+    );
+    assert.equal(calls, 0);
+  }
 });
