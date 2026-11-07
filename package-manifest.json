@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/en/provider-pilot.md",
-      "sha256": "e284f3e64bc2d017f711c3ca5e2f435b2a4981d5abfd3276699cda474eeccdf2",
-      "bytes": 6272
+      "sha256": "fc4ca9665f17f43f851696410728df2f06453ae6bc6d5b7bfc2905252744ad80",
+      "bytes": 7118
     },
     {
       "path": "docs/en/qualification.md",
@@ -216,8 +216,8 @@
     },
     {
       "path": "docs/fr/provider-pilot.md",
-      "sha256": "76138e05e9bde4e79329c03bc26e8677dc00eb5da36b7ff0d773f7e3977fe757",
-      "bytes": 7383
+      "sha256": "932188da5c30fdeab8c731412b3dfa6c41ffec451f5952c30a224e9465e7c674",
+      "bytes": 8326
     },
     {
       "path": "docs/fr/qualification.md",
@@ -436,7 +436,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "6e14da2b4c8c2cc3baf6559b654eb51d3167012f6ad4a45ae185e861567a67c0",
+      "sha256": "66d443e879039d178137aaffee8ce54830f264bfcadf98f53dd76f327c1821bf",
       "bytes": 55663
     },
     {
@@ -916,8 +916,8 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-judging.mjs",
-      "sha256": "811022d2618df939fd7e4f1e36e01171cefc526a83834c6620e180991a5e955c",
-      "bytes": 9940
+      "sha256": "aa9a3fc94e402ac354ca8e47ad138b29f21091aee073f18980a061cc1e5b4dda",
+      "bytes": 10048
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-provider.d.mts",
@@ -926,8 +926,8 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-provider.mjs",
-      "sha256": "1192655f723edb0c2b3d9086396afb6c6350eec78e3ceb7e279e393144716087",
-      "bytes": 13011
+      "sha256": "77d858b1f775dddac5cc6a83410362fd2928d188466afb39ded793eac66be5f6",
+      "bytes": 13481
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-workflow.mjs",
@@ -1116,8 +1116,8 @@
     },
     {
       "path": "test/pilot-provider.test.mjs",
-      "sha256": "440e309f1b7f1324b86101f56b750c81d58a675e165a3613a36f0a7669b9f05a",
-      "bytes": 8893
+      "sha256": "02d8e3d53f074b62f72d81bd28ca3fae1097e37565ecfe18dd5e5a88cea8f90e",
+      "bytes": 9720
     },
     {
       "path": "test/properties/acceptance-vectors.json",

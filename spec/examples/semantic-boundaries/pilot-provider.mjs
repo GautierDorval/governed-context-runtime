@@ -12,10 +12,11 @@ const ENCODER = new TextEncoder();
 const DECODER = new TextDecoder('utf-8', {fatal: true, ignoreBOM: true});
 const MAX_BYTES = 1_048_576;
 const nonnegativeInteger = value => Number.isSafeInteger(value) && value >= 0;
+const credentialEcho = (text, credential) => text.includes(credential) || (credential.length >= 16 && text.includes(credential.slice(0, 16)));
 function partialBytes(bytes, credential) {
   const preview = new TextDecoder().decode(bytes);
   const unescaped = preview.replace(/\\u([0-9a-f]{4})/gi, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16))).replace(/\\(["\\/])/g, '$1');
-  if (preview.includes(credential) || unescaped.includes(credential)) return null;
+  if (credentialEcho(preview, credential) || credentialEcho(unescaped, credential)) return null;
   let binary = '';
   for (let at = 0; at < bytes.length; at += 8192) binary += String.fromCharCode(...bytes.subarray(at, at + 8192));
   return btoa(binary);
@@ -135,6 +136,8 @@ export async function sendProviderRequest({request, credential, fetchImplementat
   assertValue(!request.body.includes(credential), 'credential_echo');
   const bodyBytes = ENCODER.encode(request.body);
   const requestSha256 = await digestBytes(bodyBytes);
+  // Bound accumulated campaign memory as well as each individual HTTP response.
+  const responseByteLimit = request.role === 'respondent' ? 16_384 : 131_072;
   const abort = new AbortController();
   const timer = setTimeout(() => abort.abort(), timeoutMs);
   const combined = signal ? AbortSignal.any([signal, abort.signal]) : abort.signal;
@@ -154,14 +157,16 @@ export async function sendProviderRequest({request, credential, fetchImplementat
       while (true) {
         const {done, value} = await reader.read();
         if (done) break;
-        assertValue(receivedBytes.length + value.length <= MAX_BYTES, 'provider_body_limit');
-        const next = new Uint8Array(receivedBytes.length + value.length);
-        next.set(receivedBytes); next.set(value, receivedBytes.length); receivedBytes = next;
+        const exceeds = receivedBytes.length + value.length > responseByteLimit;
+        const retained = value.subarray(0, responseByteLimit - receivedBytes.length);
+        const next = new Uint8Array(receivedBytes.length + retained.length);
+        next.set(receivedBytes); next.set(retained, receivedBytes.length); receivedBytes = next;
+        assertValue(!exceeds, 'provider_body_limit');
       }
     } catch (error) { await reader.cancel().catch(() => {}); throw error; }
     rawBody = DECODER.decode(receivedBytes);
     // Never persist a credential, including when JSON escaping hides its literal bytes.
-    assertValue(!rawBody.includes(credential), 'credential_echo');
+    assertValue(!credentialEcho(rawBody, credential), 'credential_echo');
     let parsed;
     try { parsed = parseProviderJson(rawBody); } catch {
       if (status !== 200) {
@@ -171,7 +176,7 @@ export async function sendProviderRequest({request, credential, fetchImplementat
       }
       throw new TypeError('provider_json');
     }
-    const containsSecret = value => typeof value === 'string' ? value.includes(credential) : value && typeof value === 'object' && Object.entries(value).some(([key, item]) => key.includes(credential) || containsSecret(item));
+    const containsSecret = value => typeof value === 'string' ? credentialEcho(value, credential) : value && typeof value === 'object' && Object.entries(value).some(([key, item]) => credentialEcho(key, credential) || containsSecret(item));
     assertValue(!containsSecret(parsed), 'credential_echo');
     safeRawBody = rawBody;
     if (status !== 200) {

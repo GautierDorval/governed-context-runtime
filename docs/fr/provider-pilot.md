@@ -14,11 +14,15 @@ Chaque tentative effectue un seul envoi HTTP borné vers l’URL fixe de son fou
 
 Une réponse terminée vide, composée d’espaces, refusée ou limitée en sortie conserve son contenu brut et son motif de fin. Elle n’est jamais reprise pour obtenir une meilleure réponse. Une erreur technique conserve séparément les octets partiels disponibles et ne reçoit aucun jugement sémantique. Une seule reprise technique admissible se produit après le premier passage prévu, avec la même entrée et la même identité d’essai. Un jugement terminé mais invalide reste rejeté ; aucune consigne de réparation automatique n’est envoyée.
 
+Les corps de réponse HTTP sont bornés à 16 Kio pour le répondant et à 128 Kio pour les juges et essais préalables. Un corps trop grand conserve seulement un préfixe borné sans secret comme preuve technique. Les motifs de jugement sont limités à 1000 unités UTF-16 et les extraits à 512, conformément à l’instruction des juges. Ces bornes limitent la mémoire cumulée de la campagne ; elles ne tronquent pas une réponse ou annotation acceptée.
+
 ## Exécution durable et budget
 
 Cloudflare Workflows mémorise les étapes bornées ; ses reprises automatiques sont désactivées. R2 conserve les entrées, requêtes, résultats, annotations et journaux immuables. Un registre budgétaire à écritures conditionnelles couvre les trois fournisseurs. Avant l’envoi HTTP, il réserve une borne conservatrice correspondant au contexte maximal d’entrée et au plafond de sortie, avec une arithmétique décimale exacte arrondie vers le haut. L’usage vérifié libère la différence avec une borne tarifaire conservatrice. Un coût inconnu conserve toute la réserve. Ces montants ne sont pas des factures.
 
 Une réservation sans résultat conservé ne peut pas être renvoyée sous le même identifiant de tentative. Un résultat conservé avant une interruption permet de régler la réservation sans nouvel envoi. Un échec de stockage, une autorisation expirée ou le plafond budgétaire arrêtent l’exécution. Trois essais techniques, un par modèle, précèdent les 560 essais et utilisent le même registre. L’échec d’un essai préalable arrête la campagne.
+
+L’essai du répondant demande `OK`. Chaque juge évalue un exemple fixe de réponse vide et doit produire une annotation conforme à la grille. Ces qualifications techniques sont exclues des 560 réponses observées et des annotations scientifiques. Le paquet épingle aussi les mesures de jetons du fournisseur couvrant les 56 messages distincts du répondant avant leurs dix répétitions ; ces comptes observés restent distincts de la réserve budgétaire conservatrice.
 
 Le paquet d’exécution épingle le commit source, l’empreinte du Worker, les neuf entrées du protocole, les preuves de métadonnées, la vérification des prix, l’autorisation propriétaire et son expiration. Métadonnées et prix doivent dater de moins de 72 heures à l’admission. Le paquet devient immuable au lancement. Un paquet corrigé exige une autre identité de campagne ; modifier les octets stockés ne peut pas reprendre silencieusement la campagne initiale.
 

@@ -14,11 +14,15 @@ Each request makes one bounded HTTP dispatch to its fixed provider endpoint. Red
 
 Completed empty, whitespace, refusal and output-limited responses retain their raw content and finish reason. They are never retried to obtain a better answer. A technical error retains available partial bytes separately and receives no semantic judgment. One eligible technical retry occurs after the planned first pass, with the same input and trial identity. A completed invalid judge output stays rejected; there is no automatic repair prompt.
 
+HTTP response bodies are bounded to 16 KiB for the respondent and 128 KiB for judges and preflights. An oversized body retains only a safe bounded prefix as technical evidence. Judge reasons are limited to 1000 UTF-16 code units and excerpts to 512, as stated in the judge instruction. These bounds limit accumulated campaign memory; they do not truncate an accepted response or annotation.
+
 ## Durable execution and budget
 
 Cloudflare Workflows caches bounded steps; its automatic retries are disabled. R2 stores immutable inputs, requests, outcomes, annotations and journals. A conditional-write budget ledger covers all three providers. Before HTTP, it reserves a conservative full-context input bound plus the output ceiling, using exact decimal arithmetic rounded upward. Verified usage settles to a conservative price-based upper bound. Unknown cost retains the whole reservation. These amounts are not invoices.
 
 A reservation without a retained outcome cannot be dispatched again under the same attempt identifier. An outcome retained before a crash can be settled without sending again. Storage failures, expired authorization or an exhausted budget stop execution. Three technical smoke requests, one per model, run before the 560 trials and use the same ledger. A failed smoke stops the campaign.
+
+The respondent smoke requests `OK`. Each judge preflight evaluates a fixed empty-response fixture and must produce a valid rubric annotation. These are technical qualifications, excluded from the 560 observed responses and the scientific annotations. The packet also pins provider token-count observations covering all 56 distinct respondent prompts before their ten repetitions; observed counts are distinct from the conservative spending reservation.
 
 The execution packet pins the source commit, Worker bundle hash, all nine protocol inputs, metadata evidence, price verification time, owner authorization and expiration. Metadata and prices must be at most 72 hours old at admission. The packet is immutable after launch. A corrected packet needs a distinct campaign identity; changing stored bytes cannot silently resume the original campaign.
 

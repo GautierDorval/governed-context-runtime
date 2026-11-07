@@ -242,3 +242,20 @@ test('redirect is never followed and a body exceeding the limit is rejected', as
     /./,
   );
 });
+
+test('response memory bound retains only the bounded prefix and suppresses a partial credential echo', async () => {
+  for (const prefix of ['x', credential.slice(0, 18)]) {
+    const raw = prefix + 'x'.repeat(16_385);
+    try {
+      await sendProviderRequest({request, credential, fetchImplementation: fake(raw)});
+      assert.fail('oversized body must be rejected');
+    } catch (error) {
+      assert(error instanceof Error && 'code' in error && 'partialResponseBase64' in error);
+      assert.equal(error.code, 'provider_body_limit');
+      if (prefix === 'x') {
+        assert.equal(typeof error.partialResponseBase64, 'string');
+        assert.equal(Buffer.from(/** @type {string} */ (error.partialResponseBase64), 'base64').length, 16_384);
+      } else assert.equal(error.partialResponseBase64, null);
+    }
+  }
+});
