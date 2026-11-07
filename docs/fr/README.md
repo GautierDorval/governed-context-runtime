@@ -111,6 +111,8 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 
 [Kit de reproduction](reproduction.md) · [Sémantique des packs](pack-semantics.md) · [Protocole comparatif préparé](../model-comparison.md).
 
+[Exécution du pilote avec fournisseurs](provider-pilot.md) : tentatives durables, budget commun, deux juges automatiques et statut opérationnel privé. Le résultat de campagne est distinct du plan réutilisable et de la qualification synthétique locale.
+
 [Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Préversion de référence](../release-0.3.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.
 
 ## Compagnon MCP Apps local

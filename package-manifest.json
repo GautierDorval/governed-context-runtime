@@ -51,8 +51,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "ae1198c4102aa58314298fa6772368e66fc5ff5aa8ba2aaa9dceb7e787d6b3d2",
-      "bytes": 12070
+      "sha256": "25c9f6dffe3623c709e5042ee272909391a1a9d137c0763698837c9d32082e06",
+      "bytes": 12455
     },
     {
       "path": "CITATION.cff",
@@ -91,8 +91,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "f60c90d8a44d7e1e78dbc1d6f286f2c24d9e35a19e390b7bbf4722c1fa0ebc06",
-      "bytes": 9369
+      "sha256": "0b6c419d07b3000289fcb2e9a3563000076fdcb430b3ee7f639f01b0e41df4ce",
+      "bytes": 9652
     },
     {
       "path": "SECURITY.md",
@@ -136,8 +136,8 @@
     },
     {
       "path": "docs/en/README.md",
-      "sha256": "60e52985f74bac9d25289771b9d172ca2763cf8cfe1e97dff39b76b13dc9b73b",
-      "bytes": 12306
+      "sha256": "cde51890cf69f0f6599af94496bb2c542c3d3b9a1ca844f5707308257f36998c",
+      "bytes": 12532
     },
     {
       "path": "docs/en/instance.md",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/en/model-comparison.md",
-      "sha256": "b6ca4dc942a85e2e9efa9357734e1d8c72717ee2a3fff9ebe6d29b3b9302b2f4",
-      "bytes": 12573
+      "sha256": "756f7a72b29b0b2d0bc781ad388ab606481d9ac6dfe064252b8b48738f85fd00",
+      "bytes": 12700
     },
     {
       "path": "docs/en/pack-comparison.md",
@@ -163,6 +163,11 @@
       "path": "docs/en/pack-semantics.md",
       "sha256": "724e8e901478cc2d263e46e636d54e7c43bb056a5226f7aaca77d559f0476d17",
       "bytes": 10437
+    },
+    {
+      "path": "docs/en/provider-pilot.md",
+      "sha256": "e284f3e64bc2d017f711c3ca5e2f435b2a4981d5abfd3276699cda474eeccdf2",
+      "bytes": 6272
     },
     {
       "path": "docs/en/qualification.md",
@@ -176,8 +181,8 @@
     },
     {
       "path": "docs/fr/README.md",
-      "sha256": "780da06119520a95f7b436e575a588e4181956b4b302b21378b9223c3238a595",
-      "bytes": 14464
+      "sha256": "a3922ac24973ddc6a5d886df8728d1acb579b4e8fe8155c5e3b94e5aca83a835",
+      "bytes": 14724
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -210,6 +215,11 @@
       "bytes": 11811
     },
     {
+      "path": "docs/fr/provider-pilot.md",
+      "sha256": "76138e05e9bde4e79329c03bc26e8677dc00eb5da36b7ff0d773f7e3977fe757",
+      "bytes": 7383
+    },
+    {
       "path": "docs/fr/qualification.md",
       "sha256": "9d27b438e0f3ebee41e558c98785af4bd6b5f3a29a4bde1706d0926956520414",
       "bytes": 7301
@@ -226,8 +236,8 @@
     },
     {
       "path": "docs/model-comparison.md",
-      "sha256": "0502f861db0f6ba120066ca64a9aa065383ed8b1e8a777320df3b5836b64733f",
-      "bytes": 14360
+      "sha256": "fed84e4cf70ed388d1517fdae6017b7dbb49ad35701ef7affccc409b67a55d10",
+      "bytes": 14492
     },
     {
       "path": "docs/observations.md",
@@ -356,18 +366,18 @@
     },
     {
       "path": "package-policy.json",
-      "sha256": "adf2b5b7f8b3cd5040181788a9c4fa645e3054437f7762af8856c01ce3d03d10",
-      "bytes": 10230
+      "sha256": "e6299b0e18773ebfa3e7152d0defa6eb07e024e0b0346738620a6f9ce0aa77fb",
+      "bytes": 11331
     },
     {
       "path": "package.json",
-      "sha256": "89392ba41669d3e059c8f7655d6d0252fef3dd96237feebefd0d1f089e9cf0b1",
-      "bytes": 2573
+      "sha256": "13959370870d16bcfe3096bd24bd8c250f2e8fb77c4fafad3b814c945afe5c85",
+      "bytes": 2716
     },
     {
       "path": "records/README.md",
-      "sha256": "7a5f6023046125669ca3d00c75685dea5a0e2ad822946fdfe79e77b3032079f8",
-      "bytes": 2069
+      "sha256": "4d76085d7f7c326c8c8a552093c8c973b4c66e273f6c101446430c4b93209232",
+      "bytes": 2291
     },
     {
       "path": "records/archive-profile-p3-2026-10-20.md",
@@ -415,14 +425,19 @@
       "bytes": 18858
     },
     {
+      "path": "records/provider-pilot-2026-11-07.md",
+      "sha256": "190aaf85ae581b8f03556f53534ec293ff45d70aca3c54618803f41da9c11f4b",
+      "bytes": 2880
+    },
+    {
       "path": "records/qualification-edition-2026-10-20.md",
       "sha256": "6e4d68bde18f277f61cbfb2a4b504f1e8c5d4e0065ac2c4405079a9bfbdce02a",
       "bytes": 12115
     },
     {
       "path": "rights.json",
-      "sha256": "b2e666261995a3af8d41ec6413d261010bc3bfc14ccd7db5f6052f2087fb225f",
-      "bytes": 50407
+      "sha256": "6e14da2b4c8c2cc3baf6559b654eb51d3167012f6ad4a45ae185e861567a67c0",
+      "bytes": 55663
     },
     {
       "path": "scripts/check-package.mjs",
@@ -438,6 +453,11 @@
       "path": "scripts/package-types.d.mts",
       "sha256": "70cf8dcd0e1fbc6d9ceefde169b02296f4ad3f0d605a0daeb415617418d9c026",
       "bytes": 1962
+    },
+    {
+      "path": "scripts/prepare-pilot.mjs",
+      "sha256": "34f81bd9d2513f355009cec225f10a51eb7908d0eb99e69772a659c85d16b12c",
+      "bytes": 4462
     },
     {
       "path": "scripts/property-process.mjs",
@@ -850,6 +870,71 @@
       "bytes": 27614
     },
     {
+      "path": "spec/examples/semantic-boundaries/pilot-budget.d.mts",
+      "sha256": "626baf1c2757bafe53b938059aee5de9cbfbbfd6d4e4a8b08ee520b35d2ca936",
+      "bytes": 1765
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-budget.mjs",
+      "sha256": "0dc556d9480e1c228131ded770ae6ea509a18503865774f69c7a975d78f41b3d",
+      "bytes": 7846
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-campaign.d.mts",
+      "sha256": "b63c569eab44975d569f3500506e45b7dae9da661b7abd1f749da41a322d6374",
+      "bytes": 2207
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-campaign.mjs",
+      "sha256": "ac6c037551b5c9c24c56a2c0d106203a24f7d7f53e856f9c6f9d15dd2015c6a8",
+      "bytes": 20924
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-execution.d.mts",
+      "sha256": "1c47d1c95c1541f98aae8694b1e1ce9f223b68b2e0f99d6eca8afcbcd31703fa",
+      "bytes": 2920
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-execution.mjs",
+      "sha256": "073e215678c0957b44ee5689023f2a9a07282b86e741e4580f9a882e5a0e44b8",
+      "bytes": 11266
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-json.d.mts",
+      "sha256": "798feda1d128134ba7a1738f8be5d9216f780a47d47a21d352cc4d9a93fff701",
+      "bytes": 232
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-json.mjs",
+      "sha256": "103ebe39d535ea86ce657f41f414be068fc899118a07ce3cf1456167f8fb5c2e",
+      "bytes": 2416
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-judging.d.mts",
+      "sha256": "2999d5f702c448d2702746d575ab78db92a5f9878cdec4aae33f32d2ad807ffa",
+      "bytes": 1742
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-judging.mjs",
+      "sha256": "811022d2618df939fd7e4f1e36e01171cefc526a83834c6620e180991a5e955c",
+      "bytes": 9940
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-provider.d.mts",
+      "sha256": "18a5e032a2296f560064a86e0e7ec0fdf39b966b9b55a7ad19f3adeceabbf3d4",
+      "bytes": 1121
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-provider.mjs",
+      "sha256": "1192655f723edb0c2b3d9086396afb6c6350eec78e3ceb7e279e393144716087",
+      "bytes": 13011
+    },
+    {
+      "path": "spec/examples/semantic-boundaries/pilot-workflow.mjs",
+      "sha256": "c0423808925b468e616e6fa251fcec892e0a9d96df338d5acd1ab769396c5b26",
+      "bytes": 2839
+    },
+    {
       "path": "spec/examples/semantic-boundaries/prose-coverage.json",
       "sha256": "c49b5bfd0ec7b52cf6703f6d69084c9925f0e7b24507ed37badceb6d8cdb608d",
       "bytes": 104382
@@ -1005,9 +1090,34 @@
       "bytes": 11280
     },
     {
+      "path": "test/pilot-budget.test.mjs",
+      "sha256": "749f79146d2f6928f91bf770f0de852b98ca9193fe6cdd97a25233eb41534818",
+      "bytes": 4650
+    },
+    {
+      "path": "test/pilot-campaign.test.mjs",
+      "sha256": "9193c438487ed3dc4fe046f2688aac6bf28bd01497eefb701c47c6cfbf87ec17",
+      "bytes": 15529
+    },
+    {
+      "path": "test/pilot-execution.test.mjs",
+      "sha256": "50ed4d71403d68c68265a28545c4575ccf340a284bd574a304a290d02ca04d36",
+      "bytes": 10285
+    },
+    {
+      "path": "test/pilot-judging.test.mjs",
+      "sha256": "db570adbaf132d504c36a91fcfd58993086ce083507c3ee7944f566a916c3133",
+      "bytes": 6920
+    },
+    {
       "path": "test/pilot-plan.test.mjs",
       "sha256": "0aa4ef903fd8f7ffec69e29c541889da28da1c6ea1b18f48fb4dd2e8b9159a91",
       "bytes": 26627
+    },
+    {
+      "path": "test/pilot-provider.test.mjs",
+      "sha256": "440e309f1b7f1324b86101f56b750c81d58a675e165a3613a36f0a7669b9f05a",
+      "bytes": 8893
     },
     {
       "path": "test/properties/acceptance-vectors.json",
