@@ -16,6 +16,8 @@ export interface Campaign {
 export function loadCampaign(input: {bucket: CampaignBucket; manifestSha256: string; campaignId: string; now?: Date}): Promise<Campaign>;
 export function snapshotCampaignInputs(input: {bucket: CampaignBucket; manifestSha256: string; campaignId: string; now?: Date}): Promise<Record<string, string>>;
 export function materializeCampaignSnapshot(input: {objects: Record<string, string>; manifestSha256: string; campaignId: string; now?: Date}): Promise<Campaign>;
+export function readCampaignRecovery(input: {bucket: PilotBucket; campaignId: string; manifestSha256: string; recoverySha256: string}): Promise<any>;
+export function admitCampaignRecovery(input: {bucket: PilotBucket; campaign: Campaign; manifestSha256: string; recoverySha256: string; workerVersionId: string}): Promise<any>;
 export function campaignAttemptRunner(input: {bucket: PilotBucket; prefix: string; ledger: ReturnType<typeof createPilotBudget>; credentials: Record<string, string>; invoke?: typeof sendProviderRequest; now?: () => Date}): (attemptId: string, request: ProviderRequest) => Promise<any>;
-export function runCampaign(input: {bucket: PilotBucket; campaign: Campaign; manifestSha256: string; credentials: Record<string, string>; steps: {run<T>(name: string, callback: () => Promise<T>): Promise<T>}; invoke?: typeof sendProviderRequest; now?: () => Date}): Promise<any>;
-export function readCampaignStatus(input: {bucket: PilotBucket; campaignId: string; manifestSha256: string; workerVersionId: string; now?: Date}): Promise<any>;
+export function runCampaign(input: {bucket: PilotBucket; campaign: Campaign; manifestSha256: string; credentials: Record<string, string>; steps: {run<T>(name: string, callback: () => Promise<T>): Promise<T>}; invoke?: typeof sendProviderRequest; recovery?: any; now?: () => Date}): Promise<any>;
+export function readCampaignStatus(input: {bucket: PilotBucket; campaignId: string; manifestSha256: string; workerVersionId: string; recoverySha256?: string | null; now?: Date}): Promise<any>;

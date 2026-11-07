@@ -258,6 +258,44 @@ test('provider JSON rejects duplicate keys, invalid Unicode and nonfinite or uns
   assert.equal(parseProviderJson('{"optional_cost":0.0000001,"usage":100}').usage, 100);
 });
 
+test('DeepInfra optional cache-write null or zero preserves full token billing and rejects positive or unknown details', () => {
+  for (const provider of /** @type {const} */ (['deepinfra', 'mistral'])) {
+    const judge = buildProviderRequest({provider, promptBytes: bytes, outputTokenLimit: 8192, role: 'judge'});
+    for (const count of [null, 0, 1, -1, 0.5, '0', false, {}, []]) {
+      const payload = {
+        id: 'synthetic',
+        model: judge.model,
+        choices: [{index: 0, finish_reason: 'stop', message: {role: 'assistant', content: '{}'}}],
+        usage: {
+          prompt_tokens: 4667,
+          completion_tokens: 723,
+          total_tokens: 5390,
+          prompt_tokens_details: {cached_tokens: 0, cache_write_tokens: count},
+        },
+      };
+      if (provider === 'deepinfra' && (count === null || count === 0)) {
+        assert.deepEqual(decodeProviderResponse(judge, JSON.stringify(payload)).usage, {
+          inputTokens: 4667,
+          outputTokens: 723,
+        });
+      } else assert.throws(() => decodeProviderResponse(judge, JSON.stringify(payload)), /provider_/);
+    }
+    for (const details of [
+      {unknown_tokens: null},
+      {cached_tokens: null},
+      {cache_write_tokens: null, audio_tokens: 1},
+    ]) {
+      const payload = {
+        id: 'synthetic',
+        model: judge.model,
+        choices: [{index: 0, finish_reason: 'stop', message: {role: 'assistant', content: '{}'}}],
+        usage: {prompt_tokens: 4667, completion_tokens: 723, total_tokens: 5390, prompt_tokens_details: details},
+      };
+      assert.throws(() => decodeProviderResponse(judge, JSON.stringify(payload)), /provider_/);
+    }
+  }
+});
+
 test('Mistral text blocks exclude thinking from evaluated text and account for all output tokens', () => {
   const judge = buildProviderRequest({
     provider: 'mistral',

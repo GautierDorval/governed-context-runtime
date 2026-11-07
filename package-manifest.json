@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/en/provider-pilot.md",
-      "sha256": "5040b5458ec303032aa86581e8e7b720b6ea45f61f439b11761af3b972dfc74c",
-      "bytes": 10852
+      "sha256": "fa8ac9db1edb0350e913ae1d92fa6bcd51d234d0d7d3a516eadbc723e947de32",
+      "bytes": 12328
     },
     {
       "path": "docs/en/qualification.md",
@@ -216,8 +216,8 @@
     },
     {
       "path": "docs/fr/provider-pilot.md",
-      "sha256": "6b90855a70dd3065bc1657686039febc03582409eed0c3919995de9ace2f96b4",
-      "bytes": 12743
+      "sha256": "27ba77c422b7bffdd6a41cd0535bcedf0b2371aa293f9a944e12da7fd4d1e41c",
+      "bytes": 14448
     },
     {
       "path": "docs/fr/qualification.md",
@@ -426,8 +426,8 @@
     },
     {
       "path": "records/provider-pilot-2026-11-07.md",
-      "sha256": "93866618c96784b6b9631cfcff02c73f2dffb823496864910896b2810e1d370b",
-      "bytes": 4565
+      "sha256": "d0ca3f9526e6b96237b254bf76db9ff1ce5e87e82f12136afc143128c7b6f0ec",
+      "bytes": 6819
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -436,7 +436,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "3c50a227188a9e2400624eb9c0786824609648965043abfc14320eaac231017a",
+      "sha256": "f80dea0d177db986d93dacb4f20a9d7cb60d022ed32cc6964b713bfdeff32903",
       "bytes": 55663
     },
     {
@@ -881,13 +881,13 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-campaign.d.mts",
-      "sha256": "1fe8e32ef84f0eafb5ed46f7f74abb9fd297d3e3bd69e09e8678ccb892f2fd04",
-      "bytes": 2361
+      "sha256": "d1b0372a28408e4cbcdeabe47bd071851c59d8c50bf278c7c069c136871610c4",
+      "bytes": 2735
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-campaign.mjs",
-      "sha256": "21d18019673e8de68367540cc4d2f05165b33f3d6e99c1f1eea6e0f2773549b2",
-      "bytes": 25224
+      "sha256": "452e4bbdc38adbd66d0331f4e64d3ace4e73b29ada151c3401d2ae527b3b2823",
+      "bytes": 34972
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-execution.d.mts",
@@ -926,13 +926,13 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-provider.mjs",
-      "sha256": "707ba3b6f7c37cc8b86af10a530de8c1d277085df7c8802e48c115c5c99d708e",
-      "bytes": 13880
+      "sha256": "62f810aa3f1a62919e33aa3911d00b3008c71daf7392cb53411d4f43f79a0ae2",
+      "bytes": 14297
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-workflow.mjs",
-      "sha256": "293166de4bd739ff3a70213bb6f80b6fe0e217bb5ad5a34bdc1338dc883868ce",
-      "bytes": 3398
+      "sha256": "4c59c1d3a83db5aedeaa5f201f46c9fc65c6980900a94a867ad2481120ed1860",
+      "bytes": 4067
     },
     {
       "path": "spec/examples/semantic-boundaries/prose-coverage.json",
@@ -1096,8 +1096,8 @@
     },
     {
       "path": "test/pilot-campaign.test.mjs",
-      "sha256": "a2eaf996c211fb7e014e32f083127e865cd3eaf8ba0ae1b2b88f98ef768c68f6",
-      "bytes": 22885
+      "sha256": "77951b098386059ba409a2587523e8c41a1121c4831918d1f06d202a3dd8e6d9",
+      "bytes": 33009
     },
     {
       "path": "test/pilot-execution.test.mjs",
@@ -1116,8 +1116,8 @@
     },
     {
       "path": "test/pilot-provider.test.mjs",
-      "sha256": "93db8f7e8f2dd7eefd4365b680f35e47fe86f8abe86c0effb11a8b62e065a371",
-      "bytes": 12304
+      "sha256": "d3e8fd289e32cbe71087e99b1df6b583309327c2948070d244305e7aeb067ee1",
+      "bytes": 13975
     },
     {
       "path": "test/properties/acceptance-vectors.json",

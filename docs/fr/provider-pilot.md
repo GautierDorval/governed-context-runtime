@@ -18,6 +18,8 @@ Les corps de réponse HTTP sont bornés à 16 Kio pour le répondant et à 128 K
 
 ## Exécution durable et budget
 
+DeepInfra peut retourner `cache_write_tokens: null` sans demande de rétention de cache. Ce champ optionnel précis accepte `null` ou zéro ; une écriture positive, un autre champ inconnu ou un total incohérent restent refusés. Tous les jetons d'entrée et de sortie restent comptés au tarif plein conservateur. Cette compatibilité ne crée ni réduction ni catégorie de dépense implicite.
+
 Cloudflare Workflows mémorise les étapes bornées ; ses reprises automatiques sont désactivées. R2 conserve les entrées, requêtes, résultats, annotations et journaux immuables. Un registre budgétaire à écritures conditionnelles couvre les trois fournisseurs. Avant l’envoi HTTP, il réserve une borne conservatrice correspondant au contexte maximal d’entrée et au plafond de sortie, avec une arithmétique décimale exacte arrondie vers le haut. L’usage vérifié libère la différence avec une borne tarifaire conservatrice. Un coût inconnu conserve toute la réserve. Ces montants ne sont pas des factures.
 
 Une réservation sans résultat conservé ne peut pas être renvoyée sous le même identifiant de tentative. Un résultat conservé avant une interruption permet de régler la réservation sans nouvel envoi. Un échec de stockage, une autorisation expirée ou le plafond budgétaire arrêtent l’exécution. Trois essais techniques, un par modèle, précèdent les 560 essais et utilisent le même registre. L’échec d’un essai préalable arrête la campagne.
@@ -35,6 +37,12 @@ Le paquet d’exécution épingle le commit source, l’empreinte du Worker, les
 `scripts/prepare-pilot.mjs` prépare ce paquet privé hors ligne depuis les entrées révisées. Il ne téléverse rien et n’appelle aucun fournisseur. La destination doit être hors du paquet public et ne pas encore exister. Ses arguments sont `--campaign`, `--preflight`, `--token-measurements`, `--bundle`, `--source-commit`, `--admit-before`, `--expires`, `--pricing-verified`, `--authorization` et `--output`. La préparation valide le paquet, mais ne certifie pas indépendamment ses métadonnées et n’autorise aucun lancement.
 
 Le plan de production doit configurer explicitement le quota de sous-requêtes Workflow, qui inclut les opérations R2 et les appels HTTP aux fournisseurs. Le quota par défaut de 10 000 est insuffisant : une tentative durable normale utilise onze sous-requêtes avant les journaux et annotations, avec des lectures supplémentaires à la création du registre. Le premier pilote prévoit 150 000 sous-requêtes ; la borne conservatrice incluant jusqu’à sept conflits par mise à jour du registre reste inférieure à 142 000. Ce quota de plateforme n’augmente ni les 3 366 tentatives ni le plafond fournisseur de 50 USD. Les limites effectives du compte et du déploiement doivent être vérifiées avant le lancement.
+
+## Reprise du contrôle préalable
+
+Une reprise du premier contrôle DeepInfra dispose d'un chemin distinct, limité à la revalidation de ses octets HTTP 200 déjà conservés après un rejet `provider_usage_details`. Un amendement immuable, épinglé par `PILOT_RECOVERY_SHA256`, lie le manifeste initial, l'ancien exécutable, son identité, le registre arrêté, la tentative et la réponse exactes au commit et au bundle corrigés. L'opérateur doit vérifier ce dernier bundle réellement déployé. Les entrées scientifiques, le manifeste, l'admission initiale, les échéances et l'autorisation de dépense ne changent pas.
+
+L'admission de cette reprise exige exactement les deux contrôles préalables déjà enregistrés, sans essai scientifique commencé. Elle conserve les anciennes preuves et ajoute une identité d'exécution propre à la nouvelle version. La réponse DeepInfra est décodée et validée à nouveau sans envoi HTTP ; l'erreur initiale et sa réserve maximale restent intactes. Même la perte du registre et de son marqueur après admission ne permet pas de recréer le budget. Ce mécanisme ne reprend pas arbitrairement une campagne, un refus sémantique ou une erreur fournisseur différente. L'échec du contrôle Mistral ou de toute garde arrête encore l'exécution.
 
 ## Jugements et résultats
 

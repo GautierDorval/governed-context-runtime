@@ -74,6 +74,12 @@ function usageFor(provider, data, outputTokenLimit) {
     ]) if (details != null) {
       assertValue(typeof details === 'object' && !Array.isArray(details), 'provider_usage_details');
       for (const [key, count] of Object.entries(details)) {
+        // DeepInfra emits this optional retention counter as null even without a cache-write
+        // request. Retention is never requested here; positive writes remain unaccounted and fail.
+        if (provider === 'deepinfra' && details === usage.prompt_tokens_details && key === 'cache_write_tokens') {
+          assertValue(count === null || count === 0, 'provider_cache_usage');
+          continue;
+        }
         assertValue(allowed.includes(key) && nonnegativeInteger(count) && count <= ceiling, 'provider_usage_details');
         if (key.includes('prediction')) assertValue(count === 0, 'provider_prediction_usage');
       }
