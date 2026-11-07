@@ -5,6 +5,7 @@ import type {Trial} from './pilot-execution.mjs';
 export const PILOT_PRICING: Readonly<Record<string, Readonly<{inputUsdPerMillion: string; outputUsdPerMillion: string}>>>;
 export function writeCampaignRecord(bucket: PilotBucket, key: string, payload: unknown): Promise<{key: string; sha256: string}>;
 export function readCampaignRecord(bucket: PilotBucket, key: string): Promise<{payload: any; sha256: string} | null>;
+export function qualifyCampaignStorage(input: {bucket: PilotBucket; campaignId: string; manifestSha256: string}): Promise<{key: string; sha256: string}>;
 export interface CampaignBucket extends PilotBucket {
   get(key: string): Promise<{etag: string; size: number; text(): Promise<string>; arrayBuffer(): Promise<ArrayBuffer>} | null>;
 }

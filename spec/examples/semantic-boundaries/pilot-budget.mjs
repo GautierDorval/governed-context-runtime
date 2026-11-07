@@ -66,9 +66,15 @@ export function createPilotBudget({bucket, key, authorization, now = () => new D
   assertValue(new Date(authorization.expiresAt).toISOString() === authorization.expiresAt, 'budget_expiry');
   // Never retain a mutable caller-owned grant.
   const grant = JSON.parse(JSON.stringify(authorization));
+  const startedKey = key.replace(/budget\.json$/, 'budget-started.json');
+  const startedText = JSON.stringify({schema: 'runtime-pilot-budget-started/1', authorization: grant});
   async function read() {
     const object = await bucket.get(key);
-    if (!object) return {object: null, state: {authorization: grant, attempts: Object.create(null)}};
+    if (!object) {
+      // Once a dispatch was admitted, losing the mutable ledger cannot renew the owner's grant.
+      assertValue(await bucket.get(startedKey) === null, 'budget_ledger_lost');
+      return {object: null, state: {authorization: grant, attempts: Object.create(null)}};
+    }
     assertValue(object.size <= MAX_LEDGER_BYTES, 'budget_size');
     const text = await object.text();
     assertValue(encoder.encode(text).byteLength <= MAX_LEDGER_BYTES, 'budget_size');
@@ -100,7 +106,7 @@ export function createPilotBudget({bucket, key, authorization, now = () => new D
       assertValue(typeof attemptId === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9/_-]{0,180}$/.test(attemptId), 'budget_attempt_identity');
       assertValue(HASH.test(requestSha256) && integer(reservedMicrousd) && reservedMicrousd > 0, 'budget_reservation');
       assertValue(['anthropic', 'deepinfra', 'mistral'].includes(provider) && ['respondent', 'judge', 'preflight'].includes(role), 'budget_scope');
-      return change(state => {
+      const result = await change(state => {
         const time = now();
         assertValue(time.getTime() < Date.parse(grant.expiresAt), 'budget_expired');
         assertValue(!Object.hasOwn(state.attempts, attemptId), 'attempt_already_reserved');
@@ -110,6 +116,13 @@ export function createPilotBudget({bucket, key, authorization, now = () => new D
         state.attempts[attemptId] = {provider, role, requestSha256, reservedMicrousd, state: 'reserved', reservedAt: time.toISOString()};
         return {attemptId};
       });
+      const started = await bucket.put(startedKey, startedText, {onlyIf: {etagDoesNotMatch: '*'}, httpMetadata: {contentType: 'application/json', cacheControl: 'no-store'}});
+      if (!started) {
+        const prior = await bucket.get(startedKey);
+        assertValue(prior && prior.size === encoder.encode(startedText).length && await prior.text() === startedText, 'budget_started_binding');
+      }
+      // The immutable marker is durable before the caller is allowed to dispatch HTTP.
+      return result;
     },
     async finish({attemptId, outcomeSha256, priceBasedUpperBoundMicrousd = null}) {
       assertValue(HASH.test(outcomeSha256) && (priceBasedUpperBoundMicrousd === null || integer(priceBasedUpperBoundMicrousd)), 'budget_settlement');

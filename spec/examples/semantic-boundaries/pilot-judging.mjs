@@ -78,13 +78,16 @@ export function agreementTable(pairs, categories) {
 }
 
 /** Report both initial annotations, missing pairs and prescribed strata before any arbitration. */
-export function summarizeJudgments({trials, records, reviewerIds, rubric}) {
+export function summarizeJudgments({trials, completedTrialIds, records, reviewerIds, rubric}) {
   assertValue(reviewerIds.length === 2 && new Set(reviewerIds).size === 2, 'judge_distinct_reviewers');
   const trialsById = new Map(trials.map(trial => [trial.trialId, trial]));
   assertValue(trialsById.size === trials.length, 'judge_duplicate_trial');
+  assertValue(Array.isArray(completedTrialIds), 'judge_response_inventory');
+  const completed = new Set(completedTrialIds);
+  assertValue(completed.size === completedTrialIds.length && completedTrialIds.every(id => trialsById.has(id)), 'judge_response_inventory');
   const indexed = new Map();
   for (const record of records) {
-    assertValue(record.status === 'accepted' && trialsById.has(record.trialId) && reviewerIds.includes(record.reviewerId), 'judge_record_identity');
+    assertValue(record.status === 'accepted' && completed.has(record.trialId) && reviewerIds.includes(record.reviewerId), 'judge_record_identity');
     const key = `${record.trialId}/${record.reviewerId}`;
     assertValue(!indexed.has(key), 'judge_duplicate_record');
     indexed.set(key, record);
@@ -93,11 +96,12 @@ export function summarizeJudgments({trials, records, reviewerIds, rubric}) {
   const descriptive = new Map();
   let pairedResponses = 0;
   function group(map, key, identity) {
-    if (!map.has(key)) map.set(key, {...identity, expected: 0, missing: 0, notApplicable: 0, pairs: []});
+    if (!map.has(key)) map.set(key, {...identity, planned: 0, notReceived: 0, expected: 0, missing: 0, notApplicable: 0, pairs: []});
     return map.get(key);
   }
   for (const trial of trials) {
     const {caseId, language, condition} = trial.metadata;
+    const received = completed.has(trial.trialId);
     const annotations = reviewerIds.map(id => indexed.get(`${trial.trialId}/${id}`));
     const paired = annotations.every(Boolean);
     if (paired) pairedResponses++;
@@ -106,8 +110,10 @@ export function summarizeJudgments({trials, records, reviewerIds, rubric}) {
     for (const dimension of Object.keys(rubric.criteria)) {
       for (const [index, reviewerId] of reviewerIds.entries()) {
         const key = `${caseId}/${language}/${condition}/${dimension}/${reviewerId}`;
-        if (!descriptive.has(key)) descriptive.set(key, {caseId, language, condition, dimension, reviewerId, expected: 0, missing: 0, counts: {PASS: 0, FAIL: 0, UNSCORABLE: 0, NOT_APPLICABLE: 0}});
+        if (!descriptive.has(key)) descriptive.set(key, {caseId, language, condition, dimension, reviewerId, planned: 0, notReceived: 0, expected: 0, missing: 0, counts: {PASS: 0, FAIL: 0, UNSCORABLE: 0, NOT_APPLICABLE: 0}});
         const row = descriptive.get(key);
+        row.planned++;
+        if (!received) { row.notReceived++; continue; }
         row.expected++;
         if (!annotations[index]) row.missing++;
         else {
@@ -119,6 +125,8 @@ export function summarizeJudgments({trials, records, reviewerIds, rubric}) {
         }
       }
       const target = group(dimensions, `${dimension}/${language}/${condition}`, {dimension, language, condition});
+      target.planned++;
+      if (!received) { target.notReceived++; continue; }
       target.expected++;
       if (applicability[dimension] === 'NOT_APPLICABLE') { target.notApplicable++; continue; }
       if (!paired) { target.missing++; continue; }
@@ -129,14 +137,17 @@ export function summarizeJudgments({trials, records, reviewerIds, rubric}) {
       }));
     }
     const target = group(utility, `${caseId}/${language}/${condition}`, {caseId, language, condition});
+    target.planned++;
+    if (!received) { target.notReceived++; continue; }
     target.expected++;
     if (paired) target.pairs.push(annotations.map(record => record.utility.category));
     else target.missing++;
   }
   const report = (map, categories) => [...map.values()].map(({pairs, ...identity}) => ({...identity, ...agreementTable(pairs, categories)}));
   return {
-    reviewerIds, expectedResponses: trials.length, pairedResponses,
-    missingPairs: trials.length - pairedResponses, acceptedAnnotations: records.length,
+    reviewerIds, plannedResponses: trials.length, responsesNotReceived: trials.length - completed.size,
+    expectedResponses: completed.size, pairedResponses,
+    missingPairs: completed.size - pairedResponses, acceptedAnnotations: records.length,
     beforeArbitration: true, globalScore: null,
     descriptive: [...descriptive.values()].map(row => ({...row, evaluable: row.counts.PASS + row.counts.FAIL, notEvaluable: row.counts.UNSCORABLE})),
     dimensions: report(dimensions, DIMENSION_LABELS), utility: report(utility, UTILITY_LABELS),

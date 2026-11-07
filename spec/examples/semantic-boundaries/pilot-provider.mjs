@@ -4,15 +4,16 @@ import {assertValue, digestBytes, parseProviderJson} from './pilot-json.mjs';
 
 // Explicit first-pilot profiles. Revalidate account availability, limits and prices before use.
 export const PROVIDER_PROFILES = Object.freeze({
-  anthropic: Object.freeze({model: 'claude-haiku-5-5', endpoint: 'https://api.anthropic.com/v1/messages', contextLimit: 1_000_000}),
-  deepinfra: Object.freeze({model: 'deepseek-ai/DeepSeek-V3.2', endpoint: 'https://api.deepinfra.com/v1/openai/chat/completions', contextLimit: 163_840}),
-  mistral: Object.freeze({model: 'mistral-large-4-0', endpoint: 'https://api.mistral.ai/v1/chat/completions', contextLimit: 1_048_576}),
+  anthropic: Object.freeze({model: 'claude-haiku-5-5', endpoint: 'https://api.anthropic.com/v1/messages', contextLimit: 1_000_000, timeoutMs: 90_000}),
+  deepinfra: Object.freeze({model: 'deepseek-ai/DeepSeek-V3.2', endpoint: 'https://api.deepinfra.com/v1/openai/chat/completions', contextLimit: 163_840, timeoutMs: 300_000}),
+  mistral: Object.freeze({model: 'mistral-large-4-0', endpoint: 'https://api.mistral.ai/v1/chat/completions', contextLimit: 1_048_576, timeoutMs: 300_000}),
 });
 const ENCODER = new TextEncoder();
 const DECODER = new TextDecoder('utf-8', {fatal: true, ignoreBOM: true});
 const MAX_BYTES = 1_048_576;
 const nonnegativeInteger = value => Number.isSafeInteger(value) && value >= 0;
-const credentialEcho = (text, credential) => text.includes(credential) || (credential.length >= 16 && text.includes(credential.slice(0, 16)));
+const credentialEcho = (text, credential) => text.includes(credential) || text.includes(btoa(credential)) ||
+  (credential.length >= 16 && (text.includes(credential.slice(0, 16)) || text.includes(credential.slice(-16))));
 function partialBytes(bytes, credential) {
   const preview = new TextDecoder().decode(bytes);
   const unescaped = preview.replace(/\\u([0-9a-f]{4})/gi, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16))).replace(/\\(["\\/])/g, '$1');
@@ -123,7 +124,7 @@ export function decodeProviderResponse(request, rawBody) {
 }
 
 /** Exactly one HTTP dispatch. The caller must durably reserve budget before invoking this. */
-export async function sendProviderRequest({request, credential, fetchImplementation = fetch, timeoutMs = 90_000, signal}) {
+export async function sendProviderRequest({request, credential, fetchImplementation = fetch, timeoutMs = PROVIDER_PROFILES[request.provider]?.timeoutMs, signal}) {
   assertValue(PROVIDER_PROFILES[request.provider]?.endpoint === request.url && request.model === PROVIDER_PROFILES[request.provider].model, 'provider_endpoint');
   const supplied = parseProviderJson(request.body);
   const user = supplied?.messages?.filter(message => message.role === 'user');
@@ -132,7 +133,7 @@ export async function sendProviderRequest({request, credential, fetchImplementat
   const expected = buildProviderRequest({provider: request.provider, promptBytes: ENCODER.encode(user[0].content), outputTokenLimit: request.outputTokenLimit, role: request.role, systemInstruction: system});
   assertValue(expected.body === request.body, 'provider_request_changed');
   assertValue(typeof credential === 'string' && credential.length >= 12 && /^[\x21-\x7e]+$/.test(credential), 'provider_credential');
-  assertValue(Number.isSafeInteger(timeoutMs) && timeoutMs > 0 && timeoutMs <= 120_000, 'provider_timeout');
+  assertValue(Number.isSafeInteger(timeoutMs) && timeoutMs > 0 && timeoutMs <= PROVIDER_PROFILES[request.provider].timeoutMs, 'provider_timeout');
   assertValue(!request.body.includes(credential), 'credential_echo');
   const bodyBytes = ENCODER.encode(request.body);
   const requestSha256 = await digestBytes(bodyBytes);
@@ -164,7 +165,8 @@ export async function sendProviderRequest({request, credential, fetchImplementat
         assertValue(!exceeds, 'provider_body_limit');
       }
     } catch (error) { await reader.cancel().catch(() => {}); throw error; }
-    rawBody = DECODER.decode(receivedBytes);
+    try { rawBody = DECODER.decode(receivedBytes); }
+    catch { throw new TypeError('provider_utf8'); }
     // Never persist a credential, including when JSON escaping hides its literal bytes.
     assertValue(!credentialEcho(rawBody, credential), 'credential_echo');
     let parsed;
@@ -185,9 +187,13 @@ export async function sendProviderRequest({request, credential, fetchImplementat
     const decoded = decodeProviderResponse(request, rawBody);
     return {...decoded, requestSha256, responseSha256: await digestBytes(receivedBytes)};
   } catch (error) {
-    if (error instanceof PilotTechnicalError) throw error;
+    if (error instanceof PilotTechnicalError) {
+      error.requestSha256 = requestSha256;
+      error.responseSha256 = await digestBytes(receivedBytes);
+      throw error;
+    }
     // Library error messages and HTTP headers may include secrets. Keep a fixed code instead.
-    const known = error instanceof TypeError && /^(provider_[a-z_]+|credential_echo)$/.test(error.message) ? error.message : 'transport_interrupted';
+    const known = error instanceof TypeError && /^(provider_[a-z0-9_]+|credential_echo)$/.test(error.message) ? error.message : 'transport_interrupted';
     const secretEcho = known === 'credential_echo';
     const partial = secretEcho ? null : safeRawBody;
     const result = new PilotTechnicalError('', {code: known, retryable: known === 'transport_interrupted' && !signal?.aborted, partialResponse: partial, deliveryState: status === 200 ? 'response_rejected' : 'unknown'});

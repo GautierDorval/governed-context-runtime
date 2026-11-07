@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import {WorkflowEntrypoint} from 'cloudflare:workers';
-import {snapshotCampaignInputs, materializeCampaignSnapshot, runCampaign, readCampaignStatus, writeCampaignRecord} from './pilot-campaign.mjs';
+import {snapshotCampaignInputs, materializeCampaignSnapshot, runCampaign, readCampaignStatus, writeCampaignRecord, qualifyCampaignStorage} from './pilot-campaign.mjs';
 import {assertValue} from './pilot-json.mjs';
 
 // Deploy without an HTTP route. Launch/read through the authenticated Cloudflare control plane.
@@ -8,11 +8,17 @@ export class PilotWorkflow extends WorkflowEntrypoint {
   async run(event, step) {
     assertValue(event.payload?.campaignId === this.env.PILOT_CAMPAIGN_ID && event.payload?.manifestSha256 === this.env.PILOT_MANIFEST_SHA256, 'workflow_manifest_binding');
     const bucket = this.env.PILOT_ARCHIVE;
-    const stepOptions = {retries: {limit: 0, delay: '1 second'}, timeout: '3 minutes'};
+    const stepOptions = {retries: {limit: 0, delay: '1 second'}, timeout: '6 minutes'};
     const options = {bucket, campaignId: event.payload.campaignId, manifestSha256: event.payload.manifestSha256};
-    const objects = await step.do('approved-inputs', stepOptions, () => snapshotCampaignInputs(options));
-    const campaign = await materializeCampaignSnapshot({...options, objects});
-    await step.do('execution-identity', stepOptions, () => writeCampaignRecord(bucket, campaign.prefix + 'execution-identity.json', {campaignId: event.payload.campaignId, manifestSha256: event.payload.manifestSha256, workerVersionId: this.env.CF_VERSION_METADATA.id}));
+    const admitted = await step.do('approved-inputs', stepOptions, async () => {
+      const admittedAt = new Date().toISOString();
+      return {admittedAt, objects: await snapshotCampaignInputs({...options, now: new Date(admittedAt)})};
+    });
+    // Freshness is an admission check. Replays validate the immutable snapshot at that cached instant;
+    // the separate ledger deadline still prevents any new dispatch after execution authorization expires.
+    const campaign = await materializeCampaignSnapshot({...options, objects: admitted.objects, now: new Date(admitted.admittedAt)});
+    await step.do('storage-qualification', stepOptions, () => qualifyCampaignStorage(options));
+    await step.do('execution-identity', stepOptions, () => writeCampaignRecord(bucket, campaign.prefix + 'execution-identity.json', {campaignId: event.payload.campaignId, manifestSha256: event.payload.manifestSha256, workerVersionId: this.env.CF_VERSION_METADATA.id, admittedAt: admitted.admittedAt}));
     const credentials = {anthropic: this.env.ANTHROPIC_API_KEY, deepinfra: this.env.DEEPINFRA_API_KEY, mistral: this.env.MISTRAL_API_KEY};
     assertValue(Object.values(credentials).every(value => typeof value === 'string' && value.length >= 12), 'workflow_credentials_missing');
     const result = await runCampaign({bucket, campaign, manifestSha256: event.payload.manifestSha256, credentials,

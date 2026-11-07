@@ -12,6 +12,7 @@ import {
   writeCampaignRecord,
   readCampaignStatus,
   PILOT_PRICING,
+  qualifyCampaignStorage,
 } from '../spec/examples/semantic-boundaries/pilot-campaign.mjs';
 import {PROVIDER_PROFILES} from '../spec/examples/semantic-boundaries/pilot-provider.mjs';
 import {createHash} from 'node:crypto';
@@ -76,6 +77,59 @@ const ledgerFor = bucket =>
     authorization: {planSha256: 'a'.repeat(64), capMicrousd: 50_000_000, maximumAttempts: 3366, expiresAt},
     now,
   });
+
+test('conditional storage qualification rejects ignored create-only or compare-and-swap conditions', async () => {
+  for (const ignored of [null, 'etagDoesNotMatch', 'etagMatches']) {
+    const bucket = new Bucket();
+    const put = bucket.put.bind(bucket);
+    bucket.put = (key, text, options) =>
+      put(key, text, ignored && Object.hasOwn(options.onlyIf, ignored) ? {onlyIf: {}} : options);
+    const options = {bucket, campaignId: 'synthetic', manifestSha256: 'a'.repeat(64)};
+    if (ignored) await assert.rejects(qualifyCampaignStorage(options), /campaign_storage_/);
+    else {
+      const proof = await qualifyCampaignStorage(options);
+      const writes = bucket.version;
+      assert.deepEqual(await qualifyCampaignStorage(options), proof);
+      assert.equal(bucket.version, writes);
+    }
+  }
+});
+
+test('an interrupted storage qualification cannot be treated as a completed qualification', async () => {
+  const bucket = new Bucket();
+  bucket.rows.set(prefix + 'storage-qualification.json', {
+    etag: '1',
+    text: '{"schema":"runtime-pilot-storage-pending/1"}',
+  });
+  await assert.rejects(
+    qualifyCampaignStorage({bucket, campaignId: 'synthetic', manifestSha256: 'a'.repeat(64)}),
+    /campaign_record_integrity/,
+  );
+});
+
+test('failure to retain the budget-started marker prevents HTTP even after a reservation', async () => {
+  const bucket = new Bucket();
+  const put = bucket.put.bind(bucket);
+  bucket.put = (key, text, options) => {
+    if (key.endsWith('/budget-started.json')) throw new Error('marker unavailable');
+    return put(key, text, options);
+  };
+  let sends = 0;
+  const runner = campaignAttemptRunner({
+    bucket,
+    prefix,
+    ledger: ledgerFor(bucket),
+    credentials,
+    now,
+    invoke: async () => {
+      sends++;
+      return response();
+    },
+  });
+  await assert.rejects(runner('respondent/trial-0001/1', request), /marker unavailable/);
+  assert.equal(sends, 0);
+  assert.equal((await ledgerFor(bucket).summary()).committedMicrousd, 501280);
+});
 
 test('durable attempt replay returns the original response without another send or charge', async () => {
   const bucket = new Bucket();
@@ -371,6 +425,7 @@ async function approvedInputs() {
   });
   const saved = await writeCampaignRecord(bucket, prefix + 'manifest.json', {
     ...campaign.manifest,
+    admitBefore: '2026-11-07T18:00:00.000Z',
     schema: 'runtime-provider-pilot/1',
     mode: 'provider',
     respondent: 'anthropic',
@@ -406,6 +461,11 @@ test('private status exposes only aggregates and marks interrupted activity stal
   const args = await approvedInputs();
   const statusArgs = {...args, workerVersionId: '11111111-2222-4333-8444-555555555555'};
   assert.equal((await readCampaignStatus(statusArgs)).executionState, 'not_started');
+  await writeCampaignRecord(args.bucket, prefix + 'execution-identity.json', {
+    campaignId: args.campaignId,
+    manifestSha256: args.manifestSha256,
+    workerVersionId: statusArgs.workerVersionId,
+  });
   const ledger = createPilotBudget({
     bucket: args.bucket,
     key: prefix + 'budget.json',
@@ -430,4 +490,144 @@ test('private status exposes only aggregates and marks interrupted activity stal
   assert.equal(JSON.stringify(current).includes('requestSha256'), false);
   assert.equal(JSON.stringify(current).includes('credential'), false);
   await assert.rejects(readCampaignStatus({...statusArgs, manifestSha256: 'f'.repeat(64)}), /manifest_pin/);
+  await assert.rejects(
+    readCampaignStatus({...statusArgs, workerVersionId: '22222222-2222-4333-8444-555555555555'}),
+    /execution_version/,
+  );
+});
+
+test('permanent and transient provider errors retain their full spending reservation', async () => {
+  const bucket = new Bucket();
+  const runner = campaignAttemptRunner({
+    bucket,
+    prefix,
+    ledger: ledgerFor(bucket),
+    credentials,
+    now,
+    invoke: async () => {
+      throw new PilotTechnicalError('', {code: 'provider_http_400', retryable: false});
+    },
+  });
+  const saved = await runner('respondent/trial-0001/1', request);
+  assert.equal(saved.error.retryable, false);
+  const entry = await ledgerFor(bucket).inspect('respondent/trial-0001/1');
+  assert(entry);
+  assert.equal(entry.state, 'uncertain');
+  assert.equal((await ledgerFor(bucket).summary()).committedMicrousd, 501280);
+});
+
+test('failed or near-timeout native preflight stops before any scientific trial', async () => {
+  for (const slow of [false, true]) {
+    const bucket = new Bucket();
+    let elapsed = 0,
+      respondentCalls = 0;
+    await assert.rejects(
+      runCampaign({
+        bucket,
+        campaign: {...campaign, trials: trials.slice(0, 2)},
+        manifestSha256: 'a'.repeat(64),
+        credentials,
+        steps,
+        now: () => new Date(now().getTime() + elapsed),
+        invoke: async input => {
+          if (input.request.role === 'respondent') respondentCalls++;
+          if (input.request.role === 'preflight' && input.request.provider === 'deepinfra') {
+            assert.equal(input.timeoutMs, 300000);
+            if (!slow) throw new PilotTechnicalError('', {code: 'provider_http_503', retryable: true});
+            elapsed += 240000;
+          }
+          return invoke(input);
+        },
+      }),
+      slow ? /preflight_latency/ : /native_preflight/,
+    );
+    assert.equal(respondentCalls, 0);
+    assert.equal(bucket.rows.has(prefix + 'result.json'), false);
+    assert((await ledgerFor(bucket).summary()).committedMicrousd > 0);
+  }
+});
+
+test('permanent judge errors are not retried and technical-only replies are excluded from judgment counts', async () => {
+  const bucket = new Bucket();
+  let respondentCalls = 0,
+    judgeCalls = 0;
+  const result = await runCampaign({
+    bucket,
+    campaign: {...campaign, trials: trials.slice(0, 2)},
+    manifestSha256: 'a'.repeat(64),
+    credentials,
+    steps,
+    now,
+    invoke: async input => {
+      if (input.request.role === 'respondent' && ++respondentCalls === 1)
+        throw new PilotTechnicalError('', {code: 'provider_http_400', retryable: false});
+      if (input.request.role === 'judge' && ++judgeCalls === 1)
+        throw new PilotTechnicalError('', {code: 'provider_http_400', retryable: false});
+      return invoke(input);
+    },
+  });
+  assert.equal(respondentCalls, 2);
+  assert.equal(judgeCalls, 2);
+  assert.equal(result.responses.technicalOnly, 1);
+  assert.equal(result.judgments.responsesNotReceived, 1);
+  assert.equal(result.judgments.expectedResponses, 1);
+  assert.equal(result.judgments.missingPairs, 1);
+  assert.equal(result.responses.judgmentsPending, 1);
+});
+
+test('snapshot admission and ledger dispatch have distinct deadlines', async () => {
+  const args = await approvedInputs();
+  const objects = await snapshotCampaignInputs(args);
+  await assert.rejects(
+    materializeCampaignSnapshot({...args, objects, now: new Date('2026-11-07T18:00:00.000Z')}),
+    /expired/,
+  );
+  // A durable replay uses the original admittedAt, not the later wall clock.
+  const restored = await materializeCampaignSnapshot({...args, objects, now: args.now});
+  assert.equal(restored.trials.length, 560);
+  const expired = createPilotBudget({
+    bucket: args.bucket,
+    key: prefix + 'budget.json',
+    authorization: {planSha256: args.manifestSha256, capMicrousd: 50_000_000, maximumAttempts: 3366, expiresAt},
+    now: () => new Date(expiresAt),
+  });
+  await assert.rejects(
+    expired.reserve({
+      attemptId: 'respondent/trial-0001/1',
+      requestSha256: 'b'.repeat(64),
+      reservedMicrousd: 100,
+      provider: 'anthropic',
+      role: 'respondent',
+    }),
+    /budget_expired/,
+  );
+});
+
+test('insufficient time after real-shaped preflights stops before scientific dispatch', async () => {
+  const bucket = new Bucket();
+  let preflightCalls = 0,
+    respondentCalls = 0;
+  await assert.rejects(
+    runCampaign({
+      bucket,
+      campaign: {
+        ...campaign,
+        trials: trials.slice(0, 2),
+        manifest: {...campaign.manifest, expiresAt: new Date(now().getTime() + 15 * 60000).toISOString()},
+      },
+      manifestSha256: 'a'.repeat(64),
+      credentials,
+      steps,
+      now,
+      invoke: async input => {
+        if (input.request.role === 'preflight') preflightCalls++;
+        if (input.request.role === 'respondent') respondentCalls++;
+        return invoke(input);
+      },
+    }),
+    /campaign_runtime_window/,
+  );
+  assert.equal(preflightCalls, 3);
+  assert.equal(respondentCalls, 0);
+  assert.equal(bucket.rows.has(prefix + 'result.json'), false);
 });

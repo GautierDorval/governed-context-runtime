@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/en/provider-pilot.md",
-      "sha256": "fc4ca9665f17f43f851696410728df2f06453ae6bc6d5b7bfc2905252744ad80",
-      "bytes": 7118
+      "sha256": "5040b5458ec303032aa86581e8e7b720b6ea45f61f439b11761af3b972dfc74c",
+      "bytes": 10852
     },
     {
       "path": "docs/en/qualification.md",
@@ -216,8 +216,8 @@
     },
     {
       "path": "docs/fr/provider-pilot.md",
-      "sha256": "932188da5c30fdeab8c731412b3dfa6c41ffec451f5952c30a224e9465e7c674",
-      "bytes": 8326
+      "sha256": "6b90855a70dd3065bc1657686039febc03582409eed0c3919995de9ace2f96b4",
+      "bytes": 12743
     },
     {
       "path": "docs/fr/qualification.md",
@@ -426,8 +426,8 @@
     },
     {
       "path": "records/provider-pilot-2026-11-07.md",
-      "sha256": "190aaf85ae581b8f03556f53534ec293ff45d70aca3c54618803f41da9c11f4b",
-      "bytes": 2880
+      "sha256": "93866618c96784b6b9631cfcff02c73f2dffb823496864910896b2810e1d370b",
+      "bytes": 4565
     },
     {
       "path": "records/qualification-edition-2026-10-20.md",
@@ -436,7 +436,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "66d443e879039d178137aaffee8ce54830f264bfcadf98f53dd76f327c1821bf",
+      "sha256": "3c50a227188a9e2400624eb9c0786824609648965043abfc14320eaac231017a",
       "bytes": 55663
     },
     {
@@ -456,8 +456,8 @@
     },
     {
       "path": "scripts/prepare-pilot.mjs",
-      "sha256": "34f81bd9d2513f355009cec225f10a51eb7908d0eb99e69772a659c85d16b12c",
-      "bytes": 4462
+      "sha256": "3366be1f9a7f9c2415c0f3a195dfd2d65faf2f2b3340c696542714e5f79857fb",
+      "bytes": 4524
     },
     {
       "path": "scripts/property-process.mjs",
@@ -876,18 +876,18 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-budget.mjs",
-      "sha256": "0dc556d9480e1c228131ded770ae6ea509a18503865774f69c7a975d78f41b3d",
-      "bytes": 7846
+      "sha256": "d58c7b48f8e74cc883b5b809d89f15e2285ac1b20f7a630ecbb6ba2196d44c14",
+      "bytes": 8740
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-campaign.d.mts",
-      "sha256": "b63c569eab44975d569f3500506e45b7dae9da661b7abd1f749da41a322d6374",
-      "bytes": 2207
+      "sha256": "1fe8e32ef84f0eafb5ed46f7f74abb9fd297d3e3bd69e09e8678ccb892f2fd04",
+      "bytes": 2361
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-campaign.mjs",
-      "sha256": "ac6c037551b5c9c24c56a2c0d106203a24f7d7f53e856f9c6f9d15dd2015c6a8",
-      "bytes": 20924
+      "sha256": "21d18019673e8de68367540cc4d2f05165b33f3d6e99c1f1eea6e0f2773549b2",
+      "bytes": 25224
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-execution.d.mts",
@@ -911,28 +911,28 @@
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-judging.d.mts",
-      "sha256": "2999d5f702c448d2702746d575ab78db92a5f9878cdec4aae33f32d2ad807ffa",
-      "bytes": 1742
+      "sha256": "15138d1e2a0538ad49eb0bb41931f98476c2c39b9bb6bda7efd223ceed5eb7cd",
+      "bytes": 1827
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-judging.mjs",
-      "sha256": "aa9a3fc94e402ac354ca8e47ad138b29f21091aee073f18980a061cc1e5b4dda",
-      "bytes": 10048
+      "sha256": "e604549f696b89d14cc64e8640b34941318f0d6973df838d58073d81bb5c01d5",
+      "bytes": 10769
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-provider.d.mts",
-      "sha256": "18a5e032a2296f560064a86e0e7ec0fdf39b966b9b55a7ad19f3adeceabbf3d4",
-      "bytes": 1121
+      "sha256": "b63d450fa4440efe8f81e646f6f8b523a64e4860e1d9b861bd0b31060290b838",
+      "bytes": 1140
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-provider.mjs",
-      "sha256": "77d858b1f775dddac5cc6a83410362fd2928d188466afb39ded793eac66be5f6",
-      "bytes": 13481
+      "sha256": "707ba3b6f7c37cc8b86af10a530de8c1d277085df7c8802e48c115c5c99d708e",
+      "bytes": 13880
     },
     {
       "path": "spec/examples/semantic-boundaries/pilot-workflow.mjs",
-      "sha256": "c0423808925b468e616e6fa251fcec892e0a9d96df338d5acd1ab769396c5b26",
-      "bytes": 2839
+      "sha256": "293166de4bd739ff3a70213bb6f80b6fe0e217bb5ad5a34bdc1338dc883868ce",
+      "bytes": 3398
     },
     {
       "path": "spec/examples/semantic-boundaries/prose-coverage.json",
@@ -1091,13 +1091,13 @@
     },
     {
       "path": "test/pilot-budget.test.mjs",
-      "sha256": "749f79146d2f6928f91bf770f0de852b98ca9193fe6cdd97a25233eb41534818",
-      "bytes": 4650
+      "sha256": "627d9a160cdc88b1963045af4f1653c21a55761ab01f5397dbc4d52ea68a0020",
+      "bytes": 5329
     },
     {
       "path": "test/pilot-campaign.test.mjs",
-      "sha256": "9193c438487ed3dc4fe046f2688aac6bf28bd01497eefb701c47c6cfbf87ec17",
-      "bytes": 15529
+      "sha256": "a2eaf996c211fb7e014e32f083127e865cd3eaf8ba0ae1b2b88f98ef768c68f6",
+      "bytes": 22885
     },
     {
       "path": "test/pilot-execution.test.mjs",
@@ -1106,8 +1106,8 @@
     },
     {
       "path": "test/pilot-judging.test.mjs",
-      "sha256": "db570adbaf132d504c36a91fcfd58993086ce083507c3ee7944f566a916c3133",
-      "bytes": 6920
+      "sha256": "174fd156f85d6240c5a17b454752fb4fc02341a2c3a3980c8945b01a73944b6b",
+      "bytes": 8601
     },
     {
       "path": "test/pilot-plan.test.mjs",
@@ -1116,8 +1116,8 @@
     },
     {
       "path": "test/pilot-provider.test.mjs",
-      "sha256": "02d8e3d53f074b62f72d81bd28ca3fae1097e37565ecfe18dd5e5a88cea8f90e",
-      "bytes": 9720
+      "sha256": "93db8f7e8f2dd7eefd4365b680f35e47fe86f8abe86c0effb11a8b62e065a371",
+      "bytes": 12304
     },
     {
       "path": "test/properties/acceptance-vectors.json",

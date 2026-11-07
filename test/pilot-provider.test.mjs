@@ -7,6 +7,7 @@ import {
   decodeProviderResponse,
 } from '../spec/examples/semantic-boundaries/pilot-provider.mjs';
 import {parseProviderJson} from '../spec/examples/semantic-boundaries/pilot-json.mjs';
+import {createHash} from 'node:crypto';
 
 const credential = 'synthetic-not-a-live-key';
 const bytes = new TextEncoder().encode(
@@ -98,6 +99,7 @@ test('HTTP transient failure is a single dispatch, retained without semantic rel
     assert.equal(value.code, 'provider_http_429');
     assert.equal(value.retryable, true);
     assert.equal(value.partialResponse, '{"error":{"message":""}}');
+    assert.equal(value.responseSha256, createHash('sha256').update('{"error":{"message":""}}').digest('hex'));
   }
   assert.equal(calls, 1);
 });
@@ -105,10 +107,12 @@ test('HTTP transient failure is a single dispatch, retained without semantic rel
 test('non-JSON 503 and an interrupted body retain exact partial bytes', async () => {
   const response = new Response('upstream unavailable', {status: 503});
   await assert.rejects(sendProviderRequest({request, credential, fetchImplementation: async () => response}), error => {
-    const value = /** @type {Error & {code:string;retryable:boolean;partialResponseBase64:string}} */ (error);
+    const value =
+      /** @type {Error & {code:string;retryable:boolean;partialResponseBase64:string;responseSha256:string}} */ (error);
     assert.equal(value.code, 'provider_http_503');
     assert(value.retryable);
     assert.equal(Buffer.from(value.partialResponseBase64, 'base64').toString(), 'upstream unavailable');
+    assert.equal(value.responseSha256, createHash('sha256').update('upstream unavailable').digest('hex'));
     return true;
   });
   let chunks = 0;
@@ -134,6 +138,8 @@ test('credential echoes, including JSON escaped echoes, leave no retained body',
   for (const raw of [
     JSON.stringify(body(credential)),
     JSON.stringify(body(credential)).replaceAll('synthetic', '\\u0073ynthetic'),
+    JSON.stringify(body(credential.slice(-16))),
+    JSON.stringify(body(btoa(credential))),
   ]) {
     await assert.rejects(sendProviderRequest({request, credential, fetchImplementation: fake(raw)}), error => {
       const value = /** @type {Error & {code:string;partialResponse:string|null;partialResponseBase64:string|null}} */ (
@@ -146,6 +152,73 @@ test('credential echoes, including JSON escaped echoes, leave no retained body',
       return true;
     });
   }
+});
+
+test('complete invalid UTF-8 or JSON and permanent HTTP failures never become retryable transport failures', async () => {
+  const invalid = new TextEncoder().encode(JSON.stringify(body('AAAA')));
+  invalid[Buffer.from(invalid).indexOf('AAAA')] = 0xff;
+  const cases = [
+    {raw: invalid, status: 200, code: 'provider_utf8'},
+    {raw: new TextEncoder().encode('{"id":'), status: 200, code: 'provider_json'},
+    ...[400, 401, 403, 413].map(status => ({
+      raw: new TextEncoder().encode('{"error":{}}'),
+      status,
+      code: 'provider_http_' + status,
+    })),
+  ];
+  for (const {raw, status, code} of cases) {
+    await assert.rejects(
+      sendProviderRequest({request, credential, fetchImplementation: async () => new Response(raw, {status})}),
+      error => {
+        const value =
+          /** @type {import('../spec/examples/semantic-boundaries/pilot-execution.mjs').PilotTechnicalError} */ (error);
+        assert.equal(value.code, code);
+        assert.equal(value.retryable, false);
+        assert.equal(value.responseSha256, createHash('sha256').update(raw).digest('hex'));
+        return true;
+      },
+    );
+  }
+});
+
+test('judges admit a five-minute bounded transport while respondent timeout remains ninety seconds', async () => {
+  const judge = buildProviderRequest({
+    provider: 'mistral',
+    role: 'judge',
+    promptBytes: bytes,
+    outputTokenLimit: 8192,
+    systemInstruction: 'Return JSON.',
+  });
+  let calls = 0;
+  await assert.rejects(
+    sendProviderRequest({
+      request,
+      credential,
+      timeoutMs: 300000,
+      fetchImplementation: async () => {
+        calls++;
+        return new Response();
+      },
+    }),
+    /provider_timeout/,
+  );
+  assert.equal(calls, 0);
+  await assert.rejects(
+    sendProviderRequest({
+      request: judge,
+      credential,
+      timeoutMs: 300000,
+      fetchImplementation: async () => {
+        calls++;
+        return new Response('{}', {status: 400});
+      },
+    }),
+    error => {
+      assert.equal(/** @type {Error & {code:string}} */ (error).code, 'provider_http_400');
+      return true;
+    },
+  );
+  assert.equal(calls, 1);
 });
 
 test('model, usage, tool and finish mismatches fail closed', () => {
@@ -227,16 +300,18 @@ test('Mistral text blocks exclude thinking from evaluated text and account for a
 });
 
 test('redirect is never followed and a body exceeding the limit is rejected', async () => {
+  /** @type {string | undefined} */ let redirect;
   await assert.rejects(
     sendProviderRequest({
       request,
       credential,
       fetchImplementation: async (_url, init) => {
-        assert.equal(init?.redirect, 'manual');
+        redirect = init?.redirect;
         return new Response(null, {status: 307, headers: {Location: 'https://untrusted.invalid'}});
       },
     }),
   );
+  assert.equal(redirect, 'manual');
   await assert.rejects(
     sendProviderRequest({request, credential, fetchImplementation: fake('x'.repeat(1_048_577))}),
     /./,

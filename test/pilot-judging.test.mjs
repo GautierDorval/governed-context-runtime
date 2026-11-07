@@ -153,7 +153,13 @@ test('missing judge outputs and nonapplicable dimensions are reported without im
       }),
     ),
   );
-  const report = summarizeJudgments({trials: trials.slice(0, 2), records, reviewerIds: ['judge-a', 'judge-b'], rubric});
+  const report = summarizeJudgments({
+    trials: trials.slice(0, 2),
+    completedTrialIds: trials.slice(0, 2).map(trial => trial.trialId),
+    records,
+    reviewerIds: ['judge-a', 'judge-b'],
+    rubric,
+  });
   assert.equal(report.pairedResponses, 1);
   assert.equal(report.missingPairs, 1);
   assert.equal(report.globalScore, null);
@@ -161,7 +167,51 @@ test('missing judge outputs and nonapplicable dimensions are reported without im
   assert(report.dimensions.some(row => row.notApplicable === 1 && row.paired === 0));
   assert(report.dimensions.some(row => row.missing === 1 && row.paired === 0));
   assert.throws(
-    () => summarizeJudgments({trials, records: [...records, records[0]], reviewerIds: ['judge-a', 'judge-b'], rubric}),
+    () =>
+      summarizeJudgments({
+        trials,
+        completedTrialIds: trials.map(trial => trial.trialId),
+        records: [...records, records[0]],
+        reviewerIds: ['judge-a', 'judge-b'],
+        rubric,
+      }),
     /duplicate_record/,
   );
+});
+
+test('technical-only trials are outside judgment denominators while unpaired received replies remain missing', async () => {
+  const input = prepareJudgeInput({trial: trials[0], outcome: outcome(), rubric});
+  const records = await Promise.all(
+    ['judge-a', 'judge-b'].map(reviewerId =>
+      validateJudgeResponse({
+        rawText: JSON.stringify(annotation(input)),
+        input,
+        trialId: trials[0].trialId,
+        reviewerId,
+      }),
+    ),
+  );
+  const args = {
+    trials: trials.slice(0, 3),
+    completedTrialIds: [trials[0].trialId, trials[2].trialId],
+    records,
+    reviewerIds: ['judge-a', 'judge-b'],
+    rubric,
+  };
+  const report = summarizeJudgments(args);
+  assert.equal(report.plannedResponses, 3);
+  assert.equal(report.responsesNotReceived, 1);
+  assert.equal(report.expectedResponses, 2);
+  assert.equal(report.pairedResponses, 1);
+  assert.equal(report.missingPairs, 1);
+  for (const row of [...report.descriptive, ...report.dimensions, ...report.utility]) {
+    assert.equal(row.planned, row.expected + row.notReceived);
+  }
+  for (const row of report.descriptive)
+    assert.equal(
+      row.expected,
+      row.missing + Object.values(row.counts).reduce((sum, count) => Number(sum) + Number(count), 0),
+    );
+  assert(report.descriptive.some(row => row.notReceived === 1 && row.expected === 0 && row.missing === 0));
+  assert.throws(() => summarizeJudgments({...args, completedTrialIds: [trials[2].trialId]}), /record_identity/);
 });

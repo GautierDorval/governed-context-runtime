@@ -39,6 +39,31 @@ export async function readCampaignRecord(bucket, key) {
   return record;
 }
 
+/** Native R2 conditional-write qualification, cached before any provider request. No model call. */
+export async function qualifyCampaignStorage({bucket, campaignId, manifestSha256}) {
+  assertValue(/^[a-z0-9-]{1,80}$/.test(campaignId) && HASH.test(manifestSha256), 'campaign_identity');
+  const key = `campaigns/${campaignId}/storage-qualification.json`;
+  const payload = {schema: 'runtime-pilot-storage-qualification/1', campaignId, manifestSha256, createOnly: true, staleEtagRejected: true, matchingEtagAccepted: true};
+  const payloadText = JSON.stringify(payload);
+  const sha256 = await digestBytes(encoder.encode(payloadText));
+  const existing = await bucket.get(key);
+  if (existing) {
+    const record = await readCampaignRecord(bucket, key);
+    assertValue(record?.sha256 === sha256, 'campaign_storage_qualification_incomplete');
+    return {key, sha256};
+  }
+  const pending = JSON.stringify({schema: 'runtime-pilot-storage-pending/1', nonce: crypto.randomUUID()});
+  assertValue(await bucket.put(key, pending, {onlyIf: {etagDoesNotMatch: '*'}, httpMetadata: METADATA}), 'campaign_storage_create');
+  assertValue(await bucket.put(key, pending, {onlyIf: {etagDoesNotMatch: '*'}, httpMetadata: METADATA}) === null, 'campaign_storage_create_only');
+  const current = await bucket.get(key);
+  assertValue(current && await current.text() === pending && typeof current.etag === 'string', 'campaign_storage_readback');
+  assertValue(await bucket.put(key, pending, {onlyIf: {etagMatches: 'invalid-' + current.etag}, httpMetadata: METADATA}) === null, 'campaign_storage_stale_etag');
+  const text = JSON.stringify({schema: 'runtime-pilot-record/1', payload, sha256});
+  assertValue(await bucket.put(key, text, {onlyIf: {etagMatches: current.etag}, httpMetadata: METADATA}), 'campaign_storage_matching_etag');
+  assertValue((await readCampaignRecord(bucket, key))?.sha256 === sha256, 'campaign_storage_readback');
+  return {key, sha256};
+}
+
 export async function loadCampaign({bucket, manifestSha256, campaignId, now = new Date()}) {
   assertValue(typeof campaignId === 'string' && /^[a-z0-9-]{1,80}$/.test(campaignId) && HASH.test(manifestSha256), 'campaign_identity');
   const prefix = `campaigns/${campaignId}/`;
@@ -50,6 +75,8 @@ export async function loadCampaign({bucket, manifestSha256, campaignId, now = ne
   assertValue(manifest.budgetCapMicrousd === 50_000_000 && manifest.maximumAttempts === 3366, 'campaign_budget');
   assertValue(manifest.respondent === 'anthropic' && JSON.stringify(manifest.reviewers) === '["deepinfra","mistral"]', 'campaign_models');
   assertValue(JSON.stringify(manifest.pricing) === JSON.stringify(PILOT_PRICING), 'campaign_prices');
+  assertValue(new Date(manifest.admitBefore).toISOString() === manifest.admitBefore && new Date(manifest.expiresAt).toISOString() === manifest.expiresAt, 'campaign_deadlines');
+  assertValue(Date.parse(manifest.admitBefore) > now.getTime() && Date.parse(manifest.expiresAt) > Date.parse(manifest.admitBefore) && Date.parse(manifest.expiresAt) - Date.parse(manifest.admitBefore) <= 7 * 24 * 3600_000, 'campaign_expired');
   assertValue(Date.parse(manifest.expiresAt) > now.getTime() && Date.parse(manifest.pricingVerifiedAt) <= now.getTime() && now.getTime() - Date.parse(manifest.pricingVerifiedAt) <= 72 * 3600_000, 'campaign_expired');
   assertValue(typeof manifest.ownerAuthorization === 'string' && manifest.ownerAuthorization.length > 0 && HASH.test(manifest.preflightSha256), 'campaign_authorization');
   assertValue(HASH.test(manifest.tokenMeasurementsSha256), 'campaign_token_measurements_pin');
@@ -161,9 +188,11 @@ export function campaignAttemptRunner({bucket, prefix, ledger, credentials, invo
     const requestSha256 = await digestBytes(encoder.encode(request.body));
     const reservedMicrousd = tokenCostMicrousd(PROVIDER_PROFILES[request.provider].contextLimit, request.outputTokenLimit, PILOT_PRICING[request.provider]);
     await ledger.reserve({attemptId, requestSha256, reservedMicrousd, provider: request.provider, role: request.role});
+    const timeoutMs = PROVIDER_PROFILES[request.provider].timeoutMs;
+    const startedAt = now();
     let response = null, error = null;
     try {
-      response = await invoke({request, credential: credentials[request.provider]});
+      response = await invoke({request, credential: credentials[request.provider], timeoutMs});
     } catch (caught) {
       const known = caught instanceof PilotTechnicalError;
       error = {
@@ -175,7 +204,10 @@ export function campaignAttemptRunner({bucket, prefix, ledger, credentials, invo
         responseSha256: known ? caught.responseSha256 ?? null : null,
       };
     }
-    const payload = {attemptId, request, requestSha256, response, error, receivedAt: now().toISOString()};
+    const receivedAt = now();
+    const elapsedMs = receivedAt.getTime() - startedAt.getTime();
+    assertValue(Number.isSafeInteger(elapsedMs) && elapsedMs >= 0, 'campaign_attempt_time');
+    const payload = {attemptId, request, requestSha256, response, error, startedAt: startedAt.toISOString(), receivedAt: receivedAt.toISOString(), elapsedMs, timeoutMs};
     const saved = await writeCampaignRecord(bucket, key, payload);
     await settle(attemptId, request, {...saved, payload});
     return payload;
@@ -202,14 +234,26 @@ export async function runCampaign({bucket, campaign, manifestSha256, credentials
     }
   }
   // One technical smoke per selected model, charged to this same ledger. No hidden SDK retry.
+  const preflightTimings = [];
   for (const provider of ['anthropic', ...manifest.reviewers]) {
     const judgeInput = provider === 'anthropic' ? null : prepareJudgeInput({trial: trials[0], rubric, outcome: {kind: 'completed_response', rawText: '', finishReason: 'end_turn', outputLimited: false}});
     const request = buildProviderRequest({provider, role: 'preflight', promptBytes: encoder.encode(judgeInput ? JSON.stringify(judgeInput) : 'Reply with exactly OK.'), outputTokenLimit: judgeInput ? 8192 : 128, systemInstruction: judgeInput ? JUDGE_INSTRUCTION : null});
     const probe = await dispatch('preflight/' + provider + '/1', request);
     assertValue(probe.response && !probe.response.outputLimited, 'campaign_native_preflight');
+    assertValue(probe.elapsedMs < probe.timeoutMs * 0.8, 'campaign_preflight_latency');
     if (judgeInput) await validateJudgeResponse({rawText: probe.response.rawText, input: judgeInput, trialId: 'preflight', reviewerId: provider});
     else assertValue(probe.response.rawText.trim() === 'OK', 'campaign_native_preflight');
+    preflightTimings.push({provider, elapsedMs: probe.elapsedMs, timeoutMs: probe.timeoutMs});
   }
+  await steps.run('native-preflight-summary', async () => {
+    // Conservative scheduling estimate, not a completion guarantee: three times measured first-pass
+    // latency, at least one second per provider, plus thirty minutes for durable orchestration.
+    const estimatedWindowMs = 3 * trials.length * preflightTimings.reduce((sum, item) => sum + Math.max(1000, item.elapsedMs), 0) + 30 * 60_000;
+    const checkedAt = now();
+    const latestScientificStartAt = new Date(Date.parse(manifest.expiresAt) - estimatedWindowMs).toISOString();
+    assertValue(checkedAt.getTime() < Date.parse(latestScientificStartAt), 'campaign_runtime_window');
+    return writeCampaignRecord(bucket, prefix + 'native-preflight-summary.json', {schema: 'runtime-pilot-native-preflight/1', mode, preflightTimings, checkedAt: checkedAt.toISOString(), estimatedWindowMs, latestScientificStartAt, executionExpiresAt: manifest.expiresAt});
+  });
   let current;
   const execution = await executePilotTrials({
     trials, mode,
@@ -257,7 +301,7 @@ export async function runCampaign({bucket, campaign, manifestSha256, credentials
   }
   for (const trial of trials) if (byTrial.has(trial.trialId)) for (const reviewerId of manifest.reviewers) await judge(trial, reviewerId, 1);
   for (const item of retryQueue) await judge(item.trial, item.reviewerId, 2);
-  const summary = summarizeJudgments({trials, records, reviewerIds: manifest.reviewers, rubric});
+  const summary = summarizeJudgments({trials, completedTrialIds: [...byTrial.keys()], records, reviewerIds: manifest.reviewers, rubric});
   const result = {
     schema: 'runtime-pilot-result/1', campaignId: manifest.campaignId, manifestSha256,
     mode, status: mode === 'synthetic' ? 'SYNTHETIC_RUN' : execution.counts.attempts > 0 ? 'RUN' : 'NOT_RUN',
@@ -282,6 +326,10 @@ export async function readCampaignStatus({bucket, campaignId, manifestSha256, wo
   const ledger = createPilotBudget({bucket, key: prefix + 'budget.json', authorization: {planSha256: manifestSha256, capMicrousd: manifest.budgetCapMicrousd, maximumAttempts: manifest.maximumAttempts, expiresAt: manifest.expiresAt}});
   const activity = await ledger.activity();
   const result = await readCampaignRecord(bucket, prefix + 'result.json');
+  const executionIdentity = await readCampaignRecord(bucket, prefix + 'execution-identity.json');
+  if (executionIdentity || activity.attempts > 0 || result) {
+    assertValue(executionIdentity?.payload.campaignId === campaignId && executionIdentity.payload.manifestSha256 === manifestSha256 && executionIdentity.payload.workerVersionId === workerVersionId, 'campaign_execution_version');
+  }
   if (result) assertValue(result.payload.schema === 'runtime-pilot-result/1' && result.payload.manifestSha256 === manifestSha256 && result.payload.mode === 'provider' && ['RUN', 'NOT_RUN'].includes(result.payload.status), 'campaign_result_binding');
   const age = activity.lastActivityAt === null ? null : now.getTime() - Date.parse(activity.lastActivityAt);
   assertValue(age === null || age >= 0, 'campaign_activity_time');

@@ -104,3 +104,16 @@ test('expired, changed, corrupted and oversized authorizations fail closed', asy
   row.text = row.text.replace('"reservedMicrousd":60', '"reservedMicrousd":1');
   await assert.rejects(ledger.summary(), /integrity/);
 });
+
+test('a lost ledger cannot renew the cap after the immutable dispatch marker exists', async () => {
+  const bucket = new Bucket();
+  const ledger = createPilotBudget({bucket, key, authorization, now});
+  await ledger.reserve(attempt('a'));
+  await ledger.finish({attemptId: 'a', outcomeSha256: 'c'.repeat(64)});
+  assert(bucket.rows.has('campaigns/synthetic/budget-started.json'));
+  bucket.rows.delete(key);
+  const restarted = createPilotBudget({bucket, key, authorization, now});
+  await assert.rejects(restarted.summary(), /budget_ledger_lost/);
+  await assert.rejects(restarted.reserve(attempt('b')), /budget_ledger_lost/);
+  assert.equal(bucket.rows.has(key), false);
+});
