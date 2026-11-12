@@ -134,7 +134,11 @@ test('agreement is computed from the contingency table, preserving undefined kap
   assert.equal(table.rawAgreement, 0.75);
   assert.equal(table.expectedAgreement, 0.5);
   assert.equal(table.kappa, 0.5);
-  assert.equal(agreementTable([], ['PASS', 'FAIL']).undefinedReason, 'no_paired_data');
+  const absent = agreementTable([], ['PASS', 'FAIL']);
+  assert.equal(absent.undefinedReason, 'no_paired_data');
+  assert.equal(absent.kappa, null);
+  assert.equal(absent.rawAgreement, null);
+  assert.equal(absent.expectedAgreement, null);
   const perfect = agreementTable([['PASS', 'PASS']], ['PASS', 'FAIL']);
   assert.equal(perfect.rawAgreement, 1);
   assert.equal(perfect.kappa, null);
@@ -214,4 +218,188 @@ test('technical-only trials are outside judgment denominators while unpaired rec
     );
   assert(report.descriptive.some(row => row.notReceived === 1 && row.expected === 0 && row.missing === 0));
   assert.throws(() => summarizeJudgments({...args, completedTrialIds: [trials[2].trialId]}), /record_identity/);
+});
+
+test('hand-counted strata separate absent responses, missing annotations, unevaluable and nonapplicable labels', async () => {
+  const selected = trials
+    .filter(
+      trial =>
+        trial.metadata.caseId === 'preserve-conditions' &&
+        trial.metadata.language === 'fr' &&
+        trial.metadata.condition === 'pack',
+    )
+    .slice(0, 4);
+  const other = trials.find(
+    trial =>
+      trial.metadata.caseId === 'preserve-conditions' &&
+      trial.metadata.language === 'en' &&
+      trial.metadata.condition === 'no_documentation',
+  );
+  assert.equal(selected.length, 4);
+  assert(other);
+  selected.push(other);
+  // Hand-built oracle: FR/pack trial 3 has no response; trial 1 has no judge-b annotation.
+  // The separate EN/no-documentation pair must never fill either missing FR observation.
+  /** @type {[number, string, string, string][]} */
+  const fixture = [
+    [0, 'judge-a', 'PASS', 'RESOLVED'],
+    [0, 'judge-b', 'FAIL', 'PARTIAL'],
+    [1, 'judge-a', 'UNSCORABLE', 'UNDETERMINED'],
+    [2, 'judge-a', 'FAIL', 'PARTIAL'],
+    [2, 'judge-b', 'PASS', 'RESOLVED'],
+    [4, 'judge-a', 'PASS', 'RESOLVED'],
+    [4, 'judge-b', 'PASS', 'RESOLVED'],
+  ];
+  const records = [];
+  for (const [index, reviewerId, label, category] of fixture) {
+    const trial = selected[index];
+    const input = prepareJudgeInput({trial, outcome: outcome(), rubric});
+    const output = annotation(input);
+    const dimension = output.dimensions.find(item => item.dimension === 'claim-justification');
+    assert(dimension);
+    dimension.label = label;
+    output.utility.category = category;
+    records.push(
+      await validateJudgeResponse({rawText: JSON.stringify(output), input, trialId: trial.trialId, reviewerId}),
+    );
+  }
+  const report = summarizeJudgments({
+    trials: selected,
+    completedTrialIds: [selected[0].trialId, selected[1].trialId, selected[2].trialId, selected[4].trialId],
+    records,
+    reviewerIds: ['judge-a', 'judge-b'],
+    rubric,
+  });
+  assert.deepEqual(
+    [
+      report.plannedResponses,
+      report.responsesNotReceived,
+      report.expectedResponses,
+      report.acceptedAnnotations,
+      report.pairedResponses,
+      report.missingPairs,
+    ],
+    [5, 1, 4, 7, 3, 1],
+  );
+  /** @param {any} row */
+  const counts = row => {
+    assert(row);
+    const {planned, notReceived, expected, missing, counts, evaluable, notEvaluable} = row;
+    return {planned, notReceived, expected, missing, counts, evaluable, notEvaluable};
+  };
+  /** @param {string} dimension @param {string} reviewerId */
+  const french = (dimension, reviewerId) =>
+    report.descriptive.find(
+      row =>
+        row.caseId === 'preserve-conditions' &&
+        row.language === 'fr' &&
+        row.condition === 'pack' &&
+        row.dimension === dimension &&
+        row.reviewerId === reviewerId,
+    );
+  assert.deepEqual(counts(french('claim-justification', 'judge-a')), {
+    planned: 4,
+    notReceived: 1,
+    expected: 3,
+    missing: 0,
+    counts: {PASS: 1, FAIL: 1, UNSCORABLE: 1, NOT_APPLICABLE: 0},
+    evaluable: 2,
+    notEvaluable: 1,
+  });
+  assert.deepEqual(counts(french('claim-justification', 'judge-b')), {
+    planned: 4,
+    notReceived: 1,
+    expected: 3,
+    missing: 1,
+    counts: {PASS: 1, FAIL: 1, UNSCORABLE: 0, NOT_APPLICABLE: 0},
+    evaluable: 2,
+    notEvaluable: 0,
+  });
+  assert.deepEqual(counts(french('unsupported-scope-extension', 'judge-a')), {
+    planned: 4,
+    notReceived: 1,
+    expected: 3,
+    missing: 0,
+    counts: {PASS: 0, FAIL: 0, UNSCORABLE: 0, NOT_APPLICABLE: 3},
+    evaluable: 0,
+    notEvaluable: 0,
+  });
+  assert.deepEqual(counts(french('unsupported-scope-extension', 'judge-b')), {
+    planned: 4,
+    notReceived: 1,
+    expected: 3,
+    missing: 1,
+    counts: {PASS: 0, FAIL: 0, UNSCORABLE: 0, NOT_APPLICABLE: 2},
+    evaluable: 0,
+    notEvaluable: 0,
+  });
+  for (const reviewerId of ['judge-a', 'judge-b']) {
+    const english = report.descriptive.find(
+      row =>
+        row.language === 'en' &&
+        row.condition === 'no_documentation' &&
+        row.dimension === 'claim-justification' &&
+        row.reviewerId === reviewerId,
+    );
+    assert.deepEqual(counts(english), {
+      planned: 1,
+      notReceived: 0,
+      expected: 1,
+      missing: 0,
+      counts: {PASS: 1, FAIL: 0, UNSCORABLE: 0, NOT_APPLICABLE: 0},
+      evaluable: 1,
+      notEvaluable: 0,
+    });
+  }
+  const dimension = report.dimensions.find(
+    row => row.language === 'fr' && row.condition === 'pack' && row.dimension === 'claim-justification',
+  );
+  assert.deepEqual(dimension, {
+    dimension: 'claim-justification',
+    language: 'fr',
+    condition: 'pack',
+    planned: 4,
+    notReceived: 1,
+    expected: 3,
+    missing: 1,
+    notApplicable: 0,
+    categories: ['PASS', 'FAIL', 'UNSCORABLE'],
+    paired: 2,
+    agreements: 0,
+    disagreements: 2,
+    contingency: [
+      [0, 1, 0],
+      [1, 0, 0],
+      [0, 0, 0],
+    ],
+    leftMargins: [1, 1, 0],
+    rightMargins: [1, 1, 0],
+    rawAgreement: 0,
+    expectedAgreement: 0.5,
+    kappa: -1,
+    undefinedReason: null,
+  });
+  const nonapplicable = report.dimensions.find(
+    row => row.language === 'fr' && row.condition === 'pack' && row.dimension === 'unsupported-scope-extension',
+  );
+  assert(nonapplicable);
+  assert.deepEqual(
+    [
+      nonapplicable.expected,
+      nonapplicable.notApplicable,
+      nonapplicable.missing,
+      nonapplicable.paired,
+      nonapplicable.kappa,
+    ],
+    [3, 3, 0, 0, null],
+  );
+  assert.equal(nonapplicable.undefinedReason, 'no_paired_data');
+  for (const row of [...report.descriptive, ...report.dimensions, ...report.utility])
+    assert.equal(row.planned, row.expected + row.notReceived);
+  for (const row of report.descriptive)
+    assert.equal(
+      row.expected,
+      row.missing + row.counts.PASS + row.counts.FAIL + row.counts.UNSCORABLE + row.counts.NOT_APPLICABLE,
+    );
+  assert.equal(report.globalScore, null);
 });

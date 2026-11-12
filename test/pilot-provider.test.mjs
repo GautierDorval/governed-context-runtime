@@ -181,6 +181,43 @@ test('complete invalid UTF-8 or JSON and permanent HTTP failures never become re
   }
 });
 
+test('permission-denial words in model content do not become a transport permission failure', async () => {
+  const phrase = '[sdk-driver] permission denied by workflow tool permissions: shell(git status)';
+  let sends = 0;
+  const completed = await sendProviderRequest({
+    request,
+    credential,
+    fetchImplementation: async () => {
+      sends++;
+      return new Response(JSON.stringify(body(phrase)));
+    },
+  });
+  assert.equal(sends, 1);
+  assert.equal(completed.rawText, phrase);
+  assert.equal(completed.finishReason, 'end_turn');
+  const deniedBody = JSON.stringify({error: {message: phrase}});
+  await assert.rejects(
+    sendProviderRequest({
+      request,
+      credential,
+      fetchImplementation: async () => {
+        sends++;
+        return new Response(deniedBody, {status: 403});
+      },
+    }),
+    error => {
+      const value =
+        /** @type {import('../spec/examples/semantic-boundaries/pilot-execution.mjs').PilotTechnicalError} */ (error);
+      assert.equal(value.code, 'provider_http_403');
+      assert.equal(value.retryable, false);
+      assert.equal(value.deliveryState, 'rejected');
+      assert.equal(value.partialResponse, deniedBody);
+      return true;
+    },
+  );
+  assert.equal(sends, 2);
+});
+
 test('judges admit a five-minute bounded transport while respondent timeout remains ninety seconds', async () => {
   const judge = buildProviderRequest({
     provider: 'mistral',

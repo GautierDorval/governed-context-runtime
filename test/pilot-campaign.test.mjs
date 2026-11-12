@@ -176,17 +176,25 @@ test('crash after HTTP but before durable outcome keeps the full reservation and
     now,
   });
   await assert.rejects(runner('respondent/trial-0001/1', request), /disk write/);
+  assert.equal(bucket.rows.has(prefix + 'attempts/respondent/trial-0001/1.json'), false);
   bucket.put = put;
-  await assert.rejects(runner('respondent/trial-0001/1', request), /unresolved/);
+  const replayError = await runner('respondent/trial-0001/1', request).then(
+    () => null,
+    error => error,
+  );
+  // Observe sends independently before checking the error: a faulty replay must fail here.
   assert.equal(sends, 1);
+  assert(replayError instanceof Error);
+  assert.match(replayError.message, /unresolved/);
   assert.equal((await ledgerFor(bucket).summary()).unresolvedAttempts, 1);
-  assert((await ledgerFor(bucket).summary()).committedMicrousd > 500_000);
+  assert.equal((await ledgerFor(bucket).summary()).committedMicrousd, 501280);
 });
 
 test('crash after retained outcome resumes settlement without a second HTTP request', async () => {
   const bucket = new Bucket();
   let sends = 0;
   const ledger = ledgerFor(bucket);
+  let settlements = 0;
   const failing = {
     ...ledger,
     finish: async () => {
@@ -204,12 +212,130 @@ test('crash after retained outcome resumes settlement without a second HTTP requ
     ),
     /settlement/,
   );
-  await campaignAttemptRunner({bucket, prefix, ledger: ledgerFor(bucket), credentials, invoke, now})(
-    'respondent/trial-0001/1',
-    request,
-  );
+  const outcomeKey = prefix + 'attempts/respondent/trial-0001/1.json';
+  const original = bucket.rows.get(outcomeKey)?.text;
+  assert(original);
+  const resumed = campaignAttemptRunner({
+    bucket,
+    prefix,
+    ledger: {
+      ...ledger,
+      finish: async input => {
+        settlements++;
+        return ledger.finish(input);
+      },
+    },
+    credentials,
+    invoke,
+    now,
+  });
+  await resumed('respondent/trial-0001/1', request);
+  const writes = bucket.version;
+  const budget = bucket.rows.get(prefix + 'budget.json')?.text;
+  await resumed('respondent/trial-0001/1', request);
   assert.equal(sends, 1);
+  assert.equal(settlements, 1);
+  assert.equal(bucket.version, writes);
+  assert.equal(bucket.rows.get(outcomeKey)?.text, original);
+  assert.equal(bucket.rows.get(prefix + 'budget.json')?.text, budget);
+  assert.equal((await ledger.inspect('respondent/trial-0001/1'))?.outcomeSha256, JSON.parse(original).sha256);
+  assert.equal((await ledger.summary()).committedMicrousd, 100);
   assert.equal((await ledgerFor(bucket).summary()).unresolvedAttempts, 0);
+});
+
+test(
+  'two executors contend on the same attempt with observable conditional writes and one send',
+  {timeout: 5000},
+  async () => {
+    const bucket = new Bucket();
+    const put = bucket.put.bind(bucket);
+    /** @type {() => void} */ let release = () => {};
+    const bothWriters = new Promise(resolve => {
+      release = () => resolve(null);
+    });
+    let arrivals = 0,
+      sends = 0;
+    /** @type {{key:string;onlyIf:{etagMatches?:string;etagDoesNotMatch?:string};accepted:boolean}[]} */
+    const writes = [];
+    bucket.put = async (key, text, options) => {
+      if (key === prefix + 'budget.json' && options.onlyIf.etagDoesNotMatch === '*') {
+        if (++arrivals === 2) release();
+        await bothWriters;
+      }
+      const result = await put(key, text, options);
+      writes.push({key, onlyIf: {...options.onlyIf}, accepted: result !== null});
+      return result;
+    };
+    const runners = [0, 1].map(() =>
+      campaignAttemptRunner({
+        bucket,
+        prefix,
+        ledger: ledgerFor(bucket),
+        credentials,
+        now,
+        invoke: async () => {
+          sends++;
+          return response();
+        },
+      }),
+    );
+    const results = await Promise.allSettled(runners.map(runner => runner('respondent/trial-0001/1', request)));
+    assert.equal(sends, 1);
+    assert.equal(results.filter(result => result.status === 'fulfilled').length, 1);
+    const rejected = results.find(result => result.status === 'rejected');
+    assert(rejected && rejected.status === 'rejected');
+    assert.match(String(rejected.reason), /already_reserved/);
+    assert.equal(arrivals, 2);
+    assert.deepEqual(
+      writes
+        .filter(write => write.key === prefix + 'budget.json' && write.onlyIf.etagDoesNotMatch === '*')
+        .map(write => write.accepted)
+        .sort(),
+      [false, true],
+    );
+    assert(
+      writes.some(
+        write => write.key === prefix + 'budget.json' && typeof write.onlyIf.etagMatches === 'string' && write.accepted,
+      ),
+    );
+    assert.equal(writes.filter(write => write.key.includes('/attempts/') && write.accepted).length, 1);
+    assert.deepEqual(await ledgerFor(bucket).summary(), {committedMicrousd: 100, unresolvedAttempts: 0, attempts: 1});
+  },
+);
+
+test('substituted durable outcome or request is refused without another send or settlement', async () => {
+  const bucket = new Bucket();
+  let sends = 0;
+  const runner = campaignAttemptRunner({
+    bucket,
+    prefix,
+    ledger: ledgerFor(bucket),
+    credentials,
+    now,
+    invoke: async () => {
+      sends++;
+      return response();
+    },
+  });
+  const id = 'respondent/trial-0001/1';
+  await runner(id, request);
+  const budget = bucket.rows.get(prefix + 'budget.json')?.text;
+  const changedRequest = buildProviderRequest({
+    provider: 'anthropic',
+    promptBytes: new TextEncoder().encode('A different synthetic request.'),
+    outputTokenLimit: 512,
+  });
+  await assert.rejects(runner(id, changedRequest), /campaign_attempt_changed/);
+  const row = bucket.rows.get(prefix + 'attempts/' + id + '.json');
+  assert(row);
+  const substituted = JSON.parse(row.text);
+  substituted.payload.response.rawText = 'Substituted synthetic response.';
+  // Even a self-consistent replacement envelope cannot change the settled ledger binding.
+  substituted.sha256 = createHash('sha256').update(JSON.stringify(substituted.payload)).digest('hex');
+  row.text = JSON.stringify(substituted);
+  await assert.rejects(runner(id, request), /campaign_settlement_binding/);
+  assert.equal(sends, 1);
+  assert.equal(bucket.rows.get(prefix + 'budget.json')?.text, budget);
 });
 
 const source = new URL('../spec/examples/semantic-boundaries/', import.meta.url);
@@ -317,6 +443,138 @@ test('technical retry comes after the first pass and a rejected completed judgme
   assert.equal(judgeCalls, 4);
   assert.equal(result.judgments.pairedResponses, 1);
   assert.equal(result.rejectedJudgments[0].kind, 'rejected_judgment');
+});
+
+test('a transient judge error is retained while its distinct retry fills the final annotation gap', async () => {
+  const bucket = new Bucket();
+  const put = bucket.put.bind(bucket);
+  /** @type {string[]} */ const writtenAttempts = [];
+  bucket.put = async (key, text, options) => {
+    const result = await put(key, text, options);
+    if (result && key.includes('/attempts/')) writtenAttempts.push(JSON.parse(text).payload.attemptId);
+    return result;
+  };
+  let sends = 0,
+    judgeCalls = 0;
+  const result = await runCampaign({
+    bucket,
+    campaign: {...campaign, trials: trials.slice(0, 2)},
+    manifestSha256: 'a'.repeat(64),
+    credentials,
+    steps,
+    now,
+    invoke: async input => {
+      sends++;
+      if (input.request.role === 'judge' && ++judgeCalls === 1)
+        throw new PilotTechnicalError('', {
+          code: 'provider_http_503',
+          retryable: true,
+          deliveryState: 'rejected',
+          partialResponse: '{"error":"synthetic temporary error"}',
+        });
+      return invoke(input);
+    },
+  });
+  assert.equal(sends, 10); // Three preflights, two responses, four initial judges, one judge retry.
+  assert.equal(judgeCalls, 5);
+  assert.equal(writtenAttempts.length, 10);
+  assert.deepEqual(
+    writtenAttempts.filter(id => id.startsWith('judge/')),
+    [
+      'judge/trial-0001/deepinfra/1',
+      'judge/trial-0001/mistral/1',
+      'judge/trial-0002/deepinfra/1',
+      'judge/trial-0002/mistral/1',
+      'judge/trial-0001/deepinfra/2',
+    ],
+  );
+  const first = await readCampaignRecord(bucket, prefix + 'attempts/judge/trial-0001/deepinfra/1.json');
+  const second = await readCampaignRecord(bucket, prefix + 'attempts/judge/trial-0001/deepinfra/2.json');
+  assert(first && second);
+  assert.equal(first.payload.response, null);
+  assert.equal(first.payload.error.partialResponse, '{"error":"synthetic temporary error"}');
+  assert.equal(first.payload.error.deliveryState, 'rejected');
+  assert.equal(second.payload.error, null);
+  assert.equal(first.payload.request.body, second.payload.request.body);
+  assert.equal(first.payload.requestSha256, second.payload.requestSha256);
+  assert.equal(first.payload.requestSha256, createHash('sha256').update(first.payload.request.body).digest('hex'));
+  assert.deepEqual(result.rejectedJudgments, [
+    {
+      trialId: trials[0].trialId,
+      reviewerId: 'deepinfra',
+      attemptNumber: 1,
+      kind: 'technical_error',
+      code: 'provider_http_503',
+    },
+  ]);
+  assert.deepEqual(
+    [
+      result.judgments.acceptedAnnotations,
+      result.judgments.pairedResponses,
+      result.judgments.missingPairs,
+      result.responses.judgmentsPending,
+    ],
+    [4, 2, 0, 0],
+  );
+  const descriptive = /** @type {{reviewerId:string;missing:number}[]} */ (result.judgments.descriptive);
+  assert(descriptive.every(row => row.missing === 0));
+  // Independent arithmetic: 45,712 uncertain + 246 preflights + 200 responses + 292 judgments.
+  assert.deepEqual(result.spend, {committedMicrousd: 46450, unresolvedAttempts: 1, attempts: 10});
+  const budget = JSON.parse(bucket.rows.get(prefix + 'budget.json')?.text ?? '{}');
+  assert.equal(budget.payload.attempts['judge/trial-0001/deepinfra/1'].state, 'uncertain');
+  assert.equal(budget.payload.attempts['judge/trial-0001/deepinfra/1'].reservedMicrousd, 45712);
+  assert.equal(budget.payload.attempts['judge/trial-0001/deepinfra/2'].priceBasedUpperBoundMicrousd, 34);
+  assert.equal(result.status, 'SYNTHETIC_RUN');
+});
+
+test('a completed rejected judge response stays retained and missing without a semantic retry', async () => {
+  const bucket = new Bucket();
+  let sends = 0,
+    judgeCalls = 0;
+  const result = await runCampaign({
+    bucket,
+    campaign: {...campaign, trials: trials.slice(0, 1)},
+    manifestSha256: 'a'.repeat(64),
+    credentials,
+    steps,
+    now,
+    invoke: async input => {
+      sends++;
+      if (input.request.role === 'judge' && ++judgeCalls === 1) return response('{}');
+      return invoke(input);
+    },
+  });
+  assert.equal(sends, 6);
+  assert.equal(judgeCalls, 2);
+  assert.equal(bucket.rows.has(prefix + 'attempts/judge/trial-0001/deepinfra/2.json'), false);
+  const retained = await readCampaignRecord(bucket, prefix + 'attempts/judge/trial-0001/deepinfra/1.json');
+  assert(retained);
+  assert.equal(retained.payload.response.rawText, '{}');
+  assert.equal(retained.payload.error, null);
+  assert.deepEqual(result.rejectedJudgments, [
+    {
+      trialId: trials[0].trialId,
+      reviewerId: 'deepinfra',
+      attemptNumber: 1,
+      kind: 'rejected_judgment',
+      code: 'judge_contract_rejected',
+    },
+  ]);
+  assert.deepEqual(
+    [
+      result.judgments.acceptedAnnotations,
+      result.judgments.pairedResponses,
+      result.judgments.missingPairs,
+      result.responses.judgmentsPending,
+    ],
+    [1, 0, 1, 1],
+  );
+  const descriptive = /** @type {{reviewerId:string;missing:number}[]} */ (result.judgments.descriptive);
+  assert(descriptive.filter(row => row.reviewerId === 'deepinfra').every(row => row.missing === 1));
+  assert(descriptive.filter(row => row.reviewerId === 'mistral').every(row => row.missing === 0));
+  const budget = JSON.parse(bucket.rows.get(prefix + 'budget.json')?.text ?? '{}');
+  assert.equal(budget.payload.attempts['judge/trial-0001/deepinfra/1'].state, 'settled');
+  assert.equal(result.status, 'SYNTHETIC_RUN');
 });
 
 test('cached Workflow replay repeats neither sends nor durable writes', async () => {
