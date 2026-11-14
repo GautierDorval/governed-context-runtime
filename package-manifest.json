@@ -36,8 +36,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "sha256": "8d94b8d2fc8ed9643d11e014a786a70baf8fc4bec77607cde521a7ae2f8aab72",
-      "bytes": 2998
+      "sha256": "9c786b50762b2418815b86b7287c36d2e291b9c84c2c304836d35453c8ae78fa",
+      "bytes": 4194
     },
     {
       "path": ".gitignore",
@@ -436,7 +436,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "32c41413f80cff3a741d9b412c41cdf49b47cf53349c315879701f8a00f2f3ec",
+      "sha256": "84d31cd87a2bd3eedf042efb2abdd7ef6f8b38adcd0d6069da7749d3046add4c",
       "bytes": 55663
     },
     {
@@ -1091,13 +1091,13 @@
     },
     {
       "path": "test/pilot-budget.test.mjs",
-      "sha256": "d8a5d56f42260010e5ca0ceb8578a992f8a00bf69f4895537e75b32a5a76d179",
-      "bytes": 5855
+      "sha256": "1c74256388f89ed7377b5f6d1d5b97a88ca664e026c7207d3dfaec84eb6b56cb",
+      "bytes": 6448
     },
     {
       "path": "test/pilot-campaign.test.mjs",
-      "sha256": "3a1d88ea39d6bf7ec5cc5a8cfdc30ba7850ed83423cbdcc6b49f9203535c041d",
-      "bytes": 44286
+      "sha256": "e3338224b8539c4a4d803555bc1522415696ab92ae76de8e3319b0f835674973",
+      "bytes": 44823
     },
     {
       "path": "test/pilot-execution.test.mjs",
@@ -1116,8 +1116,8 @@
     },
     {
       "path": "test/pilot-provider.test.mjs",
-      "sha256": "1a473beb5bdb8e496cc4c7121f7503c4f889dd7dfa2e02dc6991399449e96c43",
-      "bytes": 15262
+      "sha256": "b44c1475e7f5aec81292dad12baa23bd44c69d99e0f3c7d49b15030e0b750285",
+      "bytes": 16085
     },
     {
       "path": "test/properties/acceptance-vectors.json",

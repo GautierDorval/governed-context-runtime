@@ -57,21 +57,37 @@ test('concurrent reservations cannot cross the shared cap', async () => {
   assert.deepEqual(await left.summary(), {committedMicrousd: 60, unresolvedAttempts: 1, attempts: 1});
 });
 
-test('restart cannot resend a reservation even if its HTTP result is unknown', async () => {
-  const bucket = new Bucket();
-  // Two copies fit under the cap: only the duplicate guard can reject the replay.
-  await createPilotBudget({bucket, key, authorization, now}).reserve(attempt('a', 40));
-  const before = structuredClone([...bucket.rows]);
-  const writes = bucket.revision;
-  const restarted = createPilotBudget({bucket, key, authorization, now});
-  await assert.rejects(restarted.reserve(attempt('a', 40)), /already_reserved/);
-  assert.equal(bucket.revision, writes);
-  assert.deepEqual([...bucket.rows], before);
-  assert.equal((await restarted.inspect('a'))?.state, 'reserved');
-  assert.deepEqual(await restarted.summary(), {committedMicrousd: 40, unresolvedAttempts: 1, attempts: 1});
-  await restarted.reserve(attempt('b', 60));
-  assert.deepEqual(await restarted.summary(), {committedMicrousd: 100, unresolvedAttempts: 2, attempts: 2});
-});
+for (const state of ['reserved', 'uncertain', 'settled']) {
+  test('restart cannot resend an attempt in state ' + state + ' even when a second reservation fits', async () => {
+    const bucket = new Bucket();
+    const ledger = createPilotBudget({bucket, key, authorization, now});
+    // A second reservation fits under the cap in every state: only the duplicate guard can reject it.
+    await ledger.reserve(attempt('a', 40));
+    if (state !== 'reserved') {
+      await ledger.finish({
+        attemptId: 'a',
+        outcomeSha256: 'c'.repeat(64),
+        ...(state === 'settled' ? {priceBasedUpperBoundMicrousd: 20} : {}),
+      });
+    }
+    const before = structuredClone([...bucket.rows]);
+    const writes = bucket.revision;
+    const restarted = createPilotBudget({bucket, key, authorization, now});
+    await assert.rejects(restarted.reserve(attempt('a', 40)), /already_reserved/);
+    assert.equal(bucket.revision, writes);
+    assert.deepEqual([...bucket.rows], before);
+    assert.equal((await restarted.inspect('a'))?.state, state);
+    const committedMicrousd = state === 'settled' ? 20 : 40;
+    const unresolvedAttempts = state === 'settled' ? 0 : 1;
+    assert.deepEqual(await restarted.summary(), {committedMicrousd, unresolvedAttempts, attempts: 1});
+    await restarted.reserve(attempt('b', authorization.capMicrousd - committedMicrousd));
+    assert.deepEqual(await restarted.summary(), {
+      committedMicrousd: authorization.capMicrousd,
+      unresolvedAttempts: unresolvedAttempts + 1,
+      attempts: 2,
+    });
+  });
+}
 
 test('uncertain failures keep their ceiling; only verified settlement releases unused reservation', async () => {
   const bucket = new Bucket();

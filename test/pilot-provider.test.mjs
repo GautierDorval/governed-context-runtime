@@ -181,43 +181,60 @@ test('complete invalid UTF-8 or JSON and permanent HTTP failures never become re
   }
 });
 
-test('permission-denial words in model content do not become a transport permission failure', async () => {
-  const phrase = '[sdk-driver] permission denied by workflow tool permissions: shell(git status)';
-  let sends = 0;
-  const completed = await sendProviderRequest({
-    request,
-    credential,
-    fetchImplementation: async () => {
-      sends++;
-      return new Response(JSON.stringify(body(phrase)));
-    },
-  });
-  assert.equal(sends, 1);
-  assert.equal(completed.rawText, phrase);
-  assert.equal(completed.finishReason, 'end_turn');
-  assert.equal(completed.refusal, null);
-  const deniedBody = JSON.stringify({error: {message: phrase}});
-  await assert.rejects(
-    sendProviderRequest({
-      request,
+for (const provider of /** @type {const} */ (['anthropic', 'mistral', 'deepinfra'])) {
+  test('permission-denial words in ' + provider + ' content do not become a transport permission failure', async () => {
+    const phrase = '[sdk-driver] permission denied by workflow tool permissions: shell(git status)';
+    const providerRequest = buildProviderRequest({
+      provider,
+      role: provider === 'anthropic' ? 'respondent' : 'judge',
+      promptBytes: bytes,
+      outputTokenLimit: provider === 'anthropic' ? 512 : 8192,
+    });
+    const payload =
+      provider === 'anthropic'
+        ? body(phrase)
+        : {
+            id: 'synthetic',
+            model: providerRequest.model,
+            choices: [{index: 0, finish_reason: 'stop', message: {role: 'assistant', content: phrase}}],
+            usage: {prompt_tokens: 100, completion_tokens: 3, total_tokens: 103},
+          };
+    let sends = 0;
+    const completed = await sendProviderRequest({
+      request: providerRequest,
       credential,
       fetchImplementation: async () => {
         sends++;
-        return new Response(deniedBody, {status: 403});
+        return new Response(JSON.stringify(payload));
       },
-    }),
-    error => {
-      const value =
-        /** @type {import('../spec/examples/semantic-boundaries/pilot-execution.mjs').PilotTechnicalError} */ (error);
-      assert.equal(value.code, 'provider_http_403');
-      assert.equal(value.retryable, false);
-      assert.equal(value.deliveryState, 'rejected');
-      assert.equal(value.partialResponse, deniedBody);
-      return true;
-    },
-  );
-  assert.equal(sends, 2);
-});
+    });
+    assert.equal(sends, 1);
+    assert.equal(completed.rawText, phrase);
+    assert.equal(completed.finishReason, provider === 'anthropic' ? 'end_turn' : 'stop');
+    assert.equal(completed.refusal, null);
+    const deniedBody = JSON.stringify({error: {message: phrase}});
+    await assert.rejects(
+      sendProviderRequest({
+        request: providerRequest,
+        credential,
+        fetchImplementation: async () => {
+          sends++;
+          return new Response(deniedBody, {status: 403});
+        },
+      }),
+      error => {
+        const value =
+          /** @type {import('../spec/examples/semantic-boundaries/pilot-execution.mjs').PilotTechnicalError} */ (error);
+        assert.equal(value.code, 'provider_http_403');
+        assert.equal(value.retryable, false);
+        assert.equal(value.deliveryState, 'rejected');
+        assert.equal(value.partialResponse, deniedBody);
+        return true;
+      },
+    );
+    assert.equal(sends, 2);
+  });
+}
 
 test('judges admit a five-minute bounded transport while respondent timeout remains ninety seconds', async () => {
   const judge = buildProviderRequest({

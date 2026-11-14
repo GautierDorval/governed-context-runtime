@@ -244,88 +244,102 @@ test('crash after retained outcome resumes settlement without a second HTTP requ
 });
 
 for (const existing of [false, true]) {
-  test(
-    'two executors contend on the same attempt in a ' + (existing ? 'seeded' : 'new') + ' ledger with one send',
-    {timeout: 5000},
-    async () => {
-      const bucket = new Bucket();
-      const ledger = ledgerFor(bucket);
-      const priorId = 'preflight/anthropic/1';
-      if (existing) {
-        await ledger.reserve({
-          attemptId: priorId,
-          reservedMicrousd: 3000,
-          requestSha256: 'b'.repeat(64),
-          provider: 'anthropic',
-          role: 'preflight',
-        });
-        await ledger.finish({attemptId: priorId, outcomeSha256: 'e'.repeat(64), priceBasedUpperBoundMicrousd: 17});
-      }
-      const priorAttempt = await ledger.inspect(priorId);
-      const priorEtag = bucket.rows.get(prefix + 'budget.json')?.etag;
-      if (existing) assert.equal(typeof priorEtag, 'string');
-      const put = bucket.put.bind(bucket);
-      /** @param {{etagMatches?:string;etagDoesNotMatch?:string}} onlyIf */
-      const contendedWrite = onlyIf => (existing ? onlyIf.etagMatches === priorEtag : onlyIf.etagDoesNotMatch === '*');
-      /** @type {() => void} */ let release = () => {};
-      const bothWriters = new Promise(resolve => {
-        release = () => resolve(null);
-      });
-      let arrivals = 0,
-        sends = 0;
-      /** @type {{key:string;onlyIf:{etagMatches?:string;etagDoesNotMatch?:string};accepted:boolean}[]} */
-      const writes = [];
-      bucket.put = async (key, text, options) => {
-        if (key === prefix + 'budget.json' && contendedWrite(options.onlyIf)) {
-          if (++arrivals === 2) release();
-          await bothWriters;
+  for (const sameAttempt of [false, true]) {
+    test(
+      'two executors contend on ' +
+        (sameAttempt ? 'the same attempt' : 'distinct attempts') +
+        ' in a ' +
+        (existing ? 'seeded' : 'new') +
+        ' ledger',
+      {timeout: 5000},
+      async () => {
+        const bucket = new Bucket();
+        const ledger = ledgerFor(bucket);
+        const priorId = 'preflight/anthropic/1';
+        if (existing) {
+          await ledger.reserve({
+            attemptId: priorId,
+            reservedMicrousd: 3000,
+            requestSha256: 'b'.repeat(64),
+            provider: 'anthropic',
+            role: 'preflight',
+          });
+          await ledger.finish({attemptId: priorId, outcomeSha256: 'e'.repeat(64), priceBasedUpperBoundMicrousd: 17});
         }
-        const result = await put(key, text, options);
-        writes.push({key, onlyIf: {...options.onlyIf}, accepted: result !== null});
-        return result;
-      };
-      const runners = [0, 1].map(() =>
-        campaignAttemptRunner({
-          bucket,
-          prefix,
-          ledger: ledgerFor(bucket),
-          credentials,
-          now,
-          invoke: async () => {
-            sends++;
-            return response();
-          },
-        }),
-      );
-      const results = await Promise.allSettled(runners.map(runner => runner('respondent/trial-0001/1', request)));
-      assert.equal(sends, 1);
-      assert.equal(results.filter(result => result.status === 'fulfilled').length, 1);
-      const rejected = results.find(result => result.status === 'rejected');
-      assert(rejected && rejected.status === 'rejected');
-      assert.match(String(rejected.reason), /already_reserved/);
-      assert.equal(arrivals, 2);
-      assert.deepEqual(
-        writes
-          .filter(write => write.key === prefix + 'budget.json' && contendedWrite(write.onlyIf))
-          .map(write => write.accepted)
-          .sort(),
-        [false, true],
-      );
-      assert(
-        writes.some(
-          write =>
-            write.key === prefix + 'budget.json' && typeof write.onlyIf.etagMatches === 'string' && write.accepted,
-        ),
-      );
-      assert.equal(writes.filter(write => write.key.includes('/attempts/') && write.accepted).length, 1);
-      assert.deepEqual(await ledger.summary(), {
-        committedMicrousd: existing ? 117 : 100,
-        unresolvedAttempts: 0,
-        attempts: existing ? 2 : 1,
-      });
-      assert.deepEqual(await ledger.inspect(priorId), priorAttempt);
-    },
-  );
+        const priorAttempt = await ledger.inspect(priorId);
+        const priorEtag = bucket.rows.get(prefix + 'budget.json')?.etag;
+        if (existing) assert.equal(typeof priorEtag, 'string');
+        const put = bucket.put.bind(bucket);
+        /** @param {{etagMatches?:string;etagDoesNotMatch?:string}} onlyIf */
+        const contendedWrite = onlyIf =>
+          existing ? onlyIf.etagMatches === priorEtag : onlyIf.etagDoesNotMatch === '*';
+        /** @type {() => void} */ let release = () => {};
+        const bothWriters = new Promise(resolve => {
+          release = () => resolve(null);
+        });
+        let arrivals = 0,
+          sends = 0;
+        /** @type {{key:string;onlyIf:{etagMatches?:string;etagDoesNotMatch?:string};accepted:boolean}[]} */
+        const writes = [];
+        bucket.put = async (key, text, options) => {
+          if (key === prefix + 'budget.json' && contendedWrite(options.onlyIf)) {
+            if (++arrivals === 2) release();
+            await bothWriters;
+          }
+          const result = await put(key, text, options);
+          writes.push({key, onlyIf: {...options.onlyIf}, accepted: result !== null});
+          return result;
+        };
+        const runners = [0, 1].map(() =>
+          campaignAttemptRunner({
+            bucket,
+            prefix,
+            ledger: ledgerFor(bucket),
+            credentials,
+            now,
+            invoke: async () => {
+              sends++;
+              return response();
+            },
+          }),
+        );
+        const results = await Promise.allSettled(
+          runners.map((runner, index) =>
+            runner(index === 0 || sameAttempt ? 'respondent/trial-0001/1' : 'respondent/trial-0002/1', request),
+          ),
+        );
+        const admitted = sameAttempt ? 1 : 2;
+        assert.equal(sends, admitted);
+        assert.equal(results.filter(result => result.status === 'fulfilled').length, admitted);
+        if (sameAttempt) {
+          const rejected = results.find(result => result.status === 'rejected');
+          assert(rejected && rejected.status === 'rejected');
+          assert.match(String(rejected.reason), /already_reserved/);
+        }
+        assert.equal(arrivals, 2);
+        assert.deepEqual(
+          writes
+            .filter(write => write.key === prefix + 'budget.json' && contendedWrite(write.onlyIf))
+            .map(write => write.accepted)
+            .sort(),
+          [false, true],
+        );
+        assert(
+          writes.some(
+            write =>
+              write.key === prefix + 'budget.json' && typeof write.onlyIf.etagMatches === 'string' && write.accepted,
+          ),
+        );
+        assert.equal(writes.filter(write => write.key.includes('/attempts/') && write.accepted).length, admitted);
+        assert.deepEqual(await ledger.summary(), {
+          committedMicrousd: admitted * 100 + (existing ? 17 : 0),
+          unresolvedAttempts: 0,
+          attempts: admitted + (existing ? 1 : 0),
+        });
+        assert.deepEqual(await ledger.inspect(priorId), priorAttempt);
+      },
+    );
+  }
 }
 
 test('substituted durable outcome or request is refused without another send or settlement', async () => {
