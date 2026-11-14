@@ -31,13 +31,13 @@
     },
     {
       "path": ".github/dependabot.yml",
-      "sha256": "87aebf8fc9eeb65360e46e428b4b3a0c700646fafe39c156d8fead86cbb621f5",
-      "bytes": 269
+      "sha256": "8b0378cf06b5847d1ca2d020bd15eeaeaffc8729992cc67c19a79af36fdf3b80",
+      "bytes": 451
     },
     {
       "path": ".github/workflows/verify.yml",
-      "sha256": "e38023813c3a1bb561524d4b30bdaef2166c581b064fd4a6bd771c8f6ee91588",
-      "bytes": 2336
+      "sha256": "9c786b50762b2418815b86b7287c36d2e291b9c84c2c304836d35453c8ae78fa",
+      "bytes": 4194
     },
     {
       "path": ".gitignore",
@@ -436,7 +436,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "1328035f920c6f2478569d427be5403c96ef44b854c1c34c6c558d243c0f2fa9",
+      "sha256": "84d31cd87a2bd3eedf042efb2abdd7ef6f8b38adcd0d6069da7749d3046add4c",
       "bytes": 55663
     },
     {
@@ -1091,13 +1091,13 @@
     },
     {
       "path": "test/pilot-budget.test.mjs",
-      "sha256": "627d9a160cdc88b1963045af4f1653c21a55761ab01f5397dbc4d52ea68a0020",
-      "bytes": 5329
+      "sha256": "1c74256388f89ed7377b5f6d1d5b97a88ca664e026c7207d3dfaec84eb6b56cb",
+      "bytes": 6448
     },
     {
       "path": "test/pilot-campaign.test.mjs",
-      "sha256": "518e26dac976da24cd1c6482a433c448455d0ce1cc9bbe1acf3a1a1b4083715d",
-      "bytes": 43163
+      "sha256": "e3338224b8539c4a4d803555bc1522415696ab92ae76de8e3319b0f835674973",
+      "bytes": 44823
     },
     {
       "path": "test/pilot-execution.test.mjs",
@@ -1116,8 +1116,8 @@
     },
     {
       "path": "test/pilot-provider.test.mjs",
-      "sha256": "03135ce1ea46da955e55ed9bb5b4f22fdaff69fc0da00e7f45f2f95daa947147",
-      "bytes": 15221
+      "sha256": "b44c1475e7f5aec81292dad12baa23bd44c69d99e0f3c7d49b15030e0b750285",
+      "bytes": 16085
     },
     {
       "path": "test/properties/acceptance-vectors.json",

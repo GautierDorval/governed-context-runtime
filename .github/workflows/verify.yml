@@ -11,7 +11,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
       - run: npm test
       - name: Install locked development dependencies without lifecycle scripts
         run: npm ci --ignore-scripts
@@ -24,7 +24,7 @@ jobs:
       - name: Tests leave the worktree unchanged
         run: git status --porcelain --untracked-files=all && test -z "$(git status --porcelain --untracked-files=all)"
 
-  mcp-apps:
+  minimum-node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -34,6 +34,48 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24.17.0
+      - name: Verify the declared minimum without development dependencies
+        run: npm test
+      - name: Install locked development dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Prepare the required development-only Python oracle
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14.9'
+          check-latest: false
+      - run: npm run test:dev
+      - name: Materialize the companion outside the reference checkout
+        shell: pwsh
+        run: node spec/examples/mcp-apps/prepare.mjs (Join-Path $env:RUNNER_TEMP 'gcr-mcp-apps-minimum')
+      - name: Install isolated locked companion dependencies without lifecycle scripts
+        working-directory: ${{ runner.temp }}/gcr-mcp-apps-minimum
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build and test the companion on the declared minimum
+        working-directory: ${{ runner.temp }}/gcr-mcp-apps-minimum
+        shell: pwsh
+        run: |
+          npm run build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node web-build.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm test
+          exit $LASTEXITCODE
+      - name: Minimum-version tests leave the worktree unchanged
+        shell: pwsh
+        run: |
+          $state = git status --porcelain --untracked-files=all
+          if ($LASTEXITCODE -ne 0 -or $state) { throw 'Reference checkout changed' }
+
+  mcp-apps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.1
       - name: Materialize the companion outside the reference checkout
         shell: pwsh
         run: node spec/examples/mcp-apps/prepare.mjs (Join-Path $env:RUNNER_TEMP 'gcr-mcp-apps')
