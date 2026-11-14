@@ -8,6 +8,10 @@ updates:
       prefix: ci
   - package-ecosystem: npm
     directory: /
+    # A type-definition major must follow an explicit supported-Node change.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: weekly
     commit-message:

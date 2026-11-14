@@ -59,10 +59,18 @@ test('concurrent reservations cannot cross the shared cap', async () => {
 
 test('restart cannot resend a reservation even if its HTTP result is unknown', async () => {
   const bucket = new Bucket();
-  await createPilotBudget({bucket, key, authorization, now}).reserve(attempt('a'));
+  // Two copies fit under the cap: only the duplicate guard can reject the replay.
+  await createPilotBudget({bucket, key, authorization, now}).reserve(attempt('a', 40));
+  const before = structuredClone([...bucket.rows]);
+  const writes = bucket.revision;
   const restarted = createPilotBudget({bucket, key, authorization, now});
-  await assert.rejects(restarted.reserve(attempt('a')), /already_reserved/);
+  await assert.rejects(restarted.reserve(attempt('a', 40)), /already_reserved/);
+  assert.equal(bucket.revision, writes);
+  assert.deepEqual([...bucket.rows], before);
   assert.equal((await restarted.inspect('a'))?.state, 'reserved');
+  assert.deepEqual(await restarted.summary(), {committedMicrousd: 40, unresolvedAttempts: 1, attempts: 1});
+  await restarted.reserve(attempt('b', 60));
+  assert.deepEqual(await restarted.summary(), {committedMicrousd: 100, unresolvedAttempts: 2, attempts: 2});
 });
 
 test('uncertain failures keep their ceiling; only verified settlement releases unused reservation', async () => {

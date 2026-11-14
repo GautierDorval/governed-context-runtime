@@ -195,6 +195,7 @@ test('permission-denial words in model content do not become a transport permiss
   assert.equal(sends, 1);
   assert.equal(completed.rawText, phrase);
   assert.equal(completed.finishReason, 'end_turn');
+  assert.equal(completed.refusal, null);
   const deniedBody = JSON.stringify({error: {message: phrase}});
   await assert.rejects(
     sendProviderRequest({

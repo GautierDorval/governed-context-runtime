@@ -11,7 +11,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
       - run: npm test
       - name: Install locked development dependencies without lifecycle scripts
         run: npm ci --ignore-scripts
@@ -24,6 +24,23 @@ jobs:
       - name: Tests leave the worktree unchanged
         run: git status --porcelain --untracked-files=all && test -z "$(git status --porcelain --untracked-files=all)"
 
+  minimum-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.17.0
+      - name: Verify the declared minimum without development dependencies
+        run: npm test
+      - name: Minimum-version tests leave the worktree unchanged
+        shell: pwsh
+        run: |
+          $state = git status --porcelain --untracked-files=all
+          if ($LASTEXITCODE -ne 0 -or $state) { throw 'Reference checkout changed' }
+
   mcp-apps:
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +50,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: 24.17.0
+          node-version: 24.22.1
       - name: Materialize the companion outside the reference checkout
         shell: pwsh
         run: node spec/examples/mcp-apps/prepare.mjs (Join-Path $env:RUNNER_TEMP 'gcr-mcp-apps')

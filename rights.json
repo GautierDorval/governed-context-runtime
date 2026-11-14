@@ -36,13 +36,13 @@
       "path": ".github/dependabot.yml",
       "source": "repository-edition-2026-10-13",
       "license": "Apache-2.0",
-      "sha256": "87aebf8fc9eeb65360e46e428b4b3a0c700646fafe39c156d8fead86cbb621f5"
+      "sha256": "8b0378cf06b5847d1ca2d020bd15eeaeaffc8729992cc67c19a79af36fdf3b80"
     },
     {
       "path": ".github/workflows/verify.yml",
       "source": "pinned-read-only-workflow",
       "license": "Apache-2.0",
-      "sha256": "e38023813c3a1bb561524d4b30bdaef2166c581b064fd4a6bd771c8f6ee91588"
+      "sha256": "8d94b8d2fc8ed9643d11e014a786a70baf8fc4bec77607cde521a7ae2f8aab72"
     },
     {
       "path": ".gitignore",
@@ -1302,13 +1302,13 @@
       "path": "test/pilot-budget.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "627d9a160cdc88b1963045af4f1653c21a55761ab01f5397dbc4d52ea68a0020"
+      "sha256": "d8a5d56f42260010e5ca0ceb8578a992f8a00bf69f4895537e75b32a5a76d179"
     },
     {
       "path": "test/pilot-campaign.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "518e26dac976da24cd1c6482a433c448455d0ce1cc9bbe1acf3a1a1b4083715d"
+      "sha256": "3a1d88ea39d6bf7ec5cc5a8cfdc30ba7850ed83423cbdcc6b49f9203535c041d"
     },
     {
       "path": "test/pilot-execution.test.mjs",
@@ -1332,7 +1332,7 @@
       "path": "test/pilot-provider.test.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "03135ce1ea46da955e55ed9bb5b4f22fdaff69fc0da00e7f45f2f95daa947147"
+      "sha256": "1a473beb5bdb8e496cc4c7121f7503c4f889dd7dfa2e02dc6991399449e96c43"
     },
     {
       "path": "test/properties/acceptance-vectors.json",
