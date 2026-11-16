@@ -2,6 +2,8 @@
 
 **Give AI agents context they can verify.**
 
+The [November 16 observation review](../../records/observation-scope-2026-11-16.md) separates context delivery from inference evidence and verifies a retained provider `RUN`. In this guide, `NOT_RUN` describes the frozen public plan or a dated trial, not the current state of every campaign. A completed run is not a fidelity finding.
+
 Governed Context Runtime delivers precompiled, versioned context packs with sources and explicit interpretation boundaries for a declared task. The consumer selects a canonical intent; the interface does not infer intent from free text, compose a pack at request time, generate an answer or judge a model.
 
 [Open the hosted instance](https://context.gautierdorval.com/). The gautierdorval.com instance is accessible over HTTP and through a separate MCP adapter. This public repository provides proposed contracts, verifiers, integration guides and runnable offline examples for that instance, including its closed intent vocabulary and historical identifiers. The site remains the canonical source of its doctrine; this reference creates no new authority root.
@@ -42,7 +44,7 @@ The gautierdorval.com instance is accessible over HTTP and through a separate MC
 
 The Runtime supplies precompiled context for a consumer-selected intent. This reference defines the artifact-verification path. The consumer still selects its trust reference, verifies the complete snapshot and decides admission and permitted use. Integrity does not establish truth or compliance with the pack’s interpretation boundaries. Publication and discovery do not establish use or measured benefit.
 
-WebMCP could provide another interface to this path, but this reference contains no WebMCP bridge. This is an architectural possibility, with no implementation commitment: verifier success establishes neither WebMCP interoperability, compatibility with a particular agent client nor an effect on its answers. The existing four-condition pilot remains **NOT_RUN**.
+WebMCP could provide another interface to this path, but this reference contains no WebMCP bridge. This is an architectural possibility, with no implementation commitment: verifier success establishes neither WebMCP interoperability, compatibility with a particular agent client nor an effect on its answers. The frozen four-condition plan retains **NOT_RUN**; later provider results are separate.
 
 ## Reference version
 
@@ -113,10 +115,10 @@ In the fictional demonstration, a locally pinned root and test key policy preced
 
 [Provider pilot execution](provider-pilot.md): durable attempts, one shared budget, two automatic judges and private operational status. A campaign result is separate from the reusable plan and local synthetic qualification.
 
-[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.3.1-proposed.md). The four-condition pilot is **NOT_RUN**.
+[Offline qualification](qualification.md) · [Observation contracts](../observations.md) · [Hosted diagnostic dossier](../hosted-diagnostics.md) · [Reference prerelease](../release-0.3.1-proposed.md). The frozen four-condition plan retains **NOT_RUN**.
 
 ## Local MCP Apps companion
 
-[Choose and inspect a whole fictional pack](mcp-apps.md), then explicitly request its text-tool reading. The [T3 observation](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. The comparative pilot remains **NOT_RUN**. [Compare the retained T3 answer offline](../../evidence/mcp-apps-t3-2026-10-27/README.md). The public five-list comparison is separate from Codex editorial interpretation and private transport evidence. Native functional failures and negative nonce answers do not prove internal non-delivery.
+[Choose and inspect a whole fictional pack](mcp-apps.md), then explicitly request its text-tool reading. The [T3 observation](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. The frozen comparative plan retains **NOT_RUN**. [Compare the retained T3 answer offline](../../evidence/mcp-apps-t3-2026-10-27/README.md). The public five-list comparison is separate from Codex editorial interpretation and private transport evidence. Native functional failures and negative nonce answers do not prove internal non-delivery.
 
 [Discovery, pinned schemas and version meanings](instance.md#discovery-declaration-and-pinned-editions).

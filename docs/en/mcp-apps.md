@@ -82,7 +82,7 @@ If no component renders, the catalog is not proof that the UI worked. The text f
 
 ## Scope and primary references
 
-GCR structures and verifies context; MCP transports calls and resources; MCP Apps adds a host-rendered UI; WebMCP exposes tools from browser pages. None of these alone establishes source truth, permission or faithful answers. The existing four-condition comparative pilot remains **NOT_RUN**. This client exercise is not that pilot, a business validation or a visibility experiment.
+GCR structures and verifies context; MCP transports calls and resources; MCP Apps adds a host-rendered UI; WebMCP exposes tools from browser pages. None of these alone establishes source truth, permission or faithful answers. The frozen public four-condition plan retains **NOT_RUN**. The [November 16 observation review](../../records/observation-scope-2026-11-16.md) separately examines a retained provider `RUN`; its completion does not establish fidelity. This client exercise is distinct from that campaign, a business validation or a visibility experiment.
 
 Sources checked on 2026-10-26: [MCP Apps overview](https://modelcontextprotocol.io/extensions/apps/overview), [App API](https://apps.extensions.modelcontextprotocol.io/api/classes/app.App.html#updatemodelcontext), [Claude local setup](https://claude.com/docs/connectors/building/mcp-apps/getting-started), [Claude troubleshooting](https://claude.com/docs/connectors/building/mcp-apps/troubleshooting), [ext-apps 2.0.3 licence](https://github.com/modelcontextprotocol/ext-apps/blob/v2.0.3/LICENSE). The local server negotiates the protocol supported by its pinned SDK; it does not silently translate the hosted adapter's 2026-07-28 profile.
 

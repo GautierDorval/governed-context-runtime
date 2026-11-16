@@ -6,6 +6,12 @@ The optional runner executes the existing `four-condition-pilot-3` protocol. It 
 
 The first approved configuration is Anthropic `claude-haiku-5-5` as respondent, DeepInfra `deepseek-ai/DeepSeek-V3.2` and Mistral `mistral-large-4-0` as distinct automatic judges. The shared provider budget is at most USD 50, including technical preflights and retries. This is a spending ceiling, not a quoted or observed cost. The frozen plan remains a reusable `NOT_RUN` template; a separate campaign result establishes an actual `RUN`. Injected test transports produce `SYNTHETIC_RUN` only.
 
+## Model identity and provenance
+
+`request.model` and the request body's `model` are requested configuration. `decodeProviderResponse` reads `model` and the response identifier from the provider's JSON body, requires the returned model label to equal the requested one, and retains `rawBody`. The attempt record preserves both sides and their digests. A missing, null or different provider model label is rejected; it is never filled from configuration. Generic injected transports may leave optional outcome metadata as `null`, which is not a provider observation.
+
+These fields establish a provider-declared label in a received technical response, not independent attestation of the executed weights or hidden routing. The assistant's generated text is not an identity source. The status reader and Observatory relay campaign aggregates; they do not independently observe inference. The [November 16 review](../../records/observation-scope-2026-11-16.md) checks one retained real request/response and separates the completed campaign from the unchanged `NOT_RUN` plan.
+
 ## Request and response boundary
 
 The respondent receives the exact assembled prompt as one user message, with a 512-token output ceiling and no tools, retrieval, system instruction or condition identifier. Documentation never becomes a system message. Haiku thinking is disabled and effort is medium; unsupported temperature, top-p and seed settings are omitted. Judges receive the actual prompt, received response and applicable rubric, without their peer's annotation. DeepInfra and Mistral use temperature 0 and top-p 1; Mistral uses high reasoning effort and standard-only service. Exact request bodies and parameters are retained privately.

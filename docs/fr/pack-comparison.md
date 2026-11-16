@@ -40,7 +40,7 @@ Les identifiants d’opération sont uniques dans ce rapport. Les types sont add
 
 Chaque opération conserve sa méthode de rapprochement, son indicateur d’ambiguïté et les branches brutes correspondantes. rawCoverage couvre toutes les opérations brutes et le marqueur de tableau reconnu. presentationCoverage énumère exactement les mêmes identifiants uniques que operations et groups. Les marqueurs techniques ne comptent pas comme règles. Le contenu inchangé demeure disponible dans context. Aucune relation éditoriale n’est inventée : editorialRelations reste vide.
 
-Les essais automatisés locaux et l’examen dans un hôte simulé qualifient l’implémentation. La comparaison réelle FR/EN conservée est un diagnostic hors ligne, sans nouvelle observation du service ou d’un client réel. T3 demeure inchangé. Une revue humaine et des documents organisationnels représentatifs seraient nécessaires pour mesurer un bénéfice pratique ; le pilote comparatif sur modèles reste NOT_RUN.
+Les essais automatisés locaux et l’examen dans un hôte simulé qualifient l’implémentation. La comparaison réelle FR/EN conservée est un diagnostic hors ligne, sans nouvelle observation du service ou d’un client réel. T3 demeure inchangé. Une revue humaine et des documents organisationnels représentatifs seraient nécessaires pour mesurer un bénéfice pratique. Le plan comparatif public figé conserve `NOT_RUN` ; le [contrôle du 16 novembre](../../records/observation-scope-2026-11-16.md) examine séparément un `RUN` fournisseur conservé. Cette campagne ne qualifie pas ce comparateur et ne démontre pas de bénéfice pratique.
 
 ## Consultation Web du catalogue fictif
 

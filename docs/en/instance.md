@@ -179,7 +179,13 @@ The MCP SDK and the independent Python client reached the adapter through a loop
 - **Available Runtime**: observed technical responses establish an accessible service at a specified time.
 - **Consistent transport**: the published check compares REST and MCP bytes for one specific pack. It does not qualify every client usage.
 - **Verified context**: complete verification requires a snapshot and its archives under the consumer’s local policy.
-- **Faithful answer**: evaluating this requires a separate experiment. The four-condition comparative model pilot remains `NOT_RUN` to date.
+- **Faithful answer**: evaluating this requires a separate experiment. `NOT_RUN` belongs to the frozen public plan, not to every later campaign. The [November 16 review](../../records/observation-scope-2026-11-16.md) separately examines a retained provider `RUN`; completion does not establish fidelity.
+
+### Consumer model identity
+
+The hosted resolver serves registered context; the MCP adapter retrieves and wraps those artifacts. Neither path calls an inference provider. HTTP delivery or an MCP exchange therefore does not identify the consuming model, prove that it used the pack, or establish an effect on its answer. No consumer-model field is required in a context receipt for this path.
+
+MCP `clientInfo` and a User-Agent are caller declarations. An origin check or a verified network-bot classification does not authenticate a model identity. The calling harness owns the inference trace: requested model, observed routing when available, and provider-returned metadata must retain their respective provenance. The separate [provider runner](provider-pilot.md#model-identity-and-provenance) retains its own request and response evidence; this does not extend the hosted resolver's observations.
 
 In `/v0/health`, `mcpEnabled: false` concerns the resolver Worker only. `externalAdapters.mcp` identifies the separate adapter; its availability is checked at `/mcp`. `sourceCommitVerified: false` means the declared commit is not an independent deployment attestation.
 

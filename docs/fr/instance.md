@@ -179,7 +179,13 @@ Le SDK MCP et le client Python indépendant ont joint l’adaptateur par un hôt
 - **Runtime disponible** : les réponses techniques observées montrent un service accessible à une date donnée.
 - **Transport cohérent** : le contrôle publié compare les octets REST et MCP d’un pack précis. Il ne certifie pas tous les usages d’un client.
 - **Contexte vérifié** : la vérification complète exige un instantané et ses archives, sous la politique locale du consommateur.
-- **Réponse fidèle** : son évaluation relève d’une expérience séparée. Le pilote comparatif sur modèles à quatre conditions reste `NOT_RUN` à ce jour.
+- **Réponse fidèle** : son évaluation relève d’une expérience séparée. `NOT_RUN` appartient au plan public figé, pas à toutes les campagnes ultérieures. Le [contrôle du 16 novembre](../../records/observation-scope-2026-11-16.md) examine séparément un `RUN` fournisseur conservé ; son achèvement ne prouve pas la fidélité.
+
+### Identité du modèle consommateur
+
+Le résolveur hébergé sert le contexte enregistré ; l’adaptateur MCP récupère et enveloppe ces artefacts. Aucun de ces chemins n’appelle un fournisseur d’inférence. Une livraison HTTP ou un échange MCP n’identifie donc pas le modèle consommateur, ne prouve pas son utilisation du pack et n’établit pas un effet sur sa réponse. Aucun champ de modèle consommateur n’est nécessaire dans un reçu de contexte pour ce chemin.
+
+Le champ MCP `clientInfo` et un utilisateur-agent sont des déclarations de l’appelant. Un contrôle d’origine ou une classification réseau de robot vérifié n’authentifie pas un modèle. Le harnais appelant porte la trace d’inférence : modèle demandé, routage observé lorsqu’il est disponible et métadonnées retournées par le fournisseur gardent leur provenance respective. Le [moteur fournisseur](provider-pilot.md#identité-du-modèle-et-provenance) distinct conserve ses propres requêtes et réponses ; cela n’étend pas les observations du résolveur hébergé.
 
 Dans `/v0/health`, `mcpEnabled: false` concerne uniquement le Worker résolveur. `externalAdapters.mcp` désigne l’adaptateur séparé ; sa disponibilité se vérifie sur `/mcp`. Le champ `sourceCommitVerified: false` signifie que la déclaration du commit ne constitue pas une attestation indépendante du déploiement.
 
