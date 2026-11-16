@@ -6,6 +6,7 @@ Ces journaux conservent les résultats et attributions d’origine. Une fusion o
 
 | Date | Record / Journal |
 |---|---|
+| 2026-11-16 | [Observation scope / Périmètre d’observation](observation-scope-2026-11-16.md): context delivery, caller declarations, provider metadata and dated campaign evidence; local documentary review |
 | 2026-11-05 | [Pilot input integrity / Intégrité des entrées du pilote](pilot-integrity-2026-11-05.md): local checks completed; provider integration pending; campaign `NOT_RUN` |
 | 2026-11-07 | [Provider pilot implementation / Implémentation du pilote fournisseur](provider-pilot-2026-11-07.md): durable budget and attempts, distinct judges, synthetic qualification and private operations boundary |
 | 2026-10-27 | [Retained T3 artifacts, public comparison and native-observation limits](mcp-apps-2026-10-26.md#retained-t3-artifact-consolidation-2026-10-27) |

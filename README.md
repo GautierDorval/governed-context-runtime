@@ -77,6 +77,8 @@ Reference edition 0.3.1-proposed is a prerelease of proposed contracts. Cite v0.
 
 ## Offline consumer and interpretation boundaries
 
+The hosted Runtime observes context delivery, not the identity or behaviour of a consuming model. A separate provider harness owns inference evidence. The [November 16 observation review](records/observation-scope-2026-11-16.md) verifies a retained, completed provider `RUN`; the public plan's `NOT_RUN` remains a template status, not a claim that no later campaign ran.
+
 Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/reproduction.md),
 [English pack semantics](docs/en/pack-semantics.md) or [French semantics](docs/fr/pack-semantics.md).
 The [English pilot](docs/en/model-comparison.md) and [French pilot](docs/model-comparison.md) prepare four conditions and 560 responses per future configuration: **NOT_RUN**.
@@ -92,6 +94,6 @@ Code and configuration are available under the [Apache License 2.0](LICENSE). Do
 
 ## Optional local MCP Apps companion
 
-[English setup](docs/en/mcp-apps.md) · [Instructions françaises](docs/fr/mcp-apps.md) · [Dated qualification](records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27). Select and inspect a whole fictional pack, then explicitly request its text-tool reading. T3 completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. No public MCP Apps service deployment; comparative pilot **NOT_RUN**. [Compare the retained T3 answer offline](evidence/mcp-apps-t3-2026-10-27/README.md): exact five-list comparison, separate Codex editorial assessment and private producer checks. Native trials include observed functional failures and negative nonce answers; these do not establish an internal non-delivery cause.
+[English setup](docs/en/mcp-apps.md) · [Instructions françaises](docs/fr/mcp-apps.md) · [Dated qualification](records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27). Select and inspect a whole fictional pack, then explicitly request its text-tool reading. T3 completed the button-to-answer journey for one French pack in Claude Desktop 3.6556.2.0 after a prior cancellation; all 11 requested list entries matched. No real English trial or general fidelity claim. The native context-update channel remains experimental and unqualified. No public MCP Apps service deployment; the frozen comparative plan is **NOT_RUN**, separate from later provider campaigns. [Compare the retained T3 answer offline](evidence/mcp-apps-t3-2026-10-27/README.md): exact five-list comparison, separate Codex editorial assessment and private producer checks. Native trials include observed functional failures and negative nonce answers; these do not establish an internal non-delivery cause.
 
 [Discovery, pinned schemas and version meanings](docs/en/instance.md#discovery-declaration-and-pinned-editions).

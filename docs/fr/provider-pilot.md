@@ -6,6 +6,12 @@ Le moteur optionnel exécute le protocole existant `four-condition-pilot-3`. Il 
 
 La première configuration approuvée utilise Anthropic `claude-haiku-5-5` comme répondant, puis DeepInfra `deepseek-ai/DeepSeek-V3.2` et Mistral `mistral-large-4-0` comme deux juges automatiques distincts. Leur budget fournisseur commun est plafonné à 50 USD, essais techniques préalables et reprises compris. Il s’agit d’une limite de dépense, pas d’un coût annoncé ou observé. Le plan figé reste un modèle réutilisable `NOT_RUN` ; un résultat de campagne distinct établit une exécution réelle `RUN`. Un transport simulé produit uniquement `SYNTHETIC_RUN`.
 
+## Identité du modèle et provenance
+
+`request.model` et le champ `model` du corps de requête sont une configuration demandée. `decodeProviderResponse` lit le modèle et l’identifiant dans le corps JSON du fournisseur, exige que le libellé retourné corresponde au modèle demandé et conserve `rawBody`. Le reçu de tentative garde les deux côtés et leurs empreintes. Un libellé fournisseur absent, `null` ou différent est refusé ; il n’est jamais complété depuis la configuration. Un transport générique injecté peut laisser des métadonnées facultatives à `null`, ce qui n’est pas une observation fournisseur.
+
+Ces champs établissent un libellé déclaré par le fournisseur dans une réponse technique reçue, sans attestation indépendante des poids exécutés ou du routage interne. Le texte produit par l’assistant n’est pas une source d’identité. Le lecteur de statut et l’Observatoire relaient des agrégats de campagne ; ils n’observent pas indépendamment l’inférence. Le [contrôle du 16 novembre](../../records/observation-scope-2026-11-16.md) vérifie une requête et une réponse réelles conservées, en séparant la campagne terminée du plan `NOT_RUN` inchangé.
+
 ## Frontière des requêtes et réponses
 
 Le répondant reçoit le message assemblé exact dans un seul message utilisateur, avec un plafond de sortie de 512 jetons, sans outil, recherche, instruction système ni identifiant de condition. La documentation ne devient jamais un message système. Le raisonnement Haiku est désactivé et l’effort réglé à medium ; les paramètres non pris en charge de température, top-p et graine sont omis. Les juges reçoivent le message réel, la réponse reçue et la grille applicable, sans annotation de leur pair. DeepInfra et Mistral utilisent une température de 0 et top-p de 1 ; Mistral utilise un effort de raisonnement high et le service standard_only. Les corps et paramètres exacts sont conservés dans les preuves privées.

@@ -2,6 +2,8 @@
 
 **Donner aux agents IA un contexte qu’ils peuvent vérifier.**
 
+Le [contrôle du 16 novembre](../../records/observation-scope-2026-11-16.md) distingue livraison du contexte et preuve d’inférence et vérifie un `RUN` fournisseur conservé. Dans ce guide, `NOT_RUN` décrit le plan public figé ou un essai daté, pas l’état actuel de toutes les campagnes. Une exécution terminée n’est pas une conclusion de fidélité.
+
 Le Runtime de contexte gouverné distribue des packs de contexte précompilés et versionnés, avec leurs sources et leurs limites d’interprétation, pour une tâche déclarée. Le consommateur choisit une intention canonique. L’interface ne déduit pas l’intention d’un texte libre, ne compose pas de pack à la requête, ne génère pas de réponse et ne juge pas un modèle.
 
 [Ouvrir l’instance hébergée](https://context.gautierdorval.com/). L’instance de gautierdorval.com est accessible par HTTP et un adaptateur MCP distinct. Ce dépôt public fournit les contrats proposés, les vérificateurs, les guides d’intégration et des exemples exécutables hors ligne pour cette instance, avec son vocabulaire fermé d’intentions et ses identifiants historiques. Le site demeure la source canonique de sa doctrine. Cette référence ne crée aucune nouvelle racine d’autorité.
@@ -42,7 +44,7 @@ L’instance de gautierdorval.com est accessible par HTTP et un adaptateur MCP d
 
 Le Runtime fournit un contexte précompilé pour une intention choisie par le consommateur. Cette référence définit le parcours de vérification des artefacts. Le consommateur choisit toujours sa référence de confiance, vérifie l’instantané complet et décide de l’admission et de l’usage permis. L’intégrité n’établit ni la vérité ni le respect des limites d’interprétation du pack. La publication et la découverte n’établissent ni l’utilisation ni un bénéfice mesuré.
 
-WebMCP pourrait fournir une autre interface vers ce parcours, mais cette référence ne contient aucune passerelle WebMCP. Il s’agit d’une possibilité architecturale, sans engagement d’implémentation : la réussite du vérificateur n’établit ni l’interopérabilité WebMCP, ni la compatibilité avec un client agent particulier, ni un effet sur ses réponses. Le pilote existant à quatre conditions demeure **NOT_RUN**.
+WebMCP pourrait fournir une autre interface vers ce parcours, mais cette référence ne contient aucune passerelle WebMCP. Il s’agit d’une possibilité architecturale, sans engagement d’implémentation : la réussite du vérificateur n’établit ni l’interopérabilité WebMCP, ni la compatibilité avec un client agent particulier, ni un effet sur ses réponses. Le plan figé à quatre conditions conserve **NOT_RUN** ; les résultats fournisseur ultérieurs restent distincts.
 
 ## Version de référence
 
@@ -113,10 +115,10 @@ Dans la démonstration fictive, une racine et une politique de clé de test épi
 
 [Exécution du pilote avec fournisseurs](provider-pilot.md) : tentatives durables, budget commun, deux juges automatiques et statut opérationnel privé. Le résultat de campagne est distinct du plan réutilisable et de la qualification synthétique locale.
 
-[Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Préversion de référence](../release-0.3.1-proposed.md). Le pilote à quatre conditions reste **NOT_RUN**.
+[Qualification hors ligne](qualification.md) · [Contrats des observations](observations.md) · [Diagnostic hébergé](hosted-diagnostics.md) · [Préversion de référence](../release-0.3.1-proposed.md). Le plan figé à quatre conditions conserve **NOT_RUN**.
 
 ## Compagnon MCP Apps local
 
-[Choisir et inspecter un pack fictif entier](mcp-apps.md), puis demander explicitement sa lecture par l’outil texte. L’[observation T3](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) couvre le parcours du bouton à la réponse pour un pack français dans Claude Desktop 3.6556.2.0, après une annulation préalable ; les 11 éléments demandés sont identiques. Aucun essai réel anglais ni conclusion de fidélité générale. Le canal natif de mise à jour du contexte reste expérimental et non qualifié. Le pilote comparatif demeure **NOT_RUN**. [Comparer hors ligne la réponse T3 conservée](../../evidence/mcp-apps-t3-2026-10-27/README.md). Le contrôle public des cinq listes est distinct de la lecture éditoriale de Codex et des preuves privées de transport. Les échecs fonctionnels et réponses négatives du canal natif ne prouvent pas une non-remise interne.
+[Choisir et inspecter un pack fictif entier](mcp-apps.md), puis demander explicitement sa lecture par l’outil texte. L’[observation T3](../../records/mcp-apps-2026-10-26.md#selector-to-answer-qualification-t3-2026-10-27) couvre le parcours du bouton à la réponse pour un pack français dans Claude Desktop 3.6556.2.0, après une annulation préalable ; les 11 éléments demandés sont identiques. Aucun essai réel anglais ni conclusion de fidélité générale. Le canal natif de mise à jour du contexte reste expérimental et non qualifié. Le plan comparatif figé conserve **NOT_RUN**. [Comparer hors ligne la réponse T3 conservée](../../evidence/mcp-apps-t3-2026-10-27/README.md). Le contrôle public des cinq listes est distinct de la lecture éditoriale de Codex et des preuves privées de transport. Les échecs fonctionnels et réponses négatives du canal natif ne prouvent pas une non-remise interne.
 
 [Découverte, schémas épinglés et sens des versions](instance.md#déclaration-de-découverte-et-éditions-épinglées).
