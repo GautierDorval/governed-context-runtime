@@ -1,6 +1,9 @@
 # Périmètre d’observation du GCR, 16 novembre 2026
 
-Compte rendu de Codex. Lot documentaire local, sans publication. Base examinée :
+Compte rendu initial de Codex. Les sections 1 à 8 décrivent le lot documentaire
+avant publication. Le [suivi des publications](#9-suivi-des-publications) consigne
+la livraison autorisée ultérieure et la lecture authentifiée de l’Observatoire.
+Base examinée initialement :
 `48a5aac1ec40c2e3a7a4998a0fbbb51889042738`. Les preuves historiques restent
 intactes. Ce contrôle n’est ni une nouvelle campagne ni une attestation indépendante.
 
@@ -17,7 +20,9 @@ The separate pilot runner preserves requested configuration and provider-returne
 metadata without independently attesting model weights or hidden routing. A retained
 provider result is `RUN` / `COMPLETED`; the frozen public plan remains `NOT_RUN`.
 Neither completion nor matching model labels establishes fidelity. Website
-synchronization remains pending; this local review publishes no private response.
+synchronization was pending at the initial review; the
+[dated follow-up](#9-suivi-des-publications) records the published explanations
+and their verification. No private provider response is published here.
 
 ## 1. Mandat, ancrage et préservation
 
@@ -276,7 +281,7 @@ sources demeurent inchangés. Ce compte rendu est un dérivé daté. L’ajout a
 `records/README.md` et à `package-policy.json` assure sa découvrabilité et sa
 couverture par les registres de droits/empreintes.
 
-### Transfert public FR/EN à exécuter dans un mandat distinct
+### Transfert public FR/EN préparé avant autorisation
 
 Obligation active : [MAINTAINING.md](../MAINTAINING.md), section de synchronisation
 des explications. Les remotes et chemins ci-dessous ont été confirmés dans les
@@ -325,7 +330,9 @@ English equivalent :
 > belong to the calling harness and its evidence. The retained campaign on a
 > fictional service does not validate a client deployment.
 
-**Suivi ouvert :** aucun fichier de ces deux sites n’a été modifié ou publié.
+**État au contrôle initial :** aucun fichier de ces deux sites n’avait encore été
+modifié ou publié. Ce suivi est fermé par la livraison décrite en
+[section 9](#9-suivi-des-publications). La suite de ce passage conserve le plan initial.
 Responsable : Gautier pour autoriser le lot inter-dépôts, puis son exécutant.
 Prochaine action : intégrer ces passages proportionnés après revalidation des
 branches et publications courantes, garder les dates historiques, ajouter les
@@ -379,7 +386,88 @@ deux portions du compte rendu, pas sur chaque pixel de toutes les pages longues.
 Les temporaires de validation et d’aperçu sont supprimés après le contrôle final ;
 le cache historique du pilote est conservé.
 
-Le point de clôture est documentaire : responsabilités explicites, ambiguïtés
+Le point de clôture initial est documentaire : responsabilités explicites, ambiguïtés
 courantes corrigées et limites restantes attribuées. Il n’inclut ni publication,
 ni qualification complète de l’Observatoire ou du client. Les verdicts de relecture
 portent sur leur candidat exact et sont conservés dans le paquet de suivi du lot.
+
+## 9. Suivi des publications
+
+**16 novembre 2026, après les autorisations de publication.** Le transfert
+éditorial vers les deux sites est livré et vérifié. La référence GCR initiale a
+été intégrée par la [PR 30](https://github.com/GautierDorval/governed-context-runtime/pull/30),
+commit `c6078a73c057189c8bac0a6f30ddd5a0952524c5`. Les sites citent cette révision
+immuable. Le présent ajout ferme le suivi documentaire ; il ne modifie aucune
+capacité, aucun contrat producteur, schéma, adaptateur ou épinglage de collecte.
+
+### Sources et publications vérifiées
+
+| Surface | Livraison | Révision effectivement servie |
+| --- | --- | --- |
+| gautierdorval.com | [PR 69](https://github.com/GautierDorval/gautierdorval-site/pull/69), neuf pages Runtime, Web agentique et Runtime/MCP en FR/EN/JA | `903729340dec5cfb419eecc1377075ffd48590cf` |
+| pagup.com | [PR 44](https://github.com/GautierDorval/Pagup-site/pull/44), deux pages du service en FR/EN | `044b6beb0b1bb266cad8854d2ae4cba6f31ba3e7` |
+
+Les arbres des fusions correspondent aux candidats audités. Les contrôles
+[du site personnel](https://github.com/GautierDorval/gautierdorval-site/actions/runs/43962861069),
+[de Pagup](https://github.com/GautierDorval/Pagup-site/actions/runs/43962906385),
+[de sa gouvernance](https://github.com/GautierDorval/Pagup-site/actions/runs/43962906300)
+et de la [promotion personnelle](https://github.com/GautierDorval/gautierdorval-site/actions/runs/43963725748)
+ont réussi sur ces révisions exactes. Les identités exposées par les domaines de
+production et par Pages ont été relues à 21:59:37 UTC, sans redirection.
+
+Le déploiement Pages personnel `d8bdbcfe-53e8-47d5-8d38-c6e3167da294` a terminé
+à 21:52:01 UTC. Pagup sert la version Worker
+`1a6945cc-7404-45e8-b133-f38f2e7a762d` à 100 %, déployée à 21:46:04 UTC.
+La vérification a couvert 22 combinaisons page/format, à 390 × 844 et
+1 365 × 900 : textes attendus, changements de langue et quatre parcours du CTA
+Pagup vers le diagnostic réussis. Les captures ont été inspectées ; aucun
+débordement horizontal, texte coupé ou contrôle principal masqué n’a été relevé
+dans ces vues. Aucun formulaire n’a été soumis. Le japonais reste explicitement
+`machine-assisted/unreviewed`, sans validation linguistique native.
+
+L’audit Codex final donne GO pour ces livraisons précises. Les reçus et captures
+restent dans le paquet privé daté
+`$env:PAGUP_COLD_STORAGE/Preuves-Audits/governed-context-runtime/2026-11-16-sites-observation-publication/`.
+Son `FINAL-HANDOFF.md` distingue les exécutions initiales incomplètes des résultats
+finaux acceptés. Les reçus historiques n’ont pas été réécrits.
+
+### Observatoire : réserve d’accès levée, limites de preuve conservées
+
+Le 16 novembre à 22:45:28.855 UTC, la lecture authentifiée de
+`GET /api/v1/operations/status` a réussi dans le navigateur. La version servie
+`28708d45-fa57-42ed-9ebc-4b9423cbfcde` correspond à celle relue dans le plan de
+contrôle. Le statut `healthy` porte sur les deux sources récentes, la tentative
+complète terminée à 12:01:43.777 UTC et la fenêtre du 9 au 15 novembre :
+sept journées complètes sur sept, sans lacune dans cette fenêtre. Le service
+déclare les deux têtes d’archive `verified`. Cela ne remplace pas un recalcul
+indépendant des empreintes sur les octets bruts R2.
+
+L’interface authentifiée a également été inspectée sur mobile à 390 × 844.
+Elle distingue la fraîcheur des rapports de la couverture de mesure :
+Gouvernance « Couverture à confirmer », Runtime « Mesuré ». Cette lecture ferme
+la réserve d’accès et de rendu de la synthèse, sans qualifier toute l’interface.
+Les preuves de cette lecture sont conservées séparément dans
+`2026-11-16-observation-scope-closure`, sous le même dossier de preuves GCR.
+
+Les réserves suivantes restent ouvertes et relèvent du mandat Observatoire :
+
+- couverture Gouvernance partielle et 20 lacunes historiques hors de la fenêtre
+  courante ;
+- déclenchement seulement `cron_consistent` : `natural_trigger_proof` reste
+  `not_established`, et le statut opérationnel expose M0 comme plus haut niveau
+  établi, avec M2 à M4 partiels ;
+- absence de nouveau recalcul indépendant des empreintes sur les octets R2 et
+  de requalification de toute la chaîne historique.
+
+Prochaine action de ce mandat distinct : compléter les attestations manquantes
+et la vérification binaire des archives avec leur autorisation propre. Aucune
+collecte manuelle, reprise historique, nouvelle campagne ou requête productrice
+n’a été déclenchée par ce suivi. Le lot éditorial n’exige aucun redéploiement ou
+repointage de l’Observatoire.
+
+**English follow-up.** The personal and Pagup explanations are published and
+verified at the revisions above. Authenticated Observatory status and the mobile
+summary were read successfully. Both sources are fresh and the seven-day archive
+window is complete; partial governance coverage, historical gaps, independent
+natural-trigger attestation and independent raw-byte archive verification remain
+separate limitations. These checks establish neither model use nor causal impact.
