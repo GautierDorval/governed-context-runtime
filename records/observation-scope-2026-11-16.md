@@ -257,6 +257,15 @@ statut au pilote, alors que le résultat conservé du fournisseur est `RUN` et
 `COMPLETED`. Les guides et l’entrée des preuves qualifient maintenant ce statut
 comme celui du plan figé ou d’un essai daté, avec renvoi vers ce compte rendu.
 
+La relecture par un agent Codex distinct du candidat initial `b74b5dc` a relevé
+quatre formulations courantes encore trop générales dans les guides MCP Apps et
+de comparaison de packs FR/EN. Ces passages sont aussi corrigés : ils distinguent
+le plan figé du résultat fournisseur et préservent la portée propre à chaque
+compagnon. Les guides de reproduction, entrées scientifiques et notes de version
+historiques restent inchangés. Le rapport d’audit est conservé séparément avec
+l’identité exacte de son candidat ; cette relecture n’est pas une attestation
+indépendante de la provenance fournisseur.
+
 **Clarification de provenance.** Les guides FR/EN d’instance et de pilote exposent
 explicitement la responsabilité du harnais, le caractère déclaré des identités,
 et l’absence d’attestation des poids. Le code conserve déjà les deux côtés de
@@ -334,6 +343,8 @@ Aucune dépendance à `gh-aw` ni responsabilité nouvelle du GCR n’est déduit
 ## 8. Validation et clôture locale
 
 Les vérifications de preuve et les lectures datées sont détaillées ci-dessus.
+Le tableau décrit les contrôles du lot initial. La correction issue de la relecture
+distincte est documentée à sa suite.
 
 | Contrôle exécuté | Résultat et portée |
 | --- | --- |
@@ -344,6 +355,14 @@ Les vérifications de preuve et les lectures datées sont détaillées ci-dessus
 | Recherche de secrets | Gitleaks 8.30.1 sur un export des seuls 13 fichiers du lot : code 0, aucun secret détecté. Cela ne certifie pas à lui seul l’absence de toute donnée sensible ; les références privées et les libellés ont aussi été relus. |
 | Préservation | Aucun diff sous `spec/`, `test/` ou `scripts/`, ni dans les trois observations historiques HTTP/MCP. Le plan figé et `.claude/settings.local.json` conservent leurs empreintes initiales. Les reçus fournisseur ont été lus seulement. |
 | Visualisation locale | 11 captures à 390 × 844 et 2 à 1 365 × 900 inspectées. Les paragraphes FR/EN, titres et liens du contrôle restent lisibles ; aucun débordement horizontal de page. Les tableaux larges défilent dans leur conteneur. |
+
+La correction complémentaire des quatre guides après relecture distincte a passé
+les contrôles de package et 19 tests éditoriaux/de chemins de vérification, sans
+échec. Huit captures mobiles avant/après à 390 × 844 et deux captures après à
+1 365 × 900 ont été inspectées sur ces passages, sans texte coupé ni débordement.
+Ces preuves et les rapports de relecture sont conservés dans le dossier frère
+`2026-11-16-observation-scope-codex-review`. Ils distinguent le candidat initial
+refusé pour cette omission du candidat corrigé soumis à la révision finale.
 
 `visual_applicability: applicable` pour les guides destinés à la référence publique.
 Les captures utilisent un aperçu Markdown local produit par `ConvertFrom-Markdown`
@@ -360,6 +379,7 @@ deux portions du compte rendu, pas sur chaque pixel de toutes les pages longues.
 Les temporaires de validation et d’aperçu sont supprimés après le contrôle final ;
 le cache historique du pilote est conservé.
 
-Le point de clôture est documentaire : responsabilités explicites, ambiguïté
-courante corrigée et limites restantes attribuées. Il n’inclut ni publication,
-ni audit indépendant, ni qualification complète de l’Observatoire ou du client.
+Le point de clôture est documentaire : responsabilités explicites, ambiguïtés
+courantes corrigées et limites restantes attribuées. Il n’inclut ni publication,
+ni qualification complète de l’Observatoire ou du client. Les verdicts de relecture
+portent sur leur candidat exact et sont conservés dans le paquet de suivi du lot.

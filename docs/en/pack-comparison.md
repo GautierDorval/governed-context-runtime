@@ -40,7 +40,7 @@ Operation IDs are unique within the report. Kinds are add, remove, replace and o
 
 Each operation retains matching policy, ambiguity flag and originating raw branch references. rawCoverage accounts for all raw operations plus the recognized array marker. presentationCoverage enumerates the exact same unique IDs as operations and groups. Metadata markers are not counted as rules. Unchanged content is available in context, so no filter can silently turn a partial view into a claim of full coverage. No editorial relation is invented; the current report contains an empty editorialRelations array.
 
-Local automated checks and a simulated-host browser examination qualify the implementation. The real retained FR/EN comparison is an offline diagnosis, not a new hosted or real-client observation. Historical T3 remains unchanged. A business reviewer and representative organizational inputs would be required to measure practical benefit; the comparative model pilot remains NOT_RUN.
+Local automated checks and a simulated-host browser examination qualify the implementation. The real retained FR/EN comparison is an offline diagnosis, not a new hosted or real-client observation. Historical T3 remains unchanged. A business reviewer and representative organizational inputs would be required to measure practical benefit. The frozen public comparative plan retains `NOT_RUN`; the [November 16 observation review](../../records/observation-scope-2026-11-16.md) separately examines a retained provider `RUN`. That campaign does not qualify this comparator or establish practical benefit.
 
 ## Web access to the fictional catalog
 

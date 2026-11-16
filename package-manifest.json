@@ -146,8 +146,8 @@
     },
     {
       "path": "docs/en/mcp-apps.md",
-      "sha256": "b5bb144bbe43e1653d6eeafce216dcbd36657fffc000eb1d01da680c45c0b102",
-      "bytes": 18234
+      "sha256": "9952cb95deacfabc6b2f555a135cdf7bcecbad1ca67d324cf411cac6d7250979",
+      "bytes": 18414
     },
     {
       "path": "docs/en/model-comparison.md",
@@ -156,8 +156,8 @@
     },
     {
       "path": "docs/en/pack-comparison.md",
-      "sha256": "2cfd8c7477779180559719e7333b4ddcafe0b253aa290387f6969e78a24c1e56",
-      "bytes": 8157
+      "sha256": "4532525ff7188b53a8745324e8cf6ec8c67d385339fffd5d904b13bd18e707ca",
+      "bytes": 8376
     },
     {
       "path": "docs/en/pack-semantics.md",
@@ -196,8 +196,8 @@
     },
     {
       "path": "docs/fr/mcp-apps.md",
-      "sha256": "790e24f6c7f5b51b00512b04897b0f9f1595b3ee8caf782640134da25be573f2",
-      "bytes": 20217
+      "sha256": "5332ce56948206b1d1e2a70f3b4447beba08285ca615bf5ac606d4ce1958f5c7",
+      "bytes": 20411
     },
     {
       "path": "docs/fr/observations.md",
@@ -206,8 +206,8 @@
     },
     {
       "path": "docs/fr/pack-comparison.md",
-      "sha256": "6b14dcc7d1b1e439dda998ace6c772ca30e62718931e4ff154dd0b4ab48971dc",
-      "bytes": 9327
+      "sha256": "f66cf50760da8f1ec9e5221e87ee94ec9df5e2a31f7c288ca6cbdbc0fff68684",
+      "bytes": 9550
     },
     {
       "path": "docs/fr/pack-semantics.md",
@@ -421,8 +421,8 @@
     },
     {
       "path": "records/observation-scope-2026-11-16.md",
-      "sha256": "5fdb8938f739c46f57957220769cdfc2720b051a2bd9d9dea0bcd7e6bc2bb25e",
-      "bytes": 29575
+      "sha256": "1dca10dc2cceb045c4a99eacb97f58eb9f9dee59ff7b40d74c18bf83b425417e",
+      "bytes": 30998
     },
     {
       "path": "records/pilot-integrity-2026-11-05.md",
@@ -441,7 +441,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "4844ec87b7f56893d45e27fe428f183619e0201321a8ce13b24a4f4e99211c6e",
+      "sha256": "0367489c7aaceaf6f6338ceb022de5914c3fb0e0831cf7eab0d9834f07dbf21b",
       "bytes": 55898
     },
     {
