@@ -91,8 +91,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "b3a0c71c1fdee5267c6fc8fc94d3b132b41153fcc5939bb8ffe3942c60ab58da",
-      "bytes": 10077
+      "sha256": "96d1913b1d7e38a4600589ebd93aba28ed371ddaf9dae0e1872a1147215e6181",
+      "bytes": 10400
     },
     {
       "path": "SECURITY.md",
@@ -136,8 +136,8 @@
     },
     {
       "path": "docs/en/README.md",
-      "sha256": "2621669d828b2faf8f25ec13d0b7f4e54d770f0f7b6e12df6aeb4d0afda28043",
-      "bytes": 12919
+      "sha256": "f9ac0fc03c3a7aff2849919d93fc9c11561ca81fdd0606dcddee5496ec65e208",
+      "bytes": 13673
     },
     {
       "path": "docs/en/instance.md",
@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/en/provider-pilot.md",
-      "sha256": "9937e886bbc54c1c1bbb8461cbbd2a1a3c48f791c168ac6393e8defed98a17f1",
-      "bytes": 13400
+      "sha256": "40b133ec2f0ea8501f8a0bc0dc3bc2a8b4f491907e3b5aa4a078675952250e3c",
+      "bytes": 14519
     },
     {
       "path": "docs/en/qualification.md",
@@ -181,8 +181,8 @@
     },
     {
       "path": "docs/fr/README.md",
-      "sha256": "0e00df88cc4d970b5fe3223edf601aae528a4fff226056d87da9d6f361614940",
-      "bytes": 15157
+      "sha256": "e9c705a1084b7e927ff03c34b34595aec2ce7be35e2f26f9e04ee1b11ce49390",
+      "bytes": 15996
     },
     {
       "path": "docs/fr/hosted-diagnostics.md",
@@ -216,8 +216,8 @@
     },
     {
       "path": "docs/fr/provider-pilot.md",
-      "sha256": "e63aad2dfe66dd532fafc8951b32fdd69d253527a33a249ea47ece9f92dc0f04",
-      "bytes": 15669
+      "sha256": "ec1bf4a9869c91bbdce0f4efa9fd108af13d49281c3dde95f0a0ac7d83c27ba9",
+      "bytes": 16960
     },
     {
       "path": "docs/fr/qualification.md",
@@ -281,8 +281,8 @@
     },
     {
       "path": "evidence/README.md",
-      "sha256": "c19f479ac3b81eb9c9d7314fb78aa03282a42d0fcb46e31af1d268c1f0cb90e3",
-      "bytes": 8952
+      "sha256": "b446396bd176e4a453cb2278016e944e30498222e2fe0822b195aa4e6bdf5735",
+      "bytes": 11470
     },
     {
       "path": "evidence/comparison-2026-10-29.json",
@@ -441,7 +441,7 @@
     },
     {
       "path": "rights.json",
-      "sha256": "52e2d87733f3d7fb50be4a02ae1afbba39a4aa7d619f5d04469295bb0510fcd2",
+      "sha256": "087cb93536e3ea01582754caf74d821d16b3e9a220ee8489c1aa71818ae22b13",
       "bytes": 55898
     },
     {

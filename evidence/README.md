@@ -12,6 +12,17 @@ The reference checks are producer validation. Documentation, a repository and a 
 
 [Verification limits](../docs/verification.md) · [Synthetic publication](publication.json)
 
+## Answer fidelity: definition, instrument and observations
+
+Context availability, retrieval and use are distinct from the fidelity of the generated answer. Each record here states what was observed at its own step; transport, integrity and admission checks keep their own scope. Examining how an answer reconstructs its sources requires the answer and those sources.
+
+| Role | Resource | Scope |
+|---|---|---|
+| Definition | [Interpretive fidelity](https://gautierdorval.com/en/definitions/interpretive-fidelity/) ([French definition](https://gautierdorval.com/definitions/fidelite-interpretative/)) and the [reconstruction fidelity guide](https://gautierdorval.com/en/reconstruction-fidelity/) | The property examined in an answer: preserved meaning, conditions, exclusions, authority boundaries and claim status. In the author’s corpus, “reconstruction fidelity” is an entry term for this property in AI-generated answers. |
+| Instrument | Public [fidelity rubric](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/scoring-models/fidelity-score.md) of the Interpretive Governance test suite, with its [anti-inference](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/scoring-models/anti-inference-score.md) and [authority-boundary](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/scoring-models/authority-boundary-score.md) rubrics and [scoring protocol](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/protocols/scoring-protocol.md) | Pinned rubrics; each dimension is scored independently and no composite score is allowed. Records in this repository do not report scores from these rubrics; the provider pilot pins its own judging rubric. |
+| Bounded observation | [Retained MCP Apps T3 answer](mcp-apps-t3-2026-10-27/README.md) | One historical French answer; exact offline comparison of five lists and their eleven entries. The editorial assessment and transport checks remain producer-side reviews, not independent validation, and support no general fidelity rate. |
+| Campaign execution | [November 16 review](../records/observation-scope-2026-11-16.md) and [campaign counts](../docs/en/provider-pilot.md#reading-campaign-counts) | Execution and annotation coverage of a completed provider campaign. Completion is not a fidelity finding. |
+
 ## Artifact provenance and scope
 
 | Artifact | Role and identity | Evidence boundary |
