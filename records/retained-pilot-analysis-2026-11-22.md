@@ -2,7 +2,7 @@
 
 ## Scope and evidence
 
-This is a new **offline, read-only analysis** of campaign `gcr-pilot-20261107`, not a new campaign, judge pass or arbitration. It verifies 3,575 consumed immutable objects against the dated private archive inventory: 12 campaign/input records, 560 respondent attempts, 1,120 respondent journal records, 1,120 judge attempts and 763 accepted annotations. The two final mutable objects, three technical preflights and two run-level journal records are outside this new byte-read inventory. The preflight recovery amendment is referenced by the retained plan/result but is not independently reread here; scientific response and judge attempts show no retries. The final result payload is checked separately through a retained dated native receipt. No claim of current remote R2 availability or provider execution follows from these local reads.
+This is a new **offline, read-only analysis** of campaign `gcr-pilot-20261107`, not a new campaign, judge pass or arbitration. The dated private archive inventory contains 3,582 objects. This analysis verifies 3,575 consumed immutable objects: 12 campaign/input records, 560 respondent attempts, 1,120 respondent journal records, 1,120 judge attempts and 763 accepted annotations. The two final mutable objects, three technical preflights and two run-level journal records are outside this new byte-read inventory. The preflight recovery amendment is referenced by the retained plan/result but is not independently reread here; scientific response and judge attempts show no retries. The final result payload is checked separately through a retained dated native receipt. No claim of current remote R2 availability or provider execution follows from these local reads.
 
 The campaign manifest payload is `14f54dce16262df4be5f995d47b9edaaca1af21930389638902f22869d2f8ad3`. The archive inventory file is pinned at `f663766d53f76e3881b288f4d8a1935df3a357c6f70eaa3f4fbfa6b77c434102`; the historical final-result payload is `31b02b2db36a9dd15b320bb02134e160fa92dae36eaa1a4d4816e14c00065b3b`. The executed source was `9605a80440e2df4c528ac38b7a507ed2b8926148`; the original manifest's source pin remains distinct. The imported campaign, execution, provider, judging and fixture modules are unchanged from that executed source. Re-decoding and annotation-contract validation here are new checks of existing bytes, not new semantic judgments.
 
@@ -25,9 +25,37 @@ A received respondent output, a visible semantic omission and a missing judgment
 
 `beforeArbitration: true` and `globalScore: null` are preserved. Prespecified agreement tables and kappa, including undefined values and their reasons, are recomputed without adding inferential tests, confidence intervals or a global condition ranking. Complete pairs do not establish truth, and missing pairs are not semantic failures.
 
+## Agreement and judge discrimination
+
+Agreement uses admissible pairs before arbitration. A criterion cell is a dimension/language/condition group; a utility cell is a case/language/condition group. The same responses recur across criteria, so cells and criterion comparisons are not additional independent responses. The table counts existing kappa values; it neither averages them nor computes a pooled kappa.
+
+| Family / condition | Cells | Undefined κ | κ = 0 | κ > 0 |
+| --- | ---: | ---: | ---: | ---: |
+| criteria / pack | 20 | 20 | 0 | 0 |
+| criteria / exhaustive_text | 20 | 19 | 1 | 0 |
+| criteria / canonical_prose | 20 | 18 | 1 | 1 |
+| criteria / no_documentation | 20 | 20 | 0 | 0 |
+| utility / pack | 14 | 5 | 8 | 1 |
+| utility / exhaustive_text | 14 | 5 | 9 | 0 |
+| utility / canonical_prose | 14 | 5 | 8 | 1 |
+| utility / no_documentation | 14 | 3 | 10 | 1 |
+
+Of 136 cells, 95 have undefined kappa: 89 because expected agreement is one and six because no applicable paired data exist. Another 37 have kappa zero and four have positive kappa. Undefined kappa is not converted to zero or interpreted as a failure. The public JSON retains each cell’s value, reason, contingency table and denominator, as well as both output-limit strata. Its integer-only package profile encodes `rawAgreement`, `expectedAgreement` and `kappa` as decimal strings or null; counts remain integers and the private historical calculations retain numeric values.
+
+Utility agreement concerns one label pair per response:
+
+| Condition | Matching utility labels / paired responses |
+| --- | ---: |
+| pack | 46/69 |
+| exhaustive_text | 21/39 |
+| canonical_prose | 57/81 |
+| no_documentation | 30/77 |
+
+Across accepted criterion labels there are 3,131 PASS, six FAIL, zero UNSCORABLE and 4,493 NOT_APPLICABLE labels; these are criterion ratings, not 7,630 independent responses. Mistral labels 335/350 accepted utility annotations RESOLVED, compared with 184/413 for DeepInfra on partly different admitted responses. High raw agreement dominated by one category does not establish discriminative ability. That ability remains unestablished: neither agreement nor a complete pair makes a judgment true, and output limitation still is not automatically a semantic failure.
+
 ## Ceiling and selected subset
 
-The configured respondent ceiling was 512 tokens. The 433 output-limited responses report `max_tokens`; the remaining 127 report no output-limit signal but were subject to the same ceiling. The latter are a subset selected **after generation**, not a corrected estimate of the whole pilot. They are highly uneven: 14 pack, 4 exhaustive text, 24 prose and 85 without documentation. All responses remain in the main analysis.
+The configured respondent ceiling was 512 tokens. The 433 output-limited responses report `max_tokens`; the remaining 127 report no output-limit signal but were subject to the same ceiling. Three of those 127 nevertheless report exactly 512 output tokens; absence of the signal does not mean a count below the ceiling. The latter are a subset selected **after generation**, not a corrected estimate of the whole pilot. They are highly uneven: 14 pack, 4 exhaustive text, 24 prose and 85 without documentation. All responses remain in the main analysis.
 
 Case/language/repetition/configuration matching gives 140 four-condition blocks. Only four retain four responses without an output-limit signal; one of those also retains all four complete judge pairs. Ten blocks retain four complete pairs regardless of finish reason. Each judge separately retains only two complete four-condition blocks in the non-limited subset. These small, selected cells cannot support a general superiority claim. The private companion reports both strata by case, language and condition, with separate criteria, utility and prespecified agreement.
 
@@ -62,12 +90,14 @@ A canonical source establishes what its author states. Accurate attribution pres
 
 Run `node scripts/analyze-retained-pilot.mjs` with `--cache=PATH`, `--plan=PATH`, `--proof=PATH`, `--native=PATH`, and `--out=NEW_OUTPUT_PREFIX`. Each option is a separate PowerShell argument, for example `"--cache=$archiveCache"`. Paths are explicit operator inputs; none is discovered from another session and no credential is used. The output prefix must be new. The command writes `.json` (private detailed analysis), `.md` (readable report) and `.aggregates.json` (the reproducible public projection used by the linked record). Network fetch is disabled; the archive adapter exposes only reads and rejects mutations. Missing or changed evidence stops verification instead of silently using an aggregate.
 
-The proof argument is the pinned November 12 archive inventory, the plan is the retained delivery plan, and native is the dated native receipt containing the final payload. No runner, recovery admission, provider dispatch, storage qualification or historical generator is invoked. `node --test test/retained-pilot-analysis.test.mjs` exercises modified-byte rejection, read-only behavior, fictional identifiers and retry counting. The manifest admission time is used only to verify the historical input contract; it authorizes nothing today.
+The proof argument is the pinned November 12 archive inventory. The retained delivery plan is independently pinned at `06c4173e307dc30c332281a4e43cfa56bfe85158101042331a5a91e332334024`; altered bytes are rejected before its historical admission time is used, and native is the dated native receipt containing the final payload. No runner, recovery admission, provider dispatch, storage qualification or historical generator is invoked. `node --test test/retained-pilot-analysis.test.mjs` exercises modified-byte rejection, read-only behavior, fictional identifiers and retry counting. The manifest admission time is used only to verify the historical input contract; it authorizes nothing today.
+
+The public `analyzedDate` is the UTC day of this verification run; private `analyzedAt` records its timestamp. Data reproduction is independent of those temporal metadata. Byte-identical public output requires the same UTC day; a later reproduction must preserve both outputs and report a date-only difference rather than overwrite an earlier receipt.
 
 ## Synthèse française
 
 Cette réanalyse vérifie hors ligne les pièces réellement consommées et retrouve les résultats historiques : 560 réponses, 433 avec un motif de limite de sortie, 763 annotations admises et 266 paires complètes. Les 294 absences de paire ne sont pas des échecs sémantiques. Les critères, l’utilité, l’accord et leurs dénominateurs restent distincts, avant arbitrage et sans score global.
 
-Les 127 réponses sans signal de limite forment un sous-groupe sélectionné après génération. Il ne reste que quatre blocs complets de quatre conditions dans ce sous-groupe, dont un seul avec toutes ses paires de jugements. La fiction est explicitée dans chaque document, mais seulement dans deux des sept questions sans documentation. Ces différences bornent les conclusions ; elles ne prouvent pas un effet causal du cadrage, une supériorité générale, une permission d’action ou une fidélité universelle.
+Les 127 réponses sans signal de limite forment un sous-groupe sélectionné après génération ; trois comptent néanmoins exactement 512 jetons. Sur 136 cellules d’accord, 95 kappa sont indéfinis, 37 sont nuls et quatre sont positifs. La forte concentration des étiquettes ne prouve pas la capacité discriminante des juges, qui reste non établie. Il ne reste que quatre blocs complets de quatre conditions dans ce sous-groupe, dont un seul avec toutes ses paires de jugements. La fiction est explicitée dans chaque document, mais seulement dans deux des sept questions sans documentation. Ces différences bornent les conclusions ; elles ne prouvent pas un effet causal du cadrage, une supériorité générale, une permission d’action ou une fidélité universelle.
 
 Les statuts `NOT_RUN` du plan figé et des observations antérieures restent historiques. Cette analyse ne les réécrit pas. Elle ne remplace ni la qualification propre à un usage réel ni les contrôles d’autorisation du consommateur.

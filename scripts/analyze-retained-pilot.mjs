@@ -27,6 +27,7 @@ const enc = new TextEncoder();
 const campaignId = 'gcr-pilot-20261107';
 const manifestSha256 = '14f54dce16262df4be5f995d47b9edaaca1af21930389638902f22869d2f8ad3';
 const archiveProofSha256 = 'f663766d53f76e3881b288f4d8a1935df3a357c6f70eaa3f4fbfa6b77c434102';
+const planReceiptSha256 = '06c4173e307dc30c332281a4e43cfa56bfe85158101042331a5a91e332334024';
 const prefix = `campaigns/${campaignId}/`;
 const reviewers = ['deepinfra', 'mistral'];
 const conditions = ['pack', 'exhaustive_text', 'canonical_prose', 'no_documentation'];
@@ -277,8 +278,10 @@ function framing(request, trial) {
 export async function analyzeRetainedPilot({cache, plan: planPath, proof: proofPath, native: nativePath}) {
   const proofBytes = await readFile(proofPath);
   assert.equal(sha256(proofBytes), archiveProofSha256, 'historical_inventory_pin');
+  const planBytes = await readFile(planPath);
+  assert.equal(sha256(planBytes), planReceiptSha256, 'historical_delivery_plan_pin');
   const proof = JSON.parse(proofBytes.toString('utf8')),
-    plan = JSON.parse(await readFile(planPath, 'utf8'));
+    plan = JSON.parse(planBytes.toString('utf8'));
   assert.equal(plan.campaignId, campaignId);
   assert.equal(plan.manifestSha256, manifestSha256);
   const archive = createOfflineArchive(cache, proof.objects);
@@ -609,7 +612,8 @@ export async function analyzeRetainedPilot({cache, plan: planPath, proof: proofP
         source: 'dated-native-receipt',
         receiptSha256: sha256(nativeBytes),
       },
-      planReceiptSha256: sha256(await readFile(planPath)),
+      planReceiptSha256: sha256(planBytes),
+      archiveInventoryObjects: proof.objects.length,
       historicalAdmissionTime: plan.originalAdmittedAt,
       consumedObjects: [...archive.consumed.values()],
       publicVisibility: 'code, aggregate tables and digests only; request/response/judge text remains private',
@@ -652,10 +656,60 @@ export async function analyzeRetainedPilot({cache, plan: planPath, proof: proofP
       'Seven synthetic cases are not a random representative sample of real tasks.',
       '127 non-output-limited responses remain subject to the configured 512-token ceiling and form a post-generation subset.',
       'Missing judgment pairs are not semantic failures; complete pairs are not established truth.',
+      'Observed label concentration and incomplete pairs do not establish judge discrimination.',
       'Document form, content and fictional framing differ; counts cannot identify a causal framing effect.',
       'No model calls, new judgments, arbitration, significance tests, confidence intervals, global ranking or action-admission measurement.',
     ],
   };
+}
+
+/** Summarize existing agreement cells, without pooling or averaging kappa.
+ * A criterion comparison and a response utility pair have different units.
+ * @param {Record<string, any>} summary
+ */
+export function agreementOverview(summary) {
+  const rows = [];
+  /** @type {[string, Record<string, any>[]][]} */
+  const groups = [
+    ['criteria', summary.dimensions],
+    ['utility', summary.utility],
+  ];
+  for (const [kind, cells] of groups) {
+    for (const condition of conditions) {
+      const selected = cells.filter(cell => cell.condition === condition);
+      /** @type {Record<string, number>} */
+      const reasons = {};
+      for (const cell of selected) {
+        if (cell.kappa === null) reasons[cell.undefinedReason] = (reasons[cell.undefinedReason] ?? 0) + 1;
+      }
+      rows.push({
+        kind,
+        condition,
+        cells: selected.length,
+        pairedComparisons: selected.reduce((n, cell) => n + cell.paired, 0),
+        matchingComparisons: selected.reduce((n, cell) => n + cell.agreements, 0),
+        undefinedKappa: selected.filter(cell => cell.kappa === null).length,
+        zeroKappa: selected.filter(cell => cell.kappa === 0).length,
+        positiveKappa: selected.filter(cell => cell.kappa !== null && cell.kappa > 0).length,
+        undefinedReasons: reasons,
+      });
+    }
+  }
+  return rows;
+}
+
+/** The package JSON profile permits integer numbers only. Keep exact JS decimal
+ * representations as strings for these three fractional statistics; private
+ * historical computations retain their original numeric values.
+ * @param {Record<string, any>[]} cells
+ */
+function publicAgreementCells(cells) {
+  return cells.map(cell => ({
+    ...cell,
+    rawAgreement: cell.rawAgreement === null ? null : String(cell.rawAgreement),
+    expectedAgreement: cell.expectedAgreement === null ? null : String(cell.expectedAgreement),
+    kappa: cell.kappa === null ? null : String(cell.kappa),
+  }));
 }
 
 /** A public projection contains only aggregates, never per-trial text or identifiers.
@@ -671,6 +725,7 @@ export function publicAggregates(result) {
     manifestSha256: result.manifestSha256,
     historicalResultPayloadSha256: result.provenance.historicalResult.payloadSha256,
     consumedObjects: result.provenance.consumedObjects.length,
+    inventoryObjects: result.provenance.archiveInventoryObjects,
     evidenceVisibility: 'Private retained requests, responses and judgments; only aggregates are published.',
     responses: result.responses,
     judgmentCoverage: {
@@ -690,6 +745,25 @@ export function publicAggregates(result) {
       criteria: result.tables.criteria,
       utility: result.tables.utility,
       fiction: result.tables.fiction,
+      agreement: {
+        overview: agreementOverview(result.judgments),
+        fractionalStatisticsEncoding:
+          'rawAgreement, expectedAgreement and kappa are decimal strings or null; counts remain integers',
+        dimensions: publicAgreementCells(result.judgments.dimensions),
+        utility: publicAgreementCells(result.judgments.utility),
+      },
+      stratified: result.tables.stratified.map(stratum => ({
+        outputLimited: stratum.outputLimited,
+        selection: stratum.selection,
+        execution: stratum.execution,
+        criteria: stratum.criteria,
+        utility: stratum.utility,
+        agreement: {
+          overview: agreementOverview(stratum.agreement),
+          dimensions: publicAgreementCells(stratum.agreement.dimensions),
+          utility: publicAgreementCells(stratum.agreement.utility),
+        },
+      })),
     },
     matchedBlocks: Object.fromEntries(
       /** @type {const} */ ([
@@ -705,15 +779,114 @@ export function publicAggregates(result) {
 
 /** @param {Awaited<ReturnType<typeof analyzeRetainedPilot>>} result */
 export function renderRetainedAnalysis(result) {
-  /** @param {Record<string, any>[]} rows @param {string[]} fields */
-  const table = (rows, fields) =>
-    [
-      `| ${fields.join(' | ')} |`,
-      `| ${fields.map(() => '---').join(' | ')} |`,
-      ...rows.map(row => `| ${fields.map(field => row[field] ?? '').join(' | ')} |`),
-    ].join('\n');
+  /** @param {Record<string, any>[]} rows @param {string[]} columns */
+  const table = (rows, columns) =>
+    '| ' +
+    columns.join(' | ') +
+    ' |\n| ' +
+    columns.map(() => '---').join(' | ') +
+    ' |\n' +
+    rows
+      .map(
+        row => '| ' + columns.map(key => (row[key] === null ? 'indéfini' : String(row[key] ?? ''))).join(' | ') + ' |',
+      )
+      .join('\n');
   const blocks = result.tables.matchedBlocks;
-  return `# Analyse descriptive du pilote conservé, 22 novembre 2026\n\nAnalyse hors ligne de ${result.responses.received}/560 réponses. Empreintes vérifiées pour ${result.provenance.consumedObjects.length} objets effectivement lus. Les textes privés restent hors du dépôt public. Résultat historique réconcilié exactement, sans nouveaux jugements.\n\n## Exécution et couverture\n\n${table(result.tables.byLanguageCondition, ['language', 'condition', 'received', 'outputLimited', 'notOutputLimited', 'paired', 'single', 'unjudged'])}\n\n${result.responses.outputLimited}/560 réponses portent le motif de limite de sortie; 127 ne le portent pas. Toutes avaient un plafond configuré de 512 jetons. ${result.judgments.acceptedAnnotations}/1120 annotations sont admises; ${result.judgments.pairedResponses}/560 réponses ont une paire, ${result.judgments.missingPairs}/560 n'en ont pas. Les ${result.rejectedJudgments.length} tentatives rejetées ne sont pas autant de réponses sans paire.\n\n## Critères séparés, par juge\n\nLes effectifs PASS/FAIL/UNSCORABLE/NOT_APPLICABLE portent sur les annotations admises. La colonne missing reste affichée; evaluable vaut PASS + FAIL. Les critères et l'utilité ne sont pas fusionnés.\n\n${table(result.tables.criteria, ['language', 'condition', 'dimension', 'reviewerId', 'expected', 'PASS', 'FAIL', 'UNSCORABLE', 'NOT_APPLICABLE', 'missing', 'evaluable'])}\n\n## Utilité documentaire\n\n${table(result.tables.utility, ['language', 'condition', 'reviewerId', 'expected', 'RESOLVED', 'PARTIAL', 'UNDETERMINED', 'missing'])}\n\n## Sous-groupe sans signal de limite\n\nLes tableaux détaillés par cas, langue, condition et motif de fin, ainsi que les critères, l'utilité et l'accord des deux strates, sont dans le JSON compagnon. Le sous-groupe de 127 réponses est sélectionné après génération; il ne corrige pas l'estimation de l'ensemble. Parmi ${blocks.length} blocs de quatre conditions, ${blocks.filter(x => x.allFourNotOutputLimited).length} conservent quatre réponses sans signal de limite et ${blocks.filter(x => x.allFourNotOutputLimitedAndPaired).length} conservent aussi les quatre paires de jugements.\n\n## Cadrage fictionnel\n\nLexique publié dans protocol.fictionLexicon. Normalisation NFC, minuscules, mots Unicode; clés JSON et racines dans les identifiants techniques sont comptées séparément. Chaque entrée a été lue dans la requête archivée et comparée à l'assembleur épinglé. Les champs instruction, documentation, evidence et question sont séparés; aucun nom de fichier ni métadonnée non transmise n'est ajouté. La table fiction donne présence par réponse et occurrences par cas. Ces nombres ne mesurent pas un effet psychologique.\n\n## Accord et portée\n\nLe JSON conserve les tableaux d'accord et le kappa prévus, leurs effectifs et leurs motifs d'indéfinition, avant arbitrage. beforeArbitration reste true et globalScore reste null.\n\n${result.limits.map(limit => '- ' + limit).join('\n')}\n`;
+  const total = result.responses.expected;
+  const limited = result.responses.outputLimited;
+  const notLimited = result.rows.filter(row => row.outputLimited === false);
+  const atCeiling = notLimited.filter(row => row.outputTokens === result.protocol.configuredOutputTokenLimit).length;
+  const agreementColumns = [
+    'kind',
+    'condition',
+    'cells',
+    'pairedComparisons',
+    'matchingComparisons',
+    'undefinedKappa',
+    'zeroKappa',
+    'positiveKappa',
+  ];
+  const overview = agreementOverview(result.judgments);
+  return (
+    [
+      `# Analyse descriptive du pilote conservé, ${result.analyzedAt.slice(0, 10)}`,
+      `Analyse hors ligne de ${result.responses.received}/${total} réponses. Empreintes vérifiées pour ${result.provenance.consumedObjects.length} objets effectivement lus, parmi ${result.provenance.archiveInventoryObjects} objets inventoriés. Les textes privés restent hors du dépôt public. Résultat historique réconcilié exactement, sans nouveaux jugements.`,
+      '## Exécution et couverture',
+      table(result.tables.byLanguageCondition, [
+        'language',
+        'condition',
+        'received',
+        'outputLimited',
+        'notOutputLimited',
+        'paired',
+        'single',
+        'unjudged',
+      ]),
+      `${limited}/${total} réponses portent le motif de limite de sortie; ${notLimited.length} ne le portent pas. Toutes avaient un plafond configuré de ${result.protocol.configuredOutputTokenLimit} jetons; ${atCeiling} réponses sans signal de limite comptent néanmoins exactement ce nombre de jetons. ${result.judgments.acceptedAnnotations}/${total * result.protocol.reviewers.length} annotations sont admises; ${result.judgments.pairedResponses}/${total} réponses ont une paire, ${result.judgments.missingPairs}/${total} n'en ont pas. Les ${result.rejectedJudgments.length} tentatives rejetées ne sont pas autant de réponses sans paire.`,
+      '## Critères séparés, par juge',
+      'Les effectifs PASS/FAIL/UNSCORABLE/NOT_APPLICABLE portent sur les annotations admises. La colonne missing reste affichée; evaluable vaut PASS + FAIL. Les critères et l’utilité ne sont pas fusionnés.',
+      table(result.tables.criteria, [
+        'language',
+        'condition',
+        'dimension',
+        'reviewerId',
+        'expected',
+        'PASS',
+        'FAIL',
+        'UNSCORABLE',
+        'NOT_APPLICABLE',
+        'missing',
+        'evaluable',
+      ]),
+      '## Utilité documentaire',
+      table(result.tables.utility, [
+        'language',
+        'condition',
+        'reviewerId',
+        'expected',
+        'RESOLVED',
+        'PARTIAL',
+        'UNDETERMINED',
+        'missing',
+      ]),
+      '## Accord entre juges',
+      'Chaque cellule de critère combine dimension, langue et condition; chaque cellule d’utilité combine cas, langue et condition. Une comparaison de critère porte sur une paire réponse/critère, une comparaison d’utilité sur une réponse. Les mêmes réponses participent à plusieurs critères; ces effectifs ne sont pas des observations indépendantes supplémentaires. Aucun kappa n’est moyenné ou recalculé sur une population regroupée.',
+      table(overview, agreementColumns),
+      `Sur ${overview.reduce((n, row) => n + row.cells, 0)} cellules, ${overview.reduce((n, row) => n + row.undefinedKappa, 0)} kappa sont indéfinis, ${overview.reduce((n, row) => n + row.zeroKappa, 0)} sont nuls et ${overview.reduce((n, row) => n + row.positiveKappa, 0)} sont positifs. Les motifs et les valeurs de chaque cellule sont détaillés ci-dessous. Un accord brut élevé dominé par une catégorie n’établit pas la capacité discriminante des juges. Cette capacité reste non établie; ni les paires complètes ni l’accord ne prouvent la vérité des jugements.`,
+      table(result.judgments.dimensions, [
+        'dimension',
+        'language',
+        'condition',
+        'paired',
+        'agreements',
+        'rawAgreement',
+        'kappa',
+        'undefinedReason',
+      ]),
+      table(result.judgments.utility, [
+        'caseId',
+        'language',
+        'condition',
+        'paired',
+        'agreements',
+        'rawAgreement',
+        'kappa',
+        'undefinedReason',
+      ]),
+      '## Sous-groupes définis par le signal de limite',
+      `Le sous-groupe de ${notLimited.length} réponses sans signal de limite est sélectionné après génération; il ne corrige pas l’estimation de l’ensemble. Parmi ${blocks.length} blocs de quatre conditions, ${blocks.filter(x => x.allFourNotOutputLimited).length} conservent quatre réponses sans signal de limite et ${blocks.filter(x => x.allFourNotOutputLimitedAndPaired).length} conservent aussi les quatre paires de jugements. Les JSON privé et public exposent les effectifs, critères, utilité et accords des deux strates.`,
+      ...result.tables.stratified.flatMap(stratum => [
+        `### Signal de limite de sortie : ${stratum.outputLimited ? 'présent' : 'absent'}`,
+        table(agreementOverview(stratum.agreement), agreementColumns),
+      ]),
+      '## Cadrage fictionnel',
+      'Lexique publié dans protocol.fictionLexicon. Normalisation NFC, minuscules, mots Unicode; clés JSON et racines dans les identifiants techniques sont comptées séparément. Chaque entrée a été lue dans la requête archivée et comparée à l’assembleur épinglé. Les champs instruction, documentation, evidence et question sont séparés; aucun nom de fichier ni métadonnée non transmise n’est ajouté. Les nombres ne mesurent pas un effet psychologique.',
+      '## Reproductibilité et portée',
+      'Le JSON public contient analyzedDate (jour UTC d’exécution) et le JSON privé analyzedAt (instant d’exécution). La reproduction des données est indépendante de ces métadonnées temporelles; l’égalité octet pour octet du JSON public exige le même jour UTC. Conserver les deux sorties et comparer les chemins de différence, sans réécrire une preuve antérieure.',
+      'beforeArbitration reste true et globalScore reste null.',
+      result.limits.map(limit => '- ' + limit).join('\n'),
+    ].join('\n\n') + '\n'
+  );
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

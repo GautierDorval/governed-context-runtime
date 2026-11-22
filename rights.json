@@ -180,7 +180,7 @@
       "path": "docs/en/model-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "88d066ee50edb6da1dc444d78df856260280a8fe80f9a8bc0e3121e9b2aa7696"
+      "sha256": "054df715ca72895360dfbe70ec1b30556a2fe210d253ec09d294325eef47dc15"
     },
     {
       "path": "docs/en/pack-comparison.md",
@@ -198,7 +198,7 @@
       "path": "docs/en/provider-pilot.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "5b4ede54a9b035b19ce7549e807a6268732351cfa0f5adf9317205f9a04b0f59"
+      "sha256": "b4e925495f180ab902c3d35ec419564952ca3f332cb76a491c9c28fcefeb3a91"
     },
     {
       "path": "docs/en/qualification.md",
@@ -258,7 +258,7 @@
       "path": "docs/fr/provider-pilot.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "2d7b76d82a3dbd0c5f2f735516ddf35f00354a2d235524b391dd9a72d9028ff8"
+      "sha256": "45669fb1c2c61016bf4713ad0cfd7e3e16984e592fa4c3f8f754c36fcb5d795f"
     },
     {
       "path": "docs/fr/qualification.md",
@@ -282,7 +282,7 @@
       "path": "docs/model-comparison.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "4fea9f2dbad36d90cd2ceca871b3ca405690765c341a8e6abd0fbfba97308f21"
+      "sha256": "84423570fda379751ff29104f3289d2ab3c4e0339f958f822851d73d433e6f14"
     },
     {
       "path": "docs/observations.md",
@@ -528,19 +528,19 @@
       "path": "records/retained-pilot-analysis-2026-11-22.json",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "5822d441f793e30818976f94b248fd1a8b1ddaa6338ff368e2c3004f9d498b9c"
+      "sha256": "4f25da7bb849c9e8f57673e6b85ca89dd429bda3708b2566fa3d25e7f5092605"
     },
     {
       "path": "records/retained-pilot-analysis-2026-11-22.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "41f91420d23d6e283f7012cdf3500ee02e90c1aa37a270264b9f4abd03a49c70"
+      "sha256": "0f12f73c42e9ec97e8e4e0bc493e17b11886cdec07529a9555e4f0562589cf1e"
     },
     {
       "path": "scripts/analyze-retained-pilot.mjs",
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
-      "sha256": "62f88ff9fdfad94671309316059baed4579b94f1fd26f8fd9f933a224e2b605b"
+      "sha256": "167d9cc7eb13f83011bba1d00a5e1eb44cc2aa0575871113bf4022d90a79ae4f"
     },
     {
       "path": "scripts/check-package.mjs",
