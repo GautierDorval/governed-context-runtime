@@ -110,3 +110,9 @@ Les tests de schéma utilisent les dépendances de développement verrouillées.
 ## Occurrences et comparaison
 
 Le [contrat de comparaison](pack-comparison.md) conserve séparément les listes racine, les chaînes et les contextes causaux. Un JSON Pointer lié à une empreinte identifie une occurrence dans un état exact, pas une règle persistante. Les relations de cohérence ne sont contrôlées que pour une politique de composition déclarée et prise en charge. Une éventuelle identité logique future appartient au producteur et exige une nouvelle édition de schéma ; aucun champ historique n’est enrichi silencieusement.
+
+## Attribuer, critiquer et autoriser une action
+
+Une source canonique établit ce que son auteur déclare. Restituer cette déclaration exige de conserver ses conditions, exclusions et inconnues ; son statut ne prouve pas sa vérité générale. Une analyse critique demandée par l’utilisateur peut la confronter à des sources et arguments externes pertinents. L’absence d’une déclaration interdit de l’inventer au nom de l’auteur, sans interdire cette critique.
+
+Une prescription dans un pack peut être pertinente pour la tâche. Son application dépend du mandat et de la politique du consommateur ; sa seule présence ne prouve ni une injection malveillante ni un filtrage effectif. Les permissions et contrôles d’exécution restent nécessaires pour agir. Le pack et son empreinte ne les fournissent pas. La [réanalyse du pilote conservé](../../records/retained-pilot-analysis-2026-11-22.md) distingue ces frontières des résultats descriptifs sur réponses.

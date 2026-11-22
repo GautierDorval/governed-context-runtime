@@ -110,3 +110,9 @@ Schema tests require the locked development dependencies. The demo and other tes
 ## Occurrences and comparison
 
 The [comparison contract](pack-comparison.md) keeps root lists, chains and causal contexts separate. A digest-bound JSON Pointer identifies an occurrence in an exact state, not a persistent rule. Coherence relations are checked only for a declared supported composition policy. Any future logical identity belongs to the producer and requires a new schema edition; no historical field is silently enriched.
+
+## Attribution, criticism and action authorization
+
+A canonical source establishes what its author states. Representing that declaration requires preserving its conditions, exclusions and unknowns; its status does not establish general truth. A critical inquiry requested by the user may compare it with relevant external sources and arguments. A missing declaration prevents inventing one on the author’s behalf, not conducting that critique.
+
+A prescription in a pack may be relevant to the task. Applying it depends on the mandate and consumer policy; its mere presence establishes neither malicious injection nor effective filtering. Execution permissions and controls remain necessary for action. Neither the pack nor its digest supplies them. The [retained-pilot reanalysis](../../records/retained-pilot-analysis-2026-11-22.md) separates these boundaries from descriptive response results.
