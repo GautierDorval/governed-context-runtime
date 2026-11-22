@@ -180,7 +180,7 @@
       "path": "docs/en/model-comparison.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "756f7a72b29b0b2d0bc781ad388ab606481d9ac6dfe064252b8b48738f85fd00"
+      "sha256": "054df715ca72895360dfbe70ec1b30556a2fe210d253ec09d294325eef47dc15"
     },
     {
       "path": "docs/en/pack-comparison.md",
@@ -192,13 +192,13 @@
       "path": "docs/en/pack-semantics.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "724e8e901478cc2d263e46e636d54e7c43bb056a5226f7aaca77d559f0476d17"
+      "sha256": "85e0b9eb23dcb1d5a25aa9149bee573f9d73dbf5cb6a552c95440ff3f2397f72"
     },
     {
       "path": "docs/en/provider-pilot.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "40b133ec2f0ea8501f8a0bc0dc3bc2a8b4f491907e3b5aa4a078675952250e3c"
+      "sha256": "b4e925495f180ab902c3d35ec419564952ca3f332cb76a491c9c28fcefeb3a91"
     },
     {
       "path": "docs/en/qualification.md",
@@ -252,13 +252,13 @@
       "path": "docs/fr/pack-semantics.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "d6491913e7cf559502fb6f407f08b0afa6cc4e8690192ed09a0649f49fd21e42"
+      "sha256": "ff0f0925cfa699672ef73236e77c05eb78d1dfdc6449f27009115f3d1c68ebd8"
     },
     {
       "path": "docs/fr/provider-pilot.md",
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "ec1bf4a9869c91bbdce0f4efa9fd108af13d49281c3dde95f0a0ac7d83c27ba9"
+      "sha256": "45669fb1c2c61016bf4713ad0cfd7e3e16984e592fa4c3f8f754c36fcb5d795f"
     },
     {
       "path": "docs/fr/qualification.md",
@@ -282,7 +282,7 @@
       "path": "docs/model-comparison.md",
       "source": "consumer-reproduction-2026-10-20",
       "license": "CC-BY-4.0",
-      "sha256": "fed84e4cf70ed388d1517fdae6017b7dbb49ad35701ef7affccc409b67a55d10"
+      "sha256": "84423570fda379751ff29104f3289d2ab3c4e0339f958f822851d73d433e6f14"
     },
     {
       "path": "docs/observations.md",
@@ -438,13 +438,13 @@
       "path": "package-policy.json",
       "source": "repository-maintenance-2026-10-14",
       "license": "Apache-2.0",
-      "sha256": "5d12c803736ee8e54ee913d30f1a8cbb2f24568ffec8455d914716ef725bc40e"
+      "sha256": "dd6a65fb3486e2618376180c50f7d3af177d72735ca4bda61123d658336fc7e6"
     },
     {
       "path": "package.json",
       "source": "closed-package-configuration",
       "license": "Apache-2.0",
-      "sha256": "13959370870d16bcfe3096bd24bd8c250f2e8fb77c4fafad3b814c945afe5c85"
+      "sha256": "8322a9caf8cf4f9481552708ba79136d16fd94364a1f94bcfc74613e4a5684ba"
     },
     {
       "path": "records/README.md",
@@ -523,6 +523,24 @@
       "source": "qualification-edition-2026-10-20",
       "license": "CC-BY-4.0",
       "sha256": "6e4d68bde18f277f61cbfb2a4b504f1e8c5d4e0065ac2c4405079a9bfbdce02a"
+    },
+    {
+      "path": "records/retained-pilot-analysis-2026-11-22.json",
+      "source": "qualification-edition-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "4f25da7bb849c9e8f57673e6b85ca89dd429bda3708b2566fa3d25e7f5092605"
+    },
+    {
+      "path": "records/retained-pilot-analysis-2026-11-22.md",
+      "source": "qualification-edition-2026-10-20",
+      "license": "CC-BY-4.0",
+      "sha256": "0f12f73c42e9ec97e8e4e0bc493e17b11886cdec07529a9555e4f0562589cf1e"
+    },
+    {
+      "path": "scripts/analyze-retained-pilot.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "167d9cc7eb13f83011bba1d00a5e1eb44cc2aa0575871113bf4022d90a79ae4f"
     },
     {
       "path": "scripts/check-package.mjs",
@@ -1405,6 +1423,12 @@
       "source": "qualification-edition-2026-10-20",
       "license": "Apache-2.0",
       "sha256": "6f95cd02cbf39ded16c1e331e428464043a9d8bf761362d97f99ef5b8e76d9e6"
+    },
+    {
+      "path": "test/retained-pilot-analysis.test.mjs",
+      "source": "qualification-edition-2026-10-20",
+      "license": "Apache-2.0",
+      "sha256": "1331ac19728f257124d6aef2f5811f6f156c6fbdd5a5158bae18beb168d54957"
     },
     {
       "path": "test/schemas.test.mjs",
