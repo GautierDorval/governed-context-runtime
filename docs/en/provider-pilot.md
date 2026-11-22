@@ -60,6 +60,16 @@ An explicit inventory of completed responses defines the judgment population. `p
 
 Agreement uses paired annotations only, with contingency tables, margins, observed agreement, expected agreement and Cohen's kappa before arbitration. Kappa remains null when no pair exists or expected agreement equals one. Missing or rejected annotations are not imputed. Trial metadata preserves case/language/repetition pairing across conditions. Seven cases in one fictional service do not establish general architecture superiority or a verifier effect.
 
+### Reading campaign counts
+
+Campaign counts describe execution and annotation coverage, not answer fidelity.
+
+- `responses.completed` counts trials with a completed respondent response; technical-only trials are excluded.
+- `responses.outputLimited` counts completed responses whose provider finish reason reports the output limit (`max_tokens` or `length`). For the respondent, that limit is the 512-token output ceiling. These responses are kept as received and are not retried.
+- `responses.judgmentsPending` is computed in `pilot-campaign.mjs` as `byTrial.size - summary.pairedResponses`: completed responses that do not yet have a complete pair of accepted annotations, one per judge. It counts responses, not individual judgments or provider calls still in progress.
+
+The retained provider result checked in the [November 16 review](../../records/observation-scope-2026-11-16.md) reports 560 completed responses, of which 433 were output-limited (77.3% of completed responses, under the 512-token ceiling), and `judgmentsPending: 294`. These figures establish neither a fidelity score nor a completed analysis.
+
 ## Private operations and evidence
 
 The Worker has no public route or workers.dev exposure. Its service-bound `/internal/pilot-status` reader exposes only pinned campaign identity, Worker version, attempt counts, budget reservations and activity time. The serving version must match the retained execution identity once work has begun. The Observatory consumes this aggregate through a private service binding and its existing Access controls. It rejects a different campaign, manifest or deployed Worker version. Thirty minutes without recorded activity is reported as stale; this is an activity check, not proof of the Workflow's control-plane state. The Observatory's `verified` label means that the aggregate contract passed, including a valid stale campaign state; it is not a health or completion verdict.

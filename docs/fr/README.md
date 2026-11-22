@@ -97,7 +97,9 @@ Une page canonique statique suffit pour une définition simple ou une citation �
 
 Séparer les observations datées du producteur sur l’instance hébergée, la vérification technique locale et les expériences externes sur des modèles. Une archive de données, une projection publique, cette documentation et un paragraphe du site peuvent décrire la même archive. Ce ne sont pas quatre confirmations indépendantes. Les effets sur la fidélité des réponses restent à évaluer.
 
-[Observations datées et portée des preuves](../../evidence/README.md)
+La fidélité d’une réponse s’examine séparément de la livraison du contexte. La [définition de la fidélité interprétative](https://gautierdorval.com/definitions/fidelite-interpretative/), la [grille publique de fidélité](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/scoring-models/fidelity-score.md) de la suite de tests (en anglais) et les observations datées ont des rôles distincts : définir la propriété, fournir un instrument et consigner ce qui a été observé. Le [dossier T3](../../evidence/mcp-apps-t3-2026-10-27/README.md) reste un cas borné : cinq listes, onze entrées, revue côté producteur.
+
+[Observations datées et portée des preuves](../../evidence/README.md) · [Définition, instrument et observations](../../evidence/README.md#answer-fidelity-definition-instrument-and-observations) (en anglais)
 
 ## Limites
 

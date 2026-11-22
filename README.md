@@ -79,6 +79,8 @@ Reference edition 0.3.1-proposed is a prerelease of proposed contracts. Cite v0.
 
 The hosted Runtime observes context delivery, not the identity or behaviour of a consuming model. A separate provider harness owns inference evidence. The [November 16 observation review](records/observation-scope-2026-11-16.md) verifies a retained, completed provider `RUN`; the public plan's `NOT_RUN` remains a template status, not a claim that no later campaign ran.
 
+Answer fidelity is examined separately from context delivery and campaign completion. The evidence index relates its [definition, instrument and observations](evidence/README.md#answer-fidelity-definition-instrument-and-observations); T3 remains a bounded case of five lists and eleven entries, with producer-side review.
+
 Use the [English consumer kit](docs/en/reproduction.md), [French kit](docs/fr/reproduction.md),
 [English pack semantics](docs/en/pack-semantics.md) or [French semantics](docs/fr/pack-semantics.md).
 The [English pilot](docs/en/model-comparison.md) and [French pilot](docs/model-comparison.md) prepare four conditions and 560 responses per future configuration: **NOT_RUN**.

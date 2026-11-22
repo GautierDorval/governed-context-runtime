@@ -97,7 +97,9 @@ Use a static canonical page for a simple definition or an ordinary editorial cit
 
 Keep dated producer observations of the hosted instance, local technical verification and external model experiments separate. A data archive, a public projection, this documentation and a site paragraph can describe the same archive; they are not four independent confirmations. Model-fidelity effects remain to be evaluated.
 
-[Dated observations and evidence scope](../../evidence/README.md)
+Answer fidelity is examined separately from context delivery. The [interpretive fidelity definition](https://gautierdorval.com/en/definitions/interpretive-fidelity/), the test suite’s public [fidelity rubric](https://github.com/GautierDorval/interpretive-governance-test-suite/blob/cf61a18ab86d547443d6c0962d4c20ad9ed796f1/scoring-models/fidelity-score.md) and the dated observations have distinct roles: defining the property, providing an instrument and recording what was observed. The [T3 dossier](../../evidence/mcp-apps-t3-2026-10-27/README.md) remains a bounded case: five lists, eleven entries, producer-side review.
+
+[Dated observations and evidence scope](../../evidence/README.md) · [Definition, instrument and observations](../../evidence/README.md#answer-fidelity-definition-instrument-and-observations)
 
 ## Limits
 

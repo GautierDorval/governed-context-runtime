@@ -60,6 +60,16 @@ Un inventaire explicite des réponses terminées définit la population à juger
 
 L’accord utilise seulement les annotations appariées, avec tables de contingence, marges, accord observé, accord attendu et kappa de Cohen avant arbitrage. Le kappa reste null sans paire ou lorsque l’accord attendu vaut un. Aucune annotation manquante ou rejetée n’est imputée. Les métadonnées conservent l’appariement cas/langue/répétition entre conditions. Sept cas d’un service fictif ne démontrent ni une supériorité générale d’architecture ni un effet du vérificateur.
 
+### Lire les comptes d’une campagne
+
+Les comptes d’une campagne décrivent l’exécution et la couverture des annotations, pas la fidélité des réponses.
+
+- `responses.completed` compte les essais ayant une réponse terminée du répondant ; les essais sans réponse terminée en sont exclus.
+- `responses.outputLimited` compte les réponses terminées dont le motif de fin du fournisseur signale la limite de sortie (`max_tokens` ou `length`). Pour le répondant, cette limite est le plafond de sortie de 512 jetons. Ces réponses sont conservées telles que reçues, sans nouvel essai.
+- `responses.judgmentsPending` est calculé dans `pilot-campaign.mjs` par `byTrial.size - summary.pairedResponses` : réponses terminées qui n’ont pas encore de paire complète d’annotations acceptées, une par juge. Ce champ compte des réponses, et non des jugements individuels ni des appels fournisseur en cours.
+
+Le résultat fournisseur conservé et contrôlé dans l’[examen du 16 novembre](../../records/observation-scope-2026-11-16.md) déclare 560 réponses terminées, dont 433 limitées en sortie (77.3 % des réponses terminées, sous le plafond de 512 jetons), et `judgmentsPending: 294`. Ces chiffres n’établissent ni un score de fidélité ni une analyse terminée.
+
 ## Exploitation privée et preuves
 
 Le Worker n’a aucune route publique ni exposition workers.dev. Son lecteur `/internal/pilot-status`, accessible par liaison de service, expose seulement l’identité épinglée de la campagne, la version du Worker, les comptes de tentatives, les réserves et l’heure d’activité. Dès que le travail commence, la version qui sert ce statut doit correspondre à l’identité d’exécution conservée. L’Observatoire consomme cet agrégat par liaison privée sous ses contrôles Access existants. Une autre campagne, un autre manifeste ou une autre version déployée sont refusés. Trente minutes sans activité enregistrée donnent un statut périmé ; ce contrôle d’activité ne prouve pas l’état du Workflow dans le plan de contrôle. Le libellé `verified` de l’Observatoire signifie que le contrat de l’agrégat est validé, y compris un état périmé valide ; il ne constitue pas un verdict de santé ou d’achèvement.
